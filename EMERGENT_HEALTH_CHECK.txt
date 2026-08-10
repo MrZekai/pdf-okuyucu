@@ -76,9 +76,9 @@ Scope:
      packages just because newer versions exist.
    - Do not propose reformatting the code. The dense one-line JSX plus a
      single StyleSheet.create block per file is intentional.
-   - Do not remove or lower kotlinVersion: '2.3.21' from app.config.js. It keeps
-     play-services-ads Kotlin 2.3 metadata support without the Kotlin 2.3.0
-     type-checker crash in react-native-gesture-handler.
+   - Keep kotlinVersion: '2.1.20' in app.config.js. Expo SDK 57 / React Native
+     0.86 uses this toolchain, Google Mobile Ads 25.4.0 requires Kotlin 2.1.0,
+     and Kotlin 2.3.x crashes while compiling react-native-gesture-handler.
    - Cite file paths and line numbers for every finding.
    - If something is fine, say so in one line. No filler.
 

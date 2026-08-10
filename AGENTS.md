@@ -60,17 +60,12 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 - `scripts/check-i18n.mjs` — dependency-free i18n guard
 
 ## Known build constraint (already fixed — do not revert)
-`react-native-google-mobile-ads` pulls `play-services-ads` 25.x, which is compiled with **Kotlin 2.3**
-metadata. Expo SDK 57 defaults to Kotlin 2.1.20, which fails with:
+Expo SDK 57 / React Native 0.86 uses Kotlin **2.1.20**, while Google Mobile Ads SDK 25.4.0
+requires Kotlin 2.1.0. Keep `kotlinVersion: '2.1.20'` inside the `expo-build-properties`
+Android block in `app.config.js`. Kotlin 2.3.x is not required by the Ads SDK and causes an
+internal K2 type-checker crash while compiling `react-native-gesture-handler`.
 
-    :react-native-google-mobile-ads:compileDebugKotlin FAILED
-    Module was compiled with an incompatible version of Kotlin.
-    The binary version of its metadata is 2.3.0, expected version is 2.1.0.
-
-Fix in place: `kotlinVersion: '2.3.21'` inside the `expo-build-properties` android block in `app.config.js`.
-This keeps Kotlin 2.3 metadata support while avoiding the 2.3.0 type-checker crash seen while compiling
-`react-native-gesture-handler`. **Do not remove or lower it.** If a Kotlin/KSP mismatch appears later, pin
-`play-services-ads` instead of lowering Kotlin.
+**Do not raise Kotlin above 2.1.20 without rebuilding the full Android dependency matrix.**
 
 ## Verification commands (cheap, offline, no credits)
 ```

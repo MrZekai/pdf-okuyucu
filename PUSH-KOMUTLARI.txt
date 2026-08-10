@@ -45,5 +45,5 @@ I18N DURUMU: her uc derlemede de GECTI
    108 anahtar x 3 dil, 108 anahtar kullanilıyor, sabit metin yok.
 
 HENUZ BILMEDIGIMIZ SEY
-   AdMob Kotlin 2.3 duzeltmesi ise yaradi mi? Derleme henuz
+   Kotlin 2.1.20 uyumluluk duzeltmesi ise yaradi mi? Derleme henuz
    Android asamasina varamadi. Bu push'ta gorecegiz.
