@@ -1,0 +1,95 @@
+name: Expo Android Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build_release:
+        description: 'İmzalı Play Store AAB üret'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      ANDROID_VERSION_CODE: ${{ github.run_number }}
+      EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~2930057843
+      EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/6623949751
+      EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/3997786415
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Bağımlılıkları kur
+        run: npm ci --legacy-peer-deps
+
+      - name: Kod ve release yapılandırmasını kontrol et
+        run: |
+          npm run check
+          npm run lint
+          npm run doctor
+          npm run release:check
+
+      - name: Android projesini üret
+        run: npx expo prebuild --platform android --clean --no-install
+
+      - name: Gereksiz Android izinlerini doğrula
+        run: |
+          if grep -E 'android.permission.(SYSTEM_ALERT_WINDOW|READ_EXTERNAL_STORAGE|WRITE_EXTERNAL_STORAGE)' android/app/src/main/AndroidManifest.xml | grep -vq 'tools:node="remove"'; then
+            echo 'Gereksiz veya riskli Android izni bulundu.' >&2
+            exit 1
+          fi
+
+      - name: QA debug APK derle
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdf-okuyucu-debug-apk-v${{ github.run_number }}
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - name: Release imza dosyasını hazırla
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_UPLOAD_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_UPLOAD_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_ALIAS" ] || [ -z "$KEY_PASSWORD" ]; then
+            echo 'İmzalı AAB için GitHub Actions secrets eksik. PLAY_RELEASE_GUIDE.md dosyasını izleyin.' >&2
+            exit 1
+          fi
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+          printf 'storeFile=upload-keystore.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/keystore.properties
+          node scripts/configure-android-signing.mjs
+
+      - name: İmzalı Play Store AAB derle
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        working-directory: android
+        run: ./gradlew bundleRelease --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        with:
+          name: pdf-okuyucu-play-aab-v${{ github.run_number }}
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30

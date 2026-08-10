@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0B1020"/><stop offset=".6" stop-color="#151D3C"/><stop offset="1" stop-color="#3A2D74"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8B97FF"/><stop offset="1" stop-color="#7048DB"/></linearGradient>
+  </defs>
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <circle cx="900" cy="20" r="300" fill="#5B67F1" opacity=".16"/>
+  <circle cx="90" cy="510" r="260" fill="#38BDF8" opacity=".08"/>
+  <g transform="translate(105 93)">
+    <rect width="314" height="314" rx="76" fill="#0A0F1D" stroke="#FFFFFF" stroke-opacity=".09" stroke-width="2"/>
+    <path d="M85 54h95l53 53v153H85z" fill="#F8FAFC"/>
+    <path d="M180 54v53h53" fill="#DCE2FF"/>
+    <rect x="110" y="139" width="98" height="13" rx="6.5" fill="url(#accent)"/>
+    <rect x="110" y="169" width="76" height="9" rx="4.5" fill="#AAB3C8"/>
+    <rect x="110" y="191" width="98" height="9" rx="4.5" fill="#CBD2E2"/>
+    <circle cx="225" cy="238" r="39" fill="url(#accent)"/>
+    <path d="M207 238l12 12 25-29" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="485" y="192" fill="#FFFFFF" font-family="DejaVu Sans, sans-serif" font-size="62" font-weight="800" letter-spacing="-1">PDF OKUYUCU</text>
+  <text x="488" y="247" fill="#C9D0E8" font-family="DejaVu Sans, sans-serif" font-size="25">Hızlı, güvenli ve tamamen cihazında.</text>
+  <g transform="translate(488 294)" font-family="DejaVu Sans, sans-serif" font-size="19" font-weight="700">
+    <rect width="132" height="48" rx="24" fill="#FFFFFF" fill-opacity=".08"/><text x="25" y="31" fill="#DCE2FF">3 dil desteği</text>
+    <rect x="146" width="154" height="48" rx="24" fill="#FFFFFF" fill-opacity=".08"/><text x="171" y="31" fill="#DCE2FF">Gece modu</text>
+    <rect x="314" width="148" height="48" rx="24" fill="#FFFFFF" fill-opacity=".08"/><text x="339" y="31" fill="#DCE2FF">Yerel okuma</text>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5B67F1"/><stop offset=".55" stop-color="#7048DB"/><stop offset="1" stop-color="#19213F"/></linearGradient></defs>
+  <rect width="1080" height="1920" fill="#0B1020"/>
+  <g font-family="DejaVu Sans, sans-serif">
+    <text x="72" y="105" fill="#7C89FF" font-size="24" font-weight="800" letter-spacing="5">PDF OKUYUCU</text>
+    <text x="72" y="158" fill="#F8FAFC" font-size="42" font-weight="800">Okumaya devam et.</text>
+    <rect x="916" y="82" width="92" height="92" rx="28" fill="#8B5CF6" fill-opacity=".13" stroke="#8B5CF6" stroke-opacity=".2"/>
+    <path d="M950 127l11 5 5 12 5-12 12-5-12-5-5-12-5 12z" fill="none" stroke="#C4B5FD" stroke-width="5" stroke-linejoin="round"/>
+
+    <rect x="54" y="210" width="972" height="650" rx="58" fill="url(#hero)" stroke="#fff" stroke-opacity=".1" stroke-width="2"/>
+    <circle cx="920" cy="230" r="230" fill="#fff" opacity=".06"/>
+    <rect x="94" y="255" width="230" height="62" rx="31" fill="#050A1A" opacity=".24"/>
+    <circle cx="126" cy="286" r="8" fill="#86EFAC"/>
+    <text x="151" y="294" fill="#EEF1FF" font-size="20" font-weight="700">YEREL &amp; GÜVENLİ</text>
+    <path d="M930 258l32 12v24c0 24-13 41-32 51-19-10-32-27-32-51v-24z" fill="none" stroke="#fff" stroke-opacity=".82" stroke-width="5"/><path d="M916 292l10 10 19-23" fill="none" stroke="#fff" stroke-width="5"/>
+    <text x="94" y="430" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">Belgelerin,</text>
+    <text x="94" y="516" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">her an yanında.</text>
+    <text x="94" y="584" fill="#E9ECFF" opacity=".78" font-size="28">PDF’lerini cihazından veya bağlantıdan aç.</text>
+    <text x="94" y="624" fill="#E9ECFF" opacity=".78" font-size="28">Hesap yok, bulut zorunluluğu yok.</text>
+    <rect x="94" y="677" width="892" height="108" rx="30" fill="#F8FAFC"/>
+    <rect x="120" y="700" width="64" height="64" rx="18" fill="#E7E9FF"/><path d="M152 718v28M138 732h28" stroke="#0B1020" stroke-width="5" stroke-linecap="round"/>
+    <text x="210" y="746" fill="#0B1020" font-size="31" font-weight="900">PDF Aç</text><path d="M928 715l25 25-25 25" fill="none" stroke="#0B1020" stroke-width="6"/>
+    <text x="420" y="826" fill="#D8DEFF" font-size="24" font-weight="700">🔗  URL’den Aç</text>
+
+    <text x="64" y="955" fill="#6877EE" font-size="21" font-weight="800" letter-spacing="4">HIZLI İŞLEMLER</text>
+    <text x="64" y="1010" fill="#F8FAFC" font-size="39" font-weight="800">İhtiyacın olan her şey</text>
+    <g>
+      <rect x="54" y="1050" width="472" height="218" rx="38" fill="#11192C" stroke="#27304A" stroke-width="2"/>
+      <rect x="84" y="1080" width="72" height="72" rx="22" fill="#5B67F1" fill-opacity=".14"/><path d="M104 1097h23l13 13v29h-36zM127 1097v13h13" fill="none" stroke="#7180FF" stroke-width="4"/>
+      <text x="84" y="1190" fill="#F8FAFC" font-size="28" font-weight="800">PDF seç</text><text x="84" y="1231" fill="#8390A7" font-size="20">Cihazından belge aç</text>
+      <rect x="554" y="1050" width="472" height="218" rx="38" fill="#11192C" stroke="#27304A" stroke-width="2"/>
+      <rect x="584" y="1080" width="72" height="72" rx="22" fill="#38BDF8" fill-opacity=".12"/><path d="M605 1121c14 14 28-14 42 0M610 1109l13-13c18-18 42 6 24 24" fill="none" stroke="#38BDF8" stroke-width="4"/>
+      <text x="584" y="1190" fill="#F8FAFC" font-size="28" font-weight="800">Bağlantı aç</text><text x="584" y="1231" fill="#8390A7" font-size="20">Web’den PDF indir</text>
+      <rect x="54" y="1294" width="472" height="218" rx="38" fill="#11192C" stroke="#27304A" stroke-width="2"/>
+      <rect x="84" y="1324" width="72" height="72" rx="22" fill="#FB7185" fill-opacity=".12"/><path d="M120 1380c-30-18-28-48 0-48 28 0 30 30 0 48z" fill="none" stroke="#FB7185" stroke-width="4"/>
+      <text x="84" y="1434" fill="#F8FAFC" font-size="28" font-weight="800">Favoriler</text><text x="84" y="1475" fill="#8390A7" font-size="20">Önemli belgeleri sakla</text>
+      <rect x="554" y="1294" width="472" height="218" rx="38" fill="#11192C" stroke="#27304A" stroke-width="2"/>
+      <rect x="584" y="1324" width="72" height="72" rx="22" fill="#F59E0B" fill-opacity=".12"/><circle cx="620" cy="1360" r="15" fill="none" stroke="#F59E0B" stroke-width="4"/><path d="M620 1333v-10M620 1397v-10M593 1360h-10M657 1360h-10" stroke="#F59E0B" stroke-width="4"/>
+      <text x="584" y="1434" fill="#F8FAFC" font-size="28" font-weight="800">Okuma ayarları</text><text x="584" y="1475" fill="#8390A7" font-size="20">Deneyimini özelleştir</text>
+    </g>
+    <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/>
+    <text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
+    <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
+    <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#F8FAFC">Ana Sayfa</text><text x="405" y="1872" fill="#64748B">Kütüphane</text><text x="675" y="1872" fill="#64748B">Favoriler</text><text x="945" y="1872" fill="#64748B">Ayarlar</text></g>
+    <g fill="none" stroke-width="5"><path d="M110 1824l25-21 25 21v28h-50z" stroke="#F8FAFC"/><rect x="382" y="1802" width="17" height="49" stroke="#64748B"/><rect x="403" y="1808" width="17" height="43" stroke="#64748B"/><path d="M675 1849c-40-23-37-60 0-60 37 0 40 37 0 60z" stroke="#64748B"/><circle cx="945" cy="1826" r="16" stroke="#64748B"/></g>
+  </g>
+</svg>

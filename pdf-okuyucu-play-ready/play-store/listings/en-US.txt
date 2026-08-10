@@ -1,0 +1,28 @@
+TITLE
+PDF Reader: Fast & Private
+
+SHORT DESCRIPTION
+Open PDFs fast, read in night mode, and keep documents safely on your device.
+
+FULL DESCRIPTION
+PDF Reader is a local-first app designed to make viewing documents fast, simple, and secure.
+
+Choose PDF files from your device or download them directly from a web link. Documents stay in the app’s private on-device folder; you do not need an account or upload files to a server operated by the developer to read them.
+
+Key features:
+
+• Pick and open PDFs from your device
+• Download PDFs from a URL
+• Vertical and horizontal reading
+• Single-page snap mode
+• Pinch zoom and double-tap zoom
+• Night mode for PDF pages
+• Favourites and a searchable local library
+• Last-page and reading-progress metadata
+• Password-protected PDF support
+• Document sharing
+• Turkish, English, and Spanish interface
+
+PDF Reader keeps your documents organised, stores reading information on your device, and gives you quick access to the tools you need through a clean interface.
+
+The app contains ads. Ad privacy choices can be managed from Settings.
