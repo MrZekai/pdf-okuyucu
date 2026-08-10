@@ -7,10 +7,12 @@ import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
 import { DocumentCard } from '@/components/DocumentCard';
 import { UrlModal } from '@/components/UrlModal';
+import { useTranslation } from '@/hooks/useTranslation';
 import { palette } from '@/constants/theme';
 
 export default function HomeScreen() {
   const { ready, documents, openPicker, addFromUrl, toggleFavorite } = useApp();
+  const { t } = useTranslation();
   const [urlOpen, setUrlOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const recent = useMemo(() => [...documents].sort((a,b) => b.lastOpenedAt - a.lastOpenedAt), [documents]);
@@ -39,28 +41,28 @@ export default function HomeScreen() {
     <SafeAreaView edges={['top']} style={styles.safe}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.brandRow}>
-          <View><Text style={styles.eyebrow}>PDF OKUYUCU</Text><Text style={styles.welcome}>Belgelerin. Hızın. Odağın.</Text></View>
+          <View><Text style={styles.eyebrow}>{t('home.eyebrow')}</Text><Text style={styles.welcome}>{t('home.welcome')}</Text></View>
           <View style={styles.brandBadge}><AppIcon name="sparkles" size={20} color="#C4B5FD"/></View>
         </View>
 
         <LinearGradient colors={['#5B67F1', '#7048DB', '#19213F']} start={{x:0,y:0}} end={{x:1,y:1}} style={styles.hero}>
           <View style={styles.heroGlow}/>
-          <View style={styles.heroTop}><View style={styles.pill}><View style={styles.liveDot}/><Text style={styles.pillText}>HIZLI • GİZLİ • CİHAZINDA</Text></View><AppIcon name="shield" color="rgba(255,255,255,0.85)"/></View>
-          <Text style={styles.heroTitle}>PDF’lerini{`\n`}anında aç.</Text>
-          <Text style={styles.heroText}>Karmaşa yok. Hesap yok. Belgeni seç ve okumaya başla.</Text>
+          <View style={styles.heroTop}><View style={styles.pill}><View style={styles.liveDot}/><Text style={styles.pillText}>{t('home.heroPill')}</Text></View><AppIcon name="shield" color="rgba(255,255,255,0.85)"/></View>
+          <Text style={styles.heroTitle}>{t('home.heroTitle')}</Text>
+          <Text style={styles.heroText}>{t('home.heroText')}</Text>
           <Pressable onPress={choosePdf} disabled={busy} style={({pressed}) => [styles.openButton, pressed && { transform: [{scale:0.985}] }]}>
-            {busy ? <ActivityIndicator color={palette.ink}/> : <><View style={styles.openIcon}><AppIcon name="plus" size={20} color={palette.ink}/></View><Text style={styles.openText}>PDF Aç</Text><View style={{flex:1}}/><AppIcon name="chevronRight" size={19} color={palette.ink}/></>}
+            {busy ? <ActivityIndicator color={palette.ink}/> : <><View style={styles.openIcon}><AppIcon name="plus" size={20} color={palette.ink}/></View><Text style={styles.openText}>{t('home.openPdf')}</Text><View style={{flex:1}}/><AppIcon name="chevronRight" size={19} color={palette.ink}/></>}
           </Pressable>
-          <Pressable onPress={() => setUrlOpen(true)} style={styles.urlButton}><AppIcon name="link" size={17} color="#D8DEFF"/><Text style={styles.urlText}>URL’den PDF aç</Text></Pressable>
+          <Pressable onPress={() => setUrlOpen(true)} style={styles.urlButton}><AppIcon name="link" size={17} color="#D8DEFF"/><Text style={styles.urlText}>{t('home.openFromUrl')}</Text></Pressable>
         </LinearGradient>
 
         {continueDoc ? (
           <View style={styles.section}>
-            <View style={styles.sectionHead}><View><Text style={styles.sectionEyebrow}>SON OKUNAN</Text><Text style={styles.sectionTitle}>Son okuduğun belge</Text></View><View style={styles.roundIcon}><AppIcon name="clock" size={18} color={palette.cyan}/></View></View>
+            <View style={styles.sectionHead}><View><Text style={styles.sectionEyebrow}>{t('home.continueEyebrow')}</Text><Text style={styles.sectionTitle}>{t('home.continueTitle')}</Text></View><View style={styles.roundIcon}><AppIcon name="clock" size={18} color={palette.cyan}/></View></View>
             <Pressable onPress={() => goReader(continueDoc.id)} style={styles.continueCard}>
               <LinearGradient colors={['rgba(56,189,248,0.11)','rgba(91,103,241,0.08)']} style={StyleSheet.absoluteFillObject}/>
               <View style={styles.bigFile}><AppIcon name="file" size={31} color="#818CF8"/></View>
-              <View style={{flex:1}}><Text numberOfLines={1} style={styles.continueTitle}>{continueDoc.name}</Text><Text style={styles.continueMeta}>{continueDoc.pageCount ? `Sayfa ${continueDoc.lastPage} / ${continueDoc.pageCount}` : 'Dokun ve belgeyi aç'}</Text>
+              <View style={{flex:1}}><Text numberOfLines={1} style={styles.continueTitle}>{continueDoc.name}</Text><Text style={styles.continueMeta}>{continueDoc.pageCount ? t('home.continuePage', { page: continueDoc.lastPage, total: continueDoc.pageCount }) : t('home.continueTap')}</Text>
                 {continueDoc.pageCount ? <View style={styles.bigProgress}><View style={[styles.bigProgressFill,{width:`${Math.min(100,(continueDoc.lastPage/continueDoc.pageCount)*100)}%`}]} /></View> : null}
               </View><View style={styles.playButton}><AppIcon name="chevronRight" size={18}/></View>
             </Pressable>
@@ -68,27 +70,27 @@ export default function HomeScreen() {
         ) : null}
 
         <View style={styles.section}>
-          <Text style={styles.sectionEyebrow}>HIZLI İŞLEMLER</Text><Text style={styles.sectionTitle}>Ne yapmak istersin?</Text>
+          <Text style={styles.sectionEyebrow}>{t('home.quickEyebrow')}</Text><Text style={styles.sectionTitle}>{t('home.quickTitle')}</Text>
           <View style={styles.quickGrid}>
-            <Quick icon="file" title="PDF Aç" desc="Cihazdan seç" color={palette.royal} onPress={choosePdf}/>
-            <Quick icon="link" title="URL’den" desc="İndir ve oku" color={palette.cyan} onPress={() => setUrlOpen(true)}/>
-            <Quick icon="heart" title="Favoriler" desc={`${favoriteCount} belge`} color={palette.rose} onPress={() => router.push('/favorites')}/>
-            <Quick icon="settings" title="Okuma Ayarı" desc="Görünümü seç" color={palette.amber} onPress={() => router.push('/settings')}/>
+            <Quick icon="file" title={t('home.quickOpenTitle')} desc={t('home.quickOpenDesc')} color={palette.royal} onPress={choosePdf}/>
+            <Quick icon="link" title={t('home.quickUrlTitle')} desc={t('home.quickUrlDesc')} color={palette.cyan} onPress={() => setUrlOpen(true)}/>
+            <Quick icon="heart" title={t('home.quickFavTitle')} desc={t('home.quickFavDesc', { count: favoriteCount })} color={palette.rose} onPress={() => router.push('/favorites')}/>
+            <Quick icon="settings" title={t('home.quickSettingsTitle')} desc={t('home.quickSettingsDesc')} color={palette.amber} onPress={() => router.push('/settings')}/>
           </View>
         </View>
 
         <View style={styles.statsRow}>
-          <Stat value={documents.length.toString()} label="Belge" icon="library"/>
-          <Stat value={pagesRead.toString()} label="Okunan sayfa" icon="pages"/>
-          <Stat value={favoriteCount.toString()} label="Favori" icon="heart"/>
+          <Stat value={documents.length.toString()} label={t('home.statDocuments')} icon="library"/>
+          <Stat value={pagesRead.toString()} label={t('home.statPages')} icon="pages"/>
+          <Stat value={favoriteCount.toString()} label={t('home.statFavorites')} icon="heart"/>
         </View>
 
         <View style={styles.section}>
-          <View style={styles.sectionHead}><View><Text style={styles.sectionEyebrow}>SON AÇILANLAR</Text><Text style={styles.sectionTitle}>Dosyalarına hızlı dön</Text></View>{documents.length > 0 ? <Pressable onPress={() => router.push('/library')}><Text style={styles.seeAll}>Tümünü gör</Text></Pressable> : null}</View>
-          {recent.length ? <View style={{gap:10}}>{recent.slice(0,4).map((doc) => <DocumentCard key={doc.id} doc={doc} onPress={() => goReader(doc.id)} onFavorite={() => toggleFavorite(doc.id)}/>)}</View> : <View style={styles.empty}><View style={styles.emptyIcon}><AppIcon name="file" size={30} color="#64748B"/></View><Text style={styles.emptyTitle}>Henüz PDF yok</Text><Text style={styles.emptyText}>İlk belgeni açtığında burada otomatik görünecek.</Text></View>}
+          <View style={styles.sectionHead}><View><Text style={styles.sectionEyebrow}>{t('home.recentEyebrow')}</Text><Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text></View>{documents.length > 0 ? <Pressable onPress={() => router.push('/library')}><Text style={styles.seeAll}>{t('home.seeAll')}</Text></Pressable> : null}</View>
+          {recent.length ? <View style={{gap:10}}>{recent.slice(0,4).map((doc) => <DocumentCard key={doc.id} doc={doc} t={t} onPress={() => goReader(doc.id)} onFavorite={() => toggleFavorite(doc.id)}/>)}</View> : <View style={styles.empty}><View style={styles.emptyIcon}><AppIcon name="file" size={30} color="#64748B"/></View><Text style={styles.emptyTitle}>{t('home.emptyTitle')}</Text><Text style={styles.emptyText}>{t('home.emptyText')}</Text></View>}
         </View>
 
-        <View style={styles.privacy}><View style={styles.privacyIcon}><AppIcon name="shield" size={22} color={palette.emerald}/></View><View style={{flex:1}}><Text style={styles.privacyTitle}>Belgelerin sana ait</Text><Text style={styles.privacyText}>PDF’ler cihazında tutulur. Okumak için hesap oluşturman gerekmez.</Text></View></View>
+        <View style={styles.privacy}><View style={styles.privacyIcon}><AppIcon name="shield" size={22} color={palette.emerald}/></View><View style={{flex:1}}><Text style={styles.privacyTitle}>{t('home.privacyTitle')}</Text><Text style={styles.privacyText}>{t('home.privacyText')}</Text></View></View>
         <View style={{height:10}}/>
       </ScrollView>
       <UrlModal visible={urlOpen} onClose={() => setUrlOpen(false)} onSubmit={fromUrl}/>

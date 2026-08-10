@@ -1,0 +1,41 @@
+{
+  "// NOTE": "formatOnSave is intentionally OFF. This project uses a deliberate, dense one-line JSX/StyleSheet style. A formatter would reflow it and destroy the author's formatting.",
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.expo": true,
+    "**/android": true,
+    "**/ios": true,
+    "**/dist": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.expo/**": true,
+    "**/android/**": true,
+    "**/ios/**": true
+  },
+
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "app.config.js": "javascript"
+  },
+
+  "emmet.includeLanguages": { "typescriptreact": "html" },
+
+  "[typescriptreact]": { "editor.suggest.insertMode": "replace" },
+  "[typescript]": { "editor.suggest.insertMode": "replace" }
+}

@@ -67,3 +67,56 @@ Avoid “make this the best PDF app” as an Emergent command: that invites broa
 
 ## Important product note
 The current renderer reports page changes and page count, so the app stores reading progress. Its documented API does not expose a programmatic `jumpToPage` method, so **the project does not falsely claim automatic resume-to-page yet**. A future agent can add this only if the renderer exposes a supported navigation API or if the renderer is deliberately changed after evaluation.
+
+## Diller (tr / en / es)
+
+Uygulama üç dilde çalışır. Tüm kullanıcıya görünen metinler tek dosyada:
+`constants/i18n.ts`.
+
+- Ekranlarda: `const { t } = useTranslation();` → `t('home.openPdf')`
+- Değişkenli: `t('home.continuePage', { page, total })` — yer tutucular `{ad}` biçiminde
+- React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
+- Aktif dil `settings.language` içinde tutulur, **Ayarlar → DİL** bölümünden değiştirilir
+- `en` ve `es` sözlükleri `Record<keyof typeof tr, string>` olarak tiplenmiştir, yani
+  **bir anahtar eksik veya fazlaysa TypeScript derlemeyi durdurur**
+
+Yeni metin eklerken: anahtarı üç sözlüğe de ekle, ekranda düz string yazma, sonra:
+
+```bash
+npm run i18n:check   # anahtar + yer tutucu eşitliği, kalan sabit metin taraması
+npm run typecheck    # tsc --noEmit
+npm run check        # ikisi birlikte
+```
+
+## VS Code
+
+`.vscode/` klasörü hazır. **Format-on-save bilinçli olarak kapalı** — bu projede
+yoğun tek satırlık JSX ve dosya sonunda tek `StyleSheet.create` bloğu kullanılıyor;
+bir biçimlendirici bunu dağıtır. `extensions.json` içinde Prettier
+`unwantedRecommendations` olarak işaretlidir.
+
+Önerilen eklentiler: Expo Tools, ESLint, Path Intellisense.
+Hazır görevler: `typecheck`, `i18n:check`, `expo doctor`, `prebuild android`
+(Terminal → Run Task). Hazır çalıştırma yapılandırmaları: Expo Android / Expo start.
+
+## APK derleme (ücretsiz, Emergent kredisi harcamaz)
+
+GitHub Actions her push'ta derliyor: repo → **Actions → Expo Android Build** →
+**Artifacts → pdfokuyucu-expo-apk**. Hat şu adımları yapar:
+`npm install` → `i18n:check` + `tsc` → `expo prebuild` → `gradlew assembleDebug`.
+
+Yerelde denemek için:
+
+```bash
+npm install
+npx expo start --dev-client     # Expo Go değil, dev client gerekiyor
+```
+
+`react-native-google-mobile-ads` native modül içerdiği için Expo Go ile
+çalışmaz; bir kez dev client derlemeniz gerekir.
+
+## Bilinen derleme kısıtı
+
+`play-services-ads` 25.x Kotlin 2.3 metadata ile derlenmiş, Expo SDK 57 ise
+varsayılan olarak Kotlin 2.1.20 kullanıyor. Bu yüzden `app.config.js` içindeki
+`expo-build-properties` bloğunda `kotlinVersion: '2.3.0'` ayarlı. **Kaldırmayın.**

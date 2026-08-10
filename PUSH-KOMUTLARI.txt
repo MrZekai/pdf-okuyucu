@@ -1,20 +1,55 @@
-GIT BASH'E SIRAYLA YAPISTIRIN
-=============================
+GIT BASH'E YAPISTIRIN
+=====================
 
 cd ~/Desktop/pdf-okuyucu
-
-git init
-git add .
-git commit -m "Expo PDF Okuyucu ilk surum"
-git branch -M main
-git remote add origin https://github.com/MrZekai/pdf-okuyucu.git
-git push -u origin main
+git add -A
+git commit -m "3 dil (tr/en/es) i18n katmani, VS Code yapilandirmasi, AdMob Kotlin 2.3 uyumu"
+git push
 
 
 Push bitince bana "tamam" deyin.
-Derlemeyi ben baslatip izleyecegim, APK linkini verecegim.
+Actions otomatik baslar; ben izleyip sonucu bildirecegim.
 
 
-NOT: Bu klasor Kotlin projesinden TAMAMEN AYRI bir proje.
-Kotlin surumu hala MrZekai/PdfOkuyucu deposunda ve calisir durumda,
-ona dokunmadim.
+NELER DEGISTI
+-------------
+YENI
+  constants/i18n.ts              108 anahtar x 3 dil (tr / en / es)
+  hooks/useTranslation.ts        ekran seviyesi cevirici
+  scripts/check-i18n.mjs         bagimliliksiz i18n denetleyici
+  .vscode/settings.json          format-on-save KAPALI (stil korunuyor)
+  .vscode/extensions.json        onerilen eklentiler, Prettier istenmeyen
+  .vscode/launch.json            Expo Android / Expo start
+  .vscode/tasks.json             typecheck, i18n:check, doctor, prebuild
+  .editorconfig
+  EMERGENT_HEALTH_CHECK.txt      Emergent'e yapistirilacak prompt
+
+GUNCELLENDI
+  app.config.js                  kotlinVersion 2.3.0 (AdMob derleme hatasi)
+  types/document.ts              ReaderSettings.language
+  lib/storage.ts                 dil varsayilani + bozuk deger korumasi
+  lib/pdfFiles.ts                cevrilmis hatalar + Unicode dosya adi
+  context/AppContext.tsx         dil senkronizasyonu
+  app/(tabs)/_layout.tsx         sekme basliklari
+  app/(tabs)/index.tsx           tum metinler
+  app/(tabs)/library.tsx         tum metinler + locale duyarli arama
+  app/(tabs)/favorites.tsx       tum metinler
+  app/(tabs)/settings.tsx        DIL bolumu + tum metinler
+  app/reader/[id].tsx            tum metinler
+  components/DocumentCard.tsx    cevrilmis goreli zaman
+  components/UrlModal.tsx        tum metinler
+  components/AdBanner.tsx        reklam alani etiketi
+  package.json                   typecheck / i18n:check / check
+  AGENTS.md                      i18n kurallari + Kotlin notu
+  README.md                      dil, VS Code, derleme bolumleri
+  .github/workflows/...          derlemeden once i18n + tsc kontrolu
+
+DOKUNULMAYAN
+  constants/theme.ts             renk paleti aynen
+  components/AppIcon.tsx         ikon seti aynen
+  context/AdsContext.tsx         aynen
+  hooks/useAdsBootstrap.ts       aynen
+  eas.json, babel.config.js, tsconfig.json, expo-env.d.ts
+
+Hicbir tasarim, renk, olcu, duzen veya kod bicimi degistirilmedi.
+Sadece sabit metinler t('...') cagrilarina donusturuldu.

@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Expo: Android (dev client)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npx expo start --dev-client --android",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Expo: start (QR)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npx expo start --dev-client",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

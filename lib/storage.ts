@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReaderSettings, PdfDocument } from '@/types/document';
+import { detectDeviceLanguage, isAppLanguage } from '@/constants/i18n';
 
 const DOCS_KEY = '@pdf-reader/documents-v1';
 const SETTINGS_KEY = '@pdf-reader/settings-v1';
@@ -7,7 +8,8 @@ const SETTINGS_KEY = '@pdf-reader/settings-v1';
 export const defaultSettings: ReaderSettings = {
   horizontal: false,
   pagingEnabled: false,
-  invertPdfPages: false
+  invertPdfPages: false,
+  language: detectDeviceLanguage()
 };
 
 export async function loadDocuments(): Promise<PdfDocument[]> {
@@ -26,7 +28,11 @@ export async function saveDocuments(documents: PdfDocument[]) {
 export async function loadSettings(): Promise<ReaderSettings> {
   try {
     const raw = await AsyncStorage.getItem(SETTINGS_KEY);
-    return raw ? { ...defaultSettings, ...JSON.parse(raw) } : defaultSettings;
+    if (!raw) return defaultSettings;
+    const merged: ReaderSettings = { ...defaultSettings, ...JSON.parse(raw) };
+    // Older installs have no language stored, and a corrupted value must not break the UI.
+    if (!isAppLanguage(merged.language)) merged.language = defaultSettings.language;
+    return merged;
   } catch {
     return defaultSettings;
   }

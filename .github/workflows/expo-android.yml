@@ -24,6 +24,11 @@ jobs:
       - name: Bagimliliklar
         run: npm install --legacy-peer-deps
 
+      - name: i18n ve TypeScript kontrolu
+        run: |
+          node scripts/check-i18n.mjs
+          npx tsc --noEmit
+
       - name: Android projesini uret (expo prebuild)
         run: npx expo prebuild --platform android --clean
 

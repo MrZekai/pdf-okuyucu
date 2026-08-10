@@ -1,6 +1,7 @@
 import * as DocumentPicker from 'expo-document-picker';
 import { Directory, File, Paths } from 'expo-file-system';
 import { PdfDocument } from '@/types/document';
+import { t } from '@/constants/i18n';
 
 const libraryDirectory = new Directory(Paths.document, 'pdf-reader-library');
 
@@ -11,7 +12,9 @@ function ensureLibrary() {
 }
 
 function safeName(name: string) {
-  const clean = name.replace(/[^a-zA-Z0-9._()\-çÇğĞıİöÖşŞüÜ ]/g, '_').trim();
+  // Strip only characters that are illegal in file names, so Turkish, Spanish and
+  // any other Unicode document title survives intact.
+  const clean = name.replace(/[\\/:*?"<>|\u0000-\u001F]/g, '_').trim();
   return clean.toLowerCase().endsWith('.pdf') ? clean : `${clean}.pdf`;
 }
 
@@ -38,7 +41,7 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
 
   return {
     id,
-    name: asset.name || 'Belge.pdf',
+    name: asset.name || t('files.defaultName'),
     uri: destination.uri,
     source: 'device',
     size: asset.size,
@@ -52,19 +55,20 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
 export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
   const parsed = new URL(url);
   if (!['http:', 'https:'].includes(parsed.protocol)) {
-    throw new Error('Yalnızca http/https bağlantıları desteklenir.');
+    throw new Error(t('files.onlyHttp'));
   }
   ensureLibrary();
   const id = makeId();
-  const rawName = decodeURIComponent(parsed.pathname.split('/').pop() || 'internet-belgesi.pdf');
-  const fileName = `${id}-${safeName(rawName || 'internet-belgesi.pdf')}`;
+  const fallbackName = t('files.webName');
+  const rawName = decodeURIComponent(parsed.pathname.split('/').pop() || fallbackName);
+  const fileName = `${id}-${safeName(rawName || fallbackName)}`;
   const destination = new File(libraryDirectory, fileName);
   const output = await File.downloadFileAsync(url, destination, { idempotent: true });
   const now = Date.now();
 
   return {
     id,
-    name: safeName(rawName || 'İnternet belgesi.pdf'),
+    name: safeName(rawName || fallbackName),
     uri: output.uri,
     source: 'url',
     size: output.size ?? undefined,

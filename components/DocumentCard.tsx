@@ -2,30 +2,35 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppIcon } from './AppIcon';
 import { PdfDocument } from '@/types/document';
+import { Translator } from '@/hooks/useTranslation';
+import { t as translateActive } from '@/constants/i18n';
 import { palette } from '@/constants/theme';
 
-function relativeTime(timestamp: number) {
+function relativeTime(timestamp: number, t: Translator) {
   const minutes = Math.max(1, Math.floor((Date.now() - timestamp) / 60000));
-  if (minutes < 60) return `${minutes} dk önce`;
+  if (minutes < 60) return t('card.minutesAgo', { count: minutes });
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} sa önce`;
+  if (hours < 24) return t('card.hoursAgo', { count: hours });
   const days = Math.floor(hours / 24);
-  return days === 1 ? 'Dün' : `${days} gün önce`;
+  return days === 1 ? t('card.yesterday') : t('card.daysAgo', { count: days });
 }
 
-function formatBytes(size?: number) {
-  if (!size) return 'PDF';
+function formatBytes(size: number | undefined, t: Translator) {
+  if (!size) return t('card.pdf');
   if (size < 1024 * 1024) return `${Math.max(1, Math.round(size / 1024))} KB`;
   return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function DocumentCard({ doc, onPress, onFavorite, onDelete, compact = false }: {
+export function DocumentCard({ doc, onPress, onFavorite, onDelete, compact = false, t }: {
   doc: PdfDocument;
   onPress: () => void;
   onFavorite: () => void;
   onDelete?: () => void;
   compact?: boolean;
+  /** Optional: screens pass their translator; standalone usage falls back to the active language. */
+  t?: Translator;
 }) {
+  const tr: Translator = t ?? translateActive;
   const progress = doc.pageCount ? Math.min(100, Math.round((doc.lastPage / doc.pageCount) * 100)) : 0;
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.card, compact && styles.compact, pressed && { opacity: 0.82 }]}>
@@ -33,9 +38,9 @@ export function DocumentCard({ doc, onPress, onFavorite, onDelete, compact = fal
       <View style={styles.content}>
         <Text numberOfLines={1} style={styles.title}>{doc.name}</Text>
         <View style={styles.metaRow}>
-          <Text style={styles.meta}>{formatBytes(doc.size)}</Text><Text style={styles.dot}>•</Text>
-          <Text style={styles.meta}>{doc.pageCount ? `${doc.pageCount} sayfa` : 'Sayfa bilgisi açınca gelir'}</Text><Text style={styles.dot}>•</Text>
-          <Text style={styles.meta}>{relativeTime(doc.lastOpenedAt)}</Text>
+          <Text style={styles.meta}>{formatBytes(doc.size, tr)}</Text><Text style={styles.dot}>•</Text>
+          <Text style={styles.meta}>{doc.pageCount ? tr('card.pages', { count: doc.pageCount }) : tr('card.pagesUnknown')}</Text><Text style={styles.dot}>•</Text>
+          <Text style={styles.meta}>{relativeTime(doc.lastOpenedAt, tr)}</Text>
         </View>
         {doc.pageCount ? <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${progress}%` }]} /></View> : null}
       </View>

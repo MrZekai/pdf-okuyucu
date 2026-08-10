@@ -35,6 +35,10 @@ module.exports = ({ config }) => ({
         android: {
           compileSdkVersion: 36,
           targetSdkVersion: 36,
+          // Google Mobile Ads SDK 25.x, Kotlin 2.3 metadata ile derlenmis durumda.
+          // Expo SDK 57'nin varsayilani 2.1.20 oldugu icin
+          // ":react-native-google-mobile-ads:compileDebugKotlin" hatasi veriyordu.
+          kotlinVersion: '2.3.0',
           extraProguardRules: '-keep class com.google.android.gms.internal.consent_sdk.** { *; }'
         }
       }

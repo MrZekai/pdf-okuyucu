@@ -2,9 +2,11 @@ import React, { useRef } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function AdBanner() {
   const adsReady = useAdsReady();
+  const { t } = useTranslation();
   const ref = useRef<BannerAd>(null);
   const productionId = Platform.select({
     android: process.env.EXPO_PUBLIC_ADMOB_BANNER_ANDROID,
@@ -27,7 +29,7 @@ export function AdBanner() {
         />
       ) : (
         <View style={styles.placeholder}>
-          <Text style={styles.label}>REKLAM ALANI</Text>
+          <Text style={styles.label}>{t('ads.placeholder')}</Text>
         </View>
       )}
     </View>

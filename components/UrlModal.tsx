@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Modal, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppIcon } from './AppIcon';
+import { useTranslation } from '@/hooks/useTranslation';
 import { palette } from '@/constants/theme';
 
 export function UrlModal({ visible, onClose, onSubmit }: { visible: boolean; onClose: () => void; onSubmit: (url: string) => Promise<void> }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -15,7 +17,7 @@ export function UrlModal({ visible, onClose, onSubmit }: { visible: boolean; onC
       await onSubmit(value.trim());
       setValue(''); onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'PDF indirilemedi. Bağlantıyı kontrol edin.');
+      setError(e instanceof Error ? e.message : t('url.error'));
     } finally { setBusy(false); }
   }
 
@@ -24,14 +26,14 @@ export function UrlModal({ visible, onClose, onSubmit }: { visible: boolean; onC
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.backdrop}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose}/>
         <View style={styles.card}>
-          <View style={styles.head}><View style={styles.icon}><AppIcon name="link" color={palette.cyan}/></View><View style={{ flex: 1 }}><Text style={styles.title}>URL’den PDF aç</Text><Text style={styles.caption}>Dosya cihazına güvenli şekilde indirilir.</Text></View><Pressable onPress={onClose}><AppIcon name="close" color={palette.muted}/></Pressable></View>
+          <View style={styles.head}><View style={styles.icon}><AppIcon name="link" color={palette.cyan}/></View><View style={{ flex: 1 }}><Text style={styles.title}>{t('url.title')}</Text><Text style={styles.caption}>{t('url.caption')}</Text></View><Pressable onPress={onClose}><AppIcon name="close" color={palette.muted}/></Pressable></View>
           <TextInput
             autoCapitalize="none" autoCorrect={false} keyboardType="url" value={value} onChangeText={setValue}
-            placeholder="https://ornek.com/dosya.pdf" placeholderTextColor="#64748B" style={styles.input}
+            placeholder={t('url.placeholder')} placeholderTextColor="#64748B" style={styles.input}
           />
           {error ? <Text style={styles.error}>{error}</Text> : null}
           <Pressable onPress={submit} disabled={busy} style={({ pressed }) => [styles.button, pressed && { opacity: 0.85 }, busy && { opacity: 0.6 }]}>
-            {busy ? <ActivityIndicator color="#fff"/> : <><AppIcon name="download" size={19}/><Text style={styles.buttonText}>İndir ve Aç</Text></>}
+            {busy ? <ActivityIndicator color="#fff"/> : <><AppIcon name="download" size={19}/><Text style={styles.buttonText}>{t('url.submit')}</Text></>}
           </Pressable>
         </View>
       </KeyboardAvoidingView>

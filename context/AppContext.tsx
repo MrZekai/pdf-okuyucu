@@ -3,6 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
 import { deletePdfFile, downloadPdfFromUrl, pickPdfFromDevice } from '@/lib/pdfFiles';
+import { setActiveLanguage } from '@/constants/i18n';
 
 type AppContextValue = {
   ready: boolean;
@@ -30,9 +31,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     Promise.all([loadDocuments(), loadSettings()]).then(([docs, savedSettings]) => {
       setDocuments(docs);
       setSettings(savedSettings);
+      setActiveLanguage(savedSettings.language);
       setReady(true);
     });
   }, []);
+
+  // Keep the module-level language in sync so non-React modules can translate too.
+  useEffect(() => {
+    setActiveLanguage(settings.language);
+  }, [settings.language]);
 
   useEffect(() => {
     if (ready) saveDocuments(documents).catch(() => undefined);

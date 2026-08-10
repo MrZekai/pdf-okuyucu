@@ -1,3 +1,5 @@
+import { AppLanguage } from '@/constants/i18n';
+
 export type PdfDocument = {
   id: string;
   name: string;
@@ -15,4 +17,5 @@ export type ReaderSettings = {
   horizontal: boolean;
   pagingEnabled: boolean;
   invertPdfPages: boolean;
+  language: AppLanguage;
 };
