@@ -19,10 +19,18 @@ const { withProjectBuildGradle } = require('@expo/config-plugins');
  * tarafindan 2.1.20'ye sabitlendigi icin bu kez expo-modules-core cokuyor
  * ("Exception in type checkers", AutoSizingComposable.kt).
  *
- * Dogru cozum: Kotlin'i Expo'nun sabitledigi surumde birakip Ads SDK'sini
- * 24.x hattina cekmek. react-native-google-mobile-ads 16.0.3 zaten
- * Android 24.6.0 kullanir; buradaki force yalnizca herhangi bir gecisli
- * bagimliligin 25.x'i geri surukleyememesi icin emniyet kemeridir.
+ * DIKKAT — SADECE TAM AD ESLESMESI
+ * --------------------------------
+ * Onceki surumde `name.startsWith('play-services-ads')` kullanilmisti ve bu
+ * kural `play-services-ads-identifier`'i da yakaliyordu. O artefakt BAGIMSIZ
+ * bir surum hattinda (18.x) ilerler, 24.6.0 diye bir surumu yoktur. Sonuc:
+ *
+ *   Could not determine the dependencies of task ':app:processDebugResources'.
+ *   Could not find com.google.android.gms:play-services-ads-identifier:24.6.0.
+ *
+ * Bu yuzden yalnizca ana artefaktin TAM ADI sabitlenir. play-services-ads
+ * 24.6.0'in POM'u -base, -lite ve -identifier icin dogru surumleri kendisi
+ * getirir; onlara dokunmak gerekmez ve dokunmak zararlidir.
  *
  * KALICILIK
  * ---------
@@ -33,6 +41,10 @@ const { withProjectBuildGradle } = require('@expo/config-plugins');
 
 const ADS_SDK_VERSION = '24.6.0';
 
+// Ana Ads SDK artefakti ile AYNI surum hattinda ilerleyenler.
+// play-services-ads-identifier BILINCLI olarak listede degildir (18.x hatti).
+const PINNED_ARTIFACTS = ['play-services-ads', 'play-services-ads-lite'];
+
 const MARKER = '// expo-config-plugin: withAdsSdkPin';
 
 const BLOCK = `
@@ -41,8 +53,9 @@ allprojects {
     configurations.configureEach {
         resolutionStrategy {
             eachDependency { details ->
+                def pinned = ${JSON.stringify(PINNED_ARTIFACTS).replace(/"/g, "'")}
                 if (details.requested.group == 'com.google.android.gms'
-                        && details.requested.name.startsWith('play-services-ads')) {
+                        && pinned.contains(details.requested.name)) {
                     details.useVersion '${ADS_SDK_VERSION}'
                     details.because 'Kotlin 2.1.20 toolchain cannot read Kotlin 2.3 metadata shipped by play-services-ads 25.x'
                 }

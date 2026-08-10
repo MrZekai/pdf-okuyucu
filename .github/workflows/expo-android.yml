@@ -64,6 +64,13 @@ jobs:
           grep -Fxq 'android.kotlinVersion=2.1.20' android/gradle.properties
           grep -Fq 'withAdsSdkPin' android/build.gradle
           grep -Fq "useVersion '24.6.0'" android/build.gradle
+          grep -Fq "pinned.contains(details.requested.name)" android/build.gradle
+          # play-services-ads-identifier BAGIMSIZ surum hattinda (18.x).
+          # Onu force etmek "Could not find ...-identifier:24.6.0" hatasi verir.
+          if grep -Fq "startsWith('play-services-ads')" android/build.gradle; then
+            echo 'HATA: prefix eslesmesi geri gelmis; identifier artefakti kirilir.' >&2
+            exit 1
+          fi
           echo 'Kotlin 2.1.20 ve play-services-ads 24.6.0 sabitlemesi yerinde.'
 
       - name: Gereksiz Android izinlerini doğrula
