@@ -69,15 +69,21 @@ module.exports = ({ config }) => ({
         android: {
           compileSdkVersion: 36,
           targetSdkVersion: 36,
-          // Expo SDK 57 / React Native 0.86 arac zinciri Kotlin 2.1.20 kullanir.
-          // Kotlin 2.3.x, react-native-gesture-handler derlenirken K2 tip denetleyicisinde
-          // dahili derleyici hatasina yol actigi icin surum uyumlu hatta sabitlenir.
-          // Google Mobile Ads SDK 25.4.0'in minimum Kotlin surumu 2.1.0'dir.
+          // Expo SDK 57 / RN 0.86 arac zinciri Kotlin 2.1.20 + KSP 2.1.20-2.0.1 +
+          // bu Kotlin surumune sabitlenmis Compose derleyicisi ile gelir.
+          // Sadece kotlinVersion'i yukseltmek KSP ve Compose derleyicisini
+          // senkronizasyondan cikarir; Run #7 bu yuzden
+          // :expo-modules-core:compileDebugKotlin asamasinda
+          // "Exception in type checkers" ile cokmustur (AutoSizingComposable.kt).
+          // Bu yuzden Kotlin Expo'nun sabitledigi surumde birakilir ve
+          // uyumsuz metadata iceren play-services-ads 25.x, plugins/withAdsSdkPin.js
+          // ile 24.6.0'a sabitlenir.
           kotlinVersion: '2.1.20',
           extraProguardRules: '-keep class com.google.android.gms.internal.consent_sdk.** { *; }'
         }
       }
     ],
+    './plugins/withAdsSdkPin',
     [
       'react-native-google-mobile-ads',
       {

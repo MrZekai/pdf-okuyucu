@@ -24,6 +24,10 @@ jobs:
       EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~2930057843
       EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/6623949751
       EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/3997786415
+      # Kotlin derleyicisi ayri bir daemon'da calisir ve varsayilan heap'i
+      # bu bagimlilik grafigi icin yetersiz kalabiliyor. Bellek kaynakli
+      # "internal compiler error" ihtimalini elemek icin acikca yukseltiliyor.
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8'
     steps:
       - uses: actions/checkout@v5
 
@@ -40,6 +44,10 @@ jobs:
       - name: Bağımlılıkları kur
         run: npm ci --legacy-peer-deps
 
+      - name: Expo sürüm uyumunu doğrula (bilgilendirme)
+        continue-on-error: true
+        run: npx expo install --check
+
       - name: Kod ve release yapılandırmasını kontrol et
         run: |
           npm run check
@@ -50,8 +58,13 @@ jobs:
       - name: Android projesini üret
         run: npx expo prebuild --platform android --clean --no-install
 
-      - name: Kotlin toolchain sürümünü doğrula
-        run: grep -Fxq 'android.kotlinVersion=2.1.20' android/gradle.properties
+      - name: Toolchain ve Ads SDK sabitlemesini doğrula
+        run: |
+          set -euo pipefail
+          grep -Fxq 'android.kotlinVersion=2.1.20' android/gradle.properties
+          grep -Fq 'withAdsSdkPin' android/build.gradle
+          grep -Fq "useVersion '24.6.0'" android/build.gradle
+          echo 'Kotlin 2.1.20 ve play-services-ads 24.6.0 sabitlemesi yerinde.'
 
       - name: Gereksiz Android izinlerini doğrula
         run: |
@@ -60,16 +73,78 @@ jobs:
             exit 1
           fi
 
-      - name: QA debug APK derle
-        working-directory: android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: AdMob App ID manifeste işlendi mi
+        run: grep -Fq 'ca-app-pub-1380972808968213~2930057843' android/app/src/main/AndroidManifest.xml
 
-      - uses: actions/upload-artifact@v6
+      # ─── QA debug APK ────────────────────────────────────────────────────
+      # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.
+      - name: QA debug APK derle
+        id: debug_build
+        working-directory: android
+        run: |
+          set -o pipefail
+          ./gradlew clean assembleDebug --no-daemon --stacktrace 2>&1 | tee ../gradle-debug.log
+
+      # ─── Hata durumunda tanilama toplama ────────────────────────────────
+      - name: Kotlin derleyici tanılama dosyalarını topla
+        if: failure()
+        run: |
+          set +e
+          mkdir -p diagnostics
+          cp gradle-debug.log diagnostics/ 2>/dev/null
+
+          echo '--- Kotlin errors dizinleri araniyor ---' | tee diagnostics/00-search.txt
+          for dir in \
+            "$GITHUB_WORKSPACE/.gradle/kotlin/errors" \
+            "$GITHUB_WORKSPACE/android/.gradle/kotlin/errors" \
+            "$HOME/.gradle/kotlin/errors" \
+            "$HOME/.kotlin/errors"; do
+            if [ -d "$dir" ]; then
+              echo "BULUNDU: $dir" | tee -a diagnostics/00-search.txt
+              find "$dir" -type f | tee -a diagnostics/00-search.txt
+              mkdir -p "diagnostics/kotlin-errors"
+              cp -r "$dir"/. "diagnostics/kotlin-errors/" 2>/dev/null
+            else
+              echo "yok: $dir" | tee -a diagnostics/00-search.txt
+            fi
+          done
+
+          echo '--- Genis arama (errors*.log / kotlin-daemon) ---' | tee -a diagnostics/00-search.txt
+          find "$GITHUB_WORKSPACE" "$HOME/.gradle" "$HOME/.kotlin" \
+               -maxdepth 8 -type f \( -name 'errors*.log' -o -name 'kotlin-daemon*.log' \) \
+               2>/dev/null | tee -a diagnostics/00-search.txt | while read -r f; do
+            safe=$(echo "$f" | tr '/' '_')
+            cp "$f" "diagnostics/$safe" 2>/dev/null
+          done
+
+          echo '--- Toplanan Kotlin tanılama dosyalarının içeriği ---'
+          find diagnostics -name 'errors*.log' -o -path '*kotlin-errors*' -type f | while read -r f; do
+            echo "════════ $f ════════"
+            sed -n '1,200p' "$f"
+          done
+
+          echo '--- gradle-debug.log içindeki FAILED / e: satırları ---' | tee diagnostics/01-summary.txt
+          grep -nE '^e: |FAILED|Caused by:|Internal compiler error|Exception in type checkers|incompatible version of Kotlin' \
+            gradle-debug.log | head -120 | tee -a diagnostics/01-summary.txt
+          exit 0
+
+      - name: Tanılama dosyalarını yükle
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-diagnostics-v${{ github.run_number }}
+          path: diagnostics
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Debug APK'yı yükle
+        uses: actions/upload-artifact@v6
         with:
           name: pdf-okuyucu-debug-apk-v${{ github.run_number }}
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
+      # ─── İmzalı Play Store AAB ──────────────────────────────────────────
       - name: Release imza dosyasını hazırla
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         env:
@@ -89,7 +164,18 @@ jobs:
       - name: İmzalı Play Store AAB derle
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         working-directory: android
-        run: ./gradlew bundleRelease --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew bundleRelease --no-daemon --stacktrace 2>&1 | tee ../gradle-release.log
+
+      - name: Release log'unu yükle
+        if: failure() && github.event_name == 'workflow_dispatch' && inputs.build_release
+        uses: actions/upload-artifact@v6
+        with:
+          name: release-log-v${{ github.run_number }}
+          path: gradle-release.log
+          retention-days: 14
+          if-no-files-found: warn
 
       - uses: actions/upload-artifact@v6
         if: github.event_name == 'workflow_dispatch' && inputs.build_release

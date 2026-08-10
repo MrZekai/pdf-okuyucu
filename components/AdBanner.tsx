@@ -25,7 +25,7 @@ export function AdBanner() {
         <BannerAd
           ref={ref}
           unitId={unitId}
-          size={BannerAdSize.LARGE_ANCHORED_ADAPTIVE_BANNER}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
           onAdFailedToLoad={() => undefined}
         />
       ) : (
