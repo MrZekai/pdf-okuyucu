@@ -1,0 +1,20 @@
+GIT BASH'E SIRAYLA YAPISTIRIN
+=============================
+
+cd ~/Desktop/pdf-okuyucu
+
+git init
+git add .
+git commit -m "Expo PDF Okuyucu ilk surum"
+git branch -M main
+git remote add origin https://github.com/MrZekai/pdf-okuyucu.git
+git push -u origin main
+
+
+Push bitince bana "tamam" deyin.
+Derlemeyi ben baslatip izleyecegim, APK linkini verecegim.
+
+
+NOT: Bu klasor Kotlin projesinden TAMAMEN AYRI bir proje.
+Kotlin surumu hala MrZekai/PdfOkuyucu deposunda ve calisir durumda,
+ona dokunmadim.

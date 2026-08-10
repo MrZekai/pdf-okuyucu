@@ -1,0 +1,32 @@
+I am importing an EXISTING Expo / React Native PDF Reader project.
+
+IMPORTANT: I have only 23 Emergent credits available. CREDIT EFFICIENCY IS CRITICAL.
+
+FIRST PHASE: ANALYSIS ONLY.
+DO NOT MODIFY ANY FILE YET.
+DO NOT rebuild the app.
+DO NOT redesign the UI.
+DO NOT migrate frameworks.
+DO NOT replace the existing PDF renderer.
+DO NOT upgrade dependencies unless there is a proven build blocker.
+DO NOT add backend/auth/database/cloud services.
+DO NOT deploy.
+DO NOT repeatedly retry builds or tests.
+
+Read AGENTS.md first.
+Then inspect the repository and understand:
+- Expo SDK / React Native setup
+- Expo Router navigation
+- local PDF picker/storage
+- @kishannareshpal/expo-pdf reader
+- AdMob fixed bottom banner and UMP consent flow
+- current screens and settings
+
+Return ONLY a concise report:
+1. Is the project structure healthy?
+2. Are there any concrete build-blocking issues?
+3. If yes, exact file + exact reason.
+4. Which 1-3 files should be touched for the next requested feature?
+5. Smallest safe next step.
+
+STOP after the report. Wait for my explicit feature request before editing anything.
