@@ -19,7 +19,7 @@ export default function ReaderScreen(){
  const [password,setPassword]=useState(''); const [passwordOpen,setPasswordOpen]=useState(false); const [error,setError]=useState('');
  useEffect(()=>{if(id)touchDocument(id)},[id,touchDocument]);
  if(!doc) return <SafeAreaView style={styles.center}><AppIcon name="file" size={42} color="#475569"/><Text style={styles.errorTitle}>{t('reader.notFound')}</Text><Pressable onPress={()=>router.back()} style={styles.backButton}><Text style={styles.backText}>{t('reader.goBack')}</Text></Pressable></SafeAreaView>;
- async function share(){try{if(await Sharing.isAvailableAsync())await Sharing.shareAsync(doc.uri,{mimeType:'application/pdf',dialogTitle:doc.name});}catch{}}
+ async function share(){if(!doc)return;try{if(await Sharing.isAvailableAsync())await Sharing.shareAsync(doc.uri,{mimeType:'application/pdf',dialogTitle:doc.name});}catch{}}
  return <View style={styles.root}>
    <SafeAreaView edges={['top']} style={styles.top}><Pressable onPress={()=>router.back()} style={styles.iconButton}><AppIcon name="back"/></Pressable><View style={{flex:1,minWidth:0}}><Text numberOfLines={1} style={styles.title}>{doc.name}</Text><Text style={styles.subtitle}>{count?t('reader.pageOf',{page,total:count}):t('reader.loading')}</Text></View><Pressable onPress={()=>toggleFavorite(doc.id)} style={styles.iconButton}><AppIcon name="heart" color={doc.isFavorite?palette.rose:'#CBD5E1'}/></Pressable><Pressable onPress={share} style={styles.iconButton}><AppIcon name="share" color="#CBD5E1"/></Pressable></SafeAreaView>
    <View style={styles.viewer}>

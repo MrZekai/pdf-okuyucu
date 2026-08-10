@@ -3,37 +3,47 @@ GIT BASH'E YAPISTIRIN
 
 cd ~/Desktop/pdf-okuyucu
 git add -A
-git commit -m "tsconfig: deprecated baseUrl kaldirildi (TS5101)"
+git commit -m "tip hatalari duzeltildi: ColorValue, absoluteFill, SettingRow tipleri, doc guard, tsconfig yorumu"
 git push
 
 
-Push bitince bana "tamam" deyin. Derlemeyi izleyip sonucu bildirecegim.
+DERLEME #3 NE BULDU
+-------------------
+tsc ilk kez calisti ve 5 ayri tip hatasi ortaya cikardi.
+DORDU projede BASTAN BERI vardi (proje hic tip kontrolunden gecmemis),
+BIRI benim onceki commit'imden geldi.
 
+1) app/(tabs)/_layout.tsx (4 hata)  -- ONCEDEN VARDI
+   Type 'ColorValue' is not assignable to type 'string | undefined'
+   Sebep: tabBarIcon geri cagirmasi ColorValue veriyor, AppIcon ise
+   sadece string kabul ediyordu.
+   Cozum: AppIcon'un color prop'u ColorValue'ya genisletildi.
 
-BU DUZELTME NEDIR
------------------
-Derleme #2, tip kontrolu asamasinda su hatayla durdu:
+2) app/(tabs)/index.tsx (1 hata)  -- ONCEDEN VARDI
+   Property 'absoluteFillObject' does not exist. Did you mean 'absoluteFill'?
+   Sebep: React Native 0.86 tiplerinde absoluteFillObject yok.
+   Cozum: StyleSheet.absoluteFill kullanildi. Gorsel sonuc ayni.
 
-  tsconfig.json(5,5): error TS5101: Option 'baseUrl' is deprecated
-  and will stop functioning in TypeScript 7.0
+3) app/(tabs)/settings.tsx (3 hata)  -- ONCEDEN VARDI
+   Parameter 'v' implicitly has an 'any' type
+   Sebep: SettingRow ":any" olarak tiplenmisti, strict mod buna izin vermiyor.
+   Cozum: SettingRow'a gercek tip verildi. Govde ve gorunum degismedi.
 
-Bu sorun projede BASTAN BERI vardi; benim ekledigim `tsc --noEmit`
-adimi onu gorunur yapti. Projede TypeScript ~6.0.3 kullaniliyor ve
-`baseUrl` bu surumde kullanimdan kaldirildi.
+4) app/reader/[id].tsx (2 hata)  -- ONCEDEN VARDI
+   'doc' is possibly 'undefined'
+   Sebep: share() fonksiyonu, yukaridaki "if(!doc) return" daraltmasinin
+   disinda kaldigi icin TypeScript doc'u undefined sayiyordu.
+   Cozum: share() basina "if(!doc)return;" eklendi.
 
-Cozum: tsconfig.json icinden `baseUrl` satiri kaldirildi.
-TypeScript 4.4'ten beri `paths` zaten tsconfig.json'un bulundugu
-klasore gore cozumleniyor, yani `@/*` kisayolu aynen calismaya
-devam ediyor. Baska hicbir sey degismedi.
+5) tsconfig.json (1 hata)  -- BENIM HATAM
+   Unknown compiler option '// baseUrl'
+   Sebep: JSON icine anahtar olarak yorum yazmistim; tsc bunu
+   bilinmeyen derleyici secenegi sayiyor.
+   Cozum: gercek // yorumu kullanildi (tsconfig JSONC destekler).
 
-DERLEME #2'DE NELER GECMISTI
-----------------------------
-  Set up job                    OK
-  checkout                      OK
-  setup-node                    OK
-  setup-java                    OK
-  npm install (36s)             OK   <- tum bagimliliklar cozuldu
-  i18n kontrolu                 OK   <- 108 anahtar x 3 dil, sabit metin yok
-  TypeScript                    HATA <- simdi duzeltildi
-  expo prebuild                 (calismadi)
-  gradlew assembleDebug         (calismadi)
+I18N DURUMU: her uc derlemede de GECTI
+   108 anahtar x 3 dil, 108 anahtar kullanilıyor, sabit metin yok.
+
+HENUZ BILMEDIGIMIZ SEY
+   AdMob Kotlin 2.3 duzeltmesi ise yaradi mi? Derleme henuz
+   Android asamasina varamadi. Bu push'ta gorecegiz.

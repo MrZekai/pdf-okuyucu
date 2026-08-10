@@ -60,7 +60,7 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHead}><View><Text style={styles.sectionEyebrow}>{t('home.continueEyebrow')}</Text><Text style={styles.sectionTitle}>{t('home.continueTitle')}</Text></View><View style={styles.roundIcon}><AppIcon name="clock" size={18} color={palette.cyan}/></View></View>
             <Pressable onPress={() => goReader(continueDoc.id)} style={styles.continueCard}>
-              <LinearGradient colors={['rgba(56,189,248,0.11)','rgba(91,103,241,0.08)']} style={StyleSheet.absoluteFillObject}/>
+              <LinearGradient colors={['rgba(56,189,248,0.11)','rgba(91,103,241,0.08)']} style={StyleSheet.absoluteFill}/>
               <View style={styles.bigFile}><AppIcon name="file" size={31} color="#818CF8"/></View>
               <View style={{flex:1}}><Text numberOfLines={1} style={styles.continueTitle}>{continueDoc.name}</Text><Text style={styles.continueMeta}>{continueDoc.pageCount ? t('home.continuePage', { page: continueDoc.lastPage, total: continueDoc.pageCount }) : t('home.continueTap')}</Text>
                 {continueDoc.pageCount ? <View style={styles.bigProgress}><View style={[styles.bigProgressFill,{width:`${Math.min(100,(continueDoc.lastPage/continueDoc.pageCount)*100)}%`}]} /></View> : null}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ColorValue } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 
 type IconName =
@@ -7,7 +8,7 @@ type IconName =
   | 'sun' | 'grid' | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
   | 'check' | 'close' | 'download' | 'info' | 'sparkles';
 
-type Props = { name: IconName; size?: number; color?: string; strokeWidth?: number };
+type Props = { name: IconName; size?: number; color?: ColorValue; strokeWidth?: number };
 
 export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 }: Props) {
   const p = { fill: 'none', stroke: color, strokeWidth, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };

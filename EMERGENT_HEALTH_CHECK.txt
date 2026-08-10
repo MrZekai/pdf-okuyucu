@@ -1,81 +1,116 @@
 ════════════════════════════════════════════════════════════════════
-EMERGENT'E YAPIŞTIRILACAK PROMPT — DÜŞÜK KREDİLİ İNCELEME
-Repo: https://github.com/MrZekai/pdf-okuyucu   (branch: main)
+EMERGENT — DÜŞÜK KREDİLİ İNCELEME
+Repo: MrZekai/pdf-okuyucu   ·   branch: main
 ════════════════════════════════════════════════════════════════════
 
-KULLANIM
-1. Emergent'te projeyi aç → GitHub Integration → yukarıdaki repoyu bağla.
-2. Aşağıdaki bloğu OLDUĞU GİBİ tek mesaj olarak gönder. Bölmeyin, parça
-   parça sormayın — kredi en çok tekrarlanan turlarda yanıyor.
-3. Emergent rapor döndürene kadar başka mesaj yazmayın.
+ÖNCE: TİP DÜZELTMELERİNİ PUSH ET
+  cd ~/Desktop/pdf-okuyucu && git add -A
+  git commit -m "tip hatalari duzeltildi" && git push
+Push etmezsen Emergent, zaten bulunmuş 4 tip hatasını krediyle
+yeniden keşfeder.
 
-────────────────────────── PROMPT (KOPYALA) ──────────────────────────
+════════════════════════════════════════════════════════════════════
+EKRANDA NE YAPACAKSIN  (gönderdiğin ekran görüntüsüne göre)
+════════════════════════════════════════════════════════════════════
+
+  Sekme          : Mobile App     <- OLDUĞU GİBİ KALSIN
+  GitHub çipi    : pdf-okuyucu    <- ZATEN EKLİ, DOĞRU. Kaldırma.
+  Platform       : Mobile         <- doğru
+  Model          : Auto           <- DEĞİŞTİRME. Premium model seçmek
+                                     kredi tüketimini artırır.
+  Maxx toggle    : KAPALI         <- KAPALI KALSIN. Açmak maliyeti yükseltir.
+  Contest banner : yok say. "Continue" / "View submission" TIKLAMA.
+
+  Kutuda "Build a mobile app:" ön eki duruyor. Bu ön ek ajanı
+  "sıfırdan inşa et" moduna çeker. Aşağıdaki prompt ilk satırından
+  itibaren bunu iptal ediyor — o yüzden ilk paragrafı silmeyin.
+
+  Sonra tek mesaj olarak gönder. Bölme, parça parça sorma.
+  Rapor gelene kadar başka mesaj yazma.
+
+──────────────────────── PROMPT (KOPYALA) ────────────────────────
+
+IGNORE the "Build a mobile app" framing of this input box. Do NOT build,
+scaffold, generate or initialise anything. This application ALREADY EXISTS
+and is fully implemented in the GitHub repository attached to this message
+(MrZekai/pdf-okuyucu, branch main). Your only job in this task is to READ
+that repository and produce a report.
 
 ANALYZE ONLY — DO NOT WRITE OR MODIFY ANY CODE IN THIS TASK.
 
 Read AGENTS.md first and obey every rule in it. This is an existing
-Expo SDK 57 / React Native / TypeScript PDF reader with a deliberate
-code style and a 3-language (tr/en/es) i18n layer. I have a very small
-credit budget, so this must be a single read-only pass.
+Expo SDK 57 / React Native / TypeScript PDF reader with a deliberate dense
+code style and a 3-language (tr/en/es) i18n layer. My credit budget is very
+small, so this must be a single read-only pass.
 
-Scope of this task:
+Scope:
 1. Run the project's own cheap checks and report their output verbatim:
       npm run i18n:check
       npm run typecheck
       npx expo-doctor
-   Do NOT run a native build. Do NOT run expo prebuild.
-   Do NOT deploy. Do NOT publish. The APK is built for free on GitHub
-   Actions, so building here would only waste my credits.
+   Do NOT run a native build. Do NOT run expo prebuild. Do NOT deploy.
+   Do NOT publish. The APK is already built for free on GitHub Actions,
+   so building here would only waste my credits.
 
-2. Static review, no edits. Report findings grouped as:
+2. Static review, no edits. Group findings as:
    A) BLOCKERS — anything that would fail `expo prebuild` or a Gradle
       Android build, or crash at runtime.
    B) CORRECTNESS RISKS — state/persistence bugs in context/AppContext.tsx
       and lib/storage.ts, file lifecycle bugs in lib/pdfFiles.ts,
       unhandled promise rejections, missing cleanup in hooks.
    C) i18n GAPS — any user-visible string not going through
-      constants/i18n.ts, any key present in tr but weak/wrong in en or es,
-      any date/number formatting that ignores the active locale.
-   D) ANDROID / PLAY READINESS — permissions, AdMob consent (UMP) flow in
-      hooks/useAdsBootstrap.ts, whether TestIds vs production IDs are
-      wired correctly, anything that would fail Play review.
-   E) PERFORMANCE — unnecessary re-renders, large lists without
-      virtualisation, PdfView remount cost from its `key` prop.
-   F) IMPROVEMENT OPPORTUNITIES — ranked, each with: what, why it matters,
-      which exact files it touches, and an estimate of how many files
-      would change. Small and reversible first.
+      constants/i18n.ts, any key that is correct in tr but weak or wrong in
+      en/es, any date or number formatting that ignores the active locale.
+   D) ANDROID / PLAY READINESS — permissions, the AdMob UMP consent flow in
+      hooks/useAdsBootstrap.ts, whether TestIds vs production IDs are wired
+      correctly, anything that would fail Play review.
+   E) PERFORMANCE — unnecessary re-renders, long lists without
+      virtualisation, PdfView remount cost caused by its `key` prop.
+   F) IMPROVEMENT OPPORTUNITIES — ranked. For each: what, why it matters,
+      exact files touched, and how many files would change. Smallest and
+      most reversible first.
 
-3. Hard constraints for your report:
-   - Do not propose rewriting the app, changing the framework, replacing
-     the PDF engine, adding a backend/auth/database/analytics, or
-     upgrading packages just for freshness.
+3. Hard constraints on your report:
+   - Do not propose rewriting the app, switching framework, replacing the
+     PDF engine, adding a backend/auth/database/analytics, or upgrading
+     packages just because newer versions exist.
    - Do not propose reformatting the code. The dense one-line JSX plus a
      single StyleSheet.create block per file is intentional.
-   - Do not remove `kotlinVersion: '2.3.0'` from app.config.js — it is
-     the fix for the play-services-ads Kotlin 2.3 metadata conflict.
+   - Do not remove kotlinVersion: '2.3.0' from app.config.js. It is the fix
+     for the play-services-ads Kotlin 2.3 metadata conflict.
    - Cite file paths and line numbers for every finding.
-   - If something is fine, say it is fine in one line. No filler.
+   - If something is fine, say so in one line. No filler.
 
-4. Output format: a single markdown report. No code blocks longer than
-   10 lines. End with a section titled "CHEAPEST NEXT STEP" naming the
-   ONE task you would do first and the exact files it touches.
+4. Output: a single markdown report. No code block longer than 10 lines.
+   End with a section titled "CHEAPEST NEXT STEP" naming the ONE task you
+   would do first and the exact files it touches.
 
 Then STOP and wait for me to choose a task.
 
 ──────────────────────── PROMPT SONU ────────────────────────
 
-SONRAKİ ADIM İÇİN (rapor geldikten sonra)
-Emergent'in seçtiği tek işi onaylamak isterseniz şu kalıbı kullanın —
-yine tek mesaj, dar kapsam:
+════════════════════════════════════════════════════════════════════
+RAPOR GELDİKTEN SONRA
+════════════════════════════════════════════════════════════════════
+Tek işi onaylamak için — yine tek mesaj, dar kapsam:
 
   Implement ONLY the task named "<...>" from your report.
   Touch only these files: <...>.
-  Follow AGENTS.md. Add any new user-facing string to all three
+  Follow AGENTS.md. Any new user-facing string must be added to all three
   dictionaries in constants/i18n.ts. Then run `npm run check` and show me
   the diff. Do not build, prebuild, deploy or publish.
 
-KREDİ NOTU
-- Build ve deploy'u Emergent'te YAPMAYIN. APK'yı GitHub Actions ücretsiz
-  üretiyor: repo → Actions → "Expo Android Build" → Artifacts.
-- Emergent'in "deployment" özelliği bir web barındırma hizmetidir;
-  Android APK'sı üretmez. Mobil için oraya kredi harcamanın karşılığı yok.
+Sonra "Save to GitHub" ile main dalına push et. GitHub Actions APK'yı
+ücretsiz üretir.
+
+════════════════════════════════════════════════════════════════════
+KREDİ KURALLARI
+════════════════════════════════════════════════════════════════════
+  YAPMA : build · prebuild · deploy · publish · Maxx · premium model
+  YAPMA : "her şeyi düzelt" gibi geniş istekler — tur sayısı kredi yakar
+  YAP   : tek mesaj, dar kapsam, dosya listesi vererek
+  YAP   : APK'yı GitHub Actions'tan al (Actions > Expo Android Build >
+          Artifacts > pdfokuyucu-expo-apk)
+
+Emergent'in "deployment" özelliği bir WEB barındırma hizmetidir; Android
+APK üretmez. Mobil için oraya kredi harcamanın karşılığı yok.
