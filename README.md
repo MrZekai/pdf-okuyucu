@@ -136,4 +136,6 @@ npx expo start --dev-client     # Expo Go değil, dev client gerekiyor
 
 `play-services-ads` 25.x Kotlin 2.3 metadata ile derlenmiş, Expo SDK 57 ise
 varsayılan olarak Kotlin 2.1.20 kullanıyor. Bu yüzden `app.config.js` içindeki
-`expo-build-properties` bloğunda `kotlinVersion: '2.3.0'` ayarlı. **Kaldırmayın.**
+`expo-build-properties` bloğunda `kotlinVersion: '2.3.21'` ayarlı. Bu hata düzeltme
+sürümü Kotlin 2.3 metadata desteğini korurken `react-native-gesture-handler` derlemesinde
+görülen Kotlin 2.3.0 tip-denetleyici çökmesini önler. **Kaldırmayın veya düşürmeyin.**

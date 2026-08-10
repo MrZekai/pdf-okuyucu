@@ -76,8 +76,9 @@ Scope:
      packages just because newer versions exist.
    - Do not propose reformatting the code. The dense one-line JSX plus a
      single StyleSheet.create block per file is intentional.
-   - Do not remove kotlinVersion: '2.3.0' from app.config.js. It is the fix
-     for the play-services-ads Kotlin 2.3 metadata conflict.
+   - Do not remove or lower kotlinVersion: '2.3.21' from app.config.js. It keeps
+     play-services-ads Kotlin 2.3 metadata support without the Kotlin 2.3.0
+     type-checker crash in react-native-gesture-handler.
    - Cite file paths and line numbers for every finding.
    - If something is fine, say so in one line. No filler.
 

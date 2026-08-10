@@ -20,18 +20,19 @@ jobs:
     timeout-minutes: 75
     env:
       ANDROID_VERSION_CODE: ${{ github.run_number }}
+      EXPO_NO_TELEMETRY: '1'
       EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~2930057843
       EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/6623949751
       EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/3997786415
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '20'
           cache: npm
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -49,6 +50,9 @@ jobs:
       - name: Android projesini üret
         run: npx expo prebuild --platform android --clean --no-install
 
+      - name: Kotlin toolchain sürümünü doğrula
+        run: grep -Fxq 'android.kotlinVersion=2.3.21' android/gradle.properties
+
       - name: Gereksiz Android izinlerini doğrula
         run: |
           if grep -E 'android.permission.(SYSTEM_ALERT_WINDOW|READ_EXTERNAL_STORAGE|WRITE_EXTERNAL_STORAGE)' android/app/src/main/AndroidManifest.xml | grep -vq 'tools:node="remove"'; then
@@ -58,9 +62,9 @@ jobs:
 
       - name: QA debug APK derle
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pdf-okuyucu-debug-apk-v${{ github.run_number }}
           path: android/app/build/outputs/apk/debug/app-debug.apk
@@ -85,9 +89,9 @@ jobs:
       - name: İmzalı Play Store AAB derle
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         working-directory: android
-        run: ./gradlew bundleRelease --no-daemon
+        run: ./gradlew bundleRelease --no-daemon --stacktrace
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         with:
           name: pdf-okuyucu-play-aab-v${{ github.run_number }}

@@ -67,8 +67,10 @@ metadata. Expo SDK 57 defaults to Kotlin 2.1.20, which fails with:
     Module was compiled with an incompatible version of Kotlin.
     The binary version of its metadata is 2.3.0, expected version is 2.1.0.
 
-Fix in place: `kotlinVersion: '2.3.0'` inside the `expo-build-properties` android block in `app.config.js`.
-**Do not remove it.** If a Kotlin/KSP mismatch appears later, pin `play-services-ads` instead of lowering Kotlin.
+Fix in place: `kotlinVersion: '2.3.21'` inside the `expo-build-properties` android block in `app.config.js`.
+This keeps Kotlin 2.3 metadata support while avoiding the 2.3.0 type-checker crash seen while compiling
+`react-native-gesture-handler`. **Do not remove or lower it.** If a Kotlin/KSP mismatch appears later, pin
+`play-services-ads` instead of lowering Kotlin.
 
 ## Verification commands (cheap, offline, no credits)
 ```
