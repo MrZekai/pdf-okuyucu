@@ -3,9 +3,7 @@
   <rect width="1080" height="1920" fill="#0B1020"/>
   <g font-family="DejaVu Sans, sans-serif">
     <text x="72" y="105" fill="#7C89FF" font-size="24" font-weight="800" letter-spacing="5">PDF OKUYUCU</text>
-    <text x="72" y="158" fill="#F8FAFC" font-size="42" font-weight="800">Okumaya devam et.</text>
-    <rect x="916" y="82" width="92" height="92" rx="28" fill="#8B5CF6" fill-opacity=".13" stroke="#8B5CF6" stroke-opacity=".2"/>
-    <path d="M950 127l11 5 5 12 5-12 12-5-12-5-5-12-5 12z" fill="none" stroke="#C4B5FD" stroke-width="5" stroke-linejoin="round"/>
+    <text x="72" y="158" fill="#F8FAFC" font-size="42" font-weight="800">Gizliliğiniz önceliğimiz.</text>
 
     <rect x="54" y="210" width="972" height="650" rx="58" fill="url(#hero)" stroke="#fff" stroke-opacity=".1" stroke-width="2"/>
     <circle cx="920" cy="230" r="230" fill="#fff" opacity=".06"/>

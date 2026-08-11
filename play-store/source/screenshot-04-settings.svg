@@ -18,7 +18,7 @@
       <rect x="868" y="702" width="116" height="58" rx="29" fill="#283249"/><circle cx="897" cy="731" r="23" fill="#F8FAFC"/>
       <line x1="72" y1="785" x2="1008" y2="785" stroke="#27304A"/>
       <rect x="82" y="803" width="82" height="62" rx="22" fill="#5B67F1" fill-opacity=".1"/><path d="M137 814a25 25 0 1 0 21 36 20 20 0 0 1-21-36z" fill="none" stroke="#8792FF" stroke-width="4"/>
-      <text x="193" y="833" fill="#E5E7EB" font-size="27" font-weight="800">PDF gece modu</text><text x="193" y="868" fill="#6F7D95" font-size="20">Sayfa renklerini ters çevir</text>
+      <text x="193" y="833" fill="#E5E7EB" font-size="27" font-weight="800">PDF sayfa gece modu</text><text x="193" y="868" fill="#6F7D95" font-size="20">Yalnızca PDF sayfalarının renklerini ters çevirir</text>
       <rect x="868" y="812" width="116" height="58" rx="29" fill="#5865E8"/><circle cx="955" cy="841" r="23" fill="#F8FAFC"/>
     </g>
 

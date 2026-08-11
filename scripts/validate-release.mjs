@@ -10,6 +10,7 @@ const errors = [];
 
 function fail(message) { errors.push(message); }
 function exists(relativePath) { if (!fs.existsSync(path.join(root, relativePath))) fail(`Eksik dosya: ${relativePath}`); }
+function text(relativePath) { return fs.readFileSync(path.join(root, relativePath), 'utf8'); }
 function pngSize(relativePath, expectedWidth, expectedHeight) {
   const fullPath = path.join(root, relativePath);
   if (!fs.existsSync(fullPath)) return fail(`Eksik PNG: ${relativePath}`);
@@ -26,6 +27,9 @@ if (!config.icon) fail('Uygulama icon alanı eksik.');
 if (config.extra?.privacyPolicyUrl !== 'https://mrzekai.github.io/privacy-policy.html') fail('Gizlilik politikası kök public Pages URL’sini kullanmalı.');
 const pdfViewIntent = config.android?.intentFilters?.find((item) => item.action === 'VIEW' && item.data?.some((entry) => entry.mimeType === 'application/pdf' && entry.scheme === 'content'));
 if (!pdfViewIntent) fail('Android application/pdf VIEW intent-filter eksik.');
+const buildProperties = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-build-properties')?.[1]?.android;
+if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/minify etkin değil.');
+if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
 
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
@@ -33,6 +37,15 @@ if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.bannerAndroid || '')) fail('Geçer
 if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.appOpenAndroid || '')) fail('Geçerli Android app-open unit ID yok.');
 if ((admob.bannerAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release banner test ID kullanıyor.');
 if ((admob.appOpenAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release app-open test ID kullanıyor.');
+
+const i18nSource = text('constants/i18n.ts');
+const homeSource = text('app/(tabs)/index.tsx');
+const tabsSource = text('app/(tabs)/_layout.tsx');
+const readerSource = text('app/reader/[id].tsx');
+if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsiz ana ekran sloganı kaynakta kalmış.');
+if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
+if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
+if (!readerSource.includes("edges={['bottom']}")) fail('PDF okuyucu alt araç çubuğu sistem güvenli alanını korumuyor.');
 
 pngSize('assets/icon.png', 1024, 1024);
 pngSize('assets/adaptive-icon.png', 1024, 1024);
@@ -49,4 +62,4 @@ if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, 4 mağaza ekranı hazır.`);
+console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, 4 mağaza ekranı hazır.`);

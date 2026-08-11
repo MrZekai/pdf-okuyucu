@@ -6,7 +6,7 @@ type IconName =
   | 'home' | 'library' | 'heart' | 'settings' | 'file' | 'plus' | 'link'
   | 'search' | 'chevronRight' | 'back' | 'share' | 'trash' | 'moon'
   | 'sun' | 'grid' | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
-  | 'check' | 'close' | 'download' | 'info' | 'sparkles';
+  | 'check' | 'close' | 'download' | 'info';
 
 type Props = { name: IconName; size?: number; color?: ColorValue; strokeWidth?: number };
 
@@ -38,7 +38,6 @@ export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 
       {name === 'close' && <Path {...p} d="M6 6l12 12M18 6 6 18"/>}
       {name === 'download' && <><Path {...p} d="M12 3v12M7 10l5 5 5-5"/><Path {...p} d="M5 21h14"/></>}
       {name === 'info' && <><Circle {...p} cx="12" cy="12" r="9"/><Path {...p} d="M12 11v6M12 7h.01"/></>}
-      {name === 'sparkles' && <><Path {...p} d="m12 3 1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3z"/><Path {...p} d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7z"/><Path {...p} d="m5 13 .7 2.3L8 16l-2.3.7L5 19l-.7-2.3L2 16l2.3-.7z"/></>}
     </Svg>
   );
 }
