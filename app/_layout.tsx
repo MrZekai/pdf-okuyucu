@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider } from '@/context/AppContext';
 import { AdsProvider } from '@/context/AdsContext';
 import { AppOpenAdController } from '@/components/AppOpenAdController';
+import { IncomingPdfHandler } from '@/components/IncomingPdfHandler';
 
 export default function RootLayout() {
   return (
@@ -13,6 +14,7 @@ export default function RootLayout() {
       <AppProvider>
         <AdsProvider>
           <AppOpenAdController>
+            <IncomingPdfHandler />
             <StatusBar style="light" />
             <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0B1020' } }}>
               <Stack.Screen name="(tabs)" />

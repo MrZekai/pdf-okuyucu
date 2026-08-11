@@ -77,7 +77,7 @@ Uygulama üç dilde çalışır. Tüm kullanıcıya görünen metinler tek dosya
 `constants/i18n.ts`.
 
 - Ekranlarda: `const { t } = useTranslation();` → `t('home.openPdf')`
-- Değişkenli: `t('home.continuePage', { page, total })` — yer tutucular `{ad}` biçiminde
+- Değişkenli: `t('home.quickFavDesc', { count })` — yer tutucular `{ad}` biçiminde
 - React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
 - Aktif dil `settings.language` içinde tutulur, **Ayarlar → DİL** bölümünden değiştirilir
 - `en` ve `es` sözlükleri `Record<keyof typeof tr, string>` olarak tiplenmiştir, yani

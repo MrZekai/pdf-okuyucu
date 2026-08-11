@@ -66,6 +66,17 @@ jobs:
           npm run doctor
           npm run release:check
 
+      - name: Canlı gizlilik politikası ve app-ads.txt dosyasını doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://mrzekai.github.io/privacy-policy.html | grep -Fq 'PDF Okuyucu'
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://mrzekai.github.io/app-ads.txt | tr -d '\r' | \
+            grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
+          echo 'Canlı yasal sayfalar doğrulandı.'
+
       - name: Android projesini üret
         run: npx expo prebuild --platform android --clean --no-install
 
@@ -105,11 +116,26 @@ jobs:
         id: qa_build
         working-directory: android
         env:
-          EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ''
-          EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ''
+          # Google'ın resmi demo birimleri: QA release APK'sında canlı reklam olmaz.
+          EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-3940256099942544/9214589741
+          EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-3940256099942544/9257395921
         run: |
           set -o pipefail
           ./gradlew assembleRelease --no-daemon --no-build-cache --max-workers=2 --stacktrace --console=plain --warning-mode=summary 2>&1 | tee ../gradle-qa.log
+
+      - name: QA APK reklam kimliklerini doğrula
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          qa_apk='android/app/build/outputs/apk/release/app-release.apk'
+          unzip -p "$qa_apk" assets/app.config > qa-app.config.json
+          grep -Fq 'ca-app-pub-3940256099942544/9214589741' qa-app.config.json
+          grep -Fq 'ca-app-pub-3940256099942544/9257395921' qa-app.config.json
+          if grep -Eq '7265047779|1189880008' qa-app.config.json; then
+            echo 'HATA: QA APK içinde production reklam birimi bulundu.' >&2
+            exit 1
+          fi
+          echo 'QA APK yalnızca Google demo reklam birimlerini kullanıyor.'
 
       # ─── Hata durumunda tanilama toplama ────────────────────────────────
       - name: Kotlin derleyici tanılama dosyalarını topla
@@ -196,6 +222,20 @@ jobs:
         run: |
           set -o pipefail
           ./gradlew bundleRelease --no-daemon --stacktrace 2>&1 | tee ../gradle-release.log
+
+      - name: AAB upload imzasını doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        run: |
+          set -euo pipefail
+          aab='android/app/build/outputs/bundle/release/app-release.aab'
+          jarsigner -verify "$aab"
+          keytool -printcert -jarfile "$aab" > aab-certificate.txt
+          if grep -Fq 'CN=Android Debug' aab-certificate.txt; then
+            echo 'HATA: AAB Android Debug sertifikasıyla imzalanmış.' >&2
+            exit 1
+          fi
+          grep -E 'Owner:|Issuer:|SHA256:' aab-certificate.txt || true
+          echo 'AAB upload sertifikası doğrulandı.'
 
       - name: Release log'unu yükle
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.build_release

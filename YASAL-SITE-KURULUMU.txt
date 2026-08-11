@@ -1,0 +1,35 @@
+PDF OKUYUCU — PUBLIC GİZLİLİK POLİTİKASI VE APP-ADS.TXT
+
+Kaynak uygulama reposu private kalabilir. GitHub'da yeni ve PUBLIC bir repo oluşturun:
+
+Repo adı: MrZekai.github.io
+Görünürlük: Public
+README / .gitignore / lisans: eklemeyin
+
+Ardından ChatGPT'den aldığınız pdf-okuyucu-legal-site.zip dosyasını
+C:\Users\limno\Downloads\pdf-okuyucu-legal-site klasörüne açıp Git Bash'te çalıştırın:
+
+cd ~/Downloads/pdf-okuyucu-legal-site
+git init
+git add index.html privacy-policy.html app-ads.txt
+git commit -m "PDF Okuyucu gizlilik politikasi ve app-ads.txt"
+git branch -M main
+git remote add origin https://github.com/MrZekai/MrZekai.github.io.git
+git push -u origin main
+
+GitHub repo → Settings → Pages:
+Source: Deploy from a branch
+Branch: main
+Folder: / (root)
+Save
+
+Birkaç dakika sonra gizli sekmede ikisini de açın:
+
+https://mrzekai.github.io/privacy-policy.html
+https://mrzekai.github.io/app-ads.txt
+
+app-ads.txt sayfasında yalnızca şu satır görünmelidir:
+
+google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0
+
+İki adres de açılmadan Play AAB workflow'unu başlatmayın.

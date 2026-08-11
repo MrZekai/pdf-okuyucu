@@ -23,6 +23,9 @@ if (config.android?.package !== 'com.aitolian.pdfokuyucu') fail('Android package
 if (!Number.isInteger(config.android?.versionCode) || config.android.versionCode < 1) fail('android.versionCode pozitif tam sayı olmalı.');
 if (!config.android?.adaptiveIcon?.foregroundImage) fail('Adaptive icon foregroundImage eksik.');
 if (!config.icon) fail('Uygulama icon alanı eksik.');
+if (config.extra?.privacyPolicyUrl !== 'https://mrzekai.github.io/privacy-policy.html') fail('Gizlilik politikası kök public Pages URL’sini kullanmalı.');
+const pdfViewIntent = config.android?.intentFilters?.find((item) => item.action === 'VIEW' && item.data?.some((entry) => entry.mimeType === 'application/pdf' && entry.scheme === 'content'));
+if (!pdfViewIntent) fail('Android application/pdf VIEW intent-filter eksik.');
 
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
@@ -40,6 +43,7 @@ for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}
 for (const locale of ['tr-TR', 'en-US', 'es-ES']) exists(`play-store/listings/${locale}.txt`);
 exists('docs/privacy-policy.html');
 exists('docs/app-ads.txt');
+if (fs.existsSync(path.join(root, 'docs/app-ads.txt')) && fs.readFileSync(path.join(root, 'docs/app-ads.txt'), 'utf8').trim() !== 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0') fail('docs/app-ads.txt publisher satırı beklenen değer değil.');
 
 if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);

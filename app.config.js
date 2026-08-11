@@ -3,7 +3,7 @@ const IOS_SAMPLE_APP_ID = 'ca-app-pub-3940256099942544~1458002511';
 const ANDROID_PRODUCTION_APP_ID = 'ca-app-pub-1380972808968213~3816043340';
 const ANDROID_PRODUCTION_BANNER_ID = 'ca-app-pub-1380972808968213/7265047779';
 const ANDROID_PRODUCTION_APP_OPEN_ID = 'ca-app-pub-1380972808968213/1189880008';
-const PRIVACY_POLICY_URL = 'https://mrzekai.github.io/pdf-okuyucu/privacy-policy.html';
+const PRIVACY_POLICY_URL = 'https://mrzekai.github.io/privacy-policy.html';
 
 const androidAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_ANDROID || ANDROID_PRODUCTION_APP_ID;
 const iosAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS || IOS_SAMPLE_APP_ID;
@@ -27,6 +27,16 @@ module.exports = ({ config }) => ({
     package: 'com.aitolian.pdfokuyucu',
     allowBackup: false,
     versionCode: androidVersionCode,
+    intentFilters: [
+      {
+        action: 'VIEW',
+        category: ['DEFAULT', 'BROWSABLE'],
+        data: [
+          { scheme: 'content', mimeType: 'application/pdf' },
+          { scheme: 'file', mimeType: 'application/pdf' }
+        ]
+      }
+    ],
     blockedPermissions: [
       'android.permission.SYSTEM_ALERT_WINDOW',
       'android.permission.READ_EXTERNAL_STORAGE',

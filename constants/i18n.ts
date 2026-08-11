@@ -27,9 +27,8 @@ const tr = {
   'home.heroText': 'Karmaşa yok. Hesap yok. Belgeni seç ve okumaya başla.',
   'home.openPdf': 'PDF Aç',
   'home.openFromUrl': 'URL’den PDF aç',
-  'home.continueEyebrow': 'SON OKUNAN',
-  'home.continueTitle': 'Son okuduğun belge',
-  'home.continuePage': 'Sayfa {page} / {total}',
+  'home.continueEyebrow': 'SON AÇILAN',
+  'home.continueTitle': 'Son belgen',
   'home.continueTap': 'Dokun ve belgeyi aç',
   'home.quickEyebrow': 'HIZLI İŞLEMLER',
   'home.quickTitle': 'Ne yapmak istersin?',
@@ -134,11 +133,12 @@ const tr = {
   'common.delete': 'Sil',
   'common.clear': 'Temizle',
 
-  'files.onlyHttp': 'Yalnızca http/https bağlantıları desteklenir.',
+  'files.onlyHttps': 'Güvenliğiniz için yalnızca https bağlantıları desteklenir.',
   'files.openErrorTitle': 'PDF açılamadı',
   'files.openErrorMessage': 'Belge hazırlanırken bir hata oluştu.',
   'files.invalidPdf': 'Seçilen dosya geçerli bir PDF değil.',
   'files.tooLarge': 'PDF dosyası 250 MB sınırını aşıyor.',
+  'files.notEnoughSpace': 'Bu PDF için cihazda yeterli boş alan yok.',
   'files.defaultName': 'Belge.pdf',
   'files.webName': 'internet-belgesi.pdf'
 };
@@ -156,9 +156,8 @@ const en: Record<keyof typeof tr, string> = {
   'home.heroText': 'No clutter. No account. Pick a document and start reading.',
   'home.openPdf': 'Open PDF',
   'home.openFromUrl': 'Open PDF from URL',
-  'home.continueEyebrow': 'CONTINUE READING',
-  'home.continueTitle': 'Where you left off',
-  'home.continuePage': 'Page {page} of {total}',
+  'home.continueEyebrow': 'LAST OPENED',
+  'home.continueTitle': 'Your latest document',
   'home.continueTap': 'Tap to open the document',
   'home.quickEyebrow': 'QUICK ACTIONS',
   'home.quickTitle': 'What would you like to do?',
@@ -263,11 +262,12 @@ const en: Record<keyof typeof tr, string> = {
   'common.delete': 'Delete',
   'common.clear': 'Clear',
 
-  'files.onlyHttp': 'Only http/https links are supported.',
+  'files.onlyHttps': 'For your security, only https links are supported.',
   'files.openErrorTitle': 'Could not open PDF',
   'files.openErrorMessage': 'Something went wrong while preparing the document.',
   'files.invalidPdf': 'The selected file is not a valid PDF.',
   'files.tooLarge': 'The PDF exceeds the 250 MB limit.',
+  'files.notEnoughSpace': 'There is not enough free space on this device for the PDF.',
   'files.defaultName': 'Document.pdf',
   'files.webName': 'web-document.pdf'
 };
@@ -285,9 +285,8 @@ const es: Record<keyof typeof tr, string> = {
   'home.heroText': 'Sin desorden. Sin cuenta. Elige un documento y empieza a leer.',
   'home.openPdf': 'Abrir PDF',
   'home.openFromUrl': 'Abrir PDF desde una URL',
-  'home.continueEyebrow': 'SEGUIR LEYENDO',
-  'home.continueTitle': 'Donde lo dejaste',
-  'home.continuePage': 'Página {page} de {total}',
+  'home.continueEyebrow': 'ÚLTIMO ABIERTO',
+  'home.continueTitle': 'Tu documento más reciente',
   'home.continueTap': 'Toca para abrir el documento',
   'home.quickEyebrow': 'ACCIONES RÁPIDAS',
   'home.quickTitle': '¿Qué quieres hacer?',
@@ -392,11 +391,12 @@ const es: Record<keyof typeof tr, string> = {
   'common.delete': 'Eliminar',
   'common.clear': 'Borrar',
 
-  'files.onlyHttp': 'Solo se admiten enlaces http/https.',
+  'files.onlyHttps': 'Por seguridad, solo se admiten enlaces https.',
   'files.openErrorTitle': 'No se pudo abrir el PDF',
   'files.openErrorMessage': 'Se produjo un error al preparar el documento.',
   'files.invalidPdf': 'El archivo seleccionado no es un PDF válido.',
   'files.tooLarge': 'El PDF supera el límite de 250 MB.',
+  'files.notEnoughSpace': 'No hay suficiente espacio libre en el dispositivo para este PDF.',
   'files.defaultName': 'Documento.pdf',
   'files.webName': 'documento-web.pdf'
 };

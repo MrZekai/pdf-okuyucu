@@ -39,7 +39,7 @@ Geliştirme derlemeleri otomatik olarak Google test banner ve app-open unit ID�
 ## 3. Gizlilik, UMP ve Data Safety
 
 1. AdMob → Privacy & messaging → European regulations mesajını oluşturup yayımlayın.
-2. Play Console gizlilik URL’si: `https://mrzekai.github.io/pdf-okuyucu/privacy-policy.html`
+2. Play Console gizlilik URL’si: `https://mrzekai.github.io/privacy-policy.html`
 3. Play Data Safety yanıtları için `play-store/DATA_SAFETY_TR.md` dosyasını izleyin.
 4. “Uygulama reklam içeriyor mu?” sorusuna **Evet** deyin.
 5. Uygulama çocuklara yönelik değilse çocuk yaş gruplarını hedef kitleye eklemeyin. Eklenirse Families reklam kuralları ayrıca uygulanmalıdır.
@@ -52,7 +52,7 @@ Hazır satır `docs/app-ads.txt` içindedir:
 google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0
 ```
 
-AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı kökünde** arar (örneğin `https://site.example/app-ads.txt`). GitHub proje sayfasındaki `/pdf-okuyucu/app-ads.txt` yolu her durumda alan adı kökü sayılmaz. Bu nedenle Play geliştirici web sitesi alan adınızın köküne aynı dosyayı koyun veya `MrZekai.github.io` kök Pages sitesinde yayınlayın. Bu adım Play AAB yüklemesini engellemez; AdMob doğrulaması ve gelir güvenilirliği için önemlidir.
+AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı kökünde** arar. Bu proje private kaldığı için yasal dosyalar ayrı ve public `MrZekai/MrZekai.github.io` reposunun kökünde yayınlanmalıdır. `docs/index.html`, `docs/privacy-policy.html` ve `docs/app-ads.txt` dosyalarını o reponun köküne kopyalayın. Son URL’ler `https://mrzekai.github.io/privacy-policy.html` ve `https://mrzekai.github.io/app-ads.txt` olmalıdır. Manuel AAB workflow’u iki adres de gerçekten açılmadan derlemeyi durdurur.
 
 ## 5. Mağaza dosyaları
 

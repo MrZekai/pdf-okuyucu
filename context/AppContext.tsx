@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import * as Haptics from 'expo-haptics';
 import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
-import { deletePdfFile, downloadPdfFromUrl, pickPdfFromDevice } from '@/lib/pdfFiles';
+import { cleanupPdfImportCache, deletePdfFile, downloadPdfFromUrl, importPdfFromUri, pickPdfFromDevice } from '@/lib/pdfFiles';
 import { setActiveLanguage } from '@/constants/i18n';
 
 type AppContextValue = {
@@ -11,6 +11,7 @@ type AppContextValue = {
   settings: ReaderSettings;
   openPicker: () => Promise<PdfDocument | null>;
   addFromUrl: (url: string) => Promise<PdfDocument>;
+  addFromExternalUri: (uri: string) => Promise<PdfDocument>;
   getDocument: (id: string) => PdfDocument | undefined;
   touchDocument: (id: string) => void;
   updateProgress: (id: string, page: number, pageCount?: number) => void;
@@ -32,6 +33,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setDocuments(docs);
       setSettings(savedSettings);
       setActiveLanguage(savedSettings.language);
+      cleanupPdfImportCache();
       setReady(true);
     });
   }, []);
@@ -60,6 +62,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const addFromUrl = useCallback(async (url: string) => {
     const doc = await downloadPdfFromUrl(url);
+    setDocuments((old) => [doc, ...old]);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+    return doc;
+  }, []);
+
+  const addFromExternalUri = useCallback(async (uri: string) => {
+    const doc = await importPdfFromUri(uri);
     setDocuments((old) => [doc, ...old]);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
     return doc;
@@ -105,9 +114,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(() => ({
-    ready, documents, settings, openPicker, addFromUrl, getDocument, touchDocument,
+    ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, getDocument, touchDocument,
     updateProgress, toggleFavorite, removeDocument, clearHistory, patchSettings
-  }), [ready, documents, settings, openPicker, addFromUrl, getDocument, touchDocument,
+  }), [ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, getDocument, touchDocument,
       updateProgress, toggleFavorite, removeDocument, clearHistory, patchSettings]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

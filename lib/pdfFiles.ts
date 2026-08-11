@@ -4,7 +4,11 @@ import { PdfDocument } from '@/types/document';
 import { t } from '@/constants/i18n';
 
 const libraryDirectory = new Directory(Paths.document, 'pdf-reader-library');
+const documentPickerCache = new Directory(Paths.cache, 'DocumentPicker');
 const MAX_PDF_BYTES = 250 * 1024 * 1024;
+const MIN_FREE_DISK_BYTES = 32 * 1024 * 1024;
+const MAX_FILE_NAME_CHARS = 100;
+const MAX_FILE_NAME_BYTES = 180;
 
 function ensureLibrary() {
   if (!libraryDirectory.exists) {
@@ -12,11 +16,26 @@ function ensureLibrary() {
   }
 }
 
+function truncateUtf8(value: string, maxBytes: number) {
+  let bytes = 0;
+  let result = '';
+  for (const character of value) {
+    const codePoint = character.codePointAt(0) || 0;
+    const characterBytes = codePoint <= 0x7F ? 1 : codePoint <= 0x7FF ? 2 : codePoint <= 0xFFFF ? 3 : 4;
+    if (bytes + characterBytes > maxBytes) break;
+    result += character;
+    bytes += characterBytes;
+  }
+  return result;
+}
+
 function safeName(name: string) {
   // Strip only characters that are illegal in file names, so Turkish, Spanish and
   // any other Unicode document title survives intact.
   const clean = name.replace(/[\\/:*?"<>|\u0000-\u001F]/g, '_').trim();
-  return clean.toLowerCase().endsWith('.pdf') ? clean : `${clean}.pdf`;
+  const withoutExtension = clean.toLowerCase().endsWith('.pdf') ? clean.slice(0, -4) : clean;
+  const limited = truncateUtf8(Array.from(withoutExtension || 'document').slice(0, MAX_FILE_NAME_CHARS).join(''), MAX_FILE_NAME_BYTES);
+  return `${limited || 'document'}.pdf`;
 }
 
 function makeId() {
@@ -36,6 +55,46 @@ function validatePdfFile(file: File) {
     if (!headerFound) throw new Error(t('files.invalidPdf'));
   } finally {
     handle.close();
+  }
+}
+
+function createDocument(source: File, id: string, name: string, origin: PdfDocument['source']): PdfDocument {
+  const now = Date.now();
+  return {
+    id,
+    name: safeName(name),
+    uri: source.uri,
+    source: origin,
+    size: source.size ?? undefined,
+    lastPage: 1,
+    lastOpenedAt: now,
+    createdAt: now,
+    isFavorite: false
+  };
+}
+
+async function preflightRemotePdf(url: string) {
+  let expectedBytes: number | undefined;
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    if (response.ok) {
+      const rawLength = response.headers.get('content-length');
+      const parsedLength = rawLength ? Number.parseInt(rawLength, 10) : 0;
+      if (Number.isFinite(parsedLength) && parsedLength > 0) expectedBytes = parsedLength;
+    }
+  } catch {
+    // Some valid PDF hosts reject HEAD. The streamed limits below remain active.
+  }
+  if (expectedBytes && expectedBytes > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
+  if (Paths.availableDiskSpace < (expectedBytes || 0) + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
+  return Paths.availableDiskSpace;
+}
+
+export function cleanupPdfImportCache() {
+  try {
+    if (documentPickerCache.exists) documentPickerCache.delete();
+  } catch {
+    // Cache cleanup must never block opening the app.
   }
 }
 
@@ -59,27 +118,40 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
   } catch (error) {
     if (destination.exists) destination.delete();
     throw error;
+  } finally {
+    try {
+      if (source.uri.startsWith(Paths.cache.uri) && source.exists) source.delete();
+    } catch {
+      // The permanent library copy is already independent from the picker cache.
+    }
   }
-  const now = Date.now();
+  return createDocument(destination, id, asset.name || t('files.defaultName'), 'device');
+}
 
-  return {
-    id,
-    name: asset.name || t('files.defaultName'),
-    uri: destination.uri,
-    source: 'device',
-    size: asset.size,
-    lastPage: 1,
-    lastOpenedAt: now,
-    createdAt: now,
-    isFavorite: false
-  };
+export async function importPdfFromUri(uri: string): Promise<PdfDocument> {
+  if (!/^(content|file):/i.test(uri)) throw new Error(t('files.invalidPdf'));
+  ensureLibrary();
+  const source = new File(uri);
+  if (!source.exists) throw new Error(t('files.invalidPdf'));
+  if ((source.size || 0) > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
+  if (Paths.availableDiskSpace < (source.size || 0) + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
+  const id = makeId();
+  const originalName = source.name || t('files.defaultName');
+  const destination = new File(libraryDirectory, `${id}-${safeName(originalName)}`);
+  try {
+    await source.copy(destination);
+    validatePdfFile(destination);
+  } catch (error) {
+    if (destination.exists) destination.delete();
+    throw error;
+  }
+  return createDocument(destination, id, originalName, 'device');
 }
 
 export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
   const parsed = new URL(url);
-  if (!['http:', 'https:'].includes(parsed.protocol)) {
-    throw new Error(t('files.onlyHttp'));
-  }
+  if (parsed.protocol !== 'https:') throw new Error(t('files.onlyHttps'));
+  const availableDiskAtStart = await preflightRemotePdf(url);
   ensureLibrary();
   const id = makeId();
   const fallbackName = t('files.webName');
@@ -87,26 +159,29 @@ export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
   const fileName = `${id}-${safeName(rawName || fallbackName)}`;
   const destination = new File(libraryDirectory, fileName);
   let output: File;
+  const controller = new AbortController();
+  let limitError: Error | null = null;
   try {
-    output = await File.downloadFileAsync(url, destination, { idempotent: true });
+    output = await File.downloadFileAsync(url, destination, {
+      idempotent: true,
+      signal: controller.signal,
+      onProgress: ({ bytesWritten, totalBytes }) => {
+        if (bytesWritten > MAX_PDF_BYTES || totalBytes > MAX_PDF_BYTES) {
+          limitError = new Error(t('files.tooLarge'));
+          controller.abort();
+        } else if (bytesWritten + MIN_FREE_DISK_BYTES > availableDiskAtStart) {
+          limitError = new Error(t('files.notEnoughSpace'));
+          controller.abort();
+        }
+      }
+    });
     validatePdfFile(output);
   } catch (error) {
     if (destination.exists) destination.delete();
+    if (limitError) throw limitError;
     throw error;
   }
-  const now = Date.now();
-
-  return {
-    id,
-    name: safeName(rawName || fallbackName),
-    uri: output.uri,
-    source: 'url',
-    size: output.size ?? undefined,
-    lastPage: 1,
-    lastOpenedAt: now,
-    createdAt: now,
-    isFavorite: false
-  };
+  return createDocument(output, id, rawName || fallbackName, 'url');
 }
 
 export function deletePdfFile(uri: string) {

@@ -25,7 +25,7 @@ PDF dosyaları, belge adları, favoriler, son sayfa, okuma zamanları ve ayarlar
 ## Console’da ayrıca
 
 - **Uygulama reklam içeriyor mu?** Evet.
-- Gizlilik politikası URL’si: `https://mrzekai.github.io/pdf-okuyucu/privacy-policy.html`
+- Gizlilik politikası URL’si: `https://mrzekai.github.io/privacy-policy.html`
 - Hedef kitle: Uygulama çocuklara özel tasarlanmadıysa çocuk yaş gruplarını seçmeyin. Çocuk yaş grubu seçilecekse reklam yapılandırması ve bu beyan yeniden yapılmalıdır.
 - Google UMP için AdMob → Privacy & messaging bölümünde Avrupa düzenlemeleri mesajını yayımlayın.
 

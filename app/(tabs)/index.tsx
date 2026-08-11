@@ -16,7 +16,7 @@ export default function HomeScreen() {
   const [urlOpen, setUrlOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const recent = useMemo(() => [...documents].sort((a,b) => b.lastOpenedAt - a.lastOpenedAt), [documents]);
-  const continueDoc = recent.find((d) => d.lastPage > 1) || recent[0];
+  const continueDoc = recent[0];
   const favoriteCount = documents.filter((d) => d.isFavorite).length;
   const pagesRead = documents.reduce((sum, d) => sum + Math.max(0, d.lastPage - 1), 0);
 
@@ -64,9 +64,7 @@ export default function HomeScreen() {
             <Pressable onPress={() => goReader(continueDoc.id)} style={styles.continueCard}>
               <LinearGradient colors={['rgba(56,189,248,0.11)','rgba(91,103,241,0.08)']} style={StyleSheet.absoluteFill}/>
               <View style={styles.bigFile}><AppIcon name="file" size={31} color="#818CF8"/></View>
-              <View style={{flex:1}}><Text numberOfLines={1} style={styles.continueTitle}>{continueDoc.name}</Text><Text style={styles.continueMeta}>{continueDoc.pageCount ? t('home.continuePage', { page: continueDoc.lastPage, total: continueDoc.pageCount }) : t('home.continueTap')}</Text>
-                {continueDoc.pageCount ? <View style={styles.bigProgress}><View style={[styles.bigProgressFill,{width:`${Math.min(100,(continueDoc.lastPage/continueDoc.pageCount)*100)}%`}]} /></View> : null}
-              </View><View style={styles.playButton}><AppIcon name="chevronRight" size={18}/></View>
+              <View style={{flex:1}}><Text numberOfLines={1} style={styles.continueTitle}>{continueDoc.name}</Text><Text style={styles.continueMeta}>{t('home.continueTap')}</Text></View><View style={styles.playButton}><AppIcon name="chevronRight" size={18}/></View>
             </Pressable>
           </View>
         ) : null}

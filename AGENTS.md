@@ -26,7 +26,7 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 - **Single source of truth:** `constants/i18n.ts`. Three dictionaries: `tr`, `en`, `es`.
 - `en` and `es` are typed as `Record<keyof typeof tr, string>`, so **TypeScript fails the build if a key is missing or extra**. Key parity is compiler-enforced, not a convention.
 - In components: `const { t } = useTranslation();` then `t('home.openPdf')`.
-- With variables: `t('home.continuePage', { page, total })` — placeholders are `{name}` style.
+- With variables: `t('home.quickFavDesc', { count })` — placeholders are `{name}` style.
 - In non-React modules (e.g. `lib/pdfFiles.ts`): import `{ t }` from `@/constants/i18n` (module-level active language).
 - The active language lives in `settings.language` (persisted via `lib/storage.ts`) and is switchable from the Settings screen.
 - `AppContext` mirrors it into the module-level language with `setActiveLanguage`.

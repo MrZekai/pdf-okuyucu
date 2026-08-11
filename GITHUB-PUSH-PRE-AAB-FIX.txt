@@ -1,0 +1,39 @@
+PDF OKUYUCU — PRE-AAB DÜZELTMESİNİ GITHUB'A GÖNDERME
+
+1) ChatGPT'den aldığınız pdf-okuyucu-source-v15-pre-aab-fixed.zip dosyasını
+   C:\Users\limno\Downloads altında açın. Açılan klasörün adı aşağıdaki gibi olsun:
+
+   C:\Users\limno\Downloads\pdf-okuyucu-source-v15-pre-aab-fixed
+
+2) Git Bash'te mevcut GitHub klonunu açın:
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+3) Düzeltilmiş kaynakları mevcut klonun üzerine kopyalayın:
+
+FIX_DIR="/c/Users/limno/Downloads/pdf-okuyucu-source-v15-pre-aab-fixed-final"
+cp -a "$FIX_DIR"/. .
+
+4) Kontrol edin:
+
+git status --short
+git diff --check
+npm ci --legacy-peer-deps
+npm run check
+npm run lint
+npm run doctor
+npm run release:check
+
+5) Yalnızca bu görevdeki değişiklikleri commit edip gönderin:
+
+git add .github/workflows/expo-android.yml .github/workflows/pages.yml AGENTS.md PLAY_RELEASE_GUIDE.md PRE_AAB_AUDIT_TR.md README.md GITHUB-PUSH-PRE-AAB-FIX.txt YASAL-SITE-KURULUMU.txt app.config.js "app/(tabs)/index.tsx" app/_layout.tsx components/IncomingPdfHandler.tsx constants/i18n.ts context/AppContext.tsx docs/privacy-policy.html lib/pdfFiles.ts play-store/DATA_SAFETY_TR.md scripts/validate-release.mjs
+git commit -m "AAB oncesi reklam gizlilik ve PDF guvenlik duzeltmeleri"
+git push origin main
+
+6) Push sonrası GitHub Actions'ta Expo Android Build ve Legal Site Source Check
+   çalışır. Önce yeni QA APK'yı test edin. Public yasal site canlı olmadan manuel AAB
+   workflow'unu çalıştırmayın; workflow bunu bilinçli olarak durdurur.
+
+NOT: Keystore, şifre, GitHub secret, node_modules, android ve .env dosyalarını
+commit etmeyin. Bu ZIP bunları içermez.
