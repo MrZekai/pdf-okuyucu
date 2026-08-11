@@ -101,6 +101,7 @@ jobs:
           npm cache clean --force || true
           df -h /
       - name: Standalone QA APK derle
+        if: github.event_name == 'push'
         id: qa_build
         working-directory: android
         env:
@@ -165,6 +166,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Standalone QA APK'yı yükle
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v6
         with:
           name: pdf-okuyucu-standalone-qa-apk-v${{ github.run_number }}

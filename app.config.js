@@ -25,6 +25,7 @@ module.exports = ({ config }) => ({
   platforms: ['android', 'ios'],
   android: {
     package: 'com.aitolian.pdfokuyucu',
+    allowBackup: false,
     versionCode: androidVersionCode,
     blockedPermissions: [
       'android.permission.SYSTEM_ALERT_WINDOW',
