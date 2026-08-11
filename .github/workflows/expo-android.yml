@@ -21,9 +21,9 @@ jobs:
     env:
       ANDROID_VERSION_CODE: ${{ github.run_number }}
       EXPO_NO_TELEMETRY: '1'
-      EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~2930057843
-      EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/6623949751
-      EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/3997786415
+      EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~3816043340
+      EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/7265047779
+      EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/1189880008
       # Kotlin derleyicisi ayri bir daemon'da calisir ve varsayilan heap'i
       # bu bagimlilik grafigi icin yetersiz kalabiliyor. Bellek kaynakli
       # "internal compiler error" ihtimalini elemek icin acikca yukseltiliyor.
@@ -92,7 +92,7 @@ jobs:
           fi
 
       - name: AdMob App ID manifeste işlendi mi
-        run: grep -Fq 'ca-app-pub-1380972808968213~2930057843' android/app/src/main/AndroidManifest.xml
+        run: grep -Fq 'ca-app-pub-1380972808968213~3816043340' android/app/src/main/AndroidManifest.xml
 
       # ─── Standalone QA APK ────────────────────────────────────────────────────
       # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.

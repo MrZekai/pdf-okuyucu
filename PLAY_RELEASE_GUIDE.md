@@ -27,9 +27,9 @@ GitHub → Actions → **Expo Android Build** → Run workflow → `İmzalı Pla
 
 Kodda kullanılan kimlikler:
 
-- App ID: `ca-app-pub-1380972808968213~2930057843`
-- Banner: `ca-app-pub-1380972808968213/6623949751`
-- App open: `ca-app-pub-1380972808968213/3997786415`
+- App ID: `ca-app-pub-1380972808968213~3816043340`
+- Banner: `ca-app-pub-1380972808968213/7265047779`
+- App open: `ca-app-pub-1380972808968213/1189880008`
 - Android package: `com.aitolian.pdfokuyucu`
 
 AdMob’daki bu App ID’nin uygulama kaydı **PDF Okuyucu** ve paket `com.aitolian.pdfokuyucu` ile eşleşmelidir. AdMob ekranındaki görünen adın “Hedef Zikirmatik” olması tek başına teknik hata değildir; fakat kayıt başka bir Play uygulamasına/paketine bağlıysa bu kimlikleri kullanmayın. AdMob’da PDF Okuyucu için doğru uygulama kaydı ve reklam birimleri oluşturup `.env` / workflow değerlerini güncelleyin.

@@ -48,7 +48,7 @@ Bu puan “Play kesin onay verir” anlamına gelmez. Nihai sonuç Google Play i
 ## Açık dış bağımlılıklar — kodla çözülemez
 
 1. **Upload key:** İmzalı AAB için dört GitHub secret kullanıcı tarafından eklenmelidir. Keystore’u repoya koymak güvenlik hatası olacağı için otomatik eklenmedi.
-2. **AdMob paket eşleşmesi:** `ca-app-pub-1380972808968213~2930057843` kaydı AdMob’da `com.aitolian.pdfokuyucu` paketine bağlı olmalıdır. “Hedef Zikirmatik” başka bir mağaza kaydına bağlıysa yeni PDF Okuyucu App ID/unit’leri gerekir.
+2. **AdMob paket eşleşmesi:** `ca-app-pub-1380972808968213~3816043340` kaydı AdMob’da `com.aitolian.pdfokuyucu` paketine bağlı olmalıdır. “Hedef Zikirmatik” başka bir mağaza kaydına bağlıysa yeni PDF Okuyucu App ID/unit’leri gerekir.
 3. **UMP mesajı:** AdMob → Privacy & messaging içinde Avrupa düzenlemeleri mesajı oluşturulup yayımlanmalıdır.
 4. **Play Console formları:** Ads, Data Safety, target audience, content rating ve app access beyanları manuel gönderilmelidir.
 5. **Gizlilik URL’si:** GitHub Pages workflow’unun ilk deployment’ı tamamlanmalı ve URL herkese açık test edilmelidir.
