@@ -94,18 +94,21 @@ jobs:
       - name: AdMob App ID manifeste işlendi mi
         run: grep -Fq 'ca-app-pub-1380972808968213~2930057843' android/app/src/main/AndroidManifest.xml
 
-      # ─── QA debug APK ────────────────────────────────────────────────────
+      # ─── Standalone QA APK ────────────────────────────────────────────────────
       # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.
       - name: Gradle öncesi disk alanını kontrol et
         run: |
           npm cache clean --force || true
           df -h /
-      - name: QA debug APK derle
-        id: debug_build
+      - name: Standalone QA APK derle
+        id: qa_build
         working-directory: android
+        env:
+          EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ''
+          EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ''
         run: |
           set -o pipefail
-          ./gradlew assembleDebug --no-daemon --no-build-cache --max-workers=2 --stacktrace --console=plain --warning-mode=summary 2>&1 | tee ../gradle-debug.log
+          ./gradlew assembleRelease --no-daemon --no-build-cache --max-workers=2 --stacktrace --console=plain --warning-mode=summary 2>&1 | tee ../gradle-qa.log
 
       # ─── Hata durumunda tanilama toplama ────────────────────────────────
       - name: Kotlin derleyici tanılama dosyalarını topla
@@ -113,7 +116,7 @@ jobs:
         run: |
           set +e
           mkdir -p diagnostics
-          tail -n 5000 gradle-debug.log > diagnostics/gradle-debug-tail.log 2>/dev/null || true
+          tail -n 5000 gradle-qa.log > diagnostics/gradle-debug-tail.log 2>/dev/null || true
 
           echo '--- Kotlin errors dizinleri araniyor ---' | tee diagnostics/00-search.txt
           for dir in \
@@ -147,9 +150,9 @@ jobs:
             sed -n '1,200p' "$f"
           done
 
-          echo '--- gradle-debug.log içindeki FAILED / e: satırları ---' | tee diagnostics/01-summary.txt
+          echo '--- gradle-qa.log içindeki FAILED / e: satırları ---' | tee diagnostics/01-summary.txt
           grep -nE '^e: |FAILED|Caused by:|Internal compiler error|Exception in type checkers|incompatible version of Kotlin' \
-            gradle-debug.log | head -120 | tee -a diagnostics/01-summary.txt
+            gradle-qa.log | head -120 | tee -a diagnostics/01-summary.txt
           exit 0
 
       - name: Tanılama dosyalarını yükle
@@ -161,11 +164,11 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-      - name: Debug APK'yı yükle
+      - name: Standalone QA APK'yı yükle
         uses: actions/upload-artifact@v6
         with:
-          name: pdf-okuyucu-debug-apk-v${{ github.run_number }}
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: pdf-okuyucu-standalone-qa-apk-v${{ github.run_number }}
+          path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
 
       # ─── İmzalı Play Store AAB ──────────────────────────────────────────
