@@ -23,11 +23,6 @@ module.exports = ({ config }) => ({
   scheme: 'pdfokuyucu',
   userInterfaceStyle: 'automatic',
   platforms: ['android', 'ios'],
-  locales: {
-    tr: './locales/tr.json',
-    en: './locales/en.json',
-    es: './locales/es.json'
-  },
   android: {
     package: 'com.aitolian.pdfokuyucu',
     allowBackup: false,
@@ -59,15 +54,6 @@ module.exports = ({ config }) => ({
   },
   plugins: [
     'expo-router',
-    [
-      'expo-localization',
-      {
-        supportedLocales: {
-          android: ['tr', 'en', 'es'],
-          ios: ['tr', 'en', 'es']
-        }
-      }
-    ],
     [
       'expo-splash-screen',
       {

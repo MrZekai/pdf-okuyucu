@@ -1,33 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import mobileAds, { AdsConsent } from 'react-native-google-mobile-ads';
 
+export type AdsStatus = 'loading' | 'ready' | 'unavailable';
+
 export function useAdsBootstrap() {
-  const started = useRef(false);
-  const [ready, setReady] = useState(false);
+  const initialization = useRef<Promise<void> | null>(null);
+  const startInFlight = useRef<Promise<boolean> | null>(null);
+  const mounted = useRef(false);
+  const [status, setStatus] = useState<AdsStatus>('loading');
 
-  useEffect(() => {
-    let mounted = true;
-
-    async function startIfAllowed() {
+  const startIfAllowed = useCallback(() => {
+    if (startInFlight.current) return startInFlight.current;
+    const task = (async () => {
       try {
         const { canRequestAds } = await AdsConsent.getConsentInfo();
-        if (!canRequestAds || started.current) return;
-        started.current = true;
-        await mobileAds().initialize();
-        if (mounted) setReady(true);
+        if (!canRequestAds) {
+          if (mounted.current) setStatus('unavailable');
+          return false;
+        }
+        initialization.current ??= mobileAds().initialize().then(() => undefined);
+        await initialization.current;
+        if (mounted.current) setStatus('ready');
+        return true;
       } catch {
-        // Ad errors must never block the PDF reader.
+        initialization.current = null;
+        if (mounted.current) setStatus('unavailable');
+        return false;
+      } finally {
+        startInFlight.current = null;
       }
-    }
-
-    // Use any valid consent from the previous session immediately, then refresh UMP state.
-    startIfAllowed();
-    AdsConsent.gatherConsent()
-      .then(startIfAllowed)
-      .catch(startIfAllowed);
-
-    return () => { mounted = false; };
+    })();
+    startInFlight.current = task;
+    return task;
   }, []);
 
-  return ready;
+  const refresh = useCallback(() => startIfAllowed(), [startIfAllowed]);
+
+  useEffect(() => {
+    mounted.current = true;
+    // Use any valid consent from the previous session immediately, then refresh UMP state.
+    void startIfAllowed();
+    AdsConsent.gatherConsent()
+      .catch(() => undefined)
+      .then(startIfAllowed)
+      .catch(() => { if (mounted.current) setStatus('unavailable'); });
+
+    return () => { mounted.current = false; };
+  }, [startIfAllowed]);
+
+  return { status, refresh };
 }

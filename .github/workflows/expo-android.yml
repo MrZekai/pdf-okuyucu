@@ -107,16 +107,6 @@ jobs:
       - name: AdMob App ID manifeste işlendi mi
         run: grep -Fq 'ca-app-pub-1380972808968213~3816043340' android/app/src/main/AndroidManifest.xml
 
-      - name: Android dil ve uygulama adı yerelleştirmesini doğrula
-        run: |
-          set -euo pipefail
-          grep -Fq '<locale android:name="tr"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq '<locale android:name="en"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq '<locale android:name="es"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq 'PDF Reader' android/app/src/main/res/values-b+en/strings.xml
-          grep -Fq 'Lector PDF' android/app/src/main/res/values-b+es/strings.xml
-          echo 'tr/en/es Android sistem dili ve yerelleştirilmiş uygulama adları hazır.'
-
       # ─── Standalone QA APK ────────────────────────────────────────────────────
       # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.
       - name: Gradle öncesi disk alanını kontrol et
@@ -148,6 +138,16 @@ jobs:
             exit 1
           fi
           echo 'QA APK yalnızca Google demo reklam birimlerini kullanıyor.'
+
+      - name: QA APK 16 KB sayfa hizalamasını doğrula
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          qa_apk='android/app/build/outputs/apk/release/app-release.apk'
+          zipalign_bin=$(find "$ANDROID_HOME/build-tools" -type f -name zipalign | sort -V | tail -1)
+          test -x "$zipalign_bin"
+          "$zipalign_bin" -c -P 16 -v 4 "$qa_apk"
+          echo 'QA APK 16 KB zip hizalaması doğrulandı.'
 
       # ─── Hata durumunda tanilama toplama ────────────────────────────────
       - name: Kotlin derleyici tanılama dosyalarını topla
@@ -248,6 +248,29 @@ jobs:
           fi
           grep -E 'Owner:|Issuer:|SHA256:' aab-certificate.txt || true
           echo 'AAB upload sertifikası doğrulandı.'
+
+      - name: AAB 64-bit native kitaplıklarını 16 KB için doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        run: |
+          set -euo pipefail
+          aab='android/app/build/outputs/bundle/release/app-release.aab'
+          native_dir=$(mktemp -d)
+          unzip -q "$aab" 'base/lib/*/*.so' -d "$native_dir"
+          found=0
+          while IFS= read -r so; do
+            found=1
+            while IFS= read -r alignment; do
+              if (( alignment < 0x4000 )); then
+                echo "HATA: $so içindeki LOAD segmenti 16 KB hizalı değil: $alignment" >&2
+                exit 1
+              fi
+            done < <(readelf -lW "$so" | awk '$1 == "LOAD" { print $NF }')
+          done < <(find "$native_dir/base/lib" \( -path '*/arm64-v8a/*.so' -o -path '*/x86_64/*.so' \) -type f)
+          if (( found == 0 )); then
+            echo 'HATA: AAB içinde doğrulanacak 64-bit native kitaplık bulunamadı.' >&2
+            exit 1
+          fi
+          echo 'AAB içindeki 64-bit native kitaplıkların ELF LOAD hizalaması 16 KB.'
 
       - name: Release log'unu yükle
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.build_release

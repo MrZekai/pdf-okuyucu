@@ -4,16 +4,17 @@ import { Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, View }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AdsConsent, AdsConsentPrivacyOptionsRequirementStatus } from 'react-native-google-mobile-ads';
 import { useApp } from '@/context/AppContext';
+import { useAdsRefresh } from '@/context/AdsContext';
 import { AppIcon } from '@/components/AppIcon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { AppLanguage, languageLabels, languages } from '@/constants/i18n';
 import { palette } from '@/constants/theme';
 
 export default function SettingsScreen(){
- const {settings,patchSettings,clearHistory,documents}=useApp(); const {t}=useTranslation();
- function wipe(){Alert.alert(t('settings.wipeAlertTitle'),t('settings.wipeAlertMessage',{count:documents.length}),[{text:t('common.cancel'),style:'cancel'},{text:t('common.clear'),style:'destructive',onPress:clearHistory}]);}
- async function privacy(){try{const info=await AdsConsent.getConsentInfo();if(info.privacyOptionsRequirementStatus===AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)await AdsConsent.showPrivacyOptionsForm();else await AdsConsent.gatherConsent();Alert.alert(t('settings.consentUpdatedTitle'),t('settings.consentUpdatedMessage'));}catch{Alert.alert(t('settings.consentErrorTitle'),t('settings.consentErrorMessage'));}}
- async function openPrivacyPolicy(){const url=Constants.expoConfig?.extra?.privacyPolicyUrl as string|undefined;if(!url)return;try{await Linking.openURL(url);}catch{Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));}}
+ const {settings,patchSettings,clearHistory,documents}=useApp(); const {t}=useTranslation(); const refreshAds=useAdsRefresh();
+ function wipe(){const message=documents.length===1?t('settings.wipeAlertMessageOne'):t('settings.wipeAlertMessage',{count:documents.length});Alert.alert(t('settings.wipeAlertTitle'),message,[{text:t('common.cancel'),style:'cancel'},{text:t('common.clear'),style:'destructive',onPress:clearHistory}]);}
+ async function privacy(){try{const info=await AdsConsent.getConsentInfo();if(info.privacyOptionsRequirementStatus===AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)await AdsConsent.showPrivacyOptionsForm();else await AdsConsent.gatherConsent();await refreshAds();Alert.alert(t('settings.consentUpdatedTitle'),t('settings.consentUpdatedMessage'));}catch{Alert.alert(t('settings.consentErrorTitle'),t('settings.consentErrorMessage'));}}
+ async function openPrivacyPolicy(){const url=Constants.expoConfig?.extra?.privacyPolicyUrl as string|undefined;if(!url){Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));return;}try{await Linking.openURL(url);}catch{Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));}}
  return <SafeAreaView style={styles.safe} edges={['top']}><ScrollView contentContainerStyle={styles.content}><View><Text style={styles.kicker}>{t('settings.kicker')}</Text><Text style={styles.title}>{t('settings.title')}</Text><Text style={styles.sub}>{t('settings.subtitle')}</Text></View>
   <Section title={t('settings.languageSection')}><View style={styles.segment}>{languages.map((code)=><LanguageChip key={code} code={code} active={settings.language===code} onPress={()=>patchSettings({language:code})}/>)}</View></Section>
   <Section title={t('settings.readingSection')}><SettingRow icon="rotate" title={t('settings.horizontalTitle')} desc={t('settings.horizontalDesc')} value={settings.horizontal} onValueChange={v=>patchSettings({horizontal:v})}/><SettingRow icon="snap" title={t('settings.snapTitle')} desc={t('settings.snapDesc')} value={settings.pagingEnabled} onValueChange={v=>patchSettings({pagingEnabled:v})}/><SettingRow icon="moon" title={t('settings.nightTitle')} desc={t('settings.nightDesc')} value={settings.invertPdfPages} onValueChange={v=>patchSettings({invertPdfPages:v})}/></Section>

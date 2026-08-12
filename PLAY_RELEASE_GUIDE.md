@@ -58,16 +58,8 @@ AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı 
 
 - 512×512 ikon: `play-store/icon-512.png`
 - 1024×500 feature graphic: `play-store/feature-graphic-1024x500.png`
-- Türkçe 4 adet 1080×1920 ekran: `play-store/screenshots/`
-- İngilizce 4 adet 1080×1920 ekran: `play-store/screenshots/en-US/`
-- İspanyolca 4 adet 1080×1920 ekran: `play-store/screenshots/es-ES/`
+- 4 adet 1080×1920 ekran: `play-store/screenshots/`
 - Türkçe / İngilizce / İspanyolca metinler: `play-store/listings/`
-
-Play Console → **Grow users → Store presence → Main store listing → Manage translations** bölümünde Türkçe, English (United States) ve Español (España) dillerini ayrı ayrı ekleyin. Her dilde ilgili `listings` metnini ve aynı dil klasöründeki ekran görüntülerini yükleyin. Bu dosyaların repoda bulunması Play Console’a kendiliğinden yüklenmeleri anlamına gelmez.
-
-Play Console → **Reach and devices → Countries/regions** bölümünde yayınlanacak ülkeleri seçin. Dil eklemek tek başına uygulamayı o ülkede yayınlamaz; ülke dağıtımı ve test/production track durumu ayrıca ayarlanmalıdır. Ülke hedeflemesi kullanıcının Google Play ülkesine göre uygulanır.
-
-Uygulama ilk temiz kurulumda Android’in cihaz/uygulama dilini okur. Türkçe, İngilizce ve İspanyolca Android sistem dili olarak da tanımlanmıştır; arayüz ve cihazdaki uygulama adı uygun dilde açılır. Kullanıcı ayrıca Ayarlar ekranından dili değiştirebilir.
 
 ## 6. Son kontrol
 
@@ -80,4 +72,6 @@ npm run release:check
 npx expo prebuild --platform android --clean --no-install
 ```
 
-Play Internal testing’e önce AAB yükleyin, gerçek cihazda PDF seçme, URL indirme, parola ekranı, gece modu, paylaşma, banner, uygulama açılışı reklamı ve UMP izin akışını test edin. Canlı reklamları debug build ile test etmeyin.
+Push sonucunda oluşan release-minified QA APK yalnız Google demo reklamlarını kullanır ve Android debug anahtarıyla imzalıdır; cihaz testi içindir, Play’e yüklenmez. CI bu APK’nın 16 KB zip hizalamasını da doğrular.
+
+Play Internal testing’e yalnız manuel workflow’dan çıkan upload-key imzalı AAB’yi yükleyin. Gerçek cihazda PDF seçme, URL indirme, parola ekranı, kalıcı gece modu/yön, paylaşma, banner, uygulama açılışı reklamı ve UMP izin akışını test edin. Canlı reklam birimlerine kendiniz tıklamayın.

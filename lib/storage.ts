@@ -12,10 +12,28 @@ export const defaultSettings: ReaderSettings = {
   language: detectDeviceLanguage()
 };
 
+function isPdfDocument(value: unknown): value is PdfDocument {
+  if (typeof value !== 'object' || value === null) return false;
+  const document = value as Record<string, unknown>;
+  return typeof document.id === 'string'
+    && typeof document.name === 'string'
+    && typeof document.uri === 'string'
+    && (document.source === 'device' || document.source === 'url')
+    && typeof document.lastPage === 'number'
+    && Number.isFinite(document.lastPage)
+    && typeof document.lastOpenedAt === 'number'
+    && Number.isFinite(document.lastOpenedAt)
+    && typeof document.createdAt === 'number'
+    && Number.isFinite(document.createdAt)
+    && typeof document.isFavorite === 'boolean';
+}
+
 export async function loadDocuments(): Promise<PdfDocument[]> {
   try {
     const raw = await AsyncStorage.getItem(DOCS_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return [];
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter(isPdfDocument) : [];
   } catch {
     return [];
   }

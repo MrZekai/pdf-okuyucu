@@ -104,17 +104,19 @@ Hazır görevler: `typecheck`, `i18n:check`, `expo doctor`, `prebuild android`
 
 ## APK ve imzalı AAB derleme (ücretsiz, Emergent kredisi harcamaz)
 
-GitHub Actions her push'ta QA için debug APK derler. Manuel **Run workflow** çalıştırmasında,
+GitHub Actions her push'ta R8 ile küçültülmüş release QA APK’sı derler. Bu QA APK Google demo
+reklam birimlerini kullanır ve Android debug anahtarıyla imzalanır; **Play Store’a yüklenmez**. Manuel **Run workflow** çalıştırmasında,
 upload-key secrets ayarlıysa Play Store için imzalı `bundleRelease` AAB de üretir. Ayrıntılı ve güvenli
 kurulum için `PLAY_RELEASE_GUIDE.md` dosyasını izleyin. Hat şu kontrolleri yapar:
 `npm ci` → i18n + TypeScript + Expo Doctor + release assets → `expo prebuild` →
-`gradlew assembleDebug` ve isteğe bağlı `gradlew bundleRelease`.
+`gradlew assembleRelease` + 16 KB hizalama kontrolü ve isteğe bağlı `gradlew bundleRelease`.
 
 ## Play Store paketi
 
 `play-store/` altında 512×512 ikon, 1024×500 feature graphic, dört adet 1080×1920 mağaza ekranı,
-tr/en/es listeleme metinleri ve Data Safety yanıt taslağı bulunur. Gizlilik politikası `docs/` altındadır
-ve GitHub Pages workflow'u ile yayınlanır. Uygulamadaki Ayarlar ekranı aynı politikaya bağlantı verir.
+tr/en/es listeleme metinleri ve Data Safety yanıt taslağı bulunur. Gizlilik politikası `docs/` altındaki
+kaynak dosyadan ayrı public `MrZekai.github.io` deposuna eşitlenir; bu depodaki Pages workflow’u yalnızca
+kaynak doğrulaması yapar. Uygulamadaki Ayarlar ekranı canlı politikaya bağlantı verir.
 
 Yayından önce:
 
@@ -134,8 +136,9 @@ npx expo start --dev-client     # Expo Go değil, dev client gerekiyor
 
 ## Bilinen derleme kısıtı
 
-Expo SDK 57 / React Native 0.86 araç zinciri Kotlin 2.1.20 kullanır. Google Mobile
-Ads SDK 25.4.0'in minimum Kotlin sürümü 2.1.0 olduğu için `app.config.js` içindeki
-`expo-build-properties` bloğu `kotlinVersion: '2.1.20'` değerine sabitlenmiştir.
-Kotlin 2.3.x kullanıldığında `react-native-gesture-handler:compileDebugKotlin`
-aşamasında dahili K2 tip-denetleyici hatası oluşur. **Bu sürümü yükseltmeyin.**
+Expo SDK 57 / React Native 0.86 araç zinciri Kotlin 2.1.20, eşleşen KSP ve Compose
+derleyicisini kullanır. Ads SDK 25.x Kotlin 2.3 metadata ile yayınlandığı için
+`plugins/withAdsSdkPin.js` yalnız Ads çekirdek artefaktlarını 24.6.0’a sabitler.
+Kotlin 2.3.21 denemesinde çöken modül `expo-modules-core`; Kotlin 2.1.20 üzerinde Ads
+25.x kullanıldığında çöken modül `react-native-google-mobile-ads` olmuştur.
+**Kotlin 2.1.20 ve Ads 24.6.0 pin’i birlikte korunmalıdır.**

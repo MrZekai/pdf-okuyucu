@@ -39,7 +39,7 @@
       <text x="174" y="126" fill="#8491A8" font-size="21">1.8 MB  •  34 sayfa  •  1 hafta önce</text>
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="66" height="8" rx="4" fill="#5B67F1"/>
     </g>
-    <rect x="0" y="1604" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><rect x="0" y="1720" width="1080" height="50" fill="#050814" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
+    <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
     <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Ana Sayfa</text><text x="405" y="1872" fill="#F8FAFC">Kütüphane</text><text x="675" y="1872" fill="#64748B">Favoriler</text><text x="945" y="1872" fill="#64748B">Ayarlar</text></g>
   </g>

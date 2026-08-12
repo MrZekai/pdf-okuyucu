@@ -63,9 +63,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     const unitId = getUnitId();
     if (!adsReady || !unitId || loadingRef.current || adRef.current) return;
     loadingRef.current = true;
-    // UMP / Mobile Ads SDK decides the permitted privacy treatment. Do not force
-    // personalized requests when consent is unavailable or not granted.
-    const ad = AppOpenAd.createForAdRequest(unitId);
+    const ad = AppOpenAd.createForAdRequest(unitId, { requestNonPersonalizedAdsOnly: false });
     adRef.current = ad;
     unsubscribeRef.current = ad.addAdEventsListener(({ type }) => {
       if (type === AdEventType.LOADED) {

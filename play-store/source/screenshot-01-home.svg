@@ -3,7 +3,7 @@
   <rect width="1080" height="1920" fill="#0B1020"/>
   <g font-family="DejaVu Sans, sans-serif">
     <text x="72" y="105" fill="#7C89FF" font-size="24" font-weight="800" letter-spacing="5">PDF OKUYUCU</text>
-    <g transform="translate(0,-55)">
+
     <rect x="54" y="210" width="972" height="650" rx="58" fill="url(#hero)" stroke="#fff" stroke-opacity=".1" stroke-width="2"/>
     <circle cx="920" cy="230" r="230" fill="#fff" opacity=".06"/>
     <rect x="94" y="255" width="230" height="62" rx="31" fill="#050A1A" opacity=".24"/>
@@ -35,9 +35,7 @@
       <rect x="584" y="1324" width="72" height="72" rx="22" fill="#F59E0B" fill-opacity=".12"/><circle cx="620" cy="1360" r="15" fill="none" stroke="#F59E0B" stroke-width="4"/><path d="M620 1333v-10M620 1397v-10M593 1360h-10M657 1360h-10" stroke="#F59E0B" stroke-width="4"/>
       <text x="584" y="1434" fill="#F8FAFC" font-size="28" font-weight="800">Okuma ayarları</text><text x="584" y="1475" fill="#8390A7" font-size="20">Deneyimini özelleştir</text>
     </g>
-    </g>
-    <rect x="0" y="1604" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/>
-    <rect x="0" y="1720" width="1080" height="50" fill="#050814" stroke="#27304A" stroke-width="2"/>
+    <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/>
     <text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
     <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#F8FAFC">Ana Sayfa</text><text x="405" y="1872" fill="#64748B">Kütüphane</text><text x="675" y="1872" fill="#64748B">Favoriler</text><text x="945" y="1872" fill="#64748B">Ayarlar</text></g>

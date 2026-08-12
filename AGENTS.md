@@ -60,12 +60,17 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 - `scripts/check-i18n.mjs` — dependency-free i18n guard
 
 ## Known build constraint (already fixed — do not revert)
-Expo SDK 57 / React Native 0.86 uses Kotlin **2.1.20**, while Google Mobile Ads SDK 25.4.0
-requires Kotlin 2.1.0. Keep `kotlinVersion: '2.1.20'` inside the `expo-build-properties`
-Android block in `app.config.js`. Kotlin 2.3.x is not required by the Ads SDK and causes an
-internal K2 type-checker crash while compiling `react-native-gesture-handler`.
+Expo SDK 57 / React Native 0.86 uses Kotlin **2.1.20** together with its matching KSP and
+Compose compiler. Google Mobile Ads SDK 25.x was published with Kotlin **2.3 metadata**, which
+the Kotlin 2.1 toolchain cannot read. `plugins/withAdsSdkPin.js` therefore pins only the exact
+`play-services-ads`, `play-services-ads-lite` and `play-services-ads-base` artifacts to **24.6.0**.
+The independent `play-services-ads-identifier` artifact must not be included in that pin.
 
-**Do not raise Kotlin above 2.1.20 without rebuilding the full Android dependency matrix.**
+Raising only `kotlinVersion` to 2.3.21 breaks the synchronized Expo toolchain and caused
+`:expo-modules-core:compileDebugKotlin` to fail in `AutoSizingComposable.kt`. Keeping Kotlin
+2.1.20 without the Ads 24.6.0 pin causes `:react-native-google-mobile-ads:compileDebugKotlin`
+to reject the 2.3 metadata. **Both constraints are required.** Do not change either one without
+rebuilding and testing the full Android dependency matrix.
 
 ## Verification commands (cheap, offline, no credits)
 ```
@@ -74,10 +79,12 @@ npm run typecheck      # tsc --noEmit (also enforces dictionary parity)
 npm run check          # both
 npm run doctor         # expo-doctor
 ```
-CI (`.github/workflows/expo-android.yml`) runs the same checks plus release validation, then `expo prebuild`
-+ `gradlew assembleDebug`. A manual workflow run also creates an upload-key-signed `bundleRelease` AAB when
-the four documented GitHub secrets exist. **Builds run for free on GitHub Actions — do not spend Emergent
-credits on builds or deployments.**
+CI (`.github/workflows/expo-android.yml`) runs the same checks plus release validation and `expo prebuild`.
+Push builds run `gradlew assembleRelease` with Google demo ad units and upload a release-minified QA APK
+signed with the Android debug key; that QA APK must never be uploaded to Play. A manual workflow run creates
+an upload-key-signed `bundleRelease` AAB when the four documented GitHub secrets exist. CI also validates
+16 KB native-page alignment. **Builds run for free on GitHub Actions — do not spend Emergent credits on
+builds or deployments.**
 
 ## First Emergent task
 ANALYZE ONLY. Report build blockers and concrete improvement opportunities.

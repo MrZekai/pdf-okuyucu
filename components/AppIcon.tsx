@@ -5,7 +5,7 @@ import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 type IconName =
   | 'home' | 'library' | 'heart' | 'settings' | 'file' | 'plus' | 'link'
   | 'search' | 'chevronRight' | 'back' | 'share' | 'trash' | 'moon'
-  | 'sun' | 'grid' | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
+  | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
   | 'check' | 'close' | 'download' | 'info';
 
 type Props = { name: IconName; size?: number; color?: ColorValue; strokeWidth?: number };
@@ -27,8 +27,6 @@ export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 
       {name === 'share' && <><Circle {...p} cx="18" cy="5" r="2"/><Circle {...p} cx="6" cy="12" r="2"/><Circle {...p} cx="18" cy="19" r="2"/><Path {...p} d="m8 11 8-5M8 13l8 5"/></>}
       {name === 'trash' && <><Path {...p} d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14"/><Path {...p} d="M10 11v6M14 11v6"/></>}
       {name === 'moon' && <Path {...p} d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"/>}
-      {name === 'sun' && <><Circle {...p} cx="12" cy="12" r="4"/><Path {...p} d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></>}
-      {name === 'grid' && <><Rect {...p} x="3" y="3" width="7" height="7" rx="1"/><Rect {...p} x="14" y="3" width="7" height="7" rx="1"/><Rect {...p} x="3" y="14" width="7" height="7" rx="1"/><Rect {...p} x="14" y="14" width="7" height="7" rx="1"/></>}
       {name === 'shield' && <><Path {...p} d="M12 2 20 5v6c0 5-3.2 8.7-8 11-4.8-2.3-8-6-8-11V5z"/><Path {...p} d="m9 12 2 2 4-5"/></>}
       {name === 'clock' && <><Circle {...p} cx="12" cy="12" r="9"/><Path {...p} d="M12 7v5l3 2"/></>}
       {name === 'pages' && <><Rect {...p} x="5" y="3" width="12" height="16" rx="1"/><Path {...p} d="M8 22h11V6"/></>}

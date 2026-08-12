@@ -24,7 +24,11 @@ Bu puan “Play kesin onay verir” anlamına gelmez. Nihai sonuç Google Play i
 | Gizlilik politikası | Yok | Uygulama içi bağlantı, tr/en/es web politikası ve Pages deployment eklendi |
 | Data Safety | Yanlış “veri yok” riski | AdMob SDK veri türlerini içeren Console yanıt taslağı eklendi |
 | UMP tercihlerini yeniden açma | `gatherConsent()` ile sınırlı | Gerekli olduğunda `showPrivacyOptionsForm()` kullanılıyor |
+| UMP sonrası reklam başlatma | Uygulama yeniden başlatılana kadar kapalı kalabiliyordu | AdsProvider yenileniyor; eşzamanlı initialize yarışı engelleniyor |
+| Banner geçici hata | İlk no-fill/ağ hatasında oturum boyunca kayboluyordu | 45 saniye arayla en fazla üç kontrollü yeniden deneme |
 | PDF URL güvenliği | Her içerik PDF adıyla saklanabiliyordu; yarım indirme kalabiliyordu | `%PDF-` doğrulaması, 250 MB sınırı ve hata temizliği eklendi |
+| PDF kayıt bütünlüğü | Bozuk AsyncStorage dizisi ekranları çökertebiliyordu | Kayıtlar yüklenirken şema doğrulaması ve filtreleme eklendi |
+| 16 KB native uyumu | CI kapısı yoktu | QA APK zipalign ve AAB 64-bit ELF LOAD hizalaması CI’da doğrulanıyor |
 | Parolalı PDF | Her tuşta renderer yeniden kuruluyordu | Taslak parola ile uygulanan parola ayrıldı |
 | Expo Doctor | Script kırık | `expo-doctor` kilitli bağımlılık olarak eklendi; 20/20 kontrol geçti |
 | Tekrarlanabilir kurulum | Lockfile yoktu | `package-lock.json` eklendi; CI `npm ci` kullanıyor |
@@ -33,7 +37,7 @@ Bu puan “Play kesin onay verir” anlamına gelmez. Nihai sonuç Google Play i
 
 | Kontrol | Sonuç |
 |---|---|
-| i18n anahtar/placeholder ve hardcoded metin taraması | **Geçti** — 116 anahtar × 3 dil |
+| i18n anahtar/placeholder ve hardcoded metin taraması | **Geçti** — 120 anahtar × 3 dil |
 | TypeScript `tsc --noEmit` | **Geçti** |
 | Expo ESLint | **Geçti** — hata ve uyarı yok |
 | Expo Doctor | **Geçti** — 20/20 |

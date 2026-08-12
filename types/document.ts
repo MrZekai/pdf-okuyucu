@@ -4,6 +4,7 @@ export type PdfDocument = {
   id: string;
   name: string;
   uri: string;
+  sourceUri?: string;
   source: 'device' | 'url';
   size?: number;
   pageCount?: number;

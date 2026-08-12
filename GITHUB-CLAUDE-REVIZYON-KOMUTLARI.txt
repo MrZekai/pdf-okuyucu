@@ -1,0 +1,61 @@
+PDF OKUYUCU — CLAUDE SON İNCELEME DÜZELTMELERİNİ GITHUB'A AKTARMA
+
+1) İndirdiğiniz ZIP'i açın:
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-claude-review-final-patch.zip -d pdf-okuyucu-claude-review-final
+
+2) Mevcut GitHub depo klasörüne girin:
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+Bu komut başlamadan önce beklenmeyen yerel değişiklik varsa durun; onları ezmeyin.
+
+3) Düzeltme dosyalarını depo üzerine kopyalayın:
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-claude-review-final/project"
+test -f "$PATCH_DIR/package.json" || { echo "HATA: patch klasörü bulunamadı"; exit 1; }
+cp -a "$PATCH_DIR"/. .
+
+4) Kontrolleri çalıştırın:
+
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+EXPO_NO_TELEMETRY=1 npm run doctor
+npm run release:check
+
+Beklenen ana sonuçlar:
+- i18n: 120 keys x 3 languages, 120 keys referenced
+- TypeScript hatası yok
+- ESLint hatası yok
+- Expo Doctor: 20/20
+- Release kontrolü başarılı
+
+5) Değişiklikleri inceleyip GitHub'a gönderin:
+
+git --no-pager status --short
+git -c core.safecrlf=false add -A
+git --no-pager diff --cached --stat
+git commit -m "Claude incelemesi reklam PDF ve release guvenlik duzeltmeleri"
+git push origin main
+
+6) Push sonrası GitHub Actions otomatik başlar:
+
+GitHub > MrZekai/pdf-okuyucu > Actions > Expo Android Build
+
+Başarılı çalışmada şu artifact oluşur:
+pdf-okuyucu-standalone-qa-apk-v<run_number>
+
+Bu APK release-minified fakat Android debug anahtarıyla imzalıdır ve yalnız Google demo reklam birimlerini kullanır. Cihaz testi içindir; Play Store'a yüklemeyin.
+
+7) Cihaz testleri geçince imzalı AAB:
+
+Actions > Expo Android Build > Run workflow > build_release: true
+
+Play Store'a yalnız pdf-okuyucu-play-aab-v<run_number> artifact'ındaki AAB yüklenir.
+
+8) Claude'a tekrar inceletmek için:
+
+pdf-okuyucu-claude-review-final-source.zip dosyasını gönderin ve önce CLAUDE_REVIEW_RESOLUTION_TR.md dosyasını okumasını isteyin.

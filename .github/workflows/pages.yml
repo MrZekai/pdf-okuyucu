@@ -22,4 +22,5 @@ jobs:
           test -s docs/index.html
           grep -Fq 'PDF Okuyucu' docs/privacy-policy.html
           grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0' docs/app-ads.txt
-          echo 'Kaynaklar hazır. Bunları public MrZekai/MrZekai.github.io reposunun kökünde yayınlayın.'
+          echo 'UYARI: Bu workflow yalnızca kaynakları doğrular; yayın yapmaz.'
+          echo 'docs/README.md talimatıyla dosyaları public MrZekai/MrZekai.github.io deposunun köküne eşitleyin.'

@@ -12,10 +12,16 @@ Bu belge, v15 red-team raporundaki maddelerin kaynak kod üzerinde yeniden doğr
 - Dosya adları hem karakter hem UTF-8 byte sınırıyla kısaltılır; `.pdf` uzantısı korunur.
 - PDF motorunda programatik sayfaya gitme API’si olmadığı için ana sayfadaki “kaldığın yerden devam” iddiası kaldırıldı. Son açılan belge gösterilir; sahte resume vaat edilmez.
 - AAB için JAR imzası ve `CN=Android Debug` kontrolü CI’a eklendi.
+- R8 ve resource shrinking release’te etkinleştirildi. Pdfium 1.0.32 AAR içindeki tüketici ProGuard kuralları ve Expo Modules Core kuralları doğrulandı; tahmini/geniş keep kuralları eklenmedi.
+- QA APK için `zipalign -P 16`, AAB içindeki 64-bit `.so` dosyaları için ELF LOAD 16 KB hizalama kontrolleri CI’a eklendi.
+- Reklam izin değişikliği uygulama yeniden başlatılmadan AdsProvider’a yansıtılır; eşzamanlı SDK başlatma yarışı engellendi.
+- Banner no-fill/ağ hatasında 45 saniye arayla en fazla üç kontrollü deneme yapar.
+- Okuyucu yön, sayfalama ve PDF gece modu tercihleri artık kalıcı ayarlara yazılır.
+- Bozuk kayıt şeması filtrelenir, HEAD isteği 10 saniyede iptal edilir ve geçersiz URL hatası üç dilde gösterilir.
 
 ## Bilinçli olarak uygulanmayan rapor önerileri
 
-- **R8/ProGuard:** Play reddi sebebi değildir. PDFium/Expo JNI ve reflection kullandığı için v1 öncesinde körlemesine açılmadı. Ayrı bir release regresyon turunda değerlendirilmeli.
+- **Geniş R8 keep paketleri:** Eklenmedi. `pdfiumandroid-1.0.32.aar` kendi `proguard.txt` dosyasında `io.legere.pdfiumandroid.**` için tüketici kuralları taşır; Expo Modules Core da Expo module/view sınıflarını korur. Yanlış namespace’li veya tüm `expo.modules.**` paketini koruyan kurallar optimizasyonu gereksiz yere kapatır.
 - **AAB v3 imza kontrolü:** AAB dosyası APK v2/v3 şemalarıyla değil JAR imzasıyla doğrulanır. Play, son cihaz APK’larını kendi App Signing anahtarıyla imzalar.
 - **Sentry/Crashlytics:** Zorunlu değildir; yeni veri toplama ve Data Safety yükümlülüğü getirir. Kullanıcı kararı olmadan eklenmedi.
 - **x86/x86_64 kaldırma:** AAB ABI split uygular. ChromeOS / Play Games uyumluluğunu bozmamak için korunmuştur.
@@ -27,5 +33,5 @@ Bu belge, v15 red-team raporundaki maddelerin kaynak kod üzerinde yeniden doğr
 
 1. Public `MrZekai/MrZekai.github.io` reposunun kökünde `docs/` içindeki üç dosyayı yayınla.
 2. Gizli sekmede `https://mrzekai.github.io/privacy-policy.html` ve `https://mrzekai.github.io/app-ads.txt` adreslerini aç.
-3. Yeni QA APK’yı cihazda PDF seçme, HTTPS indirme, dosya yöneticisinden “Bununla aç”, bozuk/şifreli PDF, tema/yön ve test reklam etiketiyle doğrula.
+3. Yeni release-minified QA APK’yı cihazda PDF seçme, HTTPS indirme, dosya yöneticisinden “Bununla aç”, bozuk/şifreli PDF, kalıcı gece modu/yön ve test reklam etiketiyle doğrula. Bu APK debug anahtarıyla imzalıdır; Play’e yükleme.
 4. Sonra Actions → Expo Android Build → Run workflow → `build_release: true` çalıştır.

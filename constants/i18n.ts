@@ -1,5 +1,3 @@
-import { getLocales } from 'expo-localization';
-
 export const languages = ['tr', 'en', 'es'] as const;
 
 export type AppLanguage = (typeof languages)[number];
@@ -38,11 +36,12 @@ const tr = {
   'home.quickUrlTitle': 'URL’den',
   'home.quickUrlDesc': 'İndir ve oku',
   'home.quickFavTitle': 'Favoriler',
+  'home.quickFavDescOne': '1 belge',
   'home.quickFavDesc': '{count} belge',
   'home.quickSettingsTitle': 'Okuma Ayarı',
   'home.quickSettingsDesc': 'Görünümü seç',
   'home.statDocuments': 'Belge',
-  'home.statPages': 'Okunan sayfa',
+  'home.statPages': 'Sayfa ilerlemesi',
   'home.statFavorites': 'Favori',
   'home.recentEyebrow': 'SON AÇILANLAR',
   'home.recentTitle': 'Dosyalarına hızlı dön',
@@ -90,6 +89,7 @@ const tr = {
   'settings.wipeTitle': 'Kütüphaneyi temizle',
   'settings.wipeDesc': 'Yerel PDF kopyalarını ve geçmişi sil',
   'settings.wipeAlertTitle': 'Kütüphaneyi temizle',
+  'settings.wipeAlertMessageOne': '1 belge ve okuma geçmişi uygulamadan silinecek.',
   'settings.wipeAlertMessage': '{count} belge ve okuma geçmişi uygulamadan silinecek.',
   'settings.consentUpdatedTitle': 'Reklam izinleri güncellendi',
   'settings.consentUpdatedMessage': 'Google reklam izin durumu yeniden kontrol edildi.',
@@ -117,6 +117,7 @@ const tr = {
   'reader.passwordUnlock': 'PDF’yi Aç',
 
   'card.pdf': 'PDF',
+  'card.pagesOne': '1 sayfa',
   'card.pages': '{count} sayfa',
   'card.pagesUnknown': 'Sayfa bilgisi açınca gelir',
   'card.minutesAgo': '{count} dk önce',
@@ -134,6 +135,7 @@ const tr = {
   'common.delete': 'Sil',
   'common.clear': 'Temizle',
 
+  'files.invalidUrl': 'Geçersiz bağlantı. https:// ile başlayan bir PDF adresi girin.',
   'files.onlyHttps': 'Güvenliğiniz için yalnızca https bağlantıları desteklenir.',
   'files.openErrorTitle': 'PDF açılamadı',
   'files.openErrorMessage': 'Belge hazırlanırken bir hata oluştu.',
@@ -166,11 +168,12 @@ const en: Record<keyof typeof tr, string> = {
   'home.quickUrlTitle': 'From URL',
   'home.quickUrlDesc': 'Download and read',
   'home.quickFavTitle': 'Favorites',
+  'home.quickFavDescOne': '1 document',
   'home.quickFavDesc': '{count} documents',
   'home.quickSettingsTitle': 'Reading Setup',
   'home.quickSettingsDesc': 'Choose your view',
   'home.statDocuments': 'Documents',
-  'home.statPages': 'Pages read',
+  'home.statPages': 'Page progress',
   'home.statFavorites': 'Favorites',
   'home.recentEyebrow': 'RECENTLY OPENED',
   'home.recentTitle': 'Jump back into your files',
@@ -218,6 +221,7 @@ const en: Record<keyof typeof tr, string> = {
   'settings.wipeTitle': 'Clear library',
   'settings.wipeDesc': 'Delete local PDF copies and history',
   'settings.wipeAlertTitle': 'Clear library',
+  'settings.wipeAlertMessageOne': '1 document and the reading history will be deleted from the app.',
   'settings.wipeAlertMessage': '{count} documents and the reading history will be deleted from the app.',
   'settings.consentUpdatedTitle': 'Ad consent updated',
   'settings.consentUpdatedMessage': 'The Google ad consent state has been re-checked.',
@@ -245,6 +249,7 @@ const en: Record<keyof typeof tr, string> = {
   'reader.passwordUnlock': 'Open PDF',
 
   'card.pdf': 'PDF',
+  'card.pagesOne': '1 page',
   'card.pages': '{count} pages',
   'card.pagesUnknown': 'Page count appears once opened',
   'card.minutesAgo': '{count} min ago',
@@ -262,6 +267,7 @@ const en: Record<keyof typeof tr, string> = {
   'common.delete': 'Delete',
   'common.clear': 'Clear',
 
+  'files.invalidUrl': 'Invalid link. Enter a PDF address starting with https://.',
   'files.onlyHttps': 'For your security, only https links are supported.',
   'files.openErrorTitle': 'Could not open PDF',
   'files.openErrorMessage': 'Something went wrong while preparing the document.',
@@ -294,11 +300,12 @@ const es: Record<keyof typeof tr, string> = {
   'home.quickUrlTitle': 'Desde URL',
   'home.quickUrlDesc': 'Descargar y leer',
   'home.quickFavTitle': 'Favoritos',
+  'home.quickFavDescOne': '1 documento',
   'home.quickFavDesc': '{count} documentos',
   'home.quickSettingsTitle': 'Ajustes de lectura',
   'home.quickSettingsDesc': 'Elige la vista',
   'home.statDocuments': 'Documentos',
-  'home.statPages': 'Páginas leídas',
+  'home.statPages': 'Progreso de páginas',
   'home.statFavorites': 'Favoritos',
   'home.recentEyebrow': 'ABIERTOS RECIENTEMENTE',
   'home.recentTitle': 'Vuelve rápido a tus archivos',
@@ -346,6 +353,7 @@ const es: Record<keyof typeof tr, string> = {
   'settings.wipeTitle': 'Borrar la biblioteca',
   'settings.wipeDesc': 'Eliminar las copias locales de PDF y el historial',
   'settings.wipeAlertTitle': 'Borrar la biblioteca',
+  'settings.wipeAlertMessageOne': 'Se eliminará 1 documento y el historial de lectura de la aplicación.',
   'settings.wipeAlertMessage': 'Se eliminarán {count} documentos y el historial de lectura de la aplicación.',
   'settings.consentUpdatedTitle': 'Consentimiento actualizado',
   'settings.consentUpdatedMessage': 'Se ha vuelto a comprobar el estado de consentimiento de Google.',
@@ -373,6 +381,7 @@ const es: Record<keyof typeof tr, string> = {
   'reader.passwordUnlock': 'Abrir PDF',
 
   'card.pdf': 'PDF',
+  'card.pagesOne': '1 página',
   'card.pages': '{count} páginas',
   'card.pagesUnknown': 'El número de páginas aparece al abrirlo',
   'card.minutesAgo': 'hace {count} min',
@@ -390,6 +399,7 @@ const es: Record<keyof typeof tr, string> = {
   'common.delete': 'Eliminar',
   'common.clear': 'Borrar',
 
+  'files.invalidUrl': 'Enlace no válido. Introduce una dirección PDF que empiece por https://.',
   'files.onlyHttps': 'Por seguridad, solo se admiten enlaces https.',
   'files.openErrorTitle': 'No se pudo abrir el PDF',
   'files.openErrorMessage': 'Se produjo un error al preparar el documento.',
@@ -434,13 +444,14 @@ export function isAppLanguage(value: unknown): value is AppLanguage {
   return typeof value === 'string' && (languages as readonly string[]).includes(value);
 }
 
-/** Reads the native device/app language. Unsupported locales fall back to Turkish. */
+/** Best-effort device language without adding a dependency. Falls back to Turkish. */
 export function detectDeviceLanguage(): AppLanguage {
   try {
-    const short = getLocales()[0]?.languageCode?.toLowerCase();
+    const resolved = Intl.DateTimeFormat().resolvedOptions().locale ?? '';
+    const short = resolved.slice(0, 2).toLowerCase();
     if (isAppLanguage(short)) return short;
   } catch {
-    // Native locale lookup must never block app startup.
+    // Intl is not guaranteed on every Hermes build; Turkish stays the default.
   }
   return 'tr';
 }

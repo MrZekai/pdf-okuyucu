@@ -21,25 +21,24 @@ function formatBytes(size: number | undefined, t: Translator) {
   return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function DocumentCard({ doc, onPress, onFavorite, onDelete, compact = false, t }: {
+export function DocumentCard({ doc, onPress, onFavorite, onDelete, t }: {
   doc: PdfDocument;
   onPress: () => void;
   onFavorite: () => void;
   onDelete?: () => void;
-  compact?: boolean;
   /** Optional: screens pass their translator; standalone usage falls back to the active language. */
   t?: Translator;
 }) {
   const tr: Translator = t ?? translateActive;
   const progress = doc.pageCount ? Math.min(100, Math.round((doc.lastPage / doc.pageCount) * 100)) : 0;
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.card, compact && styles.compact, pressed && { opacity: 0.82 }]}>
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.card, pressed && { opacity: 0.82 }]}>
       <View style={styles.fileBox}><AppIcon name="file" size={24} color={palette.royal}/></View>
       <View style={styles.content}>
         <Text numberOfLines={1} style={styles.title}>{doc.name}</Text>
         <View style={styles.metaRow}>
           <Text style={styles.meta}>{formatBytes(doc.size, tr)}</Text><Text style={styles.dot}>•</Text>
-          <Text style={styles.meta}>{doc.pageCount ? tr('card.pages', { count: doc.pageCount }) : tr('card.pagesUnknown')}</Text><Text style={styles.dot}>•</Text>
+          <Text style={styles.meta}>{doc.pageCount ? (doc.pageCount===1?tr('card.pagesOne'):tr('card.pages',{count:doc.pageCount})) : tr('card.pagesUnknown')}</Text><Text style={styles.dot}>•</Text>
           <Text style={styles.meta}>{relativeTime(doc.lastOpenedAt, tr)}</Text>
         </View>
         {doc.pageCount ? <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${progress}%` }]} /></View> : null}
@@ -56,7 +55,6 @@ export function DocumentCard({ doc, onPress, onFavorite, onDelete, compact = fal
 
 const styles = StyleSheet.create({
   card: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 18, backgroundColor: '#121A2D', borderWidth: 1, borderColor: palette.line, gap: 12 },
-  compact: { minWidth: 315, maxWidth: 340 },
   fileBox: { width: 48, height: 56, borderRadius: 13, backgroundColor: 'rgba(91,103,241,0.12)', alignItems: 'center', justifyContent: 'center' },
   content: { flex: 1, minWidth: 0 },
   title: { color: palette.white, fontSize: 14.5, fontWeight: '700' },

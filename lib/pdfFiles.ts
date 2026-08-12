@@ -38,6 +38,11 @@ function safeName(name: string) {
   return `${limited || 'document'}.pdf`;
 }
 
+function displayName(name: string) {
+  const clean = name.replace(/[\u0000-\u001F]/g, ' ').trim();
+  return clean || t('files.defaultName');
+}
+
 function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
@@ -58,12 +63,13 @@ function validatePdfFile(file: File) {
   }
 }
 
-function createDocument(source: File, id: string, name: string, origin: PdfDocument['source']): PdfDocument {
+function createDocument(source: File, id: string, name: string, origin: PdfDocument['source'], sourceUri?: string): PdfDocument {
   const now = Date.now();
   return {
     id,
-    name: safeName(name),
+    name: displayName(name),
     uri: source.uri,
+    sourceUri,
     source: origin,
     size: source.size ?? undefined,
     lastPage: 1,
@@ -75,8 +81,10 @@ function createDocument(source: File, id: string, name: string, origin: PdfDocum
 
 async function preflightRemotePdf(url: string) {
   let expectedBytes: number | undefined;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10_000);
   try {
-    const response = await fetch(url, { method: 'HEAD' });
+    const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
     if (response.ok) {
       const rawLength = response.headers.get('content-length');
       const parsedLength = rawLength ? Number.parseInt(rawLength, 10) : 0;
@@ -84,6 +92,8 @@ async function preflightRemotePdf(url: string) {
     }
   } catch {
     // Some valid PDF hosts reject HEAD. The streamed limits below remain active.
+  } finally {
+    clearTimeout(timeout);
   }
   if (expectedBytes && expectedBytes > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
   if (Paths.availableDiskSpace < (expectedBytes || 0) + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
@@ -125,7 +135,7 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
       // The permanent library copy is already independent from the picker cache.
     }
   }
-  return createDocument(destination, id, asset.name || t('files.defaultName'), 'device');
+  return createDocument(destination, id, asset.name || t('files.defaultName'), 'device', asset.uri);
 }
 
 export async function importPdfFromUri(uri: string): Promise<PdfDocument> {
@@ -145,13 +155,19 @@ export async function importPdfFromUri(uri: string): Promise<PdfDocument> {
     if (destination.exists) destination.delete();
     throw error;
   }
-  return createDocument(destination, id, originalName, 'device');
+  return createDocument(destination, id, originalName, 'device', uri);
 }
 
 export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
-  const parsed = new URL(url);
+  let parsed: URL;
+  try {
+    parsed = new URL(url.trim());
+  } catch {
+    throw new Error(t('files.invalidUrl'));
+  }
   if (parsed.protocol !== 'https:') throw new Error(t('files.onlyHttps'));
-  const availableDiskAtStart = await preflightRemotePdf(url);
+  const normalizedUrl = parsed.toString();
+  const availableDiskAtStart = await preflightRemotePdf(normalizedUrl);
   ensureLibrary();
   const id = makeId();
   const fallbackName = t('files.webName');
@@ -162,7 +178,7 @@ export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
   const controller = new AbortController();
   let limitError: Error | null = null;
   try {
-    output = await File.downloadFileAsync(url, destination, {
+    output = await File.downloadFileAsync(normalizedUrl, destination, {
       idempotent: true,
       signal: controller.signal,
       onProgress: ({ bytesWritten, totalBytes }) => {
@@ -181,7 +197,7 @@ export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
     if (limitError) throw limitError;
     throw error;
   }
-  return createDocument(output, id, rawName || fallbackName, 'url');
+  return createDocument(output, id, rawName || fallbackName, 'url', normalizedUrl);
 }
 
 export function deletePdfFile(uri: string) {
