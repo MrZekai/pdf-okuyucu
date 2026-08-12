@@ -12,7 +12,12 @@ function relativeTime(timestamp: number, t: Translator) {
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return t('card.hoursAgo', { count: hours });
   const days = Math.floor(hours / 24);
-  return days === 1 ? t('card.yesterday') : t('card.daysAgo', { count: days });
+  if (days === 1) return t('card.yesterday');
+  if (days < 30) return t('card.daysAgo', { count: days });
+  const months = Math.floor(days / 30);
+  if (days < 365) return months === 1 ? t('card.monthAgo') : t('card.monthsAgo', { count: months });
+  const years = Math.floor(days / 365);
+  return years === 1 ? t('card.yearAgo') : t('card.yearsAgo', { count: years });
 }
 
 function formatBytes(size: number | undefined, t: Translator) {

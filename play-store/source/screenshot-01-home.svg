@@ -10,10 +10,10 @@
     <circle cx="126" cy="286" r="8" fill="#86EFAC"/>
     <text x="151" y="294" fill="#EEF1FF" font-size="20" font-weight="700">YEREL &amp; GÜVENLİ</text>
     <path d="M930 258l32 12v24c0 24-13 41-32 51-19-10-32-27-32-51v-24z" fill="none" stroke="#fff" stroke-opacity=".82" stroke-width="5"/><path d="M916 292l10 10 19-23" fill="none" stroke="#fff" stroke-width="5"/>
-    <text x="94" y="430" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">Belgelerin,</text>
-    <text x="94" y="516" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">her an yanında.</text>
-    <text x="94" y="584" fill="#E9ECFF" opacity=".78" font-size="28">PDF’lerini cihazından veya bağlantıdan aç.</text>
-    <text x="94" y="624" fill="#E9ECFF" opacity=".78" font-size="28">Hesap yok, bulut zorunluluğu yok.</text>
+    <text x="94" y="430" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">PDF’lerini</text>
+    <text x="94" y="516" fill="#FFFFFF" font-size="79" font-weight="900" letter-spacing="-2">anında aç.</text>
+    <text x="94" y="584" fill="#E9ECFF" opacity=".78" font-size="28">Karmaşa yok. Hesap yok.</text>
+    <text x="94" y="624" fill="#E9ECFF" opacity=".78" font-size="28">Belgeni seç ve okumaya başla.</text>
     <rect x="94" y="677" width="892" height="108" rx="30" fill="#F8FAFC"/>
     <rect x="120" y="700" width="64" height="64" rx="18" fill="#E7E9FF"/><path d="M152 718v28M138 732h28" stroke="#0B1020" stroke-width="5" stroke-linecap="round"/>
     <text x="210" y="746" fill="#0B1020" font-size="31" font-weight="900">PDF Aç</text><path d="M928 715l25 25-25 25" fill="none" stroke="#0B1020" stroke-width="6"/>

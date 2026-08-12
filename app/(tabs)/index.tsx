@@ -95,10 +95,12 @@ export default function HomeScreen() {
   );
 }
 
-function Quick({ icon, title, desc, color, onPress }: any) {
+type QuickProps = { icon: React.ComponentProps<typeof AppIcon>['name']; title: string; desc: string; color: string; onPress: () => void };
+function Quick({ icon, title, desc, color, onPress }: QuickProps) {
   return <Pressable onPress={onPress} style={({pressed}) => [styles.quick, pressed && {opacity:.8}]}><View style={[styles.quickIcon,{backgroundColor:`${color}1C`}]}><AppIcon name={icon} color={color}/></View><Text style={styles.quickTitle}>{title}</Text><Text style={styles.quickDesc}>{desc}</Text></Pressable>;
 }
-function Stat({ value, label, icon }: any) { return <View style={styles.stat}><AppIcon name={icon} size={17} color="#7C89FF"/><Text style={styles.statValue}>{value}</Text><Text style={styles.statLabel}>{label}</Text></View>; }
+type StatProps = { value: string; label: string; icon: React.ComponentProps<typeof AppIcon>['name'] };
+function Stat({ value, label, icon }: StatProps) { return <View style={styles.stat}><AppIcon name={icon} size={17} color="#7C89FF"/><Text style={styles.statValue}>{value}</Text><Text style={styles.statLabel}>{label}</Text></View>; }
 
 const styles = StyleSheet.create({
   safe:{flex:1,backgroundColor:palette.ink}, loading:{flex:1,backgroundColor:palette.ink,alignItems:'center',justifyContent:'center'}, content:{padding:18,gap:24},

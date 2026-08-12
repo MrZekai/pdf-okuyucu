@@ -35,18 +35,24 @@ Bu puan “Play kesin onay verir” anlamına gelmez. Nihai sonuç Google Play i
 
 ## Doğrulama sonuçları
 
+> **Kaynak notu (12 Ağustos 2026):** Aşağıdaki i18n, TypeScript, ESLint,
+> Expo Doctor ve release-validator satırları en son kaynak-only denetimde yeniden
+> çalıştırılmıştır. Android prebuild, Gradle, APK/AAB ve GitHub Actions bu kaynak
+> revizyonlarından sonra henüz yeniden çalıştırılmamıştır. Önceki bir native
+> doğrulamanın sonucu, mevcut kaynak HEAD'i otomatik olarak doğrulamaz.
+
 | Kontrol | Sonuç |
 |---|---|
-| i18n anahtar/placeholder ve hardcoded metin taraması | **Geçti** — 120 anahtar × 3 dil |
+| i18n anahtar/placeholder ve hardcoded metin taraması | **Geçti** — 124 anahtar × 3 dil |
 | TypeScript `tsc --noEmit` | **Geçti** |
 | Expo ESLint | **Geçti** — hata ve uyarı yok |
 | Expo Doctor | **Geçti** — 20/20 |
 | Release yapılandırma/asset doğrulaması | **Geçti** |
-| Expo Android prebuild | **Geçti** |
-| Native `versionCode` | **Doğrulandı** |
-| Native AdMob App ID | **Doğrulandı** |
-| Riskli izinlerin kaldırma kuralları | **Doğrulandı** |
-| İmza enjeksiyon scripti | **Doğrulandı** |
+| Expo Android prebuild | **Bu kaynak-only turda çalıştırılmadı** |
+| Native `versionCode` | **Bu kaynak-only turda yeniden doğrulanmadı** |
+| Native AdMob App ID | **Bu kaynak-only turda yeniden doğrulanmadı** |
+| Riskli izinlerin native kaldırma kuralları | **Bu kaynak-only turda yeniden doğrulanmadı** |
+| İmza enjeksiyon scripti | **Kaynakta mevcut; native turda yeniden doğrulanmadı** |
 | Yerel Gradle APK/AAB derlemesi | **Bu ortamda Android SDK/Gradle dağıtımı olmadığı için çalıştırılamadı**; GitHub workflow derleme noktasıdır |
 
 ## Açık dış bağımlılıklar — kodla çözülemez

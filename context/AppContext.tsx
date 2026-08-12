@@ -1,4 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
@@ -23,17 +24,35 @@ type AppContextValue = {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
+function isSameImportedPdf(existing: PdfDocument, candidate: PdfDocument) {
+  if (existing.fingerprint && candidate.fingerprint) return existing.fingerprint === candidate.fingerprint;
+  return Boolean(existing.sourceUri && candidate.sourceUri && existing.sourceUri === candidate.sourceUri);
+}
+
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
   const [documents, setDocuments] = useState<PdfDocument[]>([]);
   const [settings, setSettings] = useState<ReaderSettings>(defaultSettings);
+  const documentsRef = useRef<PdfDocument[]>([]);
+  const readyRef = useRef(false);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const updateDocumentsState = useCallback((updater: (current: PdfDocument[]) => PdfDocument[]) => {
+    setDocuments((current) => {
+      const next = updater(current);
+      documentsRef.current = next;
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     Promise.all([loadDocuments(), loadSettings()]).then(([docs, savedSettings]) => {
+      documentsRef.current = docs;
       setDocuments(docs);
       setSettings(savedSettings);
       setActiveLanguage(savedSettings.language);
       cleanupPdfImportCache();
+      readyRef.current = true;
       setReady(true);
     });
   }, []);
@@ -45,9 +64,33 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!ready) return;
-    const timeout = setTimeout(() => { saveDocuments(documents).catch(() => undefined); }, 750);
-    return () => clearTimeout(timeout);
+    documentsRef.current = documents;
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      saveTimerRef.current = null;
+      saveDocuments(documentsRef.current).catch(() => undefined);
+    }, 750);
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+    };
   }, [documents, ready]);
+
+  useEffect(() => {
+    const persistDocumentsNow = () => {
+      if (!readyRef.current) return;
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+      saveDocuments(documentsRef.current).catch(() => undefined);
+    };
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'inactive' || state === 'background') persistDocumentsNow();
+    });
+    return () => {
+      subscription.remove();
+      persistDocumentsNow();
+    };
+  }, []);
 
   useEffect(() => {
     if (ready) saveSettings(settings).catch(() => undefined);
@@ -57,74 +100,80 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const openPicker = useCallback(async () => {
     const doc = await pickPdfFromDevice();
     if (!doc) return null;
-    const existing = documents.find((document) => document.sourceUri === doc.sourceUri);
+    const existing = documentsRef.current.find((document) => isSameImportedPdf(document, doc));
     if (existing) {
       deletePdfFile(doc.uri);
-      setDocuments((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
+      updateDocumentsState((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
       return existing;
     }
-    setDocuments((old) => [doc, ...old]);
+    updateDocumentsState((old) => [doc, ...old]);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
     return doc;
-  }, [documents]);
+  }, [updateDocumentsState]);
 
   const addFromUrl = useCallback(async (url: string) => {
     const doc = await downloadPdfFromUrl(url);
-    const existing = documents.find((document) => document.source === 'url' && document.sourceUri === doc.sourceUri);
+    const existing = documentsRef.current.find((document) => document.source === 'url' && isSameImportedPdf(document, doc));
     if (existing) {
       deletePdfFile(doc.uri);
-      setDocuments((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
+      updateDocumentsState((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
       return existing;
     }
-    setDocuments((old) => [doc, ...old]);
+    updateDocumentsState((old) => [doc, ...old]);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
     return doc;
-  }, [documents]);
+  }, [updateDocumentsState]);
 
   const addFromExternalUri = useCallback(async (uri: string) => {
-    const existing = documents.find((document) => document.sourceUri === uri);
+    const existing = documentsRef.current.find((document) => document.sourceUri === uri);
     if (existing) {
-      setDocuments((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
+      updateDocumentsState((old) => old.map((document) => document.id === existing.id ? { ...document, lastOpenedAt: Date.now() } : document));
       return existing;
     }
     const doc = await importPdfFromUri(uri);
-    setDocuments((old) => [doc, ...old]);
+    const sameContent = documentsRef.current.find((document) => isSameImportedPdf(document, doc));
+    if (sameContent) {
+      deletePdfFile(doc.uri);
+      updateDocumentsState((old) => old.map((document) => document.id === sameContent.id ? { ...document, lastOpenedAt: Date.now() } : document));
+      return sameContent;
+    }
+    updateDocumentsState((old) => [doc, ...old]);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
     return doc;
-  }, [documents]);
+  }, [updateDocumentsState]);
 
   const getDocument = useCallback((id: string) => documents.find((doc) => doc.id === id), [documents]);
 
   const touchDocument = useCallback((id: string) => {
-    setDocuments((old) => old.map((doc) => doc.id === id ? { ...doc, lastOpenedAt: Date.now() } : doc));
-  }, []);
+    updateDocumentsState((old) => old.map((doc) => doc.id === id ? { ...doc, lastOpenedAt: Date.now() } : doc));
+  }, [updateDocumentsState]);
 
   const updateProgress = useCallback((id: string, page: number, pageCount?: number) => {
-    setDocuments((old) => old.map((doc) => {
+    updateDocumentsState((old) => old.map((doc) => {
       if (doc.id !== id) return doc;
       const nextPage = Math.max(1, page);
       const nextPageCount = pageCount || doc.pageCount;
       if (doc.lastPage === nextPage && doc.pageCount === nextPageCount) return doc;
       return { ...doc, lastPage: nextPage, pageCount: nextPageCount };
     }));
-  }, []);
+  }, [updateDocumentsState]);
 
   const toggleFavorite = useCallback((id: string) => {
-    setDocuments((old) => old.map((doc) => doc.id === id ? { ...doc, isFavorite: !doc.isFavorite } : doc));
+    updateDocumentsState((old) => old.map((doc) => doc.id === id ? { ...doc, isFavorite: !doc.isFavorite } : doc));
     Haptics.selectionAsync().catch(() => undefined);
-  }, []);
+  }, [updateDocumentsState]);
 
   const removeDocument = useCallback((id: string) => {
-    const target = documents.find((doc) => doc.id === id);
-    setDocuments((old) => old.filter((doc) => doc.id !== id));
+    const target = documentsRef.current.find((doc) => doc.id === id);
+    updateDocumentsState((old) => old.filter((doc) => doc.id !== id));
     if (target) deletePdfFile(target.uri);
-  }, [documents]);
+  }, [updateDocumentsState]);
 
   const clearHistory = useCallback(() => {
-    const targets = documents.map((doc) => doc.uri);
-    setDocuments([]);
+    const targets = documentsRef.current.map((doc) => doc.uri);
+    updateDocumentsState(() => []);
     targets.forEach(deletePdfFile);
-  }, [documents]);
+  }, [updateDocumentsState]);
 
   const patchSettings = useCallback((patch: Partial<ReaderSettings>) => {
     setSettings((old) => ({ ...old, ...patch }));

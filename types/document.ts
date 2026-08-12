@@ -5,6 +5,8 @@ export type PdfDocument = {
   name: string;
   uri: string;
   sourceUri?: string;
+  /** Yerel tekilleştirme için içerik özeti; güvenlik doğrulaması amacıyla kullanılmaz. */
+  fingerprint?: string;
   source: 'device' | 'url';
   size?: number;
   pageCount?: number;

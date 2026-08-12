@@ -27,7 +27,7 @@
     <g transform="translate(54 860)">
       <rect width="972" height="220" rx="38" fill="#121A2D" stroke="#27304A" stroke-width="2"/>
       <rect x="30" y="36" width="110" height="138" rx="28" fill="#5B67F1" fill-opacity=".12"/><path d="M60 62h42l25 25v63H60zM102 62v25h25" fill="none" stroke="#7180FF" stroke-width="5"/><path d="M73 111h42M73 130h34" stroke="#7180FF" stroke-width="4"/>
-      <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Course Notes.pdf</text>
+      <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Class Notes.pdf</text>
       <text x="174" y="126" fill="#8491A8" font-size="21">5.1 MB  •  126 pages  •  3 days ago</text>
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="475" height="8" rx="4" fill="#5B67F1"/>
       <path d="M899 78c-30-18-28-48 0-48 28 0 30 30 0 48z" fill="none" stroke="#718096" stroke-width="4"/>
@@ -39,7 +39,7 @@
       <text x="174" y="126" fill="#8491A8" font-size="21">1.8 MB  •  34 pages  •  1 week ago</text>
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="66" height="8" rx="4" fill="#5B67F1"/>
     </g>
-    <rect x="0" y="1604" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><rect x="0" y="1720" width="1080" height="50" fill="#050814" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">AD</text>
+    <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">AD</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
     <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Home</text><text x="405" y="1872" fill="#F8FAFC">Library</text><text x="675" y="1872" fill="#64748B">Favorites</text><text x="945" y="1872" fill="#64748B">Settings</text></g>
   </g>

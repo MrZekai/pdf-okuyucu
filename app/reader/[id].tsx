@@ -28,7 +28,7 @@ export default function ReaderScreen(){
    <View style={styles.viewer}>
     {error?<View style={styles.center}><AppIcon name="info" size={36} color={palette.danger}/><Text style={styles.errorTitle}>{t('reader.failedTitle')}</Text><Text style={styles.errorText}>{error}</Text><Pressable onPress={()=>setError('')} style={styles.backButton}><Text style={styles.backText}>{t('reader.retry')}</Text></Pressable></View>:
     <PdfView key={password} style={{flex:1}} uri={doc.uri} password={password||undefined} horizontal={settings.horizontal} pagingEnabled={settings.pagingEnabled} doubleTapToZoom pageGap={10} contentPadding={{top:10,bottom:10,left:8,right:8}} fitMode="width" pageColorInverted={settings.invertPdfPages} autoScale
-      onLoadComplete={({pageCount})=>{setCount(pageCount);queueProgress(page,pageCount)}}
+      onLoadComplete={({pageCount})=>{setCount(pageCount);if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)}}
       onPageChanged={({pageIndex,pageCount})=>{const p=pageIndex+1;setPage(p);setCount(pageCount);queueProgress(p,pageCount)}}
       onError={({code,message})=>{if(code==='password_required'||code==='password_incorrect'){setPasswordOpen(true)}else setError(message||t('reader.genericError'))}}/>}
    </View>

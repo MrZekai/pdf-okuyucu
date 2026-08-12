@@ -115,7 +115,7 @@ kurulum için `PLAY_RELEASE_GUIDE.md` dosyasını izleyin. Hat şu kontrolleri y
 
 ## Play Store paketi
 
-`play-store/` altında 512×512 ikon, 1024×500 feature graphic, dört adet 1080×1920 mağaza ekranı,
+`play-store/` altında 512×512 ikon, 1024×500 feature graphic, Türkçe/İngilizce/İspanyolca için ayrı ayrı dört adet 1080×1920 mağaza ekranı,
 tr/en/es listeleme metinleri ve Data Safety yanıt taslağı bulunur. Gizlilik politikası `docs/` altındaki
 kaynak dosyadan ayrı public `MrZekai.github.io` deposuna eşitlenir; bu depodaki Pages workflow’u yalnızca
 kaynak doğrulaması yapar. Uygulamadaki Ayarlar ekranı canlı politikaya bağlantı verir.

@@ -32,7 +32,8 @@ if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/mini
 if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
 
 const packageJson = JSON.parse(text('package.json'));
-if (packageJson.dependencies?.['expo-localization'] !== '~57.0.1') fail('expo-localization ~57.0.1 bağımlılığı eksik.');
+const localizationRange = packageJson.dependencies?.['expo-localization'] || '';
+if (!/^~57\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(localizationRange)) fail('expo-localization Expo SDK 57 ile uyumlu tilde sürüm aralığında olmalı.');
 const localizationPlugin = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-localization')?.[1];
 for (const platform of ['android', 'ios']) {
   const supported = localizationPlugin?.supportedLocales?.[platform] || [];
@@ -67,12 +68,16 @@ const i18nSource = text('constants/i18n.ts');
 const homeSource = text('app/(tabs)/index.tsx');
 const tabsSource = text('app/(tabs)/_layout.tsx');
 const readerSource = text('app/reader/[id].tsx');
+const storeHomeSource = text('play-store/source/screenshot-01-home.svg');
 const bannerSource = text('components/AdBanner.tsx');
 const settingsSource = text('app/(tabs)/settings.tsx');
 const adsBootstrapSource = text('hooks/useAdsBootstrap.ts');
+const appOpenSource = text('components/AppOpenAdController.tsx');
+const appContextSource = text('context/AppContext.tsx');
 const pdfFilesSource = text('lib/pdfFiles.ts');
 const storageSource = text('lib/storage.ts');
 if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsiz ana ekran sloganı kaynakta kalmış.');
+if (storeHomeSource.includes('Belgelerin,') || storeHomeSource.includes('her an yanında')) fail('Eski ana ekran sloganı Türkçe mağaza görselinde kalmış.');
 if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
 if (homeSource.includes("t('home.welcome')")) fail('İstenmeyen ana ekran sloganı yeniden eklenmiş.');
 if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
@@ -85,6 +90,10 @@ if (!readerSource.includes("edges={['bottom']}")) fail('PDF okuyucu alt araç ç
 if (!readerSource.includes('patchSettings({horizontal:!settings.horizontal})') || !readerSource.includes('patchSettings({invertPdfPages:!settings.invertPdfPages})')) fail('Okuyucu görünüm ayarları kalıcı AppContext ayarlarına bağlı değil.');
 if (!settingsSource.includes('showPrivacyOptionsForm()') || !settingsSource.includes('openPrivacyPolicy')) fail('Ayarlar ekranındaki reklam tercihleri veya gizlilik politikası bağlantısı eksik.');
 if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includes('startInFlight')) fail('UMP sonrası reklam başlatma yenilemesi veya yarış koruması eksik.');
+if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
+if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
+if (!appContextSource.includes("AppState.addEventListener('change'") || !appContextSource.includes('saveDocuments(documentsRef.current)')) fail('Uygulama arka plana geçerken PDF kayıtlarını hemen kalıcılaştırma koruması eksik.');
+if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('fingerprint: source.md5')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');
 
@@ -94,6 +103,9 @@ pngSize('assets/monochrome-icon.png', 1024, 1024);
 pngSize('play-store/icon-512.png', 512, 512);
 pngSize('play-store/feature-graphic-1024x500.png', 1024, 500);
 for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
+for (const locale of ['en-US', 'es-ES']) {
+  for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/${locale}/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
+}
 for (const locale of ['tr-TR', 'en-US', 'es-ES']) exists(`play-store/listings/${locale}.txt`);
 exists('docs/privacy-policy.html');
 exists('docs/app-ads.txt');
@@ -103,4 +115,4 @@ if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, 4 mağaza ekranı hazır.`);
+console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, tr/en/es için 4’er mağaza ekranı hazır.`);

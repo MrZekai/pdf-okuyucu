@@ -70,6 +70,7 @@ function createDocument(source: File, id: string, name: string, origin: PdfDocum
     name: displayName(name),
     uri: source.uri,
     sourceUri,
+    fingerprint: source.md5 ? `md5:${source.md5}` : undefined,
     source: origin,
     size: source.size ?? undefined,
     lastPage: 1,

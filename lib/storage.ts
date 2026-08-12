@@ -18,6 +18,8 @@ function isPdfDocument(value: unknown): value is PdfDocument {
   return typeof document.id === 'string'
     && typeof document.name === 'string'
     && typeof document.uri === 'string'
+    && (document.sourceUri === undefined || typeof document.sourceUri === 'string')
+    && (document.fingerprint === undefined || typeof document.fingerprint === 'string')
     && (document.source === 'device' || document.source === 'url')
     && typeof document.lastPage === 'number'
     && Number.isFinite(document.lastPage)

@@ -58,7 +58,9 @@ AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı 
 
 - 512×512 ikon: `play-store/icon-512.png`
 - 1024×500 feature graphic: `play-store/feature-graphic-1024x500.png`
-- 4 adet 1080×1920 ekran: `play-store/screenshots/`
+- Türkçe için 4 adet 1080×1920 ekran: `play-store/screenshots/`
+- İngilizce için 4 adet 1080×1920 ekran: `play-store/screenshots/en-US/`
+- İspanyolca için 4 adet 1080×1920 ekran: `play-store/screenshots/es-ES/`
 - Türkçe / İngilizce / İspanyolca metinler: `play-store/listings/`
 
 ## 6. Son kontrol

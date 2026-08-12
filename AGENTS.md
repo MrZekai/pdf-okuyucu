@@ -64,8 +64,9 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 Expo SDK 57 / React Native 0.86 uses Kotlin **2.1.20** together with its matching KSP and
 Compose compiler. Google Mobile Ads SDK 25.x was published with Kotlin **2.3 metadata**, which
 the Kotlin 2.1 toolchain cannot read. `plugins/withAdsSdkPin.js` therefore pins only the exact
-`play-services-ads`, `play-services-ads-lite` and `play-services-ads-base` artifacts to **24.6.0**.
-The independent `play-services-ads-identifier` artifact must not be included in that pin.
+`play-services-ads` and `play-services-ads-lite` artifacts to **24.6.0**. Both
+`play-services-ads-base` and the independent `play-services-ads-identifier` artifact are
+intentionally outside that pin; the main artifact POM resolves their compatible versions.
 
 Raising only `kotlinVersion` to 2.3.21 breaks the synchronized Expo toolchain and caused
 `:expo-modules-core:compileDebugKotlin` to fail in `AutoSizingComposable.kt`. Keeping Kotlin

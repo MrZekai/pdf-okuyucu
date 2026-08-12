@@ -63,7 +63,9 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     const unitId = getUnitId();
     if (!adsReady || !unitId || loadingRef.current || adRef.current) return;
     loadingRef.current = true;
-    const ad = AppOpenAd.createForAdRequest(unitId, { requestNonPersonalizedAdsOnly: false });
+    // UMP / Mobile Ads SDK izin kapsamına karar verir. Onay yoksa veya
+    // verilmemişse uygulama kişiselleştirilmiş reklam isteğini zorlamaz.
+    const ad = AppOpenAd.createForAdRequest(unitId);
     adRef.current = ad;
     unsubscribeRef.current = ad.addAdEventsListener(({ type }) => {
       if (type === AdEventType.LOADED) {

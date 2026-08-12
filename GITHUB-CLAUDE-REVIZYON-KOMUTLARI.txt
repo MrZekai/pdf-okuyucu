@@ -1,11 +1,11 @@
-PDF OKUYUCU — CLAUDE 2. TUR KAYNAK REVİZYONUNU GITHUB'A AKTARMA
+PDF OKUYUCU — CLAUDE RED TEAM 4. TUR KAYNAK REVİZYONUNU GITHUB'A AKTARMA
 
 BU AŞAMA APK/AAB ÜRETMEZ. Commit mesajındaki [skip ci], push sonrası Android build workflow'unu atlar.
 
 1) ZIP'i açın:
 
 cd ~/Downloads
-unzip -o pdf-okuyucu-claude-round2-source-only.zip -d pdf-okuyucu-claude-round2-source-only
+unzip -o pdf-okuyucu-claude-round3-source-only.zip -d pdf-okuyucu-claude-round3-source-only
 
 2) Mevcut GitHub depo klasörüne girin ve temiz olduğunu doğrulayın:
 
@@ -16,15 +16,11 @@ Beklenmeyen yerel değişiklik varsa kopyalamadan önce durun.
 
 3) Güncellenen kaynakları depo üzerine kopyalayın:
 
-PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-claude-round2-source-only/project"
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-claude-round3-source-only/project"
 test -f "$PATCH_DIR/package.json" || { echo "HATA: kaynak klasörü bulunamadı"; exit 1; }
 cp -a "$PATCH_DIR"/. .
 
-4) package-lock ve node_modules'i eşitleyin:
-
-npm install --legacy-peer-deps --no-audit --no-fund
-
-5) Yalnız kaynak kontrollerini çalıştırın:
+4) Yalnız kaynak kontrollerini çalıştırın:
 
 git -c core.safecrlf=false --no-pager diff --check
 npm run check
@@ -32,16 +28,17 @@ EXPO_NO_TELEMETRY=1 npm run lint
 EXPO_NO_TELEMETRY=1 npm run doctor
 npm run release:check
 
+Bu turda package.json/package-lock değişmedi. npm install çalıştırmanız gerekmez.
 Bu aşamada expo prebuild, gradlew, APK veya AAB komutu çalıştırmayın.
 
-6) Değişiklikleri inceleyip build başlatmadan GitHub'a gönderin:
+5) Değişiklikleri inceleyip build başlatmadan GitHub'a gönderin:
 
 git --no-pager status --short
 git -c core.safecrlf=false add -A
 git --no-pager diff --cached --stat
-git commit -m "Yerellestirme banner ve gizlilik revizyonlari [skip ci]"
+git commit -m "Okuma kaydi tekillestirme ve uc dilli magazayi duzelt [skip ci]"
 git push origin main
 
-7) Claude'a tekrar inceletin:
+6) Claude'a tekrar inceletin:
 
-ZIP içindeki CLAUDE_REVIEW_ROUND2_RESOLUTION_TR.md dosyasını önce okumasını ve kaynak kodu statik olarak yeniden denetlemesini isteyin. Claude onayı gelmeden APK/AAB üretimine geçmeyin.
+ZIP içindeki CLAUDE_REVIEW_ROUND3_RESOLUTION_TR.md dosyasını önce okumasını ve kaynak kodu statik olarak yeniden denetlemesini isteyin. Claude onayı gelmeden APK/AAB üretimine geçmeyin.

@@ -126,6 +126,10 @@ const tr = {
   'card.hoursAgo': '{count} sa önce',
   'card.yesterday': 'Dün',
   'card.daysAgo': '{count} gün önce',
+  'card.monthAgo': '1 ay önce',
+  'card.monthsAgo': '{count} ay önce',
+  'card.yearAgo': '1 yıl önce',
+  'card.yearsAgo': '{count} yıl önce',
 
   'url.title': 'URL’den PDF aç',
   'url.caption': 'Dosya cihazına güvenli şekilde indirilir.',
@@ -258,6 +262,10 @@ const en: Record<keyof typeof tr, string> = {
   'card.hoursAgo': '{count} h ago',
   'card.yesterday': 'Yesterday',
   'card.daysAgo': '{count} days ago',
+  'card.monthAgo': '1 month ago',
+  'card.monthsAgo': '{count} months ago',
+  'card.yearAgo': '1 year ago',
+  'card.yearsAgo': '{count} years ago',
 
   'url.title': 'Open PDF from URL',
   'url.caption': 'The file is downloaded securely to your device.',
@@ -390,6 +398,10 @@ const es: Record<keyof typeof tr, string> = {
   'card.hoursAgo': 'hace {count} h',
   'card.yesterday': 'Ayer',
   'card.daysAgo': 'hace {count} días',
+  'card.monthAgo': 'hace 1 mes',
+  'card.monthsAgo': 'hace {count} meses',
+  'card.yearAgo': 'hace 1 año',
+  'card.yearsAgo': 'hace {count} años',
 
   'url.title': 'Abrir PDF desde una URL',
   'url.caption': 'El archivo se descarga de forma segura a tu dispositivo.',
