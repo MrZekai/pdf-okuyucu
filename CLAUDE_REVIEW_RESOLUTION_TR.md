@@ -4,6 +4,8 @@ Tarih: 12 Ağustos 2026
 
 Bu belge, `Yapıştırılan markdown(3).md` raporundaki önerilerin mevcut kaynak ve gerçek Android bağımlılıklarıyla karşılaştırılmış sonucudur. Öneriler körlemesine uygulanmamış; yalnız doğrulanan sorunlar düzeltilmiştir.
 
+Bir sonraki `Yapıştırılan markdown(4).md` turunun ayrıntılı çözüm kaydı için `CLAUDE_REVIEW_ROUND2_RESOLUTION_TR.md` dosyasına bakın.
+
 ## Sonuç tablosu
 
 | Madde | Karar | Uygulama |

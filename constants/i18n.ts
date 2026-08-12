@@ -1,3 +1,5 @@
+import { getLocales } from 'expo-localization';
+
 export const languages = ['tr', 'en', 'es'] as const;
 
 export type AppLanguage = (typeof languages)[number];
@@ -444,14 +446,13 @@ export function isAppLanguage(value: unknown): value is AppLanguage {
   return typeof value === 'string' && (languages as readonly string[]).includes(value);
 }
 
-/** Best-effort device language without adding a dependency. Falls back to Turkish. */
+/** Reads the native device/app language. Unsupported locales fall back to Turkish. */
 export function detectDeviceLanguage(): AppLanguage {
   try {
-    const resolved = Intl.DateTimeFormat().resolvedOptions().locale ?? '';
-    const short = resolved.slice(0, 2).toLowerCase();
+    const short = getLocales()[0]?.languageCode?.toLowerCase();
     if (isAppLanguage(short)) return short;
   } catch {
-    // Intl is not guaranteed on every Hermes build; Turkish stays the default.
+    // Native locale lookup must never block app startup.
   }
   return 'tr';
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from 'expo-constants';
-import { Platform, StyleSheet, View } from 'react-native';
+import { AppState, Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import { useAdsStatus } from '@/context/AdsContext';
 
@@ -22,12 +22,19 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
   const unitId = __DEV__ || !productionId ? TestIds.ADAPTIVE_BANNER : productionId;
 
   useForeground(() => {
-    if (hidden) {
-      attempts.current = 0;
-      setHidden(false);
-      setRetryKey((key) => key + 1);
-    } else if (Platform.OS === 'ios') ref.current?.load();
+    if (Platform.OS === 'ios' && !hidden) ref.current?.load();
   });
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active' && hidden) {
+        attempts.current = 0;
+        setHidden(false);
+        setRetryKey((key) => key + 1);
+      }
+    });
+    return () => subscription.remove();
+  }, [hidden]);
 
   useEffect(() => () => {
     if (retryTimer.current) clearTimeout(retryTimer.current);
@@ -40,7 +47,10 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
       return;
     }
     if (retryTimer.current) clearTimeout(retryTimer.current);
-    retryTimer.current = setTimeout(() => setRetryKey((key) => key + 1), RETRY_DELAY_MS);
+    retryTimer.current = setTimeout(() => {
+      retryTimer.current = null;
+      setRetryKey((key) => key + 1);
+    }, RETRY_DELAY_MS);
   }
 
   if (adsStatus !== 'ready' || hidden) return null;
@@ -65,7 +75,7 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
 
 const styles = StyleSheet.create({
   container: { width: '100%', backgroundColor: '#080C18' },
-  contentGap: { height: 16, backgroundColor: '#0B1020' },
+  contentGap: { height: 16, backgroundColor: '#050814', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(148,163,184,0.18)' },
   shell: {
     minHeight: 58,
     width: '100%',
@@ -75,5 +85,5 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(148,163,184,0.16)'
   },
-  navigationGap: { height: 28, backgroundColor: '#0B1020' }
+  navigationGap: { height: 28, backgroundColor: '#050814', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(148,163,184,0.18)', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(148,163,184,0.18)' }
 });

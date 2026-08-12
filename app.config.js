@@ -23,6 +23,11 @@ module.exports = ({ config }) => ({
   scheme: 'pdfokuyucu',
   userInterfaceStyle: 'automatic',
   platforms: ['android', 'ios'],
+  locales: {
+    tr: './locales/tr.json',
+    en: './locales/en.json',
+    es: './locales/es.json'
+  },
   android: {
     package: 'com.aitolian.pdfokuyucu',
     allowBackup: false,
@@ -67,19 +72,11 @@ module.exports = ({ config }) => ({
         }
       }
     ],
-    [
-      'expo-file-system',
-      {
-        supportsOpeningDocumentsInPlace: true,
-        enableFileSharing: true
-      }
-    ],
+    'expo-file-system',
     [
       'expo-build-properties',
       {
         android: {
-          compileSdkVersion: 36,
-          targetSdkVersion: 36,
           // Expo SDK 57 / RN 0.86 arac zinciri Kotlin 2.1.20 + KSP 2.1.20-2.0.1 +
           // bu Kotlin surumune sabitlenmis Compose derleyicisi ile gelir.
           // Sadece kotlinVersion'i yukseltmek KSP ve Compose derleyicisini
@@ -93,6 +90,15 @@ module.exports = ({ config }) => ({
           enableMinifyInReleaseBuilds: true,
           enableShrinkResourcesInReleaseBuilds: true,
           extraProguardRules: '-keep class com.google.android.gms.internal.consent_sdk.** { *; }'
+        }
+      }
+    ],
+    [
+      'expo-localization',
+      {
+        supportedLocales: {
+          android: ['tr', 'en', 'es'],
+          ios: ['tr', 'en', 'es']
         }
       }
     ],

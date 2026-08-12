@@ -31,6 +31,31 @@ const buildProperties = config.plugins.find((item) => Array.isArray(item) && ite
 if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/minify etkin değil.');
 if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
 
+const packageJson = JSON.parse(text('package.json'));
+if (packageJson.dependencies?.['expo-localization'] !== '~57.0.1') fail('expo-localization ~57.0.1 bağımlılığı eksik.');
+const localizationPlugin = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-localization')?.[1];
+for (const platform of ['android', 'ios']) {
+  const supported = localizationPlugin?.supportedLocales?.[platform] || [];
+  for (const language of ['tr', 'en', 'es']) {
+    if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
+  }
+}
+for (const [language, expectedName] of Object.entries({ tr: 'PDF Okuyucu', en: 'PDF Reader', es: 'Lector PDF' })) {
+  const localePath = config.locales?.[language];
+  if (!localePath) {
+    fail(`Yerelleştirilmiş uygulama adı yapılandırmasında ${language} eksik.`);
+    continue;
+  }
+  exists(localePath);
+  if (fs.existsSync(path.join(root, localePath))) {
+    const locale = JSON.parse(text(localePath));
+    if (locale.android?.app_name !== expectedName) fail(`${language} Android uygulama adı beklenen değer değil.`);
+    if (locale.ios?.CFBundleDisplayName !== expectedName) fail(`${language} iOS uygulama adı beklenen değer değil.`);
+  }
+}
+const appConfigSource = text('app.config.js');
+if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSource.includes('enableFileSharing')) fail('iOS belge paylaşımı gizlilik politikasıyla çelişiyor.');
+
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
 if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.bannerAndroid || '')) fail('Geçerli Android banner unit ID yok.');
@@ -53,7 +78,9 @@ if (homeSource.includes("t('home.welcome')")) fail('İstenmeyen ana ekran slogan
 if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
 if (!bannerSource.includes('style={styles.contentGap}') || !bannerSource.includes('contentGap: { height: 16')) fail('Banner ile içerik arasındaki 16 dp güvenli boşluk eksik.');
 if (!bannerSource.includes('style={styles.navigationGap}') || !bannerSource.includes('navigationGap: { height: 28')) fail('Banner ile alt gezinme arasındaki 28 dp güvenli boşluk eksik.');
+if (!bannerSource.includes("contentGap: { height: 16, backgroundColor: '#050814', borderTopWidth") || !bannerSource.includes("navigationGap: { height: 28, backgroundColor: '#050814', borderTopWidth")) fail('Banner güvenli boşluklarının görünür ayırıcı sınırları eksik.');
 if (!bannerSource.includes('RETRY_DELAY_MS = 45_000') || !bannerSource.includes('MAX_ATTEMPTS = 3')) fail('Banner kontrollü yeniden deneme koruması eksik.');
+if (!bannerSource.includes("AppState.addEventListener('change'") || !bannerSource.includes("state === 'active' && hidden")) fail('Android banner foreground kurtarma yolu eksik.');
 if (!readerSource.includes("edges={['bottom']}")) fail('PDF okuyucu alt araç çubuğu sistem güvenli alanını korumuyor.');
 if (!readerSource.includes('patchSettings({horizontal:!settings.horizontal})') || !readerSource.includes('patchSettings({invertPdfPages:!settings.invertPdfPages})')) fail('Okuyucu görünüm ayarları kalıcı AppContext ayarlarına bağlı değil.');
 if (!settingsSource.includes('showPrivacyOptionsForm()') || !settingsSource.includes('openPrivacyPolicy')) fail('Ayarlar ekranındaki reklam tercihleri veya gizlilik politikası bağlantısı eksik.');

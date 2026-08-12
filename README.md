@@ -80,6 +80,8 @@ Uygulama üç dilde çalışır. Tüm kullanıcıya görünen metinler tek dosya
 - Değişkenli: `t('home.quickFavDesc', { count })` — yer tutucular `{ad}` biçiminde
 - React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
 - Aktif dil `settings.language` içinde tutulur, **Ayarlar → DİL** bölümünden değiştirilir
+- İlk açılış dili `expo-localization` ile cihazın/uygulamanın yerel dilinden güvenilir biçimde algılanır
+- Android 13+ uygulama-bazlı dil menüsü tr/en/es sunar; simge adı İngilizcede **PDF Reader**, İspanyolcada **Lector PDF** olur
 - `en` ve `es` sözlükleri `Record<keyof typeof tr, string>` olarak tiplenmiştir, yani
   **bir anahtar eksik veya fazlaysa TypeScript derlemeyi durdurur**
 

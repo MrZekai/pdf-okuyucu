@@ -107,6 +107,16 @@ jobs:
       - name: AdMob App ID manifeste işlendi mi
         run: grep -Fq 'ca-app-pub-1380972808968213~3816043340' android/app/src/main/AndroidManifest.xml
 
+      - name: Android dil ve uygulama adı yerelleştirmesini doğrula
+        run: |
+          set -euo pipefail
+          grep -Fq '<locale android:name="tr"/>' android/app/src/main/res/xml/locales_config.xml
+          grep -Fq '<locale android:name="en"/>' android/app/src/main/res/xml/locales_config.xml
+          grep -Fq '<locale android:name="es"/>' android/app/src/main/res/xml/locales_config.xml
+          grep -Fq 'PDF Reader' android/app/src/main/res/values-b+en/strings.xml
+          grep -Fq 'Lector PDF' android/app/src/main/res/values-b+es/strings.xml
+          echo 'tr/en/es Android sistem dili ve yerelleştirilmiş uygulama adları hazır.'
+
       # ─── Standalone QA APK ────────────────────────────────────────────────────
       # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.
       - name: Gradle öncesi disk alanını kontrol et

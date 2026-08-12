@@ -30,6 +30,7 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 - In non-React modules (e.g. `lib/pdfFiles.ts`): import `{ t }` from `@/constants/i18n` (module-level active language).
 - The active language lives in `settings.language` (persisted via `lib/storage.ts`) and is switchable from the Settings screen.
 - `AppContext` mirrors it into the module-level language with `setActiveLanguage`.
+- `expo-localization`, `app.config.js > locales`, the `supportedLocales` config plugin and `locales/{tr,en,es}.json` are one native localisation unit. Do not remove one without intentionally removing all native app-language and localised app-name support.
 
 **Rules when adding any user-visible text:**
 1. Add the key to all three dictionaries in `constants/i18n.ts`.
