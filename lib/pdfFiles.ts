@@ -6,6 +6,7 @@ import { t } from '@/constants/i18n';
 const libraryDirectory = new Directory(Paths.document, 'pdf-reader-library');
 const documentPickerCache = new Directory(Paths.cache, 'DocumentPicker');
 const MAX_PDF_BYTES = 250 * 1024 * 1024;
+const FINGERPRINT_MAX_BYTES = 64 * 1024 * 1024;
 const MIN_FREE_DISK_BYTES = 32 * 1024 * 1024;
 const MAX_FILE_NAME_CHARS = 100;
 const MAX_FILE_NAME_BYTES = 180;
@@ -65,14 +66,18 @@ function validatePdfFile(file: File) {
 
 function createDocument(source: File, id: string, name: string, origin: PdfDocument['source'], sourceUri?: string): PdfDocument {
   const now = Date.now();
+  const size = source.size ?? undefined;
+  // File.md5 senkron bir getter'dir. Büyük PDF'lerde ana iş parçacığını
+  // bloke etmemek için boyut hash okunmadan önce kontrol edilir.
+  const digest = (size ?? 0) > 0 && (size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null;
   return {
     id,
     name: displayName(name),
     uri: source.uri,
     sourceUri,
-    fingerprint: source.md5 ? `md5:${source.md5}` : undefined,
+    fingerprint: digest ? `md5:${digest}` : undefined,
     source: origin,
-    size: source.size ?? undefined,
+    size,
     lastPage: 1,
     lastOpenedAt: now,
     createdAt: now,

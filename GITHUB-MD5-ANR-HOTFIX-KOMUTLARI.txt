@@ -1,0 +1,47 @@
+PDF OKUYUCU — MD5/ANR HOTFIX'INI GITHUB'A AKTARMA
+
+Bu hotfix üç kaynak dosyası içerir. package.json ve package-lock.json değişmez.
+Bu commit [skip ci] içermez; push sonrasında QA APK workflow'u bilinçli olarak çalışır.
+
+1) ZIP'i Downloads klasöründe açın:
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-md5-anr-hotfix.zip -d pdf-okuyucu-md5-anr-hotfix
+
+2) Mevcut depoya girin:
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+Beklenmeyen değişiklik varsa burada durun.
+
+3) Hotfix'i kopyalayın. Bu komutta exit yoktur; hata olsa bile Git Bash kapanmaz:
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-md5-anr-hotfix/project"
+
+if [ -f "$PATCH_DIR/lib/pdfFiles.ts" ] && [ -f "$PATCH_DIR/scripts/validate-release.mjs" ]; then
+  cp -a "$PATCH_DIR"/. .
+  echo "HOTFIX BASARIYLA KOPYALANDI"
+else
+  echo "HATA: Hotfix kaynak dosyalari bulunamadi"
+fi
+
+4) Kaynak kontrollerini çalıştırın:
+
+git --no-pager status --short
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+EXPO_NO_TELEMETRY=1 npm run doctor
+npm run release:check
+
+5) Bu kez QA derlemesini başlatmak için [skip ci] KULLANMADAN gönderin:
+
+git -c core.safecrlf=false add lib/pdfFiles.ts scripts/validate-release.mjs CLAUDE_REVIEW_ROUND4_RESOLUTION_TR.md GITHUB-MD5-ANR-HOTFIX-KOMUTLARI.txt
+git --no-pager diff --cached --stat
+git commit -m "Buyuk PDF MD5 ANR riskini gider"
+git push origin main
+
+6) GitHub Actions > Expo Android Build çalışmasını bekleyin.
+
+Yeşil olursa oluşan pdf-okuyucu-standalone-qa-apk-v<run_number> artifact'ını indirip gerçek cihazda test edin. QA testi geçmeden manuel build_release: true çalıştırmayın.

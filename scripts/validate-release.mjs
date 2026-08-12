@@ -10,7 +10,14 @@ const errors = [];
 
 function fail(message) { errors.push(message); }
 function exists(relativePath) { if (!fs.existsSync(path.join(root, relativePath))) fail(`Eksik dosya: ${relativePath}`); }
-function text(relativePath) { return fs.readFileSync(path.join(root, relativePath), 'utf8'); }
+function text(relativePath) {
+  const fullPath = path.join(root, relativePath);
+  if (!fs.existsSync(fullPath)) {
+    fail(`Eksik dosya: ${relativePath}`);
+    return '';
+  }
+  return fs.readFileSync(fullPath, 'utf8');
+}
 function pngSize(relativePath, expectedWidth, expectedHeight) {
   const fullPath = path.join(root, relativePath);
   if (!fs.existsSync(fullPath)) return fail(`Eksik PNG: ${relativePath}`);
@@ -93,7 +100,7 @@ if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includ
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
 if (!appContextSource.includes("AppState.addEventListener('change'") || !appContextSource.includes('saveDocuments(documentsRef.current)')) fail('Uygulama arka plana geçerken PDF kayıtlarını hemen kalıcılaştırma koruması eksik.');
-if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('fingerprint: source.md5')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini önleyen içerik özeti eksik.');
+if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('FINGERPRINT_MAX_BYTES') || !pdfFilesSource.includes('(size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini güvenli boyut eşiğinde önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');
 
