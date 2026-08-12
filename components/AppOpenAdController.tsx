@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, AppState, Image, Platform, StyleSheet, View } from 'react-native';
+import { usePathname } from 'expo-router';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
 
@@ -25,6 +26,7 @@ function getUnitId() {
 
 export function AppOpenAdController({ children }: { children: React.ReactNode }) {
   const adsReady = useAdsReady();
+  const pathname = usePathname();
   const [gateVisible, setGateVisible] = useState(true);
   const gateVisibleRef = useRef(true);
   const coldEligibleRef = useRef(false);
@@ -36,6 +38,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
   const loadedAtRef = useRef(0);
   const lastShownAtRef = useRef(0);
   const appStateRef = useRef(AppState.currentState);
+  const pathnameRef = useRef(pathname);
   const backgroundedAtRef = useRef(0);
   const showRef = useRef<() => void>(() => undefined);
 
@@ -60,7 +63,9 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     const unitId = getUnitId();
     if (!adsReady || !unitId || loadingRef.current || adRef.current) return;
     loadingRef.current = true;
-    const ad = AppOpenAd.createForAdRequest(unitId, { requestNonPersonalizedAdsOnly: false });
+    // UMP / Mobile Ads SDK decides the permitted privacy treatment. Do not force
+    // personalized requests when consent is unavailable or not granted.
+    const ad = AppOpenAd.createForAdRequest(unitId);
     adRef.current = ad;
     unsubscribeRef.current = ad.addAdEventsListener(({ type }) => {
       if (type === AdEventType.LOADED) {
@@ -106,6 +111,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
   }, [clearAd, finishColdGate]);
 
   useEffect(() => { showRef.current = showAd; }, [showAd]);
+  useEffect(() => { pathnameRef.current = pathname; }, [pathname]);
 
   useEffect(() => {
     let mounted = true;
@@ -130,8 +136,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!adsReady) return;
-    if (coldEligibleRef.current && gateVisibleRef.current) loadAd();
-    else loadAd();
+    loadAd();
   }, [adsReady, loadAd]);
 
   useEffect(() => {
@@ -142,6 +147,11 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       if (nextState === 'active' && previous !== 'active') {
         const waited = Date.now() - backgroundedAtRef.current;
         const frequencyCapPassed = Date.now() - lastShownAtRef.current >= AD_VALIDITY_MS;
+        if (pathnameRef.current.startsWith('/reader/')) {
+          opportunityRef.current = null;
+          loadAd();
+          return;
+        }
         if (waited >= MIN_BACKGROUND_MS && frequencyCapPassed && !showingRef.current) {
           opportunityRef.current = 'warm';
           if (adRef.current?.loaded && Date.now() - loadedAtRef.current < AD_VALIDITY_MS) showAd();

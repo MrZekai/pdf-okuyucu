@@ -30,6 +30,15 @@ if (!pdfViewIntent) fail('Android application/pdf VIEW intent-filter eksik.');
 const buildProperties = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-build-properties')?.[1]?.android;
 if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/minify etkin değil.');
 if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
+const localizationPlugin = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-localization')?.[1];
+for (const platform of ['android', 'ios']) {
+  const supported = localizationPlugin?.supportedLocales?.[platform] || [];
+  for (const language of ['tr', 'en', 'es']) if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
+}
+for (const language of ['tr', 'en', 'es']) {
+  if (!config.locales?.[language]) fail(`Yerelleştirilmiş uygulama adı yapılandırmasında ${language} eksik.`);
+  else exists(config.locales[language]);
+}
 
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
@@ -42,9 +51,14 @@ const i18nSource = text('constants/i18n.ts');
 const homeSource = text('app/(tabs)/index.tsx');
 const tabsSource = text('app/(tabs)/_layout.tsx');
 const readerSource = text('app/reader/[id].tsx');
+const bannerSource = text('components/AdBanner.tsx');
+const appOpenSource = text('components/AppOpenAdController.tsx');
 if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsiz ana ekran sloganı kaynakta kalmış.');
 if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
 if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
+if (!bannerSource.includes('style={styles.contentGap}') || !bannerSource.includes('height: 16')) fail('Banner ile uygulama içeriği arasındaki dokunulamaz tampon eksik.');
+if (!bannerSource.includes('style={styles.navigationGap}') || !bannerSource.includes('height: 28')) fail('Banner ile alt gezinme arasındaki dokunulamaz tampon eksik.');
+if (appOpenSource.includes('requestNonPersonalizedAdsOnly: false')) fail('App-open reklamı UMP kararını geçersiz kılan kişiselleştirme zorlaması içeriyor.');
 if (!readerSource.includes("edges={['bottom']}")) fail('PDF okuyucu alt araç çubuğu sistem güvenli alanını korumuyor.');
 
 pngSize('assets/icon.png', 1024, 1024);
@@ -53,6 +67,9 @@ pngSize('assets/monochrome-icon.png', 1024, 1024);
 pngSize('play-store/icon-512.png', 512, 512);
 pngSize('play-store/feature-graphic-1024x500.png', 1024, 500);
 for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
+for (const locale of ['en-US', 'es-ES']) {
+  for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/${locale}/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
+}
 for (const locale of ['tr-TR', 'en-US', 'es-ES']) exists(`play-store/listings/${locale}.txt`);
 exists('docs/privacy-policy.html');
 exists('docs/app-ads.txt');
@@ -62,4 +79,4 @@ if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, 4 mağaza ekranı hazır.`);
+console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, tr/en/es cihaz dili ve 12 yerelleştirilmiş mağaza ekranı hazır.`);

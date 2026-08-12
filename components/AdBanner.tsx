@@ -24,6 +24,7 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
 
   return (
     <View style={styles.container}>
+      {separateFromNavigation ? <View pointerEvents="none" style={styles.contentGap} /> : null}
       <View style={styles.shell}>
       <BannerAd
         ref={ref}
@@ -39,6 +40,12 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
 
 const styles = StyleSheet.create({
   container: { width: '100%', backgroundColor: '#080C18' },
+  contentGap: {
+    height: 16,
+    backgroundColor: '#050814',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(148,163,184,0.18)'
+  },
   shell: {
     minHeight: 58,
     width: '100%',
@@ -48,5 +55,12 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(148,163,184,0.16)'
   },
-  navigationGap: { height: 12, backgroundColor: '#0B1020' }
+  navigationGap: {
+    height: 28,
+    backgroundColor: '#050814',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(148,163,184,0.18)',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(148,163,184,0.18)'
+  }
 });

@@ -34,7 +34,7 @@
     <rect x="54" y="1355" width="972" height="126" rx="38" fill="#11192B" stroke="#27304A" stroke-width="2"/>
     <rect x="82" y="1377" width="82" height="82" rx="26" fill="#F87171" fill-opacity=".08"/><path d="M101 1400h44M111 1400v-12h24v12M106 1400l6 39h22l6-39" fill="none" stroke="#F87171" stroke-width="4"/>
     <text x="193" y="1409" fill="#FCA5A5" font-size="27" font-weight="800">Kütüphaneyi temizle</text><text x="193" y="1446" fill="#6F7D95" font-size="20">Yerel PDF kopyalarını ve geçmişi sil</text>
-    <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
+    <rect x="0" y="1604" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><rect x="0" y="1720" width="1080" height="50" fill="#050814" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
     <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Ana Sayfa</text><text x="405" y="1872" fill="#64748B">Kütüphane</text><text x="675" y="1872" fill="#64748B">Favoriler</text><text x="945" y="1872" fill="#F8FAFC">Ayarlar</text></g>
   </g>

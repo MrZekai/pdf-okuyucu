@@ -1,3 +1,5 @@
+import { getLocales } from 'expo-localization';
+
 export const languages = ['tr', 'en', 'es'] as const;
 
 export type AppLanguage = (typeof languages)[number];
@@ -21,7 +23,6 @@ const tr = {
   'tabs.settings': 'Ayarlar',
 
   'home.eyebrow': 'PDF OKUYUCU',
-  'home.welcome': 'Gizliliğiniz önceliğimiz.',
   'home.heroPill': 'HIZLI • GİZLİ • CİHAZINDA',
   'home.heroTitle': 'PDF’lerini\nanında aç.',
   'home.heroText': 'Karmaşa yok. Hesap yok. Belgeni seç ve okumaya başla.',
@@ -150,7 +151,6 @@ const en: Record<keyof typeof tr, string> = {
   'tabs.settings': 'Settings',
 
   'home.eyebrow': 'PDF READER',
-  'home.welcome': 'Your privacy comes first.',
   'home.heroPill': 'FAST • PRIVATE • ON DEVICE',
   'home.heroTitle': 'Open your PDFs\nin an instant.',
   'home.heroText': 'No clutter. No account. Pick a document and start reading.',
@@ -279,7 +279,6 @@ const es: Record<keyof typeof tr, string> = {
   'tabs.settings': 'Ajustes',
 
   'home.eyebrow': 'LECTOR DE PDF',
-  'home.welcome': 'Tu privacidad es lo primero.',
   'home.heroPill': 'RÁPIDO • PRIVADO • EN EL DISPOSITIVO',
   'home.heroTitle': 'Abre tus PDF\nal instante.',
   'home.heroText': 'Sin desorden. Sin cuenta. Elige un documento y empieza a leer.',
@@ -435,14 +434,13 @@ export function isAppLanguage(value: unknown): value is AppLanguage {
   return typeof value === 'string' && (languages as readonly string[]).includes(value);
 }
 
-/** Best-effort device language without adding a dependency. Falls back to Turkish. */
+/** Reads the native device/app language. Unsupported locales fall back to Turkish. */
 export function detectDeviceLanguage(): AppLanguage {
   try {
-    const resolved = Intl.DateTimeFormat().resolvedOptions().locale ?? '';
-    const short = resolved.slice(0, 2).toLowerCase();
+    const short = getLocales()[0]?.languageCode?.toLowerCase();
     if (isAppLanguage(short)) return short;
   } catch {
-    // Intl is not guaranteed on every Hermes build; Turkish stays the default.
+    // Native locale lookup must never block app startup.
   }
   return 'tr';
 }

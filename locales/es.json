@@ -1,0 +1,8 @@
+{
+  "android": {
+    "app_name": "Lector PDF"
+  },
+  "ios": {
+    "CFBundleDisplayName": "Lector PDF"
+  }
+}
