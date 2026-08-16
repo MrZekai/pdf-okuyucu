@@ -22,8 +22,9 @@ export default function TabsLayout() {
       }}>
         <Tabs.Screen name="index" options={{ title: t('tabs.home'), tabBarIcon: ({ color }) => <AppIcon name="home" size={21} color={color}/> }} />
         <Tabs.Screen name="library" options={{ title: t('tabs.library'), tabBarIcon: ({ color }) => <AppIcon name="library" size={21} color={color}/> }} />
-        <Tabs.Screen name="favorites" options={{ title: t('tabs.favorites'), tabBarIcon: ({ color }) => <AppIcon name="heart" size={21} color={color}/> }} />
+        <Tabs.Screen name="tools" options={{ title: t('tabs.tools'), tabBarIcon: ({ color }) => <AppIcon name="tools" size={21} color={color}/> }} />
         <Tabs.Screen name="settings" options={{ title: t('tabs.settings'), tabBarIcon: ({ color }) => <AppIcon name="settings" size={21} color={color}/> }} />
+        <Tabs.Screen name="favorites" options={{ href: null }} />
       </Tabs>
     </View>
   );

@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
 import { cleanupPdfImportCache, deletePdfFile, downloadPdfFromUrl, importPdfFromUri, pickPdfFromDevice } from '@/lib/pdfFiles';
+import { clearToolUsage } from '@/lib/toolUsage';
 import { setActiveLanguage } from '@/constants/i18n';
 
 type AppContextValue = {
@@ -13,6 +14,7 @@ type AppContextValue = {
   openPicker: () => Promise<PdfDocument | null>;
   addFromUrl: (url: string) => Promise<PdfDocument>;
   addFromExternalUri: (uri: string) => Promise<PdfDocument>;
+  addGeneratedDocument: (document: PdfDocument) => void;
   getDocument: (id: string) => PdfDocument | undefined;
   touchDocument: (id: string) => void;
   updateProgress: (id: string, page: number, pageCount?: number) => void;
@@ -142,6 +144,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return doc;
   }, [updateDocumentsState]);
 
+  const addGeneratedDocument = useCallback((document: PdfDocument) => {
+    updateDocumentsState((current) => [document, ...current]);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+  }, [updateDocumentsState]);
+
   const getDocument = useCallback((id: string) => documents.find((doc) => doc.id === id), [documents]);
 
   const touchDocument = useCallback((id: string) => {
@@ -173,6 +180,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const targets = documentsRef.current.map((doc) => doc.uri);
     updateDocumentsState(() => []);
     targets.forEach(deletePdfFile);
+    clearToolUsage().catch(() => undefined);
   }, [updateDocumentsState]);
 
   const patchSettings = useCallback((patch: Partial<ReaderSettings>) => {
@@ -180,9 +188,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(() => ({
-    ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, getDocument, touchDocument,
+    ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, addGeneratedDocument, getDocument, touchDocument,
     updateProgress, toggleFavorite, removeDocument, clearHistory, patchSettings
-  }), [ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, getDocument, touchDocument,
+  }), [ready, documents, settings, openPicker, addFromUrl, addFromExternalUri, addGeneratedDocument, getDocument, touchDocument,
       updateProgress, toggleFavorite, removeDocument, clearHistory, patchSettings]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

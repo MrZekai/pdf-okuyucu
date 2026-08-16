@@ -1,6 +1,3 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <path d="M285 172h278l152 152v466H285zM563 172v152h152" fill="none" stroke="#fff" stroke-width="56" stroke-linejoin="round"/>
-  <path d="M360 450h280M360 540h216M360 620h250" fill="none" stroke="#fff" stroke-width="36" stroke-linecap="round"/>
-  <circle cx="690" cy="736" r="100" fill="#fff"/>
-  <path d="M642 736l31 31 65-74" fill="none" stroke="#000" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(512 512) scale(.73) translate(-498 -512)"><g><path d="M280 130h332l152 152v568a48 48 0 0 1-48 48H280a48 48 0 0 1-48-48V178a48 48 0 0 1 48-48z" fill="#FFFFFF"/></g><path d="M612 130l152 152h-116a36 36 0 0 1-36-36z" fill="#FFFFFF"/><text x="498" y="612" font-family="DejaVu Sans, sans-serif" font-size="210" font-weight="bold" fill="#000000" text-anchor="middle">PDF</text><rect x="330" y="690" width="336" height="22" rx="11" fill="#000000" opacity="1"/><rect x="330" y="742" width="240" height="22" rx="11" fill="#000000" opacity="1"/></g>
 </svg>

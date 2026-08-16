@@ -6,7 +6,7 @@ import { t } from '@/constants/i18n';
 const libraryDirectory = new Directory(Paths.document, 'pdf-reader-library');
 const documentPickerCache = new Directory(Paths.cache, 'DocumentPicker');
 const MAX_PDF_BYTES = 250 * 1024 * 1024;
-const FINGERPRINT_MAX_BYTES = 64 * 1024 * 1024;
+const FINGERPRINT_MAX_BYTES = 24 * 1024 * 1024;
 const MIN_FREE_DISK_BYTES = 32 * 1024 * 1024;
 const MAX_FILE_NAME_CHARS = 100;
 const MAX_FILE_NAME_BYTES = 180;
@@ -46,6 +46,26 @@ function displayName(name: string) {
 
 function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+// Blocks loopback / private / link-local hosts so a user-pasted (or shared) URL
+// cannot be used to probe the local network. Public hosts are allowed as before.
+function isBlockedHost(hostname: string) {
+  const host = hostname.toLowerCase().replace(/^\[|\]$/g, '');
+  if (!host || host === 'localhost' || host.endsWith('.local') || host.endsWith('.internal')) return true;
+  if (host === '::1' || host === '0.0.0.0') return true;
+  if (host.startsWith('fe80') || host.startsWith('fc') || host.startsWith('fd')) return true;
+  const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (ipv4) {
+    const a = Number(ipv4[1]);
+    const b = Number(ipv4[2]);
+    if (a === 0 || a === 10 || a === 127) return true;
+    if (a === 169 && b === 254) return true;
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a === 100 && b >= 64 && b <= 127) return true;
+  }
+  return false;
 }
 
 function validatePdfFile(file: File) {
@@ -144,6 +164,25 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
   return createDocument(destination, id, asset.name || t('files.defaultName'), 'device', asset.uri);
 }
 
+/** Saves a tool-generated PDF as a new library item without mutating its source. */
+export function saveGeneratedPdf(bytes: Uint8Array, requestedName: string): PdfDocument {
+  if (!bytes.length || bytes.length > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
+  if (Paths.availableDiskSpace < bytes.length + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
+  ensureLibrary();
+  const id = makeId();
+  const name = safeName(requestedName);
+  const destination = new File(libraryDirectory, `${id}-${name}`);
+  try {
+    destination.create({ overwrite: false, intermediates: true });
+    destination.write(bytes);
+    validatePdfFile(destination);
+  } catch (error) {
+    if (destination.exists) destination.delete();
+    throw error;
+  }
+  return createDocument(destination, id, name, 'device');
+}
+
 export async function importPdfFromUri(uri: string): Promise<PdfDocument> {
   if (!/^(content|file):/i.test(uri)) throw new Error(t('files.invalidPdf'));
   ensureLibrary();
@@ -172,6 +211,7 @@ export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
     throw new Error(t('files.invalidUrl'));
   }
   if (parsed.protocol !== 'https:') throw new Error(t('files.onlyHttps'));
+  if (isBlockedHost(parsed.hostname)) throw new Error(t('files.blockedHost'));
   const normalizedUrl = parsed.toString();
   const availableDiskAtStart = await preflightRemotePdf(normalizedUrl);
   ensureLibrary();

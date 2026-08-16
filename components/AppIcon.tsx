@@ -1,19 +1,22 @@
 import React from 'react';
 import { ColorValue } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
+import { useRtl } from '@/context/DirectionContext';
 
 type IconName =
   | 'home' | 'library' | 'heart' | 'settings' | 'file' | 'plus' | 'link'
   | 'search' | 'chevronRight' | 'back' | 'share' | 'trash' | 'moon'
   | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
-  | 'check' | 'close' | 'download' | 'info';
+  | 'check' | 'close' | 'download' | 'info' | 'tools' | 'reorder';
 
 type Props = { name: IconName; size?: number; color?: ColorValue; strokeWidth?: number };
 
 export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 }: Props) {
+  const rtl = useRtl();
+  const mirror = rtl && (name === 'chevronRight' || name === 'back');
   const p = { fill: 'none', stroke: color, strokeWidth, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Svg width={size} height={size} viewBox="0 0 24 24" style={mirror ? { transform: [{ scaleX: -1 }] } : undefined}>
       {name === 'home' && <><Path {...p} d="M3 10.7 12 3l9 7.7"/><Path {...p} d="M5.5 9.8V21h13V9.8"/><Path {...p} d="M9.5 21v-6h5v6"/></>}
       {name === 'library' && <><Rect {...p} x="4" y="3" width="5" height="18" rx="1"/><Rect {...p} x="10" y="5" width="5" height="16" rx="1"/><Path {...p} d="m16.5 5 3.2-1 3.2 15.5-3.2.7z"/></>}
       {name === 'heart' && <Path {...p} d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>}
@@ -36,6 +39,8 @@ export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 
       {name === 'close' && <Path {...p} d="M6 6l12 12M18 6 6 18"/>}
       {name === 'download' && <><Path {...p} d="M12 3v12M7 10l5 5 5-5"/><Path {...p} d="M5 21h14"/></>}
       {name === 'info' && <><Circle {...p} cx="12" cy="12" r="9"/><Path {...p} d="M12 11v6M12 7h.01"/></>}
+      {name === 'tools' && <><Path {...p} d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5L20 16.4a2.5 2.5 0 0 1-3.6 3.6l-7.7-7.7a4 4 0 0 0-5-5L6 9.6 8.4 7 6.1 4.7"/><Circle {...p} cx="18" cy="18" r=".7"/></>}
+      {name === 'reorder' && <><Path {...p} d="M8 6h12M8 12h12M8 18h12"/><Path {...p} d="m3 7 2-2 2 2M5 5v14m-2-2 2 2 2-2"/></>}
     </Svg>
   );
 }

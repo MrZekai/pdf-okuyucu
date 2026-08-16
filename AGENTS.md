@@ -14,26 +14,27 @@ The owner has a very limited Emergent credit budget. Read this file fully before
 8. Keep every requested change local, minimal and reversible.
 9. Before editing, identify the exact files required. Prefer 1-3 touched files per small task.
 10. Run only the checks needed. `npm run check` (i18n + tsc) is cheap and offline — prefer it over repeated builds.
-11. Preserve the fixed bottom AdMob banner area on Home, Library, Favorites, Settings and Reader.
+11. Preserve the fixed bottom AdMob banner area on Home, Library, Tools, Settings and Reader.
 12. Never use production AdMob IDs during development. TestIds are intentionally used in dev/fallback mode.
 13. Protect user files: a PDF-reading failure must never delete the source file or crash the app.
 14. Preserve the app-open ad safeguards: development TestIds, cold-start loading gate, first eligibility on launch 3, and four-hour cap.
 15. Do not reintroduce `SYSTEM_ALERT_WINDOW`, `READ_EXTERNAL_STORAGE` or `WRITE_EXTERNAL_STORAGE`; the SAF document picker does not need them.
 
-## Localisation — 3 languages, hard requirement
-The app ships in **Turkish (tr), English (en), Spanish (es)**.
+## Localisation — 14 languages, hard requirement
+The app ships in **English, Turkish, Spanish, Portuguese, German, French, Italian, Russian, Hindi, Indonesian, Arabic, Japanese, Korean and Simplified Chinese**.
 
-- **Single source of truth:** `constants/i18n.ts`. Three dictionaries: `tr`, `en`, `es`.
-- `en` and `es` are typed as `Record<keyof typeof tr, string>`, so **TypeScript fails the build if a key is missing or extra**. Key parity is compiler-enforced, not a convention.
+- **Language contract:** `constants/i18n.ts`; additional dictionaries are in `constants/translations/`.
+- Every dictionary is typed as `Record<keyof typeof tr, string>`, so **TypeScript fails the build if a key is missing or extra**. Key parity is compiler-enforced, not a convention.
 - In components: `const { t } = useTranslation();` then `t('home.openPdf')`.
 - With variables: `t('home.quickFavDesc', { count })` — placeholders are `{name}` style.
 - In non-React modules (e.g. `lib/pdfFiles.ts`): import `{ t }` from `@/constants/i18n` (module-level active language).
 - The active language lives in `settings.language` (persisted via `lib/storage.ts`) and is switchable from the Settings screen.
 - `AppContext` mirrors it into the module-level language with `setActiveLanguage`.
-- `expo-localization`, `app.config.js > locales`, the `supportedLocales` config plugin and `locales/{tr,en,es}.json` are one native localisation unit. Do not remove one without intentionally removing all native app-language and localised app-name support.
+- Unsupported device languages and missing translation keys fall back to English.
+- `expo-localization`, `app.config.js > locales`, the `supportedLocales` config plugin and `locales/*.json` are one native localisation unit. Do not remove one without intentionally removing all native app-language and localised app-name support.
 
 **Rules when adding any user-visible text:**
-1. Add the key to all three dictionaries in `constants/i18n.ts`.
+1. Add the key to all 14 dictionaries.
 2. Never inline a literal string in a screen or component.
 3. Run `npm run i18n:check` — it fails on key drift, placeholder drift, and any leftover hardcoded Turkish literal.
 
@@ -42,16 +43,18 @@ The app ships in **Turkish (tr), English (en), Spanish (es)**.
 - `app/(tabs)/_layout.tsx` — tab bar (titles translated)
 - `app/(tabs)/index.tsx` — premium home/dashboard
 - `app/(tabs)/library.tsx` — searchable local library (locale-aware search)
-- `app/(tabs)/favorites.tsx` — favorite documents
+- `app/(tabs)/tools.tsx` — six real on-device PDF tools
 - `app/(tabs)/settings.tsx` — language selector + reader / privacy settings
 - `app/reader/[id].tsx` — native PDF reader
-- `constants/i18n.ts` — **all user-facing strings, 3 languages**
+- `constants/i18n.ts` + `constants/translations/` — **all user-facing strings, 14 languages**
 - `constants/theme.ts` — colour palette
 - `context/AppContext.tsx` — app state, persistence, language sync
 - `context/AdsContext.tsx` — ads readiness
 - `hooks/useTranslation.ts` — screen-level translator
 - `hooks/useAdsBootstrap.ts` — UMP consent + Mobile Ads init
 - `lib/pdfFiles.ts` — picking/downloading/local copies
+- `lib/pdfTools.ts` — merge/extract/remove/reorder/rotate/metadata cleanup
+- `lib/toolUsage.ts` — private local tool-usage ranking
 - `lib/storage.ts` — AsyncStorage persistence + defaults
 - `components/AdBanner.tsx` — fixed AdMob banner
 - `components/AppOpenAdController.tsx` — policy-conscious cold/warm app-open ad lifecycle

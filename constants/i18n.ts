@@ -1,25 +1,59 @@
 import { getLocales } from 'expo-localization';
+import ptRaw from './translations/pt';
+import deRaw from './translations/de';
+import frRaw from './translations/fr';
+import itRaw from './translations/it';
+import ruRaw from './translations/ru';
+import hiRaw from './translations/hi';
+import idRaw from './translations/id';
+import arRaw from './translations/ar';
+import jaRaw from './translations/ja';
+import koRaw from './translations/ko';
+import zhRaw from './translations/zh';
 
-export const languages = ['tr', 'en', 'es'] as const;
+export const languages = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'] as const;
 
 export type AppLanguage = (typeof languages)[number];
 
 export const languageLabels: Record<AppLanguage, string> = {
   tr: 'Türkçe',
   en: 'English',
-  es: 'Español'
+  es: 'Español',
+  pt: 'Português',
+  de: 'Deutsch',
+  fr: 'Français',
+  it: 'Italiano',
+  ru: 'Русский',
+  hi: 'हिन्दी',
+  id: 'Bahasa Indonesia',
+  ar: 'العربية',
+  ja: '日本語',
+  ko: '한국어',
+  zh: '简体中文'
 };
 
 export const languageTags: Record<AppLanguage, string> = {
   tr: 'tr-TR',
   en: 'en-US',
-  es: 'es-ES'
+  es: 'es-ES',
+  pt: 'pt-BR',
+  de: 'de-DE',
+  fr: 'fr-FR',
+  it: 'it-IT',
+  ru: 'ru-RU',
+  hi: 'hi-IN',
+  id: 'id-ID',
+  ar: 'ar-SA',
+  ja: 'ja-JP',
+  ko: 'ko-KR',
+  zh: 'zh-CN'
 };
 
 const tr = {
+  'app.name': 'PDF Okuyucu',
   'tabs.home': 'Ana Sayfa',
   'tabs.library': 'Kütüphane',
-  'tabs.favorites': 'Favoriler',
+  'tabs.tools': 'Araçlar',
   'tabs.settings': 'Ayarlar',
 
   'home.eyebrow': 'PDF OKUYUCU',
@@ -35,13 +69,6 @@ const tr = {
   'home.quickTitle': 'Ne yapmak istersin?',
   'home.quickOpenTitle': 'PDF Aç',
   'home.quickOpenDesc': 'Cihazdan seç',
-  'home.quickUrlTitle': 'URL’den',
-  'home.quickUrlDesc': 'İndir ve oku',
-  'home.quickFavTitle': 'Favoriler',
-  'home.quickFavDescOne': '1 belge',
-  'home.quickFavDesc': '{count} belge',
-  'home.quickSettingsTitle': 'Okuma Ayarı',
-  'home.quickSettingsDesc': 'Görünümü seç',
   'home.statDocuments': 'Belge',
   'home.statPages': 'Sayfa ilerlemesi',
   'home.statFavorites': 'Favori',
@@ -62,12 +89,47 @@ const tr = {
   'library.noMatchText': 'Başka bir dosya adı deneyin.',
   'library.emptyTitle': 'Kütüphane boş',
   'library.emptyText': 'PDF Aç düğmesiyle ilk belgenizi ekleyin.',
+  'library.filterAll': 'Tümü',
+  'library.filterFavorites': 'Favoriler',
 
   'favorites.kicker': 'FAVORİLER',
   'favorites.title': 'Önemli belgeler',
   'favorites.subtitle': 'Sık döndüğün PDF’leri tek yerde tut.',
   'favorites.emptyTitle': 'Henüz favori yok',
   'favorites.emptyText': 'Bir belgenin kalp simgesine dokunduğunda burada görünecek.',
+
+  'tools.kicker': 'PDF ARAÇLARI',
+  'tools.title': 'Cihazında düzenle',
+  'tools.subtitle': 'Dosyaların yüklenmeden, yalnızca bu cihazda işlenir.',
+  'tools.localOnly': 'ÇEVRİMDIŞI • YÜKLEME YOK',
+  'tools.mergeTitle': 'PDF birleştir',
+  'tools.mergeDesc': 'Birden fazla PDF’yi tek dosyada birleştir',
+  'tools.extractTitle': 'Sayfaları ayır',
+  'tools.extractDesc': 'Seçtiğin sayfaları yeni PDF olarak çıkar',
+  'tools.removeTitle': 'Sayfa sil',
+  'tools.removeDesc': 'İstemediğin sayfaları bir kopyadan kaldır',
+  'tools.reorderTitle': 'Sayfaları sırala',
+  'tools.reorderDesc': 'Tüm sayfalar için yeni bir sıra belirle',
+  'tools.rotateTitle': 'Sayfaları döndür',
+  'tools.rotateDesc': 'Tüm sayfaları saat yönünde 90° döndür',
+  'tools.cleanTitle': 'Meta veriyi temizle',
+  'tools.cleanDesc': 'Başlık, yazar ve konu alanlarını kaldır',
+  'tools.rangeTitle': 'Sayfa aralığı',
+  'tools.rangeMessage': 'Örnek: 1-3, 5, 8-10',
+  'tools.rangePlaceholder': '1-3, 5',
+  'tools.orderMessage': 'Her sayfayı bir kez yaz. Örnek: 3, 1-2, 4',
+  'tools.orderPlaceholder': '3, 1-2, 4',
+  'tools.run': 'Devam et',
+  'tools.processing': 'PDF işleniyor…',
+  'tools.successTitle': 'Yeni PDF hazır',
+  'tools.successMessage': '“{name}” cihazındaki kütüphaneye eklendi.',
+  'tools.errorTitle': 'İşlem tamamlanamadı',
+  'tools.genericError': 'Bu PDF işlenemedi. Dosya bozuk veya parola korumalı olabilir.',
+  'tools.minimumMerge': 'Birleştirmek için en az iki PDF seçin.',
+  'tools.invalidRange': 'Geçerli bir sayfa aralığı girin.',
+  'tools.removeAll': 'Bir PDF’nin tüm sayfaları silinemez.',
+  'tools.invalidOrder': 'Yeni sıra, PDF’deki her sayfayı yalnızca bir kez içermelidir.',
+  'tools.tooLarge': 'PDF araçları için toplam dosya boyutu 80 MB’ı geçemez.',
 
   'settings.kicker': 'AYARLAR',
   'settings.title': 'Senin okuma alanın',
@@ -80,6 +142,8 @@ const tr = {
   'settings.nightTitle': 'PDF sayfa gece modu',
   'settings.nightDesc': 'Yalnızca PDF sayfalarının renklerini ters çevirir',
   'settings.languageSection': 'DİL',
+  'settings.languageSearch': 'Dil ara',
+  'settings.languageNoMatch': 'Eşleşen dil bulunamadı',
   'settings.adsSection': 'REKLAM & GİZLİLİK',
   'settings.consentTitle': 'Reklam izinlerini yenile',
   'settings.consentDesc': 'Google UMP izin durumunu yeniden kontrol et',
@@ -140,6 +204,8 @@ const tr = {
   'common.cancel': 'Vazgeç',
   'common.delete': 'Sil',
   'common.clear': 'Temizle',
+  'common.open': 'Aç',
+  'common.done': 'Tamam',
 
   'files.invalidUrl': 'Geçersiz bağlantı. https:// ile başlayan bir PDF adresi girin.',
   'files.onlyHttps': 'Güvenliğiniz için yalnızca https bağlantıları desteklenir.',
@@ -149,13 +215,36 @@ const tr = {
   'files.tooLarge': 'PDF dosyası 250 MB sınırını aşıyor.',
   'files.notEnoughSpace': 'Bu PDF için cihazda yeterli boş alan yok.',
   'files.defaultName': 'Belge.pdf',
-  'files.webName': 'internet-belgesi.pdf'
+  'files.webName': 'internet-belgesi.pdf',
+  'files.blockedHost': 'Bu adres güvenlik nedeniyle engellendi. Herkese açık bir bağlantı kullanın.',
+
+  'reader.lastPageHint': 'En son {page}. sayfadaydın',
+  'reader.lockedTitle': 'Şifreli belge',
+  'reader.lockedText': 'Bu PDF şifreyle korunuyor. Görüntülemek için şifreyi girin.',
+  'reader.enterPassword': 'Şifreyi gir',
+  'reader.passwordIncorrect': 'Şifre yanlış. Tekrar deneyin.',
+
+  'home.continueResume': 'Kaldığın yer: {page}. sayfa',
+
+  'errorBoundary.title': 'Bir şeyler ters gitti',
+  'errorBoundary.text': 'Uygulama beklenmedik bir sorunla karşılaştı. Yeniden deneyebilirsin.',
+  'errorBoundary.retry': 'Yeniden dene',
+
+  'a11y.goBack': 'Geri dön',
+  'a11y.addToFavorites': 'Favorilere ekle',
+  'a11y.removeFromFavorites': 'Favorilerden çıkar',
+  'a11y.share': 'PDF’yi paylaş',
+  'a11y.delete': 'Belgeyi sil',
+  'a11y.close': 'Kapat',
+  'a11y.addPdf': 'PDF ekle',
+  'a11y.clearSearch': 'Aramayı temizle'
 };
 
 const en: Record<keyof typeof tr, string> = {
+  'app.name': 'PDF Reader',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
-  'tabs.favorites': 'Favorites',
+  'tabs.tools': 'Tools',
   'tabs.settings': 'Settings',
 
   'home.eyebrow': 'PDF READER',
@@ -171,13 +260,6 @@ const en: Record<keyof typeof tr, string> = {
   'home.quickTitle': 'What would you like to do?',
   'home.quickOpenTitle': 'Open PDF',
   'home.quickOpenDesc': 'Pick from device',
-  'home.quickUrlTitle': 'From URL',
-  'home.quickUrlDesc': 'Download and read',
-  'home.quickFavTitle': 'Favorites',
-  'home.quickFavDescOne': '1 document',
-  'home.quickFavDesc': '{count} documents',
-  'home.quickSettingsTitle': 'Reading Setup',
-  'home.quickSettingsDesc': 'Choose your view',
   'home.statDocuments': 'Documents',
   'home.statPages': 'Page progress',
   'home.statFavorites': 'Favorites',
@@ -198,12 +280,47 @@ const en: Record<keyof typeof tr, string> = {
   'library.noMatchText': 'Try a different file name.',
   'library.emptyTitle': 'Library is empty',
   'library.emptyText': 'Use the Open PDF button to add your first document.',
+  'library.filterAll': 'All',
+  'library.filterFavorites': 'Favorites',
 
   'favorites.kicker': 'FAVORITES',
   'favorites.title': 'Documents that matter',
   'favorites.subtitle': 'Keep the PDFs you return to in one place.',
   'favorites.emptyTitle': 'No favorites yet',
   'favorites.emptyText': 'Tap the heart icon on a document and it will appear here.',
+
+  'tools.kicker': 'PDF TOOLS',
+  'tools.title': 'Edit on your device',
+  'tools.subtitle': 'Your files are processed only on this device and are never uploaded.',
+  'tools.localOnly': 'OFFLINE • NO UPLOADS',
+  'tools.mergeTitle': 'Merge PDFs',
+  'tools.mergeDesc': 'Combine multiple PDFs into one file',
+  'tools.extractTitle': 'Extract pages',
+  'tools.extractDesc': 'Create a new PDF from selected pages',
+  'tools.removeTitle': 'Remove pages',
+  'tools.removeDesc': 'Delete unwanted pages from a copy',
+  'tools.reorderTitle': 'Reorder pages',
+  'tools.reorderDesc': 'Choose a new order for every page',
+  'tools.rotateTitle': 'Rotate pages',
+  'tools.rotateDesc': 'Rotate every page 90° clockwise',
+  'tools.cleanTitle': 'Clean metadata',
+  'tools.cleanDesc': 'Remove title, author and subject fields',
+  'tools.rangeTitle': 'Page range',
+  'tools.rangeMessage': 'Example: 1-3, 5, 8-10',
+  'tools.rangePlaceholder': '1-3, 5',
+  'tools.orderMessage': 'Include every page once. Example: 3, 1-2, 4',
+  'tools.orderPlaceholder': '3, 1-2, 4',
+  'tools.run': 'Continue',
+  'tools.processing': 'Processing PDF…',
+  'tools.successTitle': 'Your new PDF is ready',
+  'tools.successMessage': '“{name}” was added to the library on this device.',
+  'tools.errorTitle': 'Could not complete the task',
+  'tools.genericError': 'This PDF could not be processed. It may be damaged or password protected.',
+  'tools.minimumMerge': 'Select at least two PDFs to merge.',
+  'tools.invalidRange': 'Enter a valid page range.',
+  'tools.removeAll': 'A PDF cannot have all of its pages removed.',
+  'tools.invalidOrder': 'The new order must include every page in the PDF exactly once.',
+  'tools.tooLarge': 'The total file size for PDF tools cannot exceed 80 MB.',
 
   'settings.kicker': 'SETTINGS',
   'settings.title': 'Your reading space',
@@ -216,6 +333,8 @@ const en: Record<keyof typeof tr, string> = {
   'settings.nightTitle': 'PDF page night mode',
   'settings.nightDesc': 'Only inverts the colours of PDF pages',
   'settings.languageSection': 'LANGUAGE',
+  'settings.languageSearch': 'Search languages',
+  'settings.languageNoMatch': 'No matching language',
   'settings.adsSection': 'ADS & PRIVACY',
   'settings.consentTitle': 'Refresh ad consent',
   'settings.consentDesc': 'Re-check the Google UMP consent state',
@@ -276,6 +395,8 @@ const en: Record<keyof typeof tr, string> = {
   'common.cancel': 'Cancel',
   'common.delete': 'Delete',
   'common.clear': 'Clear',
+  'common.open': 'Open',
+  'common.done': 'Done',
 
   'files.invalidUrl': 'Invalid link. Enter a PDF address starting with https://.',
   'files.onlyHttps': 'For your security, only https links are supported.',
@@ -285,13 +406,36 @@ const en: Record<keyof typeof tr, string> = {
   'files.tooLarge': 'The PDF exceeds the 250 MB limit.',
   'files.notEnoughSpace': 'There is not enough free space on this device for the PDF.',
   'files.defaultName': 'Document.pdf',
-  'files.webName': 'web-document.pdf'
+  'files.webName': 'web-document.pdf',
+  'files.blockedHost': 'This address is blocked for security. Use a public link.',
+
+  'reader.lastPageHint': 'You were last on page {page}',
+  'reader.lockedTitle': 'Protected document',
+  'reader.lockedText': 'This PDF is password protected. Enter the password to view it.',
+  'reader.enterPassword': 'Enter password',
+  'reader.passwordIncorrect': 'Incorrect password. Please try again.',
+
+  'home.continueResume': 'You left off on page {page}',
+
+  'errorBoundary.title': 'Something went wrong',
+  'errorBoundary.text': 'The app hit an unexpected problem. You can try again.',
+  'errorBoundary.retry': 'Try again',
+
+  'a11y.goBack': 'Go back',
+  'a11y.addToFavorites': 'Add to favorites',
+  'a11y.removeFromFavorites': 'Remove from favorites',
+  'a11y.share': 'Share PDF',
+  'a11y.delete': 'Delete document',
+  'a11y.close': 'Close',
+  'a11y.addPdf': 'Add PDF',
+  'a11y.clearSearch': 'Clear search'
 };
 
 const es: Record<keyof typeof tr, string> = {
+  'app.name': 'Lector PDF',
   'tabs.home': 'Inicio',
   'tabs.library': 'Biblioteca',
-  'tabs.favorites': 'Favoritos',
+  'tabs.tools': 'Herramientas',
   'tabs.settings': 'Ajustes',
 
   'home.eyebrow': 'LECTOR DE PDF',
@@ -307,13 +451,6 @@ const es: Record<keyof typeof tr, string> = {
   'home.quickTitle': '¿Qué quieres hacer?',
   'home.quickOpenTitle': 'Abrir PDF',
   'home.quickOpenDesc': 'Elegir del dispositivo',
-  'home.quickUrlTitle': 'Desde URL',
-  'home.quickUrlDesc': 'Descargar y leer',
-  'home.quickFavTitle': 'Favoritos',
-  'home.quickFavDescOne': '1 documento',
-  'home.quickFavDesc': '{count} documentos',
-  'home.quickSettingsTitle': 'Ajustes de lectura',
-  'home.quickSettingsDesc': 'Elige la vista',
   'home.statDocuments': 'Documentos',
   'home.statPages': 'Progreso de páginas',
   'home.statFavorites': 'Favoritos',
@@ -334,12 +471,47 @@ const es: Record<keyof typeof tr, string> = {
   'library.noMatchText': 'Prueba con otro nombre de archivo.',
   'library.emptyTitle': 'La biblioteca está vacía',
   'library.emptyText': 'Usa el botón Abrir PDF para añadir tu primer documento.',
+  'library.filterAll': 'Todos',
+  'library.filterFavorites': 'Favoritos',
 
   'favorites.kicker': 'FAVORITOS',
   'favorites.title': 'Documentos importantes',
   'favorites.subtitle': 'Ten en un solo lugar los PDF a los que vuelves.',
   'favorites.emptyTitle': 'Aún no hay favoritos',
   'favorites.emptyText': 'Toca el icono de corazón en un documento y aparecerá aquí.',
+
+  'tools.kicker': 'HERRAMIENTAS PDF',
+  'tools.title': 'Edita en tu dispositivo',
+  'tools.subtitle': 'Tus archivos se procesan solo en este dispositivo y nunca se suben.',
+  'tools.localOnly': 'SIN CONEXIÓN • SIN SUBIDAS',
+  'tools.mergeTitle': 'Unir PDF',
+  'tools.mergeDesc': 'Combina varios PDF en un solo archivo',
+  'tools.extractTitle': 'Extraer páginas',
+  'tools.extractDesc': 'Crea un PDF nuevo con las páginas elegidas',
+  'tools.removeTitle': 'Eliminar páginas',
+  'tools.removeDesc': 'Quita páginas no deseadas de una copia',
+  'tools.reorderTitle': 'Reordenar páginas',
+  'tools.reorderDesc': 'Elige un orden nuevo para todas las páginas',
+  'tools.rotateTitle': 'Girar páginas',
+  'tools.rotateDesc': 'Gira todas las páginas 90° a la derecha',
+  'tools.cleanTitle': 'Limpiar metadatos',
+  'tools.cleanDesc': 'Elimina los campos de título, autor y asunto',
+  'tools.rangeTitle': 'Intervalo de páginas',
+  'tools.rangeMessage': 'Ejemplo: 1-3, 5, 8-10',
+  'tools.rangePlaceholder': '1-3, 5',
+  'tools.orderMessage': 'Incluye cada página una vez. Ejemplo: 3, 1-2, 4',
+  'tools.orderPlaceholder': '3, 1-2, 4',
+  'tools.run': 'Continuar',
+  'tools.processing': 'Procesando PDF…',
+  'tools.successTitle': 'Tu nuevo PDF está listo',
+  'tools.successMessage': '“{name}” se añadió a la biblioteca de este dispositivo.',
+  'tools.errorTitle': 'No se pudo completar la tarea',
+  'tools.genericError': 'No se pudo procesar este PDF. Puede estar dañado o protegido con contraseña.',
+  'tools.minimumMerge': 'Selecciona al menos dos PDF para unirlos.',
+  'tools.invalidRange': 'Introduce un intervalo de páginas válido.',
+  'tools.removeAll': 'No se pueden eliminar todas las páginas de un PDF.',
+  'tools.invalidOrder': 'El nuevo orden debe incluir cada página del PDF exactamente una vez.',
+  'tools.tooLarge': 'El tamaño total para las herramientas PDF no puede superar 80 MB.',
 
   'settings.kicker': 'AJUSTES',
   'settings.title': 'Tu espacio de lectura',
@@ -352,6 +524,8 @@ const es: Record<keyof typeof tr, string> = {
   'settings.nightTitle': 'Modo nocturno de páginas PDF',
   'settings.nightDesc': 'Solo invierte los colores de las páginas del PDF',
   'settings.languageSection': 'IDIOMA',
+  'settings.languageSearch': 'Buscar idiomas',
+  'settings.languageNoMatch': 'No hay un idioma coincidente',
   'settings.adsSection': 'ANUNCIOS Y PRIVACIDAD',
   'settings.consentTitle': 'Actualizar consentimiento de anuncios',
   'settings.consentDesc': 'Volver a comprobar el estado de consentimiento de Google UMP',
@@ -412,6 +586,8 @@ const es: Record<keyof typeof tr, string> = {
   'common.cancel': 'Cancelar',
   'common.delete': 'Eliminar',
   'common.clear': 'Borrar',
+  'common.open': 'Abrir',
+  'common.done': 'Listo',
 
   'files.invalidUrl': 'Enlace no válido. Introduce una dirección PDF que empiece por https://.',
   'files.onlyHttps': 'Por seguridad, solo se admiten enlaces https.',
@@ -421,10 +597,44 @@ const es: Record<keyof typeof tr, string> = {
   'files.tooLarge': 'El PDF supera el límite de 250 MB.',
   'files.notEnoughSpace': 'No hay suficiente espacio libre en el dispositivo para este PDF.',
   'files.defaultName': 'Documento.pdf',
-  'files.webName': 'documento-web.pdf'
+  'files.webName': 'documento-web.pdf',
+  'files.blockedHost': 'Esta dirección está bloqueada por seguridad. Usa un enlace público.',
+
+  'reader.lastPageHint': 'Estabas en la página {page}',
+  'reader.lockedTitle': 'Documento protegido',
+  'reader.lockedText': 'Este PDF está protegido con contraseña. Introdúcela para verlo.',
+  'reader.enterPassword': 'Introducir contraseña',
+  'reader.passwordIncorrect': 'Contraseña incorrecta. Inténtalo de nuevo.',
+
+  'home.continueResume': 'Lo dejaste en la página {page}',
+
+  'errorBoundary.title': 'Algo salió mal',
+  'errorBoundary.text': 'La aplicación tuvo un problema inesperado. Puedes intentarlo de nuevo.',
+  'errorBoundary.retry': 'Intentar de nuevo',
+
+  'a11y.goBack': 'Volver',
+  'a11y.addToFavorites': 'Añadir a favoritos',
+  'a11y.removeFromFavorites': 'Quitar de favoritos',
+  'a11y.share': 'Compartir PDF',
+  'a11y.delete': 'Eliminar documento',
+  'a11y.close': 'Cerrar',
+  'a11y.addPdf': 'Añadir PDF',
+  'a11y.clearSearch': 'Borrar búsqueda'
 };
 
-const dictionaries: Record<AppLanguage, Record<keyof typeof tr, string>> = { tr, en, es };
+const pt: Record<keyof typeof tr, string> = ptRaw;
+const de: Record<keyof typeof tr, string> = deRaw;
+const fr: Record<keyof typeof tr, string> = frRaw;
+const it: Record<keyof typeof tr, string> = itRaw;
+const ru: Record<keyof typeof tr, string> = ruRaw;
+const hi: Record<keyof typeof tr, string> = hiRaw;
+const id: Record<keyof typeof tr, string> = idRaw;
+const ar: Record<keyof typeof tr, string> = arRaw;
+const ja: Record<keyof typeof tr, string> = jaRaw;
+const ko: Record<keyof typeof tr, string> = koRaw;
+const zh: Record<keyof typeof tr, string> = zhRaw;
+
+const dictionaries: Record<AppLanguage, Record<keyof typeof tr, string>> = { en, tr, es, pt, de, fr, it, ru, hi, id, ar, ja, ko, zh };
 
 export type TranslationKey = keyof typeof tr;
 export type TranslationVars = Record<string, string | number>;
@@ -435,12 +645,12 @@ function interpolate(template: string, vars?: TranslationVars) {
 }
 
 export function translate(language: AppLanguage, key: TranslationKey, vars?: TranslationVars) {
-  const dictionary = dictionaries[language] ?? dictionaries.tr;
-  return interpolate(dictionary[key] ?? dictionaries.tr[key] ?? key, vars);
+  const dictionary = dictionaries[language] ?? dictionaries.en;
+  return interpolate(dictionary[key] ?? dictionaries.en[key] ?? key, vars);
 }
 
 // Module-level language, so non-React modules (lib/pdfFiles.ts) can translate too.
-let activeLanguage: AppLanguage = 'tr';
+let activeLanguage: AppLanguage = 'en';
 
 export function setActiveLanguage(language: AppLanguage) {
   activeLanguage = language;
@@ -458,7 +668,11 @@ export function isAppLanguage(value: unknown): value is AppLanguage {
   return typeof value === 'string' && (languages as readonly string[]).includes(value);
 }
 
-/** Reads the native device/app language. Unsupported locales fall back to Turkish. */
+export function isRtlLanguage(language: AppLanguage) {
+  return language === 'ar';
+}
+
+/** Reads the native device/app language. Unsupported locales fall back to English. */
 export function detectDeviceLanguage(): AppLanguage {
   try {
     const short = getLocales()[0]?.languageCode?.toLowerCase();
@@ -466,5 +680,5 @@ export function detectDeviceLanguage(): AppLanguage {
   } catch {
     // Native locale lookup must never block app startup.
   }
-  return 'tr';
+  return 'en';
 }

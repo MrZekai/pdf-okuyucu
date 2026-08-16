@@ -2,7 +2,7 @@ TÍTULO
 Lector PDF: Rápido y Privado
 
 DESCRIPCIÓN BREVE
-Abre PDF rápido, usa el modo nocturno y guarda documentos en tu dispositivo.
+Lee y edita PDF en tu dispositivo, sin cuenta y sin subir tus documentos.
 
 DESCRIPCIÓN COMPLETA
 Lector PDF es una aplicación centrada en el almacenamiento local, diseñada para ver documentos de forma rápida, sencilla y segura.
@@ -21,7 +21,8 @@ Funciones principales:
 • Metadatos de última página y progreso de lectura
 • Compatibilidad con PDF protegidos por contraseña
 • Compartir documentos
-• Interfaz en turco, inglés y español
+• Unir PDF, extraer o eliminar páginas, girarlas y limpiar metadatos
+• Interfaz en 14 idiomas
 
 Lector PDF organiza tus documentos, guarda la información de lectura en el dispositivo y ofrece acceso rápido a las herramientas esenciales mediante una interfaz limpia.
 

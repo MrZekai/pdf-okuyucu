@@ -7,8 +7,9 @@
     <rect x="54" y="212" width="972" height="96" rx="30" fill="#11192B" stroke="#27304A" stroke-width="2"/>
     <circle cx="102" cy="260" r="18" fill="none" stroke="#64748B" stroke-width="5"/><path d="M116 274l17 17" stroke="#64748B" stroke-width="5"/>
     <text x="150" y="270" fill="#5D6B84" font-size="26">Belge ara</text>
+    <rect x="54" y="326" width="118" height="54" rx="18" fill="#5662E6"/><text x="113" y="361" fill="#fff" font-size="20" font-weight="800" text-anchor="middle">Tümü</text><rect x="184" y="326" width="170" height="54" rx="18" fill="#11192B" stroke="#27304A"/><text x="269" y="361" fill="#738098" font-size="20" font-weight="800" text-anchor="middle">Favoriler</text>
 
-    <g transform="translate(54 360)">
+    <g transform="translate(54 410)">
       <rect width="972" height="220" rx="38" fill="#121A2D" stroke="#27304A" stroke-width="2"/>
       <rect x="30" y="36" width="110" height="138" rx="28" fill="#5B67F1" fill-opacity=".12"/><path d="M60 62h42l25 25v63H60zM102 62v25h25" fill="none" stroke="#7180FF" stroke-width="5"/><path d="M73 111h42M73 130h34" stroke="#7180FF" stroke-width="4"/>
       <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Proje Notları.pdf</text>
@@ -16,7 +17,7 @@
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="396" height="8" rx="4" fill="#5B67F1"/>
       <path d="M899 78c-30-18-28-48 0-48 28 0 30 30 0 48z" fill="#FB7185"/>
     </g>
-    <g transform="translate(54 610)">
+    <g transform="translate(54 660)">
       <rect width="972" height="220" rx="38" fill="#121A2D" stroke="#27304A" stroke-width="2"/>
       <rect x="30" y="36" width="110" height="138" rx="28" fill="#5B67F1" fill-opacity=".12"/><path d="M60 62h42l25 25v63H60zM102 62v25h25" fill="none" stroke="#7180FF" stroke-width="5"/><path d="M73 111h42M73 130h34" stroke="#7180FF" stroke-width="4"/>
       <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Sözleşme.pdf</text>
@@ -24,7 +25,7 @@
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="165" height="8" rx="4" fill="#5B67F1"/>
       <path d="M899 78c-30-18-28-48 0-48 28 0 30 30 0 48z" fill="none" stroke="#718096" stroke-width="4"/>
     </g>
-    <g transform="translate(54 860)">
+    <g transform="translate(54 910)">
       <rect width="972" height="220" rx="38" fill="#121A2D" stroke="#27304A" stroke-width="2"/>
       <rect x="30" y="36" width="110" height="138" rx="28" fill="#5B67F1" fill-opacity=".12"/><path d="M60 62h42l25 25v63H60zM102 62v25h25" fill="none" stroke="#7180FF" stroke-width="5"/><path d="M73 111h42M73 130h34" stroke="#7180FF" stroke-width="4"/>
       <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Ders Notları.pdf</text>
@@ -32,7 +33,7 @@
       <rect x="174" y="161" width="660" height="8" rx="4" fill="#263047"/><rect x="174" y="161" width="475" height="8" rx="4" fill="#5B67F1"/>
       <path d="M899 78c-30-18-28-48 0-48 28 0 30 30 0 48z" fill="none" stroke="#718096" stroke-width="4"/>
     </g>
-    <g transform="translate(54 1110)">
+    <g transform="translate(54 1160)">
       <rect width="972" height="220" rx="38" fill="#121A2D" stroke="#27304A" stroke-width="2"/>
       <rect x="30" y="36" width="110" height="138" rx="28" fill="#5B67F1" fill-opacity=".12"/><path d="M60 62h42l25 25v63H60zM102 62v25h25" fill="none" stroke="#7180FF" stroke-width="5"/><path d="M73 111h42M73 130h34" stroke="#7180FF" stroke-width="4"/>
       <text x="174" y="78" fill="#F8FAFC" font-size="31" font-weight="800">Kullanım Kılavuzu.pdf</text>
@@ -41,6 +42,6 @@
     </g>
     <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">REKLAM</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
-    <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Ana Sayfa</text><text x="405" y="1872" fill="#F8FAFC">Kütüphane</text><text x="675" y="1872" fill="#64748B">Favoriler</text><text x="945" y="1872" fill="#64748B">Ayarlar</text></g>
+    <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Ana Sayfa</text><text x="405" y="1872" fill="#F8FAFC">Kütüphane</text><text x="675" y="1872" fill="#64748B">Araçlar</text><text x="945" y="1872" fill="#64748B">Ayarlar</text></g>
   </g>
 </svg>

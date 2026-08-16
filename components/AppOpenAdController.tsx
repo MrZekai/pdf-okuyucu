@@ -5,11 +5,12 @@ import { ActivityIndicator, AppState, Image, Platform, StyleSheet, View } from '
 import { usePathname } from 'expo-router';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
 const LAST_SHOWN_KEY = '@pdf-reader/app-open-last-shown-v1';
 const FIRST_AD_LAUNCH = 3;
-const COLD_START_WAIT_MS = 3000;
+const COLD_START_WAIT_MS = 2500;
 const MIN_BACKGROUND_MS = 10000;
 const AD_VALIDITY_MS = 4 * 60 * 60 * 1000;
 
@@ -26,6 +27,7 @@ function getUnitId() {
 
 export function AppOpenAdController({ children }: { children: React.ReactNode }) {
   const adsReady = useAdsReady();
+  const { t } = useTranslation();
   const pathname = usePathname();
   const [gateVisible, setGateVisible] = useState(true);
   const gateVisibleRef = useRef(true);
@@ -167,7 +169,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
 
   useEffect(() => () => clearAd(), [clearAd]);
 
-  return <View style={styles.root}>{gateVisible ? <View style={styles.gate} accessibilityLabel="PDF Okuyucu"><Image source={require('../assets/splash-icon.png')} style={styles.logo}/><ActivityIndicator color="#8B97FF" size="small"/></View> : children}</View>;
+  return <View style={styles.root}>{gateVisible ? <View style={styles.gate} accessibilityLabel={t('app.name')}><Image source={require('../assets/splash-icon.png')} style={styles.logo}/><ActivityIndicator color="#8B97FF" size="small"/></View> : children}</View>;
 }
 
 const styles = StyleSheet.create({

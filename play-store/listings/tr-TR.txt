@@ -2,7 +2,7 @@ BAŞLIK
 PDF Okuyucu: Hızlı Okuma
 
 KISA AÇIKLAMA
-PDF’lerini hızlı aç, gece modunda oku ve cihazında güvenle sakla.
+PDF’lerini hesap açmadan ve yüklemeden cihazında oku ve düzenle.
 
 UZUN AÇIKLAMA
 PDF Okuyucu; belgelerini hızlı, sade ve güvenli biçimde görüntülemek için tasarlanmış yerel odaklı bir PDF okuma uygulamasıdır.
@@ -21,7 +21,8 @@ PDF dosyalarını cihazından seçebilir veya doğrudan bir internet bağlantıs
 • Son görüntülenen sayfa ve okuma ilerlemesi kaydı
 • Parola korumalı PDF desteği
 • Belge paylaşma
-• Türkçe, İngilizce ve İspanyolca arayüz
+• PDF birleştirme, sayfa ayırma/silme/döndürme ve meta veri temizleme
+• 14 dilde arayüz
 
 PDF Okuyucu belgelerini düzenli tutar, son okuma bilgilerini cihazında saklar ve sade arayüzüyle ihtiyacın olan araçlara hızla ulaşmanı sağlar.
 

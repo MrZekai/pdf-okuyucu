@@ -1,0 +1,17 @@
+TITEL
+PDF-Reader: Privat
+
+KURZBESCHREIBUNG
+PDFs lokal lesen und bearbeiten – ohne Konto und ohne Datei-Upload.
+
+VOLLSTÄNDIGE BESCHREIBUNG
+Öffne, organisiere und bearbeite PDFs mit Fokus auf Datenschutz. Dokumente bleiben auf deinem Gerät und werden nicht auf einen Server des Entwicklers hochgeladen.
+
+Funktionen:
+• PDFs vom Gerät oder über HTTPS-Links öffnen
+• Lokale Bibliothek, Favoriten und letzte Seite merken
+• Vertikal oder horizontal lesen, zoomen und Nachtmodus nutzen
+• PDFs zusammenfügen, Seiten extrahieren oder entfernen, drehen und Metadaten bereinigen
+• Passwortgeschützte PDFs öffnen
+
+Die App enthält Werbung. Datenschutzoptionen für Werbung lassen sich in den Einstellungen verwalten.

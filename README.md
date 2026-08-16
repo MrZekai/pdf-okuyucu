@@ -1,6 +1,6 @@
-# PDF Okuyucu — Emergent Ready
+# PDF Reader — global, local-first PDF workspace
 
-A premium, local-first PDF reader starter built for **Expo SDK 57 / React Native** and intentionally structured so an AI coding agent can extend it without rebuilding the project.
+A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / React Native**. PDFs are processed inside the app's private device storage; the project has no account, backend, document upload, analytics or cloud storage.
 
 ## Included
 - Rich dashboard home screen
@@ -17,13 +17,19 @@ A premium, local-first PDF reader starter built for **Expo SDK 57 / React Native
 - PDF page inversion for night reading
 - Password-protected PDF prompt
 - Share PDF
+- Merge PDFs
+- Extract, remove and reorder pages
+- Rotate every page by 90 degrees
+- Remove common PDF metadata fields
+- Usage-aware on-device tool suggestions (stored only on the device)
 - Persistent settings
 - Fixed bottom AdMob banner area on tabs **and reader**
 - Policy-conscious app-open ad flow (test IDs in development, first eligible from the third launch, four-hour frequency cap)
 - Google UMP consent bootstrap before ads
 - Development/test ad fallback
+- 14 complete interface languages with English fallback
+- Searchable language selector and Arabic RTL-aware layout
 - EAS development / APK preview / production profiles
-- `AGENTS.md` + a 23-credit-safe Emergent first prompt
 
 ## Native libraries = Development Build required
 This app uses a native PDF renderer and Google Mobile Ads. It is **not an Expo Go-only project**.
@@ -59,33 +65,26 @@ EXPO_PUBLIC_ADMOB_APP_OPEN_IOS=ca-app-pub-.../...
 
 Also configure **Privacy & messaging** in AdMob for the consent messages you need. The app asks UMP for current consent state before Mobile Ads initialization.
 
-## GitHub → Emergent
-1. Upload this full folder to a new GitHub repository.
-2. Import/Pull the repository in Emergent.
-3. Paste the contents of `EMERGENT_FIRST_PROMPT.txt`.
-4. Let Emergent analyze only.
-5. Give one small implementation request at a time.
-
-Avoid “make this the best PDF app” as an Emergent command: that invites broad refactors and burns credits. This repo already establishes the product and architecture; use Emergent for targeted increments.
-
 ## Important product note
 The current renderer reports page changes and page count, so the app stores reading progress. Its documented API does not expose a programmatic `jumpToPage` method, so **the project does not falsely claim automatic resume-to-page yet**. A future agent can add this only if the renderer exposes a supported navigation API or if the renderer is deliberately changed after evaluation.
 
-## Diller (tr / en / es)
+## Languages and fallback
 
-Uygulama üç dilde çalışır. Tüm kullanıcıya görünen metinler tek dosyada:
-`constants/i18n.ts`.
+The app supports English, Turkish, Spanish, Portuguese, German, French, Italian, Russian, Hindi, Indonesian, Arabic, Japanese, Korean and Simplified Chinese. Unsupported device languages always fall back to English, including the launcher name.
+
+The language contract lives in `constants/i18n.ts`; the additional dictionaries live in `constants/translations/`.
 
 - Ekranlarda: `const { t } = useTranslation();` → `t('home.openPdf')`
 - Değişkenli: `t('home.quickFavDesc', { count })` — yer tutucular `{ad}` biçiminde
 - React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
 - Aktif dil `settings.language` içinde tutulur, **Ayarlar → DİL** bölümünden değiştirilir
 - İlk açılış dili `expo-localization` ile cihazın/uygulamanın yerel dilinden güvenilir biçimde algılanır
-- Android 13+ uygulama-bazlı dil menüsü tr/en/es sunar; simge adı İngilizcede **PDF Reader**, İspanyolcada **Lector PDF** olur
-- `en` ve `es` sözlükleri `Record<keyof typeof tr, string>` olarak tiplenmiştir, yani
-  **bir anahtar eksik veya fazlaysa TypeScript derlemeyi durdurur**
+- Android 13+ uygulama-bazlı dil menüsü 14 dili sunar ve launcher adı her dil için `locales/` altında yerelleştirilir
+- Her sözlük `Record<keyof typeof tr, string>` olarak tiplenmiştir; eksik veya fazla anahtar TypeScript derlemesini durdurur
+- `scripts/check-i18n.mjs`, dil listesini otomatik okur; yeni bir dil sessizce doğrulama dışında kalamaz
+- Arapça uygulama içinde RTL yönü kullanır; yönlü ikonlar yansıtılır ve kayıtlı dil ayarı korunur
 
-Yeni metin eklerken: anahtarı üç sözlüğe de ekle, ekranda düz string yazma, sonra:
+Yeni metin eklerken anahtarı 14 sözlüğe de ekleyin, ekranda düz string yazmayın, sonra:
 
 ```bash
 npm run i18n:check   # anahtar + yer tutucu eşitliği, kalan sabit metin taraması
@@ -104,7 +103,7 @@ bir biçimlendirici bunu dağıtır. `extensions.json` içinde Prettier
 Hazır görevler: `typecheck`, `i18n:check`, `expo doctor`, `prebuild android`
 (Terminal → Run Task). Hazır çalıştırma yapılandırmaları: Expo Android / Expo start.
 
-## APK ve imzalı AAB derleme (ücretsiz, Emergent kredisi harcamaz)
+## Android builds
 
 GitHub Actions her push'ta R8 ile küçültülmüş release QA APK’sı derler. Bu QA APK Google demo
 reklam birimlerini kullanır ve Android debug anahtarıyla imzalanır; **Play Store’a yüklenmez**. Manuel **Run workflow** çalıştırmasında,
@@ -116,7 +115,7 @@ kurulum için `PLAY_RELEASE_GUIDE.md` dosyasını izleyin. Hat şu kontrolleri y
 ## Play Store paketi
 
 `play-store/` altında 512×512 ikon, 1024×500 feature graphic, Türkçe/İngilizce/İspanyolca için ayrı ayrı dört adet 1080×1920 mağaza ekranı,
-tr/en/es listeleme metinleri ve Data Safety yanıt taslağı bulunur. Gizlilik politikası `docs/` altındaki
+14 dil için listeleme metinleri ve Data Safety yanıt taslağı bulunur. Yeni 11 mağaza çevirisi yayınlanmadan önce ana dili konuşan biri tarafından incelenmelidir; durum `play-store/LISTING_REVIEW_STATUS.md` içinde izlenir. Gizlilik politikası `docs/` altındaki
 kaynak dosyadan ayrı public `MrZekai.github.io` deposuna eşitlenir; bu depodaki Pages workflow’u yalnızca
 kaynak doğrulaması yapar. Uygulamadaki Ayarlar ekranı canlı politikaya bağlantı verir.
 

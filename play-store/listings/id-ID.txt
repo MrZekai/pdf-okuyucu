@@ -1,0 +1,17 @@
+JUDUL
+Pembaca PDF: Privat
+
+DESKRIPSI SINGKAT
+Baca dan edit PDF di perangkat, tanpa akun dan tanpa mengunggah file.
+
+DESKRIPSI LENGKAP
+Buka, atur, dan edit PDF dengan menjaga privasi. Dokumen tetap berada di perangkat Anda dan tidak diunggah ke server pengembang.
+
+Fitur utama:
+• Buka PDF dari perangkat atau tautan HTTPS
+• Pustaka lokal, favorit, dan lanjutkan dari halaman terakhir
+• Baca vertikal atau horizontal, perbesar, dan gunakan mode malam
+• Gabungkan PDF, ekstrak atau hapus halaman, putar halaman, dan bersihkan metadata
+• Dukungan PDF yang dilindungi kata sandi
+
+Aplikasi berisi iklan. Pilihan privasi iklan dapat dikelola dari Pengaturan.

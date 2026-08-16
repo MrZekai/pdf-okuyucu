@@ -2,7 +2,7 @@ TITLE
 PDF Reader: Fast & Private
 
 SHORT DESCRIPTION
-Open PDFs fast, read in night mode, and keep documents safely on your device.
+Read and edit PDFs on your device, with no account and no document uploads.
 
 FULL DESCRIPTION
 PDF Reader is a local-first app designed to make viewing documents fast, simple, and secure.
@@ -21,7 +21,8 @@ Key features:
 • Last-page and reading-progress metadata
 • Password-protected PDF support
 • Document sharing
-• Turkish, English, and Spanish interface
+• Merge PDFs, extract or remove pages, rotate pages and clean metadata
+• Interface in 14 languages
 
 PDF Reader keeps your documents organised, stores reading information on your device, and gives you quick access to the tools you need through a clean interface.
 

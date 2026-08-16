@@ -12,3 +12,10 @@ web-build/
 android/
 ios/
 .DS_Store
+.env.*
+*.env
+!.env.example
+credentials.json
+*.pem
+.credentials
+qa-raporlari/

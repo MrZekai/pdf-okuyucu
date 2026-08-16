@@ -15,7 +15,7 @@ try {
   $storePassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($storePtr)
   $keyPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($keyPtr)
   if ($storePassword.Length -lt 6 -or $keyPassword.Length -lt 6) { throw 'Parolalar en az 6 karakter olmalıdır.' }
-  keytool -genkeypair -v -keystore $KeystorePath -alias $Alias -keyalg RSA -keysize 4096 -validity 10000 -storepass $storePassword -keypass $keyPassword -dname 'CN=PDF Okuyucu Upload, OU=Mobile, O=Aitolian, C=TR'
+  keytool -genkeypair -v -keystore $KeystorePath -alias $Alias -keyalg RSA -keysize 4096 -validity 10000 -storepass $storePassword -keypass $keyPassword -dname 'CN=PDF Reader Upload, OU=Mobile, O=PDF Reader, C=TR'
   if ($LASTEXITCODE -ne 0) { throw 'keytool keystore üretemedi.' }
   [Convert]::ToBase64String([IO.File]::ReadAllBytes((Resolve-Path $KeystorePath))) | Set-Clipboard
   Write-Host "Keystore oluşturuldu: $KeystorePath"

@@ -15,7 +15,7 @@ if (!Number.isInteger(androidVersionCode) || androidVersionCode < 1) {
 
 module.exports = ({ config }) => ({
   ...config,
-  name: 'PDF Okuyucu',
+  name: 'PDF Reader',
   slug: 'pdf-okuyucu-premium',
   version: '1.0.0',
   icon: './assets/icon.png',
@@ -26,7 +26,18 @@ module.exports = ({ config }) => ({
   locales: {
     tr: './locales/tr.json',
     en: './locales/en.json',
-    es: './locales/es.json'
+    es: './locales/es.json',
+    pt: './locales/pt.json',
+    de: './locales/de.json',
+    fr: './locales/fr.json',
+    it: './locales/it.json',
+    ru: './locales/ru.json',
+    hi: './locales/hi.json',
+    id: './locales/id.json',
+    ar: './locales/ar.json',
+    ja: './locales/ja.json',
+    ko: './locales/ko.json',
+    zh: './locales/zh.json'
   },
   android: {
     package: 'com.aitolian.pdfokuyucu',
@@ -97,8 +108,8 @@ module.exports = ({ config }) => ({
       'expo-localization',
       {
         supportedLocales: {
-          android: ['tr', 'en', 'es'],
-          ios: ['tr', 'en', 'es']
+          android: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'],
+          ios: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh']
         }
       }
     ],
@@ -111,7 +122,7 @@ module.exports = ({ config }) => ({
         delayAppMeasurementInit: true,
         optimizeInitialization: true,
         optimizeAdLoading: true,
-        userTrackingUsageDescription: 'Bu tanımlayıcı, izin vermeniz halinde size daha uygun reklamlar sunmak için kullanılabilir.'
+        userTrackingUsageDescription: 'With your permission, this identifier may be used to show more relevant ads.'
       }
     ]
   ],

@@ -1,0 +1,17 @@
+TITOLO
+Lettore PDF: Privato
+
+DESCRIZIONE BREVE
+Leggi e modifica PDF sul dispositivo, senza account e senza caricare i file.
+
+DESCRIZIONE COMPLETA
+Apri, organizza e modifica i PDF rispettando la tua privacy. I documenti restano sul dispositivo e non vengono caricati su un server dello sviluppatore.
+
+Funzioni principali:
+• Aprire PDF dal dispositivo o da link HTTPS
+• Libreria locale, preferiti e ripresa dall’ultima pagina
+• Lettura verticale o orizzontale, zoom e modalità notte
+• Unire PDF, estrarre o rimuovere pagine, ruotarle e pulire i metadati
+• Supporto per PDF protetti da password
+
+L’app contiene annunci. Le preferenze sulla privacy pubblicitaria sono disponibili nelle Impostazioni.

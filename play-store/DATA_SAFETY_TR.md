@@ -20,7 +20,7 @@ Bu taslak, projedeki `react-native-google-mobile-ads` / Google Mobile Ads SDK ve
 
 ## Uygulamanın kendi yerel verileri
 
-PDF dosyaları, belge adları, favoriler, son sayfa, okuma zamanları ve ayarlar yalnızca cihazda tutulur; geliştiriciye veya başka bir sunucuya gönderilmez. Play formunda “toplanan veri”, cihazdan dışarı iletilen veriyi ifade ettiğinden bunlar **toplanıyor** olarak işaretlenmez.
+PDF dosyaları, araçlarla üretilen PDF'ler, belge adları, favoriler, son sayfa, okuma zamanları, yerel araç kullanım sayaçları ve ayarlar yalnızca cihazda tutulur; geliştiriciye veya başka bir sunucuya gönderilmez. Birleştirme, sayfa çıkarma/silme/sıralama/döndürme ve ortak meta veri temizleme işlemleri cihaz içinde yapılır. Play formunda “toplanan veri”, cihazdan dışarı iletilen veriyi ifade ettiğinden bunlar **toplanıyor** olarak işaretlenmez.
 
 ## Console’da ayrıca
 

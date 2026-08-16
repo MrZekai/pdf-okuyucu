@@ -28,6 +28,7 @@ function pngSize(relativePath, expectedWidth, expectedHeight) {
 }
 
 if (config.android?.package !== 'com.aitolian.pdfokuyucu') fail('Android package beklenen com.aitolian.pdfokuyucu değil.');
+if (config.name !== 'PDF Reader') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF Reader olmalı.');
 if (!Number.isInteger(config.android?.versionCode) || config.android.versionCode < 1) fail('android.versionCode pozitif tam sayı olmalı.');
 if (!config.android?.adaptiveIcon?.foregroundImage) fail('Adaptive icon foregroundImage eksik.');
 if (!config.icon) fail('Uygulama icon alanı eksik.');
@@ -39,16 +40,21 @@ if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/mini
 if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
 
 const packageJson = JSON.parse(text('package.json'));
+exists('.env.example');
+if (packageJson.dependencies?.['pdf-lib'] !== '1.17.1') fail('Cihaz içi PDF araçları için pdf-lib 1.17.1 sabiti eksik.');
+const packageLock = JSON.parse(text('package-lock.json'));
+if (packageLock.packages?.['']?.dependencies?.['pdf-lib'] !== '1.17.1' || packageLock.packages?.['node_modules/pdf-lib']?.version !== '1.17.1') fail('package-lock.json içindeki pdf-lib sabiti package.json ile eşleşmiyor.');
 const localizationRange = packageJson.dependencies?.['expo-localization'] || '';
 if (!/^~57\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(localizationRange)) fail('expo-localization Expo SDK 57 ile uyumlu tilde sürüm aralığında olmalı.');
 const localizationPlugin = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-localization')?.[1];
+const expectedLocales = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'];
 for (const platform of ['android', 'ios']) {
   const supported = localizationPlugin?.supportedLocales?.[platform] || [];
-  for (const language of ['tr', 'en', 'es']) {
+  for (const language of expectedLocales) {
     if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
   }
 }
-for (const [language, expectedName] of Object.entries({ tr: 'PDF Okuyucu', en: 'PDF Reader', es: 'Lector PDF' })) {
+for (const [language, expectedName] of Object.entries({ en:'PDF Reader',tr:'PDF Okuyucu',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器' })) {
   const localePath = config.locales?.[language];
   if (!localePath) {
     fail(`Yerelleştirilmiş uygulama adı yapılandırmasında ${language} eksik.`);
@@ -83,6 +89,7 @@ const appOpenSource = text('components/AppOpenAdController.tsx');
 const appContextSource = text('context/AppContext.tsx');
 const pdfFilesSource = text('lib/pdfFiles.ts');
 const storageSource = text('lib/storage.ts');
+const toolsSource = text('lib/pdfTools.ts');
 if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsiz ana ekran sloganı kaynakta kalmış.');
 if (storeHomeSource.includes('Belgelerin,') || storeHomeSource.includes('her an yanında')) fail('Eski ana ekran sloganı Türkçe mağaza görselinde kalmış.');
 if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
@@ -103,6 +110,9 @@ if (!appContextSource.includes("AppState.addEventListener('change'") || !appCont
 if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('FINGERPRINT_MAX_BYTES') || !pdfFilesSource.includes('(size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini güvenli boyut eşiğinde önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');
+for (const guard of ['mergePdfs', 'extractPages', 'removePages', 'reorderPages', 'rotatePages', 'cleanMetadata', 'MAX_TOOL_INPUT_BYTES']) if (!toolsSource.includes(guard)) fail(`PDF araç kapısı eksik: ${guard}`);
+if (!tabsSource.includes('name="tools"') || !tabsSource.includes('name="favorites" options={{ href: null }}')) fail('Araçlar sekmesi veya Kütüphane içi favori mimarisi eksik.');
+if (!i18nSource.includes("return 'en';") || !i18nSource.includes("let activeLanguage: AppLanguage = 'en'")) fail('Desteklenmeyen dil için İngilizce yedekleme eksik.');
 
 pngSize('assets/icon.png', 1024, 1024);
 pngSize('assets/adaptive-icon.png', 1024, 1024);
@@ -113,7 +123,19 @@ for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}
 for (const locale of ['en-US', 'es-ES']) {
   for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/${locale}/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
 }
-for (const locale of ['tr-TR', 'en-US', 'es-ES']) exists(`play-store/listings/${locale}.txt`);
+for (const locale of ['en-US','tr-TR','es-ES','pt-BR','de-DE','fr-FR','it-IT','ru-RU','hi-IN','id-ID','ar-SA','ja-JP','ko-KR','zh-CN']) {
+  const listingPath = `play-store/listings/${locale}.txt`;
+  exists(listingPath);
+  if (!fs.existsSync(path.join(root, listingPath))) continue;
+  const blocks = text(listingPath).trim().split(/\r?\n\s*\r?\n/);
+  const title = (blocks[0]?.split(/\r?\n/)[1] || '').trim();
+  const shortDescription = (blocks[1]?.split(/\r?\n/)[1] || '').trim();
+  const longDescription = blocks.slice(2).join('\n\n').split(/\r?\n/).slice(1).join('\n').trim();
+  if (!title || [...title].length > 30) fail(`${locale} mağaza başlığı boş veya 30 karakterden uzun.`);
+  if (!shortDescription || [...shortDescription].length > 80) fail(`${locale} kısa açıklaması boş veya 80 karakterden uzun.`);
+  if (!longDescription || [...longDescription].length > 4000) fail(`${locale} uzun açıklaması boş veya 4000 karakterden uzun.`);
+}
+exists('play-store/LISTING_REVIEW_STATUS.md');
 exists('docs/privacy-policy.html');
 exists('docs/app-ads.txt');
 if (fs.existsSync(path.join(root, 'docs/app-ads.txt')) && fs.readFileSync(path.join(root, 'docs/app-ads.txt'), 'utf8').trim() !== 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0') fail('docs/app-ads.txt publisher satırı beklenen değer değil.');
@@ -122,4 +144,4 @@ if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, tr/en/es için 4’er mağaza ekranı hazır.`);
+console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, 14 dil ve cihaz içi PDF araçları hazır.`);

@@ -1,4 +1,4 @@
-# PDF Okuyucu — Play Store release kılavuzu
+# PDF Reader — Play Store release kılavuzu
 
 ## 1. Tek seferlik upload key ve GitHub Secrets
 
@@ -32,7 +32,7 @@ Kodda kullanılan kimlikler:
 - App open: `ca-app-pub-1380972808968213/1189880008`
 - Android package: `com.aitolian.pdfokuyucu`
 
-AdMob’daki bu App ID’nin uygulama kaydı **PDF Okuyucu** ve paket `com.aitolian.pdfokuyucu` ile eşleşmelidir. AdMob ekranındaki görünen adın “Hedef Zikirmatik” olması tek başına teknik hata değildir; fakat kayıt başka bir Play uygulamasına/paketine bağlıysa bu kimlikleri kullanmayın. AdMob’da PDF Okuyucu için doğru uygulama kaydı ve reklam birimleri oluşturup `.env` / workflow değerlerini güncelleyin.
+AdMob’daki bu App ID’nin uygulama kaydı bu uygulama ve paket `com.aitolian.pdfokuyucu` ile eşleşmelidir. AdMob ekranındaki görünen ad teknik kimlik değildir; ancak kayıt başka bir Play uygulamasına/paketine bağlıysa bu kimlikleri kullanmayın. Doğru uygulama kaydını ve reklam birimlerini oluşturup `.env` / workflow değerlerini güncelleyin.
 
 Geliştirme derlemeleri otomatik olarak Google test banner ve app-open unit ID’lerini kullanır. Production kimlikleri yalnız release davranışında reklam isteği için kullanılır.
 
@@ -61,7 +61,10 @@ AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı 
 - Türkçe için 4 adet 1080×1920 ekran: `play-store/screenshots/`
 - İngilizce için 4 adet 1080×1920 ekran: `play-store/screenshots/en-US/`
 - İspanyolca için 4 adet 1080×1920 ekran: `play-store/screenshots/es-ES/`
-- Türkçe / İngilizce / İspanyolca metinler: `play-store/listings/`
+- 14 dil için mağaza metinleri: `play-store/listings/`
+- Yeni 11 dilin yayın öncesi dil uzmanı kontrol durumu: `play-store/LISTING_REVIEW_STATUS.md`
+
+Play Console varsayılan mağaza dili **İngilizce (ABD)** olmalıdır. Ekran görüntülerinin TR/en-US/es-ES sürümleri hazırdır; diğer diller varsayılan İngilizce görsellere düşebilir. Mağaza metinlerini yerel dil uzmanı incelemeden canlıya almayın.
 
 ## 6. Son kontrol
 
@@ -76,4 +79,4 @@ npx expo prebuild --platform android --clean --no-install
 
 Push sonucunda oluşan release-minified QA APK yalnız Google demo reklamlarını kullanır ve Android debug anahtarıyla imzalıdır; cihaz testi içindir, Play’e yüklenmez. CI bu APK’nın 16 KB zip hizalamasını da doğrular.
 
-Play Internal testing’e yalnız manuel workflow’dan çıkan upload-key imzalı AAB’yi yükleyin. Gerçek cihazda PDF seçme, URL indirme, parola ekranı, kalıcı gece modu/yön, paylaşma, banner, uygulama açılışı reklamı ve UMP izin akışını test edin. Canlı reklam birimlerine kendiniz tıklamayın.
+Play Internal testing’e yalnız manuel workflow’dan çıkan upload-key imzalı AAB’yi yükleyin. Gerçek cihazda PDF seçme, URL indirme, parola ekranı, kalıcı gece modu/yön, paylaşma, altı PDF aracı, Arapça RTL, banner, uygulama açılışı reklamı ve UMP izin akışını test edin. Büyük PDF araç işlemlerini düşük/orta segment bir cihazda ayrıca deneyin. Canlı reklam birimlerine kendiniz tıklamayın.

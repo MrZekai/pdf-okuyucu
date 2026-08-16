@@ -3,8 +3,9 @@
   <g font-family="DejaVu Sans, sans-serif">
     <text x="64" y="98" fill="#6E7BEE" font-size="22" font-weight="900" letter-spacing="4">SETTINGS</text><text x="64" y="158" fill="#F8FAFC" font-size="50" font-weight="900">Your reading space</text><text x="64" y="205" fill="#8491A8" font-size="23">Manage reading behaviour, language and privacy.</text>
     <text x="68" y="288" fill="#66738A" font-size="20" font-weight="900" letter-spacing="4">LANGUAGE</text>
-    <rect x="54" y="315" width="972" height="116" rx="38" fill="#11192B" stroke="#27304A" stroke-width="2"/>
-    <text x="222" y="384" fill="#738098" font-size="25" font-weight="800" text-anchor="middle">Türkçe</text><rect x="394" y="333" width="300" height="80" rx="26" fill="#5662E6"/><text x="544" y="384" fill="#fff" font-size="25" font-weight="800" text-anchor="middle">✓  English</text><text x="862" y="384" fill="#738098" font-size="25" font-weight="800" text-anchor="middle">Español</text>
+    <rect x="54" y="315" width="972" height="170" rx="38" fill="#11192B" stroke="#27304A" stroke-width="2"/>
+    <rect x="72" y="330" width="936" height="48" rx="16" fill="#090F1E" stroke="#27304A"/><text x="102" y="362" fill="#5D6B84" font-size="20">⌕  Search languages</text>
+    <rect x="72" y="390" width="450" height="70" rx="22" fill="#5662E6"/><text x="297" y="435" fill="#fff" font-size="23" font-weight="800" text-anchor="middle">✓  English</text><text x="760" y="435" fill="#738098" font-size="23" font-weight="800" text-anchor="middle">Deutsch</text>
 
     <text x="68" y="508" fill="#66738A" font-size="20" font-weight="900" letter-spacing="4">DEFAULT READING</text>
     <rect x="54" y="535" width="972" height="354" rx="38" fill="#11192B" stroke="#27304A" stroke-width="2"/>
@@ -36,6 +37,6 @@
     <text x="193" y="1409" fill="#FCA5A5" font-size="27" font-weight="800">Clear library</text><text x="193" y="1446" fill="#6F7D95" font-size="20">Delete local PDF copies and history</text>
     <rect x="0" y="1654" width="1080" height="116" fill="#10182A" stroke="#27304A" stroke-width="2"/><text x="540" y="1701" fill="#46536D" font-size="18" text-anchor="middle" letter-spacing="4">AD</text>
     <rect x="0" y="1770" width="1080" height="150" fill="#0B1020"/>
-    <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Home</text><text x="405" y="1872" fill="#64748B">Library</text><text x="675" y="1872" fill="#64748B">Favorites</text><text x="945" y="1872" fill="#F8FAFC">Settings</text></g>
+    <g font-size="19" font-weight="700" text-anchor="middle"><text x="135" y="1872" fill="#64748B">Home</text><text x="405" y="1872" fill="#64748B">Library</text><text x="675" y="1872" fill="#64748B">Tools</text><text x="945" y="1872" fill="#F8FAFC">Settings</text></g>
   </g>
 </svg>

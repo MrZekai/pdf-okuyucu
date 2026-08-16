@@ -53,7 +53,19 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
     }, RETRY_DELAY_MS);
   }
 
-  if (adsStatus !== 'ready' || hidden) return null;
+  if (hidden) return null;
+  if (adsStatus !== 'ready') {
+    if (adsStatus !== 'loading') return null;
+    // Reserve the banner height while the SDK is initialising so the layout
+    // does not shift once the ad becomes ready.
+    return (
+      <View style={styles.container}>
+        {separateFromNavigation ? <View pointerEvents="none" style={styles.contentGap} /> : null}
+        <View pointerEvents="none" style={styles.shell} />
+        {separateFromNavigation ? <View pointerEvents="none" style={styles.navigationGap} /> : null}
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

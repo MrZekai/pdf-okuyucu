@@ -15,28 +15,40 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const source = readFileSync(join(root, 'constants/i18n.ts'), 'utf8');
 
-function extractDictionary(name) {
-  const start = source.indexOf(`const ${name}`);
+function extractDictionary(sourceText, name, startToken = `const ${name}`) {
+  const start = sourceText.indexOf(startToken);
   if (start === -1) throw new Error(`Dictionary "${name}" not found`);
-  const open = source.indexOf('{', start);
+  const open = sourceText.indexOf('{', start);
   let depth = 0;
   let end = open;
-  for (let i = open; i < source.length; i += 1) {
-    if (source[i] === '{') depth += 1;
-    if (source[i] === '}') {
+  for (let i = open; i < sourceText.length; i += 1) {
+    if (sourceText[i] === '{') depth += 1;
+    if (sourceText[i] === '}') {
       depth -= 1;
       if (depth === 0) { end = i; break; }
     }
   }
-  const body = source.slice(open, end + 1);
+  const body = sourceText.slice(open, end + 1);
   const entries = new Map();
   const pattern = /'([\w.]+)'\s*:\s*'((?:\\.|[^'\\])*)'/g;
   let match;
-  while ((match = pattern.exec(body)) !== null) entries.set(match[1], match[2]);
+  while ((match = pattern.exec(body)) !== null) {
+    if (entries.has(match[1])) throw new Error(`Dictionary "${name}" has duplicate key "${match[1]}"`);
+    entries.set(match[1], match[2]);
+  }
   return entries;
 }
 
-const dictionaries = { tr: extractDictionary('tr'), en: extractDictionary('en'), es: extractDictionary('es') };
+const languagesMatch = source.match(/export const languages\s*=\s*\[([^\]]+)\]/);
+if (!languagesMatch) throw new Error('languages array not found in constants/i18n.ts');
+const languages = [...languagesMatch[1].matchAll(/'([a-z]{2})'/g)].map((match) => match[1]);
+if (new Set(languages).size !== languages.length) throw new Error('languages array contains a duplicate language code');
+const inline = new Set(['tr', 'en', 'es']);
+const dictionaries = Object.fromEntries(languages.map((language) => {
+  if (inline.has(language)) return [language, extractDictionary(source, language)];
+  const localeSource = readFileSync(join(root, `constants/translations/${language}.ts`), 'utf8');
+  return [language, extractDictionary(localeSource, language, 'export default')];
+}));
 const base = dictionaries.tr;
 const problems = [];
 

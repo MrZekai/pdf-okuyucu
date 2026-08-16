@@ -110,12 +110,26 @@ jobs:
       - name: Android dil ve uygulama adı yerelleştirmesini doğrula
         run: |
           set -euo pipefail
-          grep -Fq '<locale android:name="tr"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq '<locale android:name="en"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq '<locale android:name="es"/>' android/app/src/main/res/xml/locales_config.xml
-          grep -Fq 'PDF Reader' android/app/src/main/res/values-b+en/strings.xml
-          grep -Fq 'Lector PDF' android/app/src/main/res/values-b+es/strings.xml
-          echo 'tr/en/es Android sistem dili ve yerelleştirilmiş uygulama adları hazır.'
+          while IFS='|' read -r locale app_name; do
+            grep -Fq "<locale android:name=\"$locale\"/>" android/app/src/main/res/xml/locales_config.xml
+            grep -RFq "$app_name" "android/app/src/main/res/values-b+$locale"
+          done <<'LOCALES'
+          en|PDF Reader
+          tr|PDF Okuyucu
+          es|Lector PDF
+          pt|Leitor de PDF
+          de|PDF-Reader
+          fr|Lecteur PDF
+          it|Lettore PDF
+          ru|PDF-ридер
+          hi|PDF रीडर
+          id|Pembaca PDF
+          ar|قارئ PDF
+          ja|PDFリーダー
+          ko|PDF 리더
+          zh|PDF 阅读器
+          LOCALES
+          echo '14 Android sistem dili ve yerelleştirilmiş uygulama adları hazır.'
 
       # ─── Standalone QA APK ────────────────────────────────────────────────────
       # pipefail sayesinde tee kullanilmasina ragmen gradlew'in cikis kodu korunur.
