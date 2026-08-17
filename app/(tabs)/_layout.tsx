@@ -16,7 +16,7 @@ export default function TabsLayout() {
       <Tabs tabBar={(props) => <View style={{backgroundColor:palette.ink}}><AdBanner separateFromNavigation/><BottomTabBar {...props}/></View>} screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: palette.pdfRedSoft,
-        tabBarInactiveTintColor: '#727780',
+        tabBarInactiveTintColor: palette.tabInactive,
         tabBarStyle: { backgroundColor: palette.ink, borderTopColor: palette.line, height: 63 + insets.bottom, paddingTop: 7, paddingBottom: 7 + insets.bottom },
         tabBarLabelStyle: { fontSize: 10, fontWeight: '700' }
       }}>

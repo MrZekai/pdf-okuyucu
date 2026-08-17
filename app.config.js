@@ -62,7 +62,7 @@ module.exports = ({ config }) => ({
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       monochromeImage: './assets/monochrome-icon.png',
-      backgroundColor: '#08090B'
+      backgroundColor: '#D3161E'
     }
   },
   ios: {
