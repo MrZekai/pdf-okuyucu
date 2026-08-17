@@ -15,7 +15,7 @@ if (!Number.isInteger(androidVersionCode) || androidVersionCode < 1) {
 
 module.exports = ({ config }) => ({
   ...config,
-  name: 'PDF Reader',
+  name: 'PDF: Reader - Tools',
   slug: 'pdf-okuyucu-premium',
   version: '1.0.0',
   icon: './assets/icon.png',
@@ -87,7 +87,7 @@ module.exports = ({ config }) => ({
     [
       'expo-image-picker',
       {
-        cameraPermission: 'Allow PDF Reader to use the camera to scan pages into a PDF.',
+        cameraPermission: 'Allow PDF: Reader - Tools to use the camera to create a PDF from camera images.',
         photosPermission: false,
         microphonePermission: false
       }

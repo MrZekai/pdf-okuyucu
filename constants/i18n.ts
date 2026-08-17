@@ -50,7 +50,7 @@ export const languageTags: Record<AppLanguage, string> = {
 };
 
 const tr = {
-  'app.name': 'PDF Okuyucu',
+  'app.name': 'PDF: Okuyucu - Araçları',
   'tabs.home': 'Ana Sayfa',
   'tabs.library': 'Kütüphane',
   'tabs.tools': 'Araçlar',
@@ -185,7 +185,7 @@ const tr = {
   'settings.consentUpdatedMessage': 'Google reklam izin durumu yeniden kontrol edildi.',
   'settings.consentErrorTitle': 'Gizlilik seçenekleri',
   'settings.consentErrorMessage': 'AdMob izin akışı şu anda kullanılamıyor. AdMob > Privacy & messaging ayarlarını kontrol edin.',
-  'settings.about': 'PDF Okuyucu • Expo SDK 57 • Yerel PDF işleme',
+  'settings.about': 'PDF: Okuyucu - Araçları • Expo SDK 57 • Yerel PDF işleme',
 
   'reader.notFound': 'Belge bulunamadı',
   'reader.goBack': 'Geri dön',
@@ -265,7 +265,7 @@ const tr = {
 };
 
 const en: Record<keyof typeof tr, string> = {
-  'app.name': 'PDF Reader',
+  'app.name': 'PDF: Reader - Tools',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
   'tabs.tools': 'Tools',
@@ -400,7 +400,7 @@ const en: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedMessage': 'The Google ad consent state has been re-checked.',
   'settings.consentErrorTitle': 'Privacy options',
   'settings.consentErrorMessage': 'The AdMob consent flow is unavailable right now. Check AdMob > Privacy & messaging.',
-  'settings.about': 'PDF Reader • Expo SDK 57 • On-device PDF handling',
+  'settings.about': 'PDF: Reader - Tools • Expo SDK 57 • On-device PDF handling',
 
   'reader.notFound': 'Document not found',
   'reader.goBack': 'Go back',

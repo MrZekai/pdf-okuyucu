@@ -1,5 +1,5 @@
 BAŞLIK
-PDF Okuyucu: Hızlı Okuma
+PDF: Okuyucu - Araçları
 
 KISA AÇIKLAMA
 PDF’lerini hesap açmadan ve yüklemeden cihazında oku ve düzenle.

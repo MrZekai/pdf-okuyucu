@@ -1,5 +1,5 @@
 TITLE
-PDF Reader: Fast & Private
+PDF: Reader - Tools
 
 SHORT DESCRIPTION
 Read and edit PDFs on your device, with no account and no document uploads.

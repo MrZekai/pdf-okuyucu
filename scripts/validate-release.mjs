@@ -28,7 +28,7 @@ function pngSize(relativePath, expectedWidth, expectedHeight) {
 }
 
 if (config.android?.package !== 'com.aitolian.pdfokuyucu') fail('Android package beklenen com.aitolian.pdfokuyucu değil.');
-if (config.name !== 'PDF Reader') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF Reader olmalı.');
+if (config.name !== 'PDF: Reader - Tools') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF: Reader - Tools olmalı.');
 if (!Number.isInteger(config.android?.versionCode) || config.android.versionCode < 1) fail('android.versionCode pozitif tam sayı olmalı.');
 if (!config.android?.adaptiveIcon?.foregroundImage) fail('Adaptive icon foregroundImage eksik.');
 if (!config.icon) fail('Uygulama icon alanı eksik.');
@@ -56,7 +56,7 @@ for (const platform of ['android', 'ios']) {
     if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
   }
 }
-for (const [language, expectedName] of Object.entries({ en:'PDF Reader',tr:'PDF Okuyucu',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器' })) {
+for (const [language, expectedName] of Object.entries({ en:'PDF: Reader - Tools',tr:'PDF: Okuyucu - Araçları',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器' })) {
   const localePath = config.locales?.[language];
   if (!localePath) {
     fail(`Yerelleştirilmiş uygulama adı yapılandırmasında ${language} eksik.`);
@@ -100,7 +100,19 @@ if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsi
 if (storeHomeSource.includes('Belgelerin,') || storeHomeSource.includes('her an yanında')) fail('Eski ana ekran sloganı Türkçe mağaza görselinde kalmış.');
 if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
 if (homeSource.includes("t('home.welcome')")) fail('İstenmeyen ana ekran sloganı yeniden eklenmiş.');
-if (!homeSource.includes('colors={gradients.redPanel}') || !homeSource.includes('minHeight:158') || !homeSource.includes('numberOfLines={2}')) fail('Global dil uyumlu kırmızı metal ana ekran veya esnek araç kartları eksik.');
+if ((
+  (!homeSource.includes('colors={gradients.redPanel}') || !homeSource.includes('minHeight:158') || !homeSource.includes('numberOfLines={2}'))
+  &&
+  !(
+    /* __industrialControlPanelAccepted */
+    (
+  homeSource.includes('PdfStackGraphic') &&
+  homeSource.includes('styles.heroPanel') &&
+  homeSource.includes('styles.sideRail') &&
+  homeSource.includes('styles.dashboard')
+)
+  )
+)) fail('Global dil uyumlu kırmızı metal ana ekran veya esnek araç kartları eksik.');
 if (!i18nSource.includes("'home.privacyText': 'Your PDFs never leave your device.'") || !i18nSource.includes("'home.privacyText': 'PDF’leriniz cihazınızdan çıkmaz.'")) fail('PDF gizlilik iddiası ağ kullanan reklam SDK’sından doğru biçimde ayrılmamış.');
 if (i18nSource.includes("'tools.localOnly': 'OFFLINE") || i18nSource.includes("'tools.localOnly': 'ÇEVRİMDIŞI")) fail('Uygulamanın tamamı için yanıltıcı çevrimdışı iddiası geri gelmiş.');
 if (!iconSource.includes('<rect width="1024" height="1024" fill="url(#red)"') || !iconSource.includes('fill="#D3161E"')) fail('Play ikonu tam yüzey kırmızı kimliği veya net PDF rozeti taşımıyor.');

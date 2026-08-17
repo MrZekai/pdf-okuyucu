@@ -1,8 +1,8 @@
 {
   "android": {
-    "app_name": "PDF Okuyucu"
+    "app_name": "PDF: Okuyucu - Araçları"
   },
   "ios": {
-    "CFBundleDisplayName": "PDF Okuyucu"
+    "CFBundleDisplayName": "PDF: Okuyucu - Araçları"
   }
 }
