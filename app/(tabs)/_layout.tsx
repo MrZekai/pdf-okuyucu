@@ -13,11 +13,11 @@ export default function TabsLayout() {
   const insets = useSafeAreaInsets();
   return (
     <View style={{ flex: 1, backgroundColor: palette.ink }}>
-      <Tabs tabBar={(props) => <View style={{backgroundColor:'#0B1020'}}><AdBanner separateFromNavigation/><BottomTabBar {...props}/></View>} screenOptions={{
+      <Tabs tabBar={(props) => <View style={{backgroundColor:palette.ink}}><AdBanner separateFromNavigation/><BottomTabBar {...props}/></View>} screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: palette.white,
-        tabBarInactiveTintColor: '#64748B',
-        tabBarStyle: { backgroundColor: '#0B1020', borderTopColor: palette.line, height: 63 + insets.bottom, paddingTop: 7, paddingBottom: 7 + insets.bottom },
+        tabBarActiveTintColor: palette.pdfRedSoft,
+        tabBarInactiveTintColor: '#727780',
+        tabBarStyle: { backgroundColor: palette.ink, borderTopColor: palette.line, height: 63 + insets.bottom, paddingTop: 7, paddingBottom: 7 + insets.bottom },
         tabBarLabelStyle: { fontSize: 10, fontWeight: '700' }
       }}>
         <Tabs.Screen name="index" options={{ title: t('tabs.home'), tabBarIcon: ({ color }) => <AppIcon name="home" size={21} color={color}/> }} />

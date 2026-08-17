@@ -3,6 +3,7 @@ import Constants from 'expo-constants';
 import { AppState, Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import { useAdsStatus } from '@/context/AdsContext';
+import { palette } from '@/constants/theme';
 
 type AdBannerProps = { separateFromNavigation?: boolean };
 const MAX_ATTEMPTS = 3;
@@ -86,16 +87,16 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { width: '100%', backgroundColor: '#080C18' },
-  contentGap: { height: 16, backgroundColor: '#050814', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(148,163,184,0.18)' },
+  container: { width: '100%', backgroundColor: palette.ink },
+  contentGap: { height: 16, backgroundColor: palette.ink, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: palette.line },
   shell: {
     minHeight: 58,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#080C18',
+    backgroundColor: palette.ink,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(148,163,184,0.16)'
   },
-  navigationGap: { height: 28, backgroundColor: '#050814', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(148,163,184,0.18)', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(148,163,184,0.18)' }
+  navigationGap: { height: 28, backgroundColor: palette.ink, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: palette.line, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.line }
 });

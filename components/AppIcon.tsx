@@ -7,7 +7,8 @@ type IconName =
   | 'home' | 'library' | 'heart' | 'settings' | 'file' | 'plus' | 'link'
   | 'search' | 'chevronRight' | 'back' | 'share' | 'trash' | 'moon'
   | 'shield' | 'clock' | 'pages' | 'rotate' | 'snap'
-  | 'check' | 'close' | 'download' | 'info' | 'tools' | 'reorder';
+  | 'check' | 'close' | 'download' | 'info' | 'tools' | 'reorder'
+  | 'camera' | 'image' | 'edit' | 'watermark' | 'compress' | 'print' | 'split';
 
 type Props = { name: IconName; size?: number; color?: ColorValue; strokeWidth?: number };
 
@@ -41,6 +42,13 @@ export function AppIcon({ name, size = 22, color = '#F8FAFC', strokeWidth = 1.9 
       {name === 'info' && <><Circle {...p} cx="12" cy="12" r="9"/><Path {...p} d="M12 11v6M12 7h.01"/></>}
       {name === 'tools' && <><Path {...p} d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5L20 16.4a2.5 2.5 0 0 1-3.6 3.6l-7.7-7.7a4 4 0 0 0-5-5L6 9.6 8.4 7 6.1 4.7"/><Circle {...p} cx="18" cy="18" r=".7"/></>}
       {name === 'reorder' && <><Path {...p} d="M8 6h12M8 12h12M8 18h12"/><Path {...p} d="m3 7 2-2 2 2M5 5v14m-2-2 2 2 2-2"/></>}
+      {name === 'camera' && <><Path {...p} d="M4 7h3l1.5-2h7L17 7h3v12H4z"/><Circle {...p} cx="12" cy="13" r="3.5"/></>}
+      {name === 'image' && <><Rect {...p} x="3" y="4" width="18" height="16" rx="2"/><Circle {...p} cx="8.5" cy="9" r="1.5"/><Path {...p} d="m4 17 5-5 3.5 3.5 2.5-2.5 5 5"/></>}
+      {name === 'edit' && <><Path {...p} d="M4 20h4L19 9l-4-4L4 16z"/><Path {...p} d="m13.5 6.5 4 4M4 20h16"/></>}
+      {name === 'watermark' && <><Path {...p} d="M4 4h16v16H4z"/><Path {...p} d="m7 15 3-7 3 7 3-7 2 7M6 18h12"/></>}
+      {name === 'compress' && <><Path {...p} d="M8 3v5H3M16 3v5h5M8 21v-5H3M16 21v-5h5"/><Path {...p} d="m8 8-5-5M16 8l5-5M8 16l-5 5M16 16l5 5"/></>}
+      {name === 'print' && <><Path {...p} d="M7 9V3h10v6M7 18H4V10h16v8h-3"/><Rect {...p} x="7" y="15" width="10" height="6"/><Path {...p} d="M17 12h.01"/></>}
+      {name === 'split' && <><Rect {...p} x="3" y="4" width="7" height="16" rx="1"/><Rect {...p} x="14" y="4" width="7" height="16" rx="1"/><Path {...p} d="M12 3v18"/></>}
     </Svg>
   );
 }

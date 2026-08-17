@@ -5,8 +5,8 @@ import { AppLanguage, TranslationKey, TranslationVars, languageTags, translate }
 export type Translator = (key: TranslationKey, vars?: TranslationVars) => string;
 
 /**
- * Screen-level translation helper. The active language lives in AppContext settings,
- * so switching it in Ayarlar / Settings / Ajustes re-renders every screen instantly.
+ * Screen-level translation helper. AppContext mirrors the current native app/device
+ * language, so unsupported languages fall back to English without an in-app picker.
  */
 export function useTranslation() {
   const { settings } = useApp();

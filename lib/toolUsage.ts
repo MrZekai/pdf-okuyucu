@@ -2,7 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { PdfToolId } from '@/lib/pdfTools';
 
 const TOOL_USAGE_KEY = '@pdf-reader/tool-usage-v1';
-const allTools: PdfToolId[] = ['merge', 'extract', 'remove', 'reorder', 'rotate', 'clean'];
+const allTools: PdfToolId[] = [
+  'scan', 'images', 'merge', 'compress', 'split', 'watermark', 'create',
+  'extract', 'remove', 'reorder', 'rotate', 'clean', 'print'
+];
 
 type ToolUsage = Partial<Record<PdfToolId, number>>;
 
@@ -26,13 +29,13 @@ export async function clearToolUsage() {
   await AsyncStorage.removeItem(TOOL_USAGE_KEY);
 }
 
-/** Two most-used tools plus one deterministic daily discovery card. */
+/** Two most-used tools plus two rotating discovery cards. */
 export async function getSuggestedTools(): Promise<PdfToolId[]> {
   const usage = await loadUsage();
   const ranked = [...allTools].sort((a, b) => (usage[b] || 0) - (usage[a] || 0));
   const used = ranked.filter((id) => (usage[id] || 0) > 0).slice(0, 2);
   const pool = allTools.filter((id) => !used.includes(id));
   const day = Math.floor(Date.now() / 86_400_000);
-  const discovery = pool[day % pool.length];
-  return [...used, ...ranked.filter((id) => !used.includes(id) && id !== discovery).slice(0, 2 - used.length), discovery].slice(0, 3);
+  const discovery = [pool[day % pool.length], pool[(day + 5) % pool.length]].filter(Boolean);
+  return [...new Set([...used, ...discovery, ...ranked])].slice(0, 4);
 }

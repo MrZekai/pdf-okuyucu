@@ -72,14 +72,14 @@ export function DocumentCard({ doc, onPress, onFavorite, onDelete, t, locale = '
 }
 
 const styles = StyleSheet.create({
-  card: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 18, backgroundColor: '#121A2D', borderWidth: 1, borderColor: palette.line, gap: 12 },
-  fileBox: { width: 48, height: 56, borderRadius: 13, backgroundColor: 'rgba(91,103,241,0.12)', alignItems: 'center', justifyContent: 'center' },
+  card: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 18, backgroundColor: palette.card, borderWidth: 1, borderColor: palette.line, gap: 12 },
+  fileBox: { width: 48, height: 56, borderRadius: 13, backgroundColor: palette.redGlow, alignItems: 'center', justifyContent: 'center' },
   content: { flex: 1, minWidth: 0 },
   title: { color: palette.white, fontSize: 14.5, fontWeight: '700' },
   metaRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', marginTop: 7 },
   meta: { color: palette.muted, fontSize: 10.5 },
-  dot: { color: '#475569', fontSize: 10, marginHorizontal: 5 },
-  progressTrack: { height: 3, backgroundColor: '#263047', borderRadius: 2, overflow: 'hidden', marginTop: 10 },
-  progressFill: { height: '100%', backgroundColor: palette.royal, borderRadius: 2 },
+  dot: { color: '#555B64', fontSize: 10, marginHorizontal: 5 },
+  progressTrack: { height: 3, backgroundColor: palette.metalSoft, borderRadius: 2, overflow: 'hidden', marginTop: 10 },
+  progressFill: { height: '100%', backgroundColor: palette.pdfRed, borderRadius: 2 },
   actions: { alignItems: 'center', justifyContent: 'space-between', gap: 16, paddingVertical: 2 }
 });

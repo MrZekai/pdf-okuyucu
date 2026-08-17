@@ -6,12 +6,12 @@ Bu tur yalnız kaynak kodu günceller. APK/AAB üretilmedi ve hiçbir depoya oto
 
 - Desteklenmeyen cihaz dilleri ve eksik çeviriler artık İngilizceye düşer.
 - Görünen varsayılan uygulama adı `PDF Reader`; 14 dilin launcher adı ayrı yerelleştirilmiştir.
-- TR, EN, ES, PT, DE, FR, IT, RU, HI, ID, AR, JA, KO ve ZH için 174 anahtarlık eksiksiz arayüz sözlükleri vardır.
+- TR, EN, ES, PT, DE, FR, IT, RU, HI, ID, AR, JA, KO ve ZH için eksiksiz ve eş anahtarlı arayüz sözlükleri vardır.
 - Dil denetimi dil listesini otomatik okur; yeni bir sözlük doğrulama dışında bırakılamaz.
-- Ayarlardaki dil seçici aranabilir ve uzun listeye uygundur.
+- Uygulama içi manuel dil seçici kaldırılmıştır. Arayüz cihazın/Android uygulama dilini otomatik izler; desteklenmeyen dil İngilizceye düşer.
 - Arapça uygulama içi RTL yönü, mantıksal boşluklar ve aynalanan yön ikonları uygulanmıştır.
 - Tarih, göreli zaman, dosya boyutu ve sayılar seçili BCP-47 etiketiyle biçimlendirilir.
-- `Araçlar` sekmesi eklendi: PDF birleştir, sayfa çıkar, sayfa sil, sayfaları sırala, tüm sayfaları 90° döndür ve ortak meta verileri temizle.
+- `Araçlar` sekmesi gerçek işlevlerle genişletildi: kamerayla tara, JPG/PNG’den PDF, metinden PDF, birleştir, böl, sayfa çıkar/sil/sırala/döndür, filigran ekle, kayıpsız optimize et, meta veri temizle ve sistem yazdırmayı aç.
 - Araçlar `pdf-lib` ile cihaz içinde çalışır; kaynak PDF değiştirilmez, sonuç yeni yerel PDF olarak kitaplığa eklenir.
 - Ana sayfa yalnız gerçek özellikleri önerir. Word/Excel/PPT dönüştürme eklenmedi; mevcut teknolojiyle gerçek ve güvenilir dönüşüm sunulmadan bu düğmeler yanıltıcı olurdu.
 - Öneri sırası yalnız cihazdaki kullanım sayaçları ve günlük keşif sırası ile belirlenir; analitik veya sunucuya gönderim yoktur.
@@ -23,7 +23,7 @@ Bu tur yalnız kaynak kodu günceller. APK/AAB üretilmedi ve hiçbir depoya oto
 - Android paket adı `com.aitolian.pdfokuyucu` kaldı. Bu kullanıcıya gösterilen marka değil, Play kimliğidir. İlk Play yüklemesinden sonra paket adı değiştirilemez; yeni ve benzersiz bir paket adı isteniyorsa ilk yüklemeden önce ayrıca karar verilmelidir.
 - Kotlin 2.1.20, Ads SDK 24.6.0 sabiti ve üretim AdMob kimlikleri korunmuştur.
 - PDF motoru değiştirilmemiştir.
-- Sıkıştırma, OCR, Office dönüştürme ve imza araçları eklenmemiştir; yarım veya yanıltıcı özellik sunulmamıştır.
+- OCR, Office (Word/Excel/PowerPoint) dönüştürme, kriptografik imza ve taranmış görselleri yeniden kodlayan güçlü sıkıştırma uygulanmış gibi gösterilmez; bunlar ek bir yerel motor gerektirir.
 
 ## Yayın öncesi insan testi
 

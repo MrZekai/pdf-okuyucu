@@ -10,6 +10,7 @@ import { AppOpenAdController } from '@/components/AppOpenAdController';
 import { IncomingPdfHandler } from '@/components/IncomingPdfHandler';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { DirectionProvider } from '@/context/DirectionContext';
+import { palette } from '@/constants/theme';
 
 I18nManager.allowRTL(true);
 
@@ -23,7 +24,7 @@ export default function RootLayout() {
           <AppOpenAdController>
             <IncomingPdfHandler />
             <StatusBar style="light" />
-            <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0B1020' } }}>
+            <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: palette.ink } }}>
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="reader/[id]" options={{ animation: 'fade' }} />
             </Stack>

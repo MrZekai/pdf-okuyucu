@@ -42,6 +42,8 @@ if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Releas
 const packageJson = JSON.parse(text('package.json'));
 exists('.env.example');
 if (packageJson.dependencies?.['pdf-lib'] !== '1.17.1') fail('Cihaz içi PDF araçları için pdf-lib 1.17.1 sabiti eksik.');
+if (!packageJson.dependencies?.['expo-image-picker']) fail('Kamera ile PDF tarama için expo-image-picker eksik.');
+if (!packageJson.dependencies?.['expo-print']) fail('PDF oluşturma/yazdırma için expo-print eksik.');
 const packageLock = JSON.parse(text('package-lock.json'));
 if (packageLock.packages?.['']?.dependencies?.['pdf-lib'] !== '1.17.1' || packageLock.packages?.['node_modules/pdf-lib']?.version !== '1.17.1') fail('package-lock.json içindeki pdf-lib sabiti package.json ile eşleşmiyor.');
 const localizationRange = packageJson.dependencies?.['expo-localization'] || '';
@@ -68,6 +70,8 @@ for (const [language, expectedName] of Object.entries({ en:'PDF Reader',tr:'PDF 
   }
 }
 const appConfigSource = text('app.config.js');
+if (!config.plugins.some((item) => Array.isArray(item) && item[0] === 'expo-image-picker')) fail('expo-image-picker config plugin eksik.');
+if (!config.android?.blockedPermissions?.includes('android.permission.RECORD_AUDIO')) fail('Belge tarama özelliğinde gereksiz mikrofon izni engellenmemiş.');
 if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSource.includes('enableFileSharing')) fail('iOS belge paylaşımı gizlilik politikasıyla çelişiyor.');
 
 const admob = config.extra?.admob || {};
@@ -97,12 +101,13 @@ if (homeSource.includes("t('home.welcome')")) fail('İstenmeyen ana ekran slogan
 if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
 if (!bannerSource.includes('style={styles.contentGap}') || !bannerSource.includes('contentGap: { height: 16')) fail('Banner ile içerik arasındaki 16 dp güvenli boşluk eksik.');
 if (!bannerSource.includes('style={styles.navigationGap}') || !bannerSource.includes('navigationGap: { height: 28')) fail('Banner ile alt gezinme arasındaki 28 dp güvenli boşluk eksik.');
-if (!bannerSource.includes("contentGap: { height: 16, backgroundColor: '#050814', borderTopWidth") || !bannerSource.includes("navigationGap: { height: 28, backgroundColor: '#050814', borderTopWidth")) fail('Banner güvenli boşluklarının görünür ayırıcı sınırları eksik.');
+if (!bannerSource.includes('contentGap: { height: 16, backgroundColor: palette.ink, borderTopWidth') || !bannerSource.includes('navigationGap: { height: 28, backgroundColor: palette.ink, borderTopWidth')) fail('Banner güvenli boşluklarının görünür ayırıcı sınırları eksik.');
 if (!bannerSource.includes('RETRY_DELAY_MS = 45_000') || !bannerSource.includes('MAX_ATTEMPTS = 3')) fail('Banner kontrollü yeniden deneme koruması eksik.');
 if (!bannerSource.includes("AppState.addEventListener('change'") || !bannerSource.includes("state === 'active' && hidden")) fail('Android banner foreground kurtarma yolu eksik.');
 if (!readerSource.includes("edges={['bottom']}")) fail('PDF okuyucu alt araç çubuğu sistem güvenli alanını korumuyor.');
 if (!readerSource.includes('patchSettings({horizontal:!settings.horizontal})') || !readerSource.includes('patchSettings({invertPdfPages:!settings.invertPdfPages})')) fail('Okuyucu görünüm ayarları kalıcı AppContext ayarlarına bağlı değil.');
 if (!settingsSource.includes('showPrivacyOptionsForm()') || !settingsSource.includes('openPrivacyPolicy')) fail('Ayarlar ekranındaki reklam tercihleri veya gizlilik politikası bağlantısı eksik.');
+if (settingsSource.includes('languageLabels') || settingsSource.includes("t('settings.languageSection')") || settingsSource.includes('patchSettings({language')) fail('İstenmeyen uygulama içi manuel dil seçici yeniden eklenmiş.');
 if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includes('startInFlight')) fail('UMP sonrası reklam başlatma yenilemesi veya yarış koruması eksik.');
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
@@ -110,7 +115,7 @@ if (!appContextSource.includes("AppState.addEventListener('change'") || !appCont
 if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('FINGERPRINT_MAX_BYTES') || !pdfFilesSource.includes('(size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini güvenli boyut eşiğinde önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');
-for (const guard of ['mergePdfs', 'extractPages', 'removePages', 'reorderPages', 'rotatePages', 'cleanMetadata', 'MAX_TOOL_INPUT_BYTES']) if (!toolsSource.includes(guard)) fail(`PDF araç kapısı eksik: ${guard}`);
+for (const guard of ['scanToPdf', 'imagesToPdf', 'createPdf', 'mergePdfs', 'splitPdf', 'extractPages', 'removePages', 'reorderPages', 'rotatePages', 'addWatermark', 'compressPdf', 'cleanMetadata', 'printPdf', 'MAX_TOOL_INPUT_BYTES']) if (!toolsSource.includes(guard)) fail(`PDF araç kapısı eksik: ${guard}`);
 if (!tabsSource.includes('name="tools"') || !tabsSource.includes('name="favorites" options={{ href: null }}')) fail('Araçlar sekmesi veya Kütüphane içi favori mimarisi eksik.');
 if (!i18nSource.includes("return 'en';") || !i18nSource.includes("let activeLanguage: AppLanguage = 'en'")) fail('Desteklenmeyen dil için İngilizce yedekleme eksik.');
 

@@ -42,14 +42,14 @@ export function UrlModal({ visible, onClose, onSubmit }: { visible: boolean; onC
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, backgroundColor: 'rgba(2,6,23,0.75)', justifyContent: 'center', padding: 20 },
-  card: { backgroundColor: '#11182B', borderRadius: 24, borderWidth: 1, borderColor: palette.line, padding: 20, gap: 16 },
+  backdrop: { flex: 1, backgroundColor: 'rgba(2,3,4,0.82)', justifyContent: 'center', padding: 20 },
+  card: { backgroundColor: palette.metal, borderRadius: 24, borderWidth: 1, borderColor: palette.line, padding: 20, gap: 16 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  icon: { width: 44, height: 44, borderRadius: 14, backgroundColor: 'rgba(56,189,248,0.1)', alignItems: 'center', justifyContent: 'center' },
+  icon: { width: 44, height: 44, borderRadius: 14, backgroundColor: palette.redGlow, alignItems: 'center', justifyContent: 'center' },
   title: { color: palette.white, fontWeight: '800', fontSize: 18 },
   caption: { color: palette.muted, fontSize: 12, marginTop: 3 },
-  input: { color: palette.white, backgroundColor: '#0A1020', borderColor: palette.line, borderWidth: 1, borderRadius: 14, paddingHorizontal: 14, height: 50, fontSize: 14 },
+  input: { color: palette.white, backgroundColor: palette.ink, borderColor: palette.line, borderWidth: 1, borderRadius: 14, paddingHorizontal: 14, height: 50, fontSize: 14 },
   error: { color: palette.danger, fontSize: 12 },
-  button: { height: 50, borderRadius: 14, backgroundColor: palette.royal, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 9 },
+  button: { height: 50, borderRadius: 14, backgroundColor: palette.pdfRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 9 },
   buttonText: { color: '#fff', fontSize: 14, fontWeight: '800' }
 });

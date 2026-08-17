@@ -50,7 +50,9 @@ export async function loadSettings(): Promise<ReaderSettings> {
     const raw = await AsyncStorage.getItem(SETTINGS_KEY);
     if (!raw) return defaultSettings;
     const merged: ReaderSettings = { ...defaultSettings, ...JSON.parse(raw) };
-    // Older installs have no language stored, and a corrupted value must not break the UI.
+    // The interface always follows the current Android/iOS app language. A language
+    // saved by older versions is intentionally ignored so no manual selection sticks.
+    merged.language = detectDeviceLanguage();
     if (!isAppLanguage(merged.language)) merged.language = defaultSettings.language;
     return merged;
   } catch {

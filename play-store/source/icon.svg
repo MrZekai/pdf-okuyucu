@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs><linearGradient id="r" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FF564C"/><stop offset="1" stop-color="#C2101A"/></linearGradient><filter id="sh" x="-35%" y="-35%" width="170%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".35"/></filter></defs>
-  <rect width="1024" height="1024" rx="218" fill="#0B1020"/>
-  <circle cx="512" cy="480" r="380" fill="#5B67F1" opacity=".18"/>
+  <rect width="1024" height="1024" rx="218" fill="#08090B"/>
+  <circle cx="512" cy="480" r="380" fill="#E5252A" opacity=".18"/>
   <g filter="url(#sh)"><path d="M280 130h332l152 152v568a48 48 0 0 1-48 48H280a48 48 0 0 1-48-48V178a48 48 0 0 1 48-48z" fill="url(#r)"/></g><path d="M612 130l152 152h-116a36 36 0 0 1-36-36z" fill="#FFC3BE"/><text x="498" y="612" font-family="DejaVu Sans, sans-serif" font-size="210" font-weight="bold" fill="#FFFFFF" text-anchor="middle">PDF</text><rect x="330" y="690" width="336" height="22" rx="11" fill="#FFFFFF" opacity="0.6"/><rect x="330" y="742" width="240" height="22" rx="11" fill="#FFFFFF" opacity="0.38"/>
 </svg>

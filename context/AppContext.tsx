@@ -5,7 +5,7 @@ import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
 import { cleanupPdfImportCache, deletePdfFile, downloadPdfFromUrl, importPdfFromUri, pickPdfFromDevice } from '@/lib/pdfFiles';
 import { clearToolUsage } from '@/lib/toolUsage';
-import { setActiveLanguage } from '@/constants/i18n';
+import { detectDeviceLanguage, setActiveLanguage } from '@/constants/i18n';
 
 type AppContextValue = {
   ready: boolean;
@@ -14,7 +14,7 @@ type AppContextValue = {
   openPicker: () => Promise<PdfDocument | null>;
   addFromUrl: (url: string) => Promise<PdfDocument>;
   addFromExternalUri: (uri: string) => Promise<PdfDocument>;
-  addGeneratedDocument: (document: PdfDocument) => void;
+  addGeneratedDocument: (document: PdfDocument | PdfDocument[]) => void;
   getDocument: (id: string) => PdfDocument | undefined;
   touchDocument: (id: string) => void;
   updateProgress: (id: string, page: number, pageCount?: number) => void;
@@ -51,8 +51,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     Promise.all([loadDocuments(), loadSettings()]).then(([docs, savedSettings]) => {
       documentsRef.current = docs;
       setDocuments(docs);
-      setSettings(savedSettings);
-      setActiveLanguage(savedSettings.language);
+      const language = detectDeviceLanguage();
+      const localizedSettings = { ...savedSettings, language };
+      setSettings(localizedSettings);
+      setActiveLanguage(language);
       cleanupPdfImportCache();
       readyRef.current = true;
       setReady(true);
@@ -97,6 +99,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (ready) saveSettings(settings).catch(() => undefined);
   }, [settings, ready]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state !== 'active') return;
+      const language = detectDeviceLanguage();
+      setSettings((current) => current.language === language ? current : { ...current, language });
+    });
+    return () => subscription.remove();
+  }, []);
 
 
   const openPicker = useCallback(async () => {
@@ -144,8 +155,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return doc;
   }, [updateDocumentsState]);
 
-  const addGeneratedDocument = useCallback((document: PdfDocument) => {
-    updateDocumentsState((current) => [document, ...current]);
+  const addGeneratedDocument = useCallback((document: PdfDocument | PdfDocument[]) => {
+    const generated = Array.isArray(document) ? document : [document];
+    updateDocumentsState((current) => [...generated, ...current]);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
   }, [updateDocumentsState]);
 

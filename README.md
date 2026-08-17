@@ -17,10 +17,11 @@ A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / 
 - PDF page inversion for night reading
 - Password-protected PDF prompt
 - Share PDF
-- Merge PDFs
-- Extract, remove and reorder pages
-- Rotate every page by 90 degrees
-- Remove common PDF metadata fields
+- Scan a paper document to PDF with the camera
+- Convert JPG/PNG images to PDF and create PDF from text
+- Merge and split PDFs
+- Extract, remove, reorder and rotate pages
+- Add text watermarks, losslessly optimize, clean metadata and print/save as PDF
 - Usage-aware on-device tool suggestions (stored only on the device)
 - Persistent settings
 - Fixed bottom AdMob banner area on tabs **and reader**
@@ -28,7 +29,7 @@ A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / 
 - Google UMP consent bootstrap before ads
 - Development/test ad fallback
 - 14 complete interface languages with English fallback
-- Searchable language selector and Arabic RTL-aware layout
+- Automatic system/app-language detection with English fallback and Arabic RTL-aware layout
 - EAS development / APK preview / production profiles
 
 ## Native libraries = Development Build required
@@ -77,8 +78,8 @@ The language contract lives in `constants/i18n.ts`; the additional dictionaries 
 - Ekranlarda: `const { t } = useTranslation();` → `t('home.openPdf')`
 - Değişkenli: `t('home.quickFavDesc', { count })` — yer tutucular `{ad}` biçiminde
 - React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
-- Aktif dil `settings.language` içinde tutulur, **Ayarlar → DİL** bölümünden değiştirilir
-- İlk açılış dili `expo-localization` ile cihazın/uygulamanın yerel dilinden güvenilir biçimde algılanır
+- Aktif dil `settings.language` içinde yalnız çalışma zamanı durumu olarak tutulur; uygulama içinde manuel dil seçici yoktur
+- Dil `expo-localization` ile cihazın/Android uygulama dilinden algılanır; desteklenmeyen diller İngilizceye düşer
 - Android 13+ uygulama-bazlı dil menüsü 14 dili sunar ve launcher adı her dil için `locales/` altında yerelleştirilir
 - Her sözlük `Record<keyof typeof tr, string>` olarak tiplenmiştir; eksik veya fazla anahtar TypeScript derlemesini durdurur
 - `scripts/check-i18n.mjs`, dil listesini otomatik okur; yeni bir dil sessizce doğrulama dışında kalamaz

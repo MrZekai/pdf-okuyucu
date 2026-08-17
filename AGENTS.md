@@ -43,8 +43,8 @@ The app ships in **English, Turkish, Spanish, Portuguese, German, French, Italia
 - `app/(tabs)/_layout.tsx` — tab bar (titles translated)
 - `app/(tabs)/index.tsx` — premium home/dashboard
 - `app/(tabs)/library.tsx` — searchable local library (locale-aware search)
-- `app/(tabs)/tools.tsx` — six real on-device PDF tools
-- `app/(tabs)/settings.tsx` — language selector + reader / privacy settings
+- `app/(tabs)/tools.tsx` — real on-device PDF creation, page, watermark, optimization and print tools
+- `app/(tabs)/settings.tsx` — reader / privacy settings; language follows the system/app locale automatically
 - `app/reader/[id].tsx` — native PDF reader
 - `constants/i18n.ts` + `constants/translations/` — **all user-facing strings, 14 languages**
 - `constants/theme.ts` — colour palette

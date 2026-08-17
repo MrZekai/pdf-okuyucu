@@ -6,6 +6,7 @@ import { usePathname } from 'expo-router';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
 import { useTranslation } from '@/hooks/useTranslation';
+import { palette } from '@/constants/theme';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
 const LAST_SHOWN_KEY = '@pdf-reader/app-open-last-shown-v1';
@@ -169,11 +170,11 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
 
   useEffect(() => () => clearAd(), [clearAd]);
 
-  return <View style={styles.root}>{gateVisible ? <View style={styles.gate} accessibilityLabel={t('app.name')}><Image source={require('../assets/splash-icon.png')} style={styles.logo}/><ActivityIndicator color="#8B97FF" size="small"/></View> : children}</View>;
+  return <View style={styles.root}>{gateVisible ? <View style={styles.gate} accessibilityLabel={t('app.name')}><Image source={require('../assets/splash-icon.png')} style={styles.logo}/><ActivityIndicator color={palette.pdfRed} size="small"/></View> : children}</View>;
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#0B1020' },
-  gate: { flex: 1, backgroundColor: '#0B1020', alignItems: 'center', justifyContent: 'center', gap: 26 },
+  root: { flex: 1, backgroundColor: palette.ink },
+  gate: { flex: 1, backgroundColor: palette.ink, alignItems: 'center', justifyContent: 'center', gap: 26 },
   logo: { width: 180, height: 180, resizeMode: 'contain' }
 });

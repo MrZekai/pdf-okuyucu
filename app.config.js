@@ -56,12 +56,13 @@ module.exports = ({ config }) => ({
     blockedPermissions: [
       'android.permission.SYSTEM_ALERT_WINDOW',
       'android.permission.READ_EXTERNAL_STORAGE',
-      'android.permission.WRITE_EXTERNAL_STORAGE'
+      'android.permission.WRITE_EXTERNAL_STORAGE',
+      'android.permission.RECORD_AUDIO'
     ],
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       monochromeImage: './assets/monochrome-icon.png',
-      backgroundColor: '#0B1020'
+      backgroundColor: '#08090B'
     }
   },
   ios: {
@@ -76,11 +77,19 @@ module.exports = ({ config }) => ({
         image: './assets/splash-icon.png',
         imageWidth: 180,
         resizeMode: 'contain',
-        backgroundColor: '#0B1020',
+        backgroundColor: '#08090B',
         dark: {
           image: './assets/splash-icon.png',
-          backgroundColor: '#0B1020'
+          backgroundColor: '#08090B'
         }
+      }
+    ],
+    [
+      'expo-image-picker',
+      {
+        cameraPermission: 'Allow PDF Reader to use the camera to scan pages into a PDF.',
+        photosPermission: false,
+        microphonePermission: false
       }
     ],
     'expo-file-system',
