@@ -114,8 +114,8 @@ jobs:
             grep -Fq "<locale android:name=\"$locale\"/>" android/app/src/main/res/xml/locales_config.xml
             grep -RFq "$app_name" "android/app/src/main/res/values-b+$locale"
           done <<'LOCALES'
-          en|PDF Reader
-          tr|PDF Okuyucu
+          en|PDF: Reader - Tools
+          tr|PDF: Okuyucu - Araçları
           es|Lector PDF
           pt|Leitor de PDF
           de|PDF-Reader
