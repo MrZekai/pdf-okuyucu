@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'Belum ada PDF',
   'home.emptyText':'Dokumen pertama Anda akan muncul otomatis di sini.',
   'home.privacyTitle':'Hanya di perangkat Anda',
-  'home.privacyText':'PDF Anda tidak pernah meninggalkan perangkat.',
+  'home.privacyText':'PDF Anda tidak diunggah ke server pengembang.',
   'library.kicker':'PUSTAKA',
   'library.title':'Semua PDF Anda',
   'library.searchPlaceholder':'Cari berdasarkan nama file',

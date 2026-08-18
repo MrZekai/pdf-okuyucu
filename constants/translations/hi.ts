@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'अभी कोई PDF नहीं',
   'home.emptyText':'आपका पहला दस्तावेज़ अपने आप यहाँ दिखाई देगा।',
   'home.privacyTitle':'केवल आपके डिवाइस पर',
-  'home.privacyText':'आपके PDF कभी आपके डिवाइस से बाहर नहीं जाते।',
+  'home.privacyText':'आपके PDF डेवलपर के सर्वर पर अपलोड नहीं किए जाते।',
   'library.kicker':'लाइब्रेरी',
   'library.title':'आपके सभी PDF',
   'library.searchPlaceholder':'फ़ाइल नाम से खोजें',

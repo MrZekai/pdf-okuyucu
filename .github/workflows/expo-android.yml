@@ -71,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
           curl --fail --silent --show-error --location --max-time 20 \
-            https://mrzekai.github.io/privacy-policy.html | grep -Fq 'PDF Okuyucu'
+            https://mrzekai.github.io/privacy-policy.html | grep -Fq 'PDF: Okuyucu - Araçları'
           curl --fail --silent --show-error --location --max-time 20 \
             https://mrzekai.github.io/app-ads.txt | tr -d '\r' | \
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
@@ -83,6 +83,8 @@ jobs:
       - name: Toolchain ve Ads SDK sabitlemesini doğrula
         run: |
           set -euo pipefail
+          grep -Fxq 'android.compileSdkVersion=36' android/gradle.properties
+          grep -Fxq 'android.targetSdkVersion=36' android/gradle.properties
           grep -Fxq 'android.kotlinVersion=2.1.20' android/gradle.properties
           grep -Fxq 'android.enableMinifyInReleaseBuilds=true' android/gradle.properties
           grep -Fxq 'android.enableShrinkResourcesInReleaseBuilds=true' android/gradle.properties
@@ -95,7 +97,7 @@ jobs:
             echo 'HATA: prefix eslesmesi geri gelmis; identifier artefakti kirilir.' >&2
             exit 1
           fi
-          echo 'Kotlin 2.1.20, R8/resource shrink ve play-services-ads 24.6.0 sabitlemesi yerinde.'
+          echo 'API 36, Kotlin 2.1.20, R8/resource shrink ve play-services-ads 24.6.0 sabitlemesi yerinde.'
 
       - name: Gereksiz Android izinlerini doğrula
         run: |
@@ -163,7 +165,7 @@ jobs:
           fi
           echo 'QA APK yalnızca Google demo reklam birimlerini kullanıyor.'
 
-      - name: QA APK 16 KB sayfa hizalamasını doğrula
+      - name: QA APK 16 KB ZIP ve ELF hizalamasını doğrula
         if: github.event_name == 'push'
         run: |
           set -euo pipefail
@@ -171,7 +173,25 @@ jobs:
           zipalign_bin=$(find "$ANDROID_HOME/build-tools" -type f -name zipalign | sort -V | tail -1)
           test -x "$zipalign_bin"
           "$zipalign_bin" -c -P 16 -v 4 "$qa_apk"
-          echo 'QA APK 16 KB zip hizalaması doğrulandı.'
+          command -v readelf >/dev/null
+          native_dir=$(mktemp -d)
+          trap 'rm -rf "$native_dir"' EXIT
+          unzip -q "$qa_apk" 'lib/*/*.so' -d "$native_dir"
+          found=0
+          while IFS= read -r so; do
+            found=1
+            while IFS= read -r alignment; do
+              if (( alignment < 0x4000 )); then
+                echo "HATA: $so içindeki LOAD segmenti 16 KB hizalı değil: $alignment" >&2
+                exit 1
+              fi
+            done < <(readelf -lW "$so" | awk '$1 == "LOAD" { print $NF }')
+          done < <(find "$native_dir/lib" \( -path '*/arm64-v8a/*.so' -o -path '*/x86_64/*.so' \) -type f)
+          if (( found == 0 )); then
+            echo 'HATA: QA APK içinde doğrulanacak 64-bit native kitaplık bulunamadı.' >&2
+            exit 1
+          fi
+          echo 'QA APK ZIP hizalaması ve 64-bit ELF LOAD segmentleri 16 KB uyumlu.'
 
       # ─── Hata durumunda tanilama toplama ────────────────────────────────
       - name: Kotlin derleyici tanılama dosyalarını topla
@@ -251,6 +271,23 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
           printf 'storeFile=upload-keystore.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/keystore.properties
           node scripts/configure-android-signing.mjs
+
+      - name: Play Store ana ekran görsellerinin yeni UI'dan alındığını doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        run: |
+          set -euo pipefail
+          while IFS='|' read -r file old_sha; do
+            actual=$(sha256sum "$file" | awk '{print $1}')
+            if [ "$actual" = "$old_sha" ]; then
+              echo "HATA: $file hala eski ana ekran tasarımına ait. Gerçek son QA APK'dan yeni screenshot alınmadan AAB üretilemez." >&2
+              exit 1
+            fi
+          done <<'OLD_SCREENSHOTS'
+          play-store/screenshots/screenshot-01-home.png|a173bed4cb8e314cd318408e789dd2f0e66b2576361b366d0c4d1d0b41909976
+          play-store/screenshots/en-US/screenshot-01-home.png|a76a02858198bd0e58cbff9a3e2620e8a47f33ef51209c08783f8151211a5917
+          play-store/screenshots/es-ES/screenshot-01-home.png|89f358f680eeff517e65cefb3c7c5f87f3781543b8ac9c450d4cbdc0bc8205b4
+          OLD_SCREENSHOTS
+          echo 'Ana ekran mağaza görselleri eski UI hashlerinden farklı.'
 
       - name: İmzalı Play Store AAB derle
         if: github.event_name == 'workflow_dispatch' && inputs.build_release

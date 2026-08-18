@@ -36,6 +36,8 @@ if (config.extra?.privacyPolicyUrl !== 'https://mrzekai.github.io/privacy-policy
 const pdfViewIntent = config.android?.intentFilters?.find((item) => item.action === 'VIEW' && item.data?.some((entry) => entry.mimeType === 'application/pdf' && entry.scheme === 'content'));
 if (!pdfViewIntent) fail('Android application/pdf VIEW intent-filter eksik.');
 const buildProperties = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-build-properties')?.[1]?.android;
+if (buildProperties?.compileSdkVersion !== 36) fail('compileSdkVersion açıkça 36 olmalı.');
+if (buildProperties?.targetSdkVersion !== 36) fail('targetSdkVersion açıkça 36 olmalı.');
 if (buildProperties?.enableMinifyInReleaseBuilds !== true) fail('Release R8/minify etkin değil.');
 if (buildProperties?.enableShrinkResourcesInReleaseBuilds !== true) fail('Release resource shrinking etkin değil.');
 
@@ -113,7 +115,7 @@ if ((
 )
   )
 )) fail('Global dil uyumlu kırmızı metal ana ekran veya esnek araç kartları eksik.');
-if (!i18nSource.includes("'home.privacyText': 'Your PDFs never leave your device.'") || !i18nSource.includes("'home.privacyText': 'PDF’leriniz cihazınızdan çıkmaz.'")) fail('PDF gizlilik iddiası ağ kullanan reklam SDK’sından doğru biçimde ayrılmamış.');
+if (!i18nSource.includes("'home.privacyText': 'Your PDFs are not uploaded to the developer server.'") || !i18nSource.includes("'home.privacyText': 'PDF dosyalarınız geliştirici sunucusuna yüklenmez.'")) fail('PDF gizlilik iddiası geliştirici sunucusu sınırını doğru anlatmıyor.');
 if (i18nSource.includes("'tools.localOnly': 'OFFLINE") || i18nSource.includes("'tools.localOnly': 'ÇEVRİMDIŞI")) fail('Uygulamanın tamamı için yanıltıcı çevrimdışı iddiası geri gelmiş.');
 if (!iconSource.includes('<rect width="1024" height="1024" fill="url(#red)"') || !iconSource.includes('fill="#D3161E"')) fail('Play ikonu tam yüzey kırmızı kimliği veya net PDF rozeti taşımıyor.');
 if (!tabsSource.includes('<AdBanner separateFromNavigation/>') || tabsSource.indexOf('<AdBanner separateFromNavigation/>') > tabsSource.indexOf('<BottomTabBar')) fail('Banner, alt sekme gezinmesinin üstünde ve ayrılmış olmalı.');
@@ -128,12 +130,19 @@ if (!settingsSource.includes('showPrivacyOptionsForm()') || !settingsSource.incl
 if (settingsSource.includes('languageLabels') || settingsSource.includes("t('settings.languageSection')") || settingsSource.includes('patchSettings({language')) fail('İstenmeyen uygulama içi manuel dil seçici yeniden eklenmiş.');
 if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includes('startInFlight')) fail('UMP sonrası reklam başlatma yenilemesi veya yarış koruması eksik.');
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
+if (appOpenSource.includes("AppState.addEventListener('change'") || appOpenSource.includes('MIN_BACKGROUND_MS') || appOpenSource.includes("'warm'")) fail('App-open reklamı banner bulunan warm-resume içeriği üzerine çıkabilecek yol içeriyor.');
+if (!appOpenSource.includes('FIRST_AD_LAUNCH = 3') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk kullanım/frequency-cap/tek launch sayımı koruması eksik.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
+if (!readerSource.includes("AppState.addEventListener('change'") || !readerSource.includes("state==='inactive'||state==='background'") || !readerSource.includes('flushProgress()')) fail('Reader background progress flush koruması eksik.');
 if (!appContextSource.includes("AppState.addEventListener('change'") || !appContextSource.includes('saveDocuments(documentsRef.current)')) fail('Uygulama arka plana geçerken PDF kayıtlarını hemen kalıcılaştırma koruması eksik.');
 if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('FINGERPRINT_MAX_BYTES') || !pdfFilesSource.includes('(size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini güvenli boyut eşiğinde önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
+if (!pdfFilesSource.includes('const sourceSize = asset.size || source.size || 0') || !pdfFilesSource.includes('Paths.availableDiskSpace < sourceSize + MIN_FREE_DISK_BYTES')) fail('Cihazdan PDF kopyalanmadan önce boyut/disk preflight koruması eksik.');
+if (!pdfFilesSource.includes('try { rawName = decodeURIComponent(encodedName); } catch { rawName = fallbackName; }')) fail('URL dosya adı için güvenli decode fallback eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');
 for (const guard of ['scanToPdf', 'imagesToPdf', 'createPdf', 'mergePdfs', 'splitPdf', 'extractPages', 'removePages', 'reorderPages', 'rotatePages', 'addWatermark', 'compressPdf', 'cleanMetadata', 'printPdf', 'MAX_TOOL_INPUT_BYTES']) if (!toolsSource.includes(guard)) fail(`PDF araç kapısı eksik: ${guard}`);
+if (!toolsSource.includes('deletePdfFile(firstDocument.uri)')) fail('splitPdf ikinci çıktı başarısızlığında ilk dosya rollback koruması eksik.');
+if (!toolsSource.includes('const bytes = await output.save({ useObjectStreams: true });') || toolsSource.includes("return saveGeneratedPdf(await output.save({ useObjectStreams: true }), requestedName);\n  } catch {\n    throw new Error(t('tools.unsupportedImage'))")) fail('Resimden PDF kaydetme hataları unsupported-image hatasıyla maskelenmemeli.');
 if (!tabsSource.includes('name="tools"') || !tabsSource.includes('name="favorites" options={{ href: null }}')) fail('Araçlar sekmesi veya Kütüphane içi favori mimarisi eksik.');
 if (!i18nSource.includes("return 'en';") || !i18nSource.includes("let activeLanguage: AppLanguage = 'en'")) fail('Desteklenmeyen dil için İngilizce yedekleme eksik.');
 
@@ -146,11 +155,24 @@ for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}
 for (const locale of ['en-US', 'es-ES']) {
   for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/${locale}/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
 }
+const forbiddenResumeClaims = {
+  'fr-FR': 'reprise à la dernière page',
+  'it-IT': 'ripresa dall’ultima pagina',
+  'id-ID': 'lanjutkan dari halaman terakhir',
+  'ar-SA': 'متابعة من آخر صفحة',
+  'zh-CN': '从上次页面继续阅读',
+  'hi-IN': 'अंतिम पृष्ठ से पढ़ना जारी रखें',
+  'pt-BR': 'retomada da última página',
+  'ja-JP': '最後のページから再開',
+  'ko-KR': '마지막 페이지부터 이어 읽기'
+};
 for (const locale of ['en-US','tr-TR','es-ES','pt-BR','de-DE','fr-FR','it-IT','ru-RU','hi-IN','id-ID','ar-SA','ja-JP','ko-KR','zh-CN']) {
   const listingPath = `play-store/listings/${locale}.txt`;
   exists(listingPath);
   if (!fs.existsSync(path.join(root, listingPath))) continue;
-  const blocks = text(listingPath).trim().split(/\r?\n\s*\r?\n/);
+  const listingText = text(listingPath);
+  if (forbiddenResumeClaims[locale] && listingText.includes(forbiddenResumeClaims[locale])) fail(`${locale} mağaza metni otomatik son sayfaya devam özelliğini yanlış vaat ediyor.`);
+  const blocks = listingText.trim().split(/\r?\n\s*\r?\n/);
   const title = (blocks[0]?.split(/\r?\n/)[1] || '').trim();
   const shortDescription = (blocks[1]?.split(/\r?\n/)[1] || '').trim();
   const longDescription = blocks.slice(2).join('\n\n').split(/\r?\n/).slice(1).join('\n').trim();

@@ -106,6 +106,8 @@ module.exports = ({ config }) => ({
           // Bu yuzden Kotlin Expo'nun sabitledigi surumde birakilir ve
           // uyumsuz metadata iceren play-services-ads 25.x, plugins/withAdsSdkPin.js
           // ile 24.6.0'a sabitlenir.
+          compileSdkVersion: 36,
+          targetSdkVersion: 36,
           kotlinVersion: '2.1.20',
           enableMinifyInReleaseBuilds: true,
           enableShrinkResourcesInReleaseBuilds: true,

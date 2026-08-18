@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'PDFはまだありません',
   'home.emptyText':'最初の文書を開くと自動的にここに表示されます。',
   'home.privacyTitle':'端末内だけで処理',
-  'home.privacyText':'PDFが端末の外に送信されることはありません。',
+  'home.privacyText':'PDFは開発者のサーバーへアップロードされません。',
   'library.kicker':'ライブラリ',
   'library.title':'すべてのPDF',
   'library.searchPlaceholder':'ファイル名で検索',

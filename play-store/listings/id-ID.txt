@@ -9,7 +9,7 @@ Buka, atur, dan edit PDF dengan menjaga privasi. Dokumen tetap berada di perangk
 
 Fitur utama:
 • Buka PDF dari perangkat atau tautan HTTPS
-• Pustaka lokal, favorit, dan lanjutkan dari halaman terakhir
+• Pustaka lokal, favorit, dan mengingat halaman terakhir yang dilihat
 • Baca vertikal atau horizontal, perbesar, dan gunakan mode malam
 • Gabungkan PDF, ekstrak atau hapus halaman, putar halaman, dan bersihkan metadata
 • Dukungan PDF yang dilindungi kata sandi

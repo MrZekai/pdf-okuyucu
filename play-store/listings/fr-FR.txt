@@ -9,7 +9,7 @@ Ouvrez, classez et modifiez des PDF en toute confidentialité. Les documents res
 
 Fonctions principales :
 • Ouvrir des PDF depuis l’appareil ou un lien HTTPS
-• Bibliothèque locale, favoris et reprise à la dernière page
+• Bibliothèque locale, favoris et mémorisation de la dernière page consultée
 • Lecture verticale ou horizontale, zoom et mode nuit
 • Fusionner des PDF, extraire ou supprimer des pages, les faire pivoter et nettoyer les métadonnées
 • Prise en charge des PDF protégés par mot de passe

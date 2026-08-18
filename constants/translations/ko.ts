@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'아직 PDF가 없습니다',
   'home.emptyText':'첫 문서를 열면 여기에 자동으로 표시됩니다.',
   'home.privacyTitle':'내 기기에서만',
-  'home.privacyText':'PDF는 기기 밖으로 전송되지 않습니다.',
+  'home.privacyText':'PDF는 개발자 서버로 업로드되지 않습니다.',
   'library.kicker':'라이브러리',
   'library.title':'모든 PDF',
   'library.searchPlaceholder':'파일 이름으로 검색',

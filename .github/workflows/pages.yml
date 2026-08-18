@@ -20,7 +20,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s docs/index.html
-          grep -Fq 'PDF Okuyucu' docs/privacy-policy.html
+          grep -Fq 'PDF: Okuyucu - Araçları' docs/privacy-policy.html
           grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0' docs/app-ads.txt
           echo 'UYARI: Bu workflow yalnızca kaynakları doğrular; yayın yapmaz.'
           echo 'docs/README.md talimatıyla dosyaları public MrZekai/MrZekai.github.io deposunun köküne eşitleyin.'

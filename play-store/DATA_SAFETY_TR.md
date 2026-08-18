@@ -20,7 +20,7 @@ Bu taslak, projedeki `react-native-google-mobile-ads` / Google Mobile Ads SDK ve
 
 ## Uygulamanın kendi yerel verileri
 
-PDF dosyaları, araçlarla üretilen PDF'ler, belge adları, favoriler, son sayfa, okuma zamanları, yerel araç kullanım sayaçları ve ayarlar yalnızca cihazda tutulur; geliştiriciye veya başka bir sunucuya gönderilmez. Birleştirme, sayfa çıkarma/silme/sıralama/döndürme ve ortak meta veri temizleme işlemleri cihaz içinde yapılır. Play formunda “toplanan veri”, cihazdan dışarı iletilen veriyi ifade ettiğinden bunlar **toplanıyor** olarak işaretlenmez.
+PDF dosyaları, araçlarla üretilen PDF'ler, belge adları, favoriler, son sayfa, okuma zamanları, yerel araç kullanım sayaçları ve ayarlar geliştirici sunucusuna otomatik olarak gönderilmez. Birleştirme, sayfa çıkarma/silme/sıralama/döndürme ve ortak meta veri temizleme işlemleri cihaz içinde yapılır. Kullanıcı **Paylaş** komutunu seçerse ilgili PDF, Android paylaşım menüsünde kullanıcının seçtiği üçüncü taraf uygulamaya aktarılır; bu kullanıcı tarafından başlatılan dosya aktarımı geliştiricinin veri toplaması değildir. Play formunda “toplanan veri”, uygulama veya SDK tarafından cihazdan dışarı iletilen veriyi ifade ettiğinden yerel PDF içeriği geliştirici tarafından **toplanıyor** olarak işaretlenmez.
 
 ## Console’da ayrıca
 

@@ -3,7 +3,7 @@
 # PDF Okuyucu - cihaz uzerinde otomatik stres testi
 #
 # Kullanim (Git Bash):
-#   bash scripts/qa-stress-test.sh              # varsayilan 3000 olay
+#   bash scripts/qa-stress-test.sh              # varsayilan 10000 olay
 #   bash scripts/qa-stress-test.sh 10000        # daha uzun test
 #
 # Gereksinim: telefon USB ile bagli, "USB hata ayiklama" acik, uygulama kurulu.
@@ -11,7 +11,7 @@
 set -uo pipefail
 
 PKG="com.aitolian.pdfokuyucu"
-EVENTS="${1:-3000}"
+EVENTS="${1:-10000}"
 THROTTLE=300                     # olaylar arasi ms - insan hizina yakin
 STAMP="$(date +%Y%m%d-%H%M%S)"
 OUTDIR="qa-raporlari/$STAMP"
@@ -26,7 +26,7 @@ ok()  { printf '  \033[32mOK\033[0m   %s\n' "$*"; }
 bad() { printf '  \033[31mHATA\033[0m %s\n' "$*"; }
 
 # --- 1. On kontroller ------------------------------------------------------
-say "1/6  On kontroller"
+say "1/8  On kontroller"
 
 command -v adb >/dev/null 2>&1 || { bad "adb bulunamadi. Android Platform Tools kurulu mu?"; exit 1; }
 ok "adb bulundu"
@@ -47,7 +47,7 @@ fi
 ok "uygulama kurulu"
 
 # --- 2. Cihaz ve surum bilgisi ---------------------------------------------
-say "2/6  Ortam bilgisi"
+say "2/8  Ortam bilgisi"
 {
   echo "=== PDF Okuyucu QA raporu - $STAMP ==="
   echo
@@ -60,27 +60,43 @@ say "2/6  Ortam bilgisi"
 } | tee "$REPORT"
 
 # --- 3. Soguk acilis suresi ------------------------------------------------
-say "3/6  Soguk acilis olcumu"
-adb shell am force-stop "$PKG"
-sleep 1
-START_OUT="$(adb shell am start -W -S -n "$PKG/.MainActivity" 2>&1 | tr -d '\r')"
-TTID="$(echo "$START_OUT" | grep -E '^TotalTime:' | awk '{print $2}')"
-if [ -n "${TTID:-}" ]; then
-  ok "acilis suresi: ${TTID} ms"
-  echo "Soguk acilis: ${TTID} ms" >> "$REPORT"
-  [ "$TTID" -gt 5000 ] && bad "5 saniyeden uzun - Play 'yavas acilis' uyarisi verebilir"
-else
-  bad "acilis suresi olculemedi (MainActivity adi farkli olabilir), teste devam"
-  echo "Soguk acilis: olculemedi" >> "$REPORT"
-fi
-sleep 2
+say "3/8  Fresh-install + soguk acilis kaniti"
+adb shell pm clear "$PKG" >/dev/null
+ok "uygulama verisi temizlendi; app-open ilk kullanim testi fresh state ile basliyor"
+for launch in 1 2 3; do
+  adb shell am force-stop "$PKG"
+  sleep 1
+  START_OUT="$(adb shell am start -W -S -n "$PKG/.MainActivity" 2>&1 | tr -d '\r')"
+  TTID="$(echo "$START_OUT" | grep -E '^TotalTime:' | awk '{print $2}')"
+  echo "Cold launch $launch: ${TTID:-olculemedi} ms" >> "$REPORT"
+  sleep 4
+  adb shell screencap -p "/sdcard/qa-launch-$launch.png" >/dev/null 2>&1 || true
+  adb pull "/sdcard/qa-launch-$launch.png" "$OUTDIR/launch-$launch.png" >/dev/null 2>&1 || true
+  adb shell rm "/sdcard/qa-launch-$launch.png" >/dev/null 2>&1 || true
+  if [ "$launch" -eq 1 ] && [ -n "${TTID:-}" ]; then
+    ok "ilk soguk acilis: ${TTID} ms"
+    [ "$TTID" -gt 5000 ] && bad "5 saniyeden uzun - performans incelemesi gerekli"
+  fi
+done
+ok "1., 2. ve 3. soguk acilis ekran kanitlari kaydedildi (ilk iki acilista app-open olmamali)"
+
+say "4/8  Warm-resume hedefli kontrol"
+adb shell input keyevent 4 >/dev/null 2>&1 || true
+adb shell input keyevent 3 >/dev/null 2>&1 || true
+sleep 12
+adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1
+sleep 3
+adb shell screencap -p /sdcard/qa-warm-resume.png >/dev/null 2>&1 \
+  && adb pull /sdcard/qa-warm-resume.png "$OUTDIR/warm-resume.png" >/dev/null 2>&1 \
+  && adb shell rm /sdcard/qa-warm-resume.png >/dev/null 2>&1
+ok "warm-resume kaniti kaydedildi; tam ekran app-open bannerli icerigin ustune cikmamalidir"
 
 # --- 4. Bellek anlik goruntusu (once) --------------------------------------
 MEM_BEFORE="$(adb shell dumpsys meminfo "$PKG" | grep -m1 'TOTAL PSS' | awk '{print $3}' | tr -d '\r')"
 [ -z "${MEM_BEFORE:-}" ] && MEM_BEFORE="$(adb shell dumpsys meminfo "$PKG" | grep -m1 'TOTAL' | awk '{print $2}' | tr -d '\r')"
 
 # --- 5. Monkey stres testi -------------------------------------------------
-say "4/6  Monkey stres testi ($EVENTS olay) - telefona dokunma, ekran acik kalsin"
+say "5/8  Monkey stres testi ($EVENTS olay) - telefona dokunma, ekran acik kalsin"
 adb logcat -c
 adb shell monkey -p "$PKG" \
   --throttle "$THROTTLE" \
@@ -100,7 +116,7 @@ else
 fi
 
 # --- 6. Log toplama ve analiz ----------------------------------------------
-say "5/6  Log analizi"
+say "6/8  Log analizi"
 adb logcat -d > "$LOG" 2>&1
 
 MEM_AFTER="$(adb shell dumpsys meminfo "$PKG" | grep -m1 'TOTAL PSS' | awk '{print $3}' | tr -d '\r')"
@@ -136,7 +152,7 @@ if [ "$FATAL" -gt 0 ] || [ "$ANR" -gt 0 ] || [ "$NATIVE" -gt 0 ]; then
 fi
 
 # --- 7. Ekran goruntusu ----------------------------------------------------
-say "6/6  Son ekran goruntusu"
+say "7/8  Son ekran goruntusu"
 adb shell screencap -p /sdcard/qa-son.png >/dev/null 2>&1 \
   && adb pull /sdcard/qa-son.png "$OUTDIR/son-ekran.png" >/dev/null 2>&1 \
   && adb shell rm /sdcard/qa-son.png >/dev/null 2>&1 \
@@ -144,7 +160,8 @@ adb shell screencap -p /sdcard/qa-son.png >/dev/null 2>&1 \
 
 adb shell am force-stop "$PKG"
 
-# --- Ozet ------------------------------------------------------------------
+# --- 8. Ozet ----------------------------------------------------------------
+say "8/8  Ozet"
 echo
 if [ "$FATAL" -eq 0 ] && [ "$ANR" -eq 0 ] && [ "$NATIVE" -eq 0 ] && [ "$OOM" -eq 0 ]; then
   printf '\033[42m\033[30m  TEMIZ  \033[0m Cokme, ANR veya bellek hatasi bulunamadi.\n'

@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'لا توجد ملفات PDF بعد',
   'home.emptyText':'سيظهر مستندك الأول هنا تلقائيًا.',
   'home.privacyTitle':'على جهازك فقط',
-  'home.privacyText':'لا تغادر ملفات PDF جهازك أبدًا.',
+  'home.privacyText':'لا تُرفع ملفات PDF إلى خادم تابع للمطور.',
   'library.kicker':'المكتبة',
   'library.title':'كل ملفات PDF',
   'library.searchPlaceholder':'البحث باسم الملف',

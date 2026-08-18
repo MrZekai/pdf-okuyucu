@@ -73,7 +73,7 @@ const tr = {
   'home.emptyTitle': 'Henüz PDF yok',
   'home.emptyText': 'İlk belgeni açtığında burada otomatik görünecek.',
   'home.privacyTitle': 'Yalnızca cihazında',
-  'home.privacyText': 'PDF’leriniz cihazınızdan çıkmaz.',
+  'home.privacyText': 'PDF dosyalarınız geliştirici sunucusuna yüklenmez.',
 
   'library.kicker': 'KÜTÜPHANE',
   'library.title': 'Tüm PDF’lerin',
@@ -288,7 +288,7 @@ const en: Record<keyof typeof tr, string> = {
   'home.emptyTitle': 'No PDFs yet',
   'home.emptyText': 'Your first document will show up here automatically.',
   'home.privacyTitle': 'On your device only',
-  'home.privacyText': 'Your PDFs never leave your device.',
+  'home.privacyText': 'Your PDFs are not uploaded to the developer server.',
 
   'library.kicker': 'LIBRARY',
   'library.title': 'All your PDFs',
@@ -503,7 +503,7 @@ const es: Record<keyof typeof tr, string> = {
   'home.emptyTitle': 'Aún no hay PDF',
   'home.emptyText': 'Tu primer documento aparecerá aquí automáticamente.',
   'home.privacyTitle': 'Solo en tu dispositivo',
-  'home.privacyText': 'Tus PDF nunca salen de tu dispositivo.',
+  'home.privacyText': 'Tus PDF no se suben a un servidor del desarrollador.',
 
   'library.kicker': 'BIBLIOTECA',
   'library.title': 'Todos tus PDF',

@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'Noch keine PDFs',
   'home.emptyText':'Dein erstes Dokument erscheint automatisch hier.',
   'home.privacyTitle':'Nur auf deinem Gerät',
-  'home.privacyText':'Deine PDFs verlassen dein Gerät nie.',
+  'home.privacyText':'Deine PDFs werden nicht auf einen Server des Entwicklers hochgeladen.',
   'library.kicker':'BIBLIOTHEK',
   'library.title':'Alle deine PDFs',
   'library.searchPlaceholder':'Nach Dateinamen suchen',

@@ -2,9 +2,9 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import * as Print from 'expo-print';
 import { File, Paths } from 'expo-file-system';
-import { PDFDocument, StandardFonts, degrees, rgb } from 'pdf-lib';
+import { PDFDocument, PDFImage, StandardFonts, degrees, rgb } from 'pdf-lib';
 import { PdfDocument } from '@/types/document';
-import { saveGeneratedPdf } from '@/lib/pdfFiles';
+import { deletePdfFile, saveGeneratedPdf } from '@/lib/pdfFiles';
 import { t } from '@/constants/i18n';
 
 export type PdfToolId = 'scan' | 'images' | 'create' | 'merge' | 'split' | 'extract' | 'remove' | 'reorder' | 'rotate' | 'watermark' | 'compress' | 'clean' | 'print';
@@ -80,9 +80,14 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
   try {
     for (const source of files) {
       const file = new File(source.uri);
-      const bytes = await file.bytes();
-      const isPng = source.mimeType === 'image/png' || /\.png$/i.test(source.name);
-      const embedded = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
+      let embedded: PDFImage;
+      try {
+        const bytes = await file.bytes();
+        const isPng = source.mimeType === 'image/png' || /\.png$/i.test(source.name);
+        embedded = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
+      } catch {
+        throw new Error(t('tools.unsupportedImage'));
+      }
       const landscape = embedded.width > embedded.height;
       const pageWidth = landscape ? A4_PORTRAIT.height : A4_PORTRAIT.width;
       const pageHeight = landscape ? A4_PORTRAIT.width : A4_PORTRAIT.height;
@@ -92,9 +97,8 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
       const page = output.addPage([pageWidth, pageHeight]);
       page.drawImage(embedded, { x: (pageWidth - width) / 2, y: (pageHeight - height) / 2, width, height });
     }
-    return saveGeneratedPdf(await output.save({ useObjectStreams: true }), requestedName);
-  } catch {
-    throw new Error(t('tools.unsupportedImage'));
+    const bytes = await output.save({ useObjectStreams: true });
+    return saveGeneratedPdf(bytes, requestedName);
   } finally {
     files.forEach((file) => cleanupCacheFile(file.uri));
   }
@@ -200,10 +204,14 @@ export async function splitPdf(afterPage: string): Promise<PdfDocument[] | null>
   const secondPages = await second.copyPages(input, Array.from({ length: input.getPageCount() - splitAt }, (_, index) => splitAt + index));
   firstPages.forEach((page) => first.addPage(page));
   secondPages.forEach((page) => second.addPage(page));
-  return [
-    saveGeneratedPdf(await first.save({ useObjectStreams: true }), outputName(source.name, 'part-1')),
-    saveGeneratedPdf(await second.save({ useObjectStreams: true }), outputName(source.name, 'part-2'))
-  ];
+  const firstDocument = saveGeneratedPdf(await first.save({ useObjectStreams: true }), outputName(source.name, 'part-1'));
+  try {
+    const secondDocument = saveGeneratedPdf(await second.save({ useObjectStreams: true }), outputName(source.name, 'part-2'));
+    return [firstDocument, secondDocument];
+  } catch (error) {
+    deletePdfFile(firstDocument.uri);
+    throw error;
+  }
 }
 
 export async function extractPages(range: string): Promise<PdfDocument | null> {

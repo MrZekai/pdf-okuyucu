@@ -145,6 +145,9 @@ export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
   ensureLibrary();
   const asset = result.assets[0];
   const source = new File(asset.uri);
+  const sourceSize = asset.size || source.size || 0;
+  if (sourceSize > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
+  if (Paths.availableDiskSpace < sourceSize + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
   const id = makeId();
   const filename = `${id}-${safeName(asset.name || 'document.pdf')}`;
   const destination = new File(libraryDirectory, filename);
@@ -217,7 +220,9 @@ export async function downloadPdfFromUrl(url: string): Promise<PdfDocument> {
   ensureLibrary();
   const id = makeId();
   const fallbackName = t('files.webName');
-  const rawName = decodeURIComponent(parsed.pathname.split('/').pop() || fallbackName);
+  const encodedName = parsed.pathname.split('/').pop() || fallbackName;
+  let rawName = encodedName;
+  try { rawName = decodeURIComponent(encodedName); } catch { rawName = fallbackName; }
   const fileName = `${id}-${safeName(rawName || fallbackName)}`;
   const destination = new File(libraryDirectory, fileName);
   let output: File;

@@ -21,7 +21,7 @@ export default {
   'home.emptyTitle':'Aucun PDF pour le moment',
   'home.emptyText':'Votre premier document apparaîtra automatiquement ici.',
   'home.privacyTitle':'Uniquement sur votre appareil',
-  'home.privacyText':'Vos PDF ne quittent jamais votre appareil.',
+  'home.privacyText':'Vos PDF ne sont pas envoyés vers un serveur du développeur.',
   'library.kicker':'BIBLIOTHÈQUE',
   'library.title':'Tous vos PDF',
   'library.searchPlaceholder':'Rechercher par nom de fichier',

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, AppState, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PdfView } from '@kishannareshpal/expo-pdf';
@@ -23,6 +23,7 @@ export default function ReaderScreen(){
  const flushProgress=useCallback(()=>{if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=null;const pending=pendingProgress.current;pendingProgress.current=null;if(id&&pending)updateProgress(id,pending.page,pending.pageCount)},[id,updateProgress]);
  const queueProgress=useCallback((nextPage:number,nextPageCount?:number)=>{pendingProgress.current={page:nextPage,pageCount:nextPageCount};if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=setTimeout(flushProgress,750)},[flushProgress]);
  useEffect(()=>{if(id)touchDocument(id)},[id,touchDocument]);
+ useEffect(()=>{const subscription=AppState.addEventListener('change',(state)=>{if(state==='inactive'||state==='background')flushProgress()});return()=>subscription.remove()},[flushProgress]);
  useEffect(()=>()=>flushProgress(),[flushProgress]);
  if(!doc) return <SafeAreaView style={styles.center}><AppIcon name="file" size={42} color="#475569"/><Text style={styles.errorTitle}>{t('reader.notFound')}</Text><Pressable onPress={()=>router.back()} style={styles.backButton}><Text style={styles.backText}>{t('reader.goBack')}</Text></Pressable></SafeAreaView>;
  async function share(){if(!doc)return;try{if(!await Sharing.isAvailableAsync())throw new Error('sharing_unavailable');await Sharing.shareAsync(doc.uri,{mimeType:'application/pdf',dialogTitle:doc.name})}catch{Alert.alert(t('reader.shareFailedTitle'),t('reader.shareFailedMessage'))}}
