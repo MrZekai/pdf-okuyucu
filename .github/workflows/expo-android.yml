@@ -74,8 +74,18 @@ jobs:
           npm run doctor
           npm run release:check
 
+      - name: Closed-test yasal kaynaklarını doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release && inputs.release_target == 'closed_test'
+        run: |
+          set -euo pipefail
+          grep -Fq 'PDF: Okuyucu - Araçları' docs/privacy-policy.html
+          grep -Fq 'PDF: Reader - Tools' docs/privacy-policy.html
+          tr -d '\r' < docs/app-ads.txt | \
+            grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
+          echo 'Closed-test yasal kaynakları doğrulandı; GitHub Pages deploy gecikmesi AAB buildini engellemeyecek.'
+
       - name: Canlı gizlilik politikası ve app-ads.txt dosyasını doğrula
-        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release && inputs.release_target == 'production'
         run: |
           set -euo pipefail
           curl --fail --silent --show-error --location --max-time 20 \
@@ -83,7 +93,7 @@ jobs:
           curl --fail --silent --show-error --location --max-time 20 \
             https://mrzekai.github.io/app-ads.txt | tr -d '\r' | \
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
-          echo 'Canlı yasal sayfalar doğrulandı.'
+          echo 'Production canlı yasal sayfaları doğrulandı.'
 
       - name: Android projesini üret
         run: npx expo prebuild --platform android --clean --no-install
@@ -264,6 +274,30 @@ jobs:
           retention-days: 30
 
       # ─── İmzalı Play Store AAB ──────────────────────────────────────────
+      - name: AAB signing secrets preflight
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_UPLOAD_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_UPLOAD_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for pair in             "ANDROID_UPLOAD_KEYSTORE_BASE64:$KEYSTORE_BASE64"             "ANDROID_UPLOAD_STORE_PASSWORD:$STORE_PASSWORD"             "ANDROID_UPLOAD_KEY_ALIAS:$KEY_ALIAS"             "ANDROID_UPLOAD_KEY_PASSWORD:$KEY_PASSWORD"; do
+            name="${pair%%:*}"
+            value="${pair#*:}"
+            if [ -z "$value" ]; then
+              echo "::error::Eksik GitHub Actions secret: $name"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::AAB signing secrets tamamlanmadan Play Store AAB üretilemez."
+            exit 1
+          fi
+          echo 'AAB signing secrets mevcut.'
+
       - name: Release imza dosyasını hazırla
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         env:
