@@ -1,5 +1,10 @@
 const APP_SCHEME = 'pdfokuyucu:';
 const PROVIDER_AUTHORITY = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+const KNOWN_PROVIDER_AUTHORITIES = new Set(['media', 'downloads']);
+
+function isProviderAuthority(authority: string) {
+  return PROVIDER_AUTHORITY.test(authority) && (authority.includes('.') || KNOWN_PROVIDER_AUTHORITIES.has(authority));
+}
 
 /**
  * Expo Router can receive Android ACTION_VIEW content URIs through the app's
@@ -19,8 +24,8 @@ export function normalizeIncomingPdfUri(value: string | null | undefined): strin
 
   // +native-intent documents that `path` is not guaranteed to be a valid URL.
   // Accept a provider authority/path form as well as the full custom-scheme URL.
-  const providerPath = raw.match(/^\/{0,2}([A-Za-z0-9][A-Za-z0-9._-]*\.[A-Za-z0-9._-]+)(\/.*)$/);
-  if (providerPath) return `content://${providerPath[1]}${providerPath[2]}`;
+  const providerPath = raw.match(/^\/{0,2}([A-Za-z0-9][A-Za-z0-9._-]*)(\/.*)$/);
+  if (providerPath && isProviderAuthority(providerPath[1])) return `content://${providerPath[1]}${providerPath[2]}`;
 
   let parsed: URL;
   try {
@@ -32,7 +37,7 @@ export function normalizeIncomingPdfUri(value: string | null | undefined): strin
   if (parsed.protocol.toLowerCase() !== APP_SCHEME) return null;
 
   const authority = parsed.hostname;
-  if (authority && authority.includes('.') && PROVIDER_AUTHORITY.test(authority)) {
+  if (authority && isProviderAuthority(authority)) {
     return `content://${authority}${parsed.pathname}${parsed.search}${parsed.hash}`;
   }
 

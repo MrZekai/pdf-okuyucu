@@ -93,11 +93,12 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       return;
     }
     showingRef.current = true;
+    cancelGateTimeout();
     ad.show().catch(() => {
       clearAd();
       finishColdGate();
     });
-  }, [clearAd, finishColdGate]);
+  }, [cancelGateTimeout, clearAd, finishColdGate]);
 
   useEffect(() => { showRef.current = showAd; }, [showAd]);
 

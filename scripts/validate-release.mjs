@@ -75,6 +75,8 @@ const appConfigSource = text('app.config.js');
 if (!config.plugins.some((item) => Array.isArray(item) && item[0] === 'expo-image-picker')) fail('expo-image-picker config plugin eksik.');
 if (!config.android?.blockedPermissions?.includes('android.permission.RECORD_AUDIO')) fail('Belge tarama özelliğinde gereksiz mikrofon izni engellenmemiş.');
 if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSource.includes('enableFileSharing')) fail('iOS belge paylaşımı gizlilik politikasıyla çelişiyor.');
+if (!appConfigSource.includes("['expo-router', { sitemap: false }]")) fail('Expo Router sitemap production buildde kapalı değil.');
+if (!appConfigSource.includes("{ scheme: 'content', mimeType: 'application/octet-stream' }")) fail('PDF dış açma intent filtresinde application/octet-stream desteği eksik.');
 
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
@@ -138,11 +140,13 @@ if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includ
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
 if (appOpenSource.includes("AppState.addEventListener('change'") || appOpenSource.includes('MIN_BACKGROUND_MS') || appOpenSource.includes("'warm'")) fail('App-open reklamı banner bulunan warm-resume içeriği üzerine çıkabilecek yol içeriyor.');
 if (!appOpenSource.includes('FIRST_AD_LAUNCH = 3') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk kullanım/frequency-cap/tek launch sayımı koruması eksik.');
+if (!appOpenSource.includes('showingRef.current = true;\n    cancelGateTimeout();\n    ad.show()')) fail('App-open show/OPENED yarışına karşı gate timeout iptali eksik.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
 if (!readerSource.includes("AppState.addEventListener('change'") || !readerSource.includes("state==='inactive'||state==='background'") || !readerSource.includes('flushProgress()')) fail('Reader background progress flush koruması eksik.');
 if (!appContextSource.includes("AppState.addEventListener('change'") || !appContextSource.includes('saveDocuments(documentsRef.current)')) fail('Uygulama arka plana geçerken PDF kayıtlarını hemen kalıcılaştırma koruması eksik.');
 if (!appContextSource.includes('isSameImportedPdf') || !pdfFilesSource.includes('FINGERPRINT_MAX_BYTES') || !pdfFilesSource.includes('(size ?? 0) <= FINGERPRINT_MAX_BYTES ? source.md5 : null')) fail('Aynı PDF’nin değişken picker URI’larıyla yinelenmesini güvenli boyut eşiğinde önleyen içerik özeti eksik.');
 if (!pdfFilesSource.includes("t('files.invalidUrl')") || !pdfFilesSource.includes("method: 'HEAD', signal: controller.signal")) fail('URL doğrulaması veya HEAD zaman aşımı koruması eksik.');
+if (!pdfFilesSource.includes("host.startsWith('::ffff:')")) fail('IPv4-mapped IPv6 yerel ağ engeli eksik.');
 if (!pdfFilesSource.includes('const sourceSize = asset.size || source.size || 0') || !pdfFilesSource.includes('Paths.availableDiskSpace < sourceSize + MIN_FREE_DISK_BYTES')) fail('Cihazdan PDF kopyalanmadan önce boyut/disk preflight koruması eksik.');
 if (!pdfFilesSource.includes('try { rawName = decodeURIComponent(encodedName); } catch { rawName = fallbackName; }')) fail('URL dosya adı için güvenli decode fallback eksik.');
 if (!storageSource.includes('parsed.filter(isPdfDocument)')) fail('Kalıcı PDF kayıtları şema doğrulamasından geçmiyor.');

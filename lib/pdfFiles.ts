@@ -54,6 +54,7 @@ function isBlockedHost(hostname: string) {
   const host = hostname.toLowerCase().replace(/^\[|\]$/g, '');
   if (!host || host === 'localhost' || host.endsWith('.local') || host.endsWith('.internal')) return true;
   if (host === '::1' || host === '0.0.0.0') return true;
+  if (host.startsWith('::ffff:')) return true;
   if (host.startsWith('fe80') || host.startsWith('fc') || host.startsWith('fd')) return true;
   const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
   if (ipv4) {

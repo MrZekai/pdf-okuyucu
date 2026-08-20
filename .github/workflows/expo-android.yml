@@ -10,6 +10,14 @@ on:
         required: true
         default: true
         type: boolean
+      release_target:
+        description: 'AAB hedefi'
+        required: true
+        default: 'closed_test'
+        type: choice
+        options:
+          - closed_test
+          - production
 
 permissions:
   contents: read
@@ -273,7 +281,7 @@ jobs:
           node scripts/configure-android-signing.mjs
 
       - name: Play Store ana ekran görsellerinin yeni UI'dan alındığını doğrula
-        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release && inputs.release_target == 'production'
         run: |
           set -euo pipefail
           while IFS='|' read -r file old_sha; do
@@ -292,9 +300,47 @@ jobs:
       - name: İmzalı Play Store AAB derle
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         working-directory: android
+        env:
+          RELEASE_TARGET: ${{ inputs.release_target }}
         run: |
+          set -euo pipefail
+          if [ "$RELEASE_TARGET" = "closed_test" ]; then
+            export EXPO_PUBLIC_ADMOB_BANNER_ANDROID='ca-app-pub-3940256099942544/9214589741'
+            export EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID='ca-app-pub-3940256099942544/9257395921'
+            echo 'Closed-test AAB: Google demo reklam birimleri kullanılacak.'
+          else
+            export EXPO_PUBLIC_ADMOB_BANNER_ANDROID='ca-app-pub-1380972808968213/7265047779'
+            export EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID='ca-app-pub-1380972808968213/1189880008'
+            echo 'Production AAB: gerçek AdMob reklam birimleri kullanılacak.'
+          fi
           set -o pipefail
           ./gradlew bundleRelease --no-daemon --stacktrace 2>&1 | tee ../gradle-release.log
+
+      - name: AAB reklam profilini doğrula
+        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+        env:
+          RELEASE_TARGET: ${{ inputs.release_target }}
+        run: |
+          set -euo pipefail
+          aab='android/app/build/outputs/bundle/release/app-release.aab'
+          unzip -p "$aab" base/assets/app.config > aab-app.config.json
+          if [ "$RELEASE_TARGET" = "closed_test" ]; then
+            grep -Fq 'ca-app-pub-3940256099942544/9214589741' aab-app.config.json
+            grep -Fq 'ca-app-pub-3940256099942544/9257395921' aab-app.config.json
+            if grep -Eq '7265047779|1189880008' aab-app.config.json; then
+              echo 'HATA: Closed-test AAB içinde production reklam birimi bulundu.' >&2
+              exit 1
+            fi
+            echo 'Closed-test AAB yalnızca Google demo reklam birimlerini kullanıyor.'
+          else
+            grep -Fq 'ca-app-pub-1380972808968213/7265047779' aab-app.config.json
+            grep -Fq 'ca-app-pub-1380972808968213/1189880008' aab-app.config.json
+            if grep -Fq 'ca-app-pub-3940256099942544' aab-app.config.json; then
+              echo 'HATA: Production AAB içinde Google demo reklam birimi bulundu.' >&2
+              exit 1
+            fi
+            echo 'Production AAB gerçek AdMob reklam birimlerini kullanıyor.'
+          fi
 
       - name: AAB upload imzasını doğrula
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
@@ -345,6 +391,6 @@ jobs:
       - uses: actions/upload-artifact@v6
         if: github.event_name == 'workflow_dispatch' && inputs.build_release
         with:
-          name: pdf-okuyucu-play-aab-v${{ github.run_number }}
+          name: pdf-okuyucu-${{ inputs.release_target }}-aab-v${{ github.run_number }}
           path: android/app/build/outputs/bundle/release/app-release.aab
           retention-days: 30

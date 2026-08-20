@@ -24,6 +24,10 @@ try {
     ['pdfokuyucu://com.whatsapp.provider.media/item/abc', 'content://com.whatsapp.provider.media/item/abc'],
     ['com.whatsapp.provider.media/item/abc', 'content://com.whatsapp.provider.media/item/abc'],
     ['pdfokuyucu://com.google.android.apps.docs.storage/document/xyz?x=1', 'content://com.google.android.apps.docs.storage/document/xyz?x=1'],
+    ['pdfokuyucu://media/external/file/123', 'content://media/external/file/123'],
+    ['media/external/file/123', 'content://media/external/file/123'],
+    ['pdfokuyucu://downloads/public_downloads/42', 'content://downloads/public_downloads/42'],
+    ['downloads/public_downloads/42', 'content://downloads/public_downloads/42'],
     ['pdfokuyucu://reader/123', null],
     ['https://example.com/test.pdf', null],
     ['', null]

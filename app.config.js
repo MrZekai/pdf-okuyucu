@@ -49,7 +49,8 @@ module.exports = ({ config }) => ({
         category: ['DEFAULT', 'BROWSABLE'],
         data: [
           { scheme: 'content', mimeType: 'application/pdf' },
-          { scheme: 'file', mimeType: 'application/pdf' }
+          { scheme: 'file', mimeType: 'application/pdf' },
+          { scheme: 'content', mimeType: 'application/octet-stream' }
         ]
       }
     ],
@@ -70,7 +71,7 @@ module.exports = ({ config }) => ({
     supportsTablet: true
   },
   plugins: [
-    'expo-router',
+    ['expo-router', { sitemap: false }],
     [
       'expo-splash-screen',
       {

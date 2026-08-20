@@ -15,9 +15,15 @@ export function IncomingPdfHandler() {
   const checkedInitialUrl = useRef(false);
   const recentlyHandled = useRef(new Map<string, number>());
 
-  const openExternalPdf = useCallback(async (value: string) => {
+  const openExternalPdf = useCallback(async (value: string, notifyInvalid = false) => {
     const uri = normalizeIncomingPdfUri(value);
-    if (!uri) return;
+    if (!uri) {
+      if (notifyInvalid && /^(?:content|file|pdfokuyucu):/i.test(value.trim())) {
+        router.replace('/');
+        Alert.alert(t('files.openErrorTitle'), t('files.openErrorMessage'));
+      }
+      return;
+    }
 
     const now = Date.now();
     const lastHandledAt = recentlyHandled.current.get(uri) || 0;
@@ -53,12 +59,12 @@ export function IncomingPdfHandler() {
     if (!checkedInitialUrl.current) {
       checkedInitialUrl.current = true;
       Linking.getInitialURL()
-        .then((url) => { if (url) return openExternalPdf(url); })
+        .then((url) => { if (url) return openExternalPdf(url, true); })
         .catch(() => undefined);
     }
 
     const subscription = Linking.addEventListener('url', ({ url }) => {
-      openExternalPdf(url).catch(() => undefined);
+      openExternalPdf(url, true).catch(() => undefined);
     });
     return () => subscription.remove();
   }, [navigationState?.key, openExternalPdf, ready]);

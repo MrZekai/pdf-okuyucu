@@ -9,8 +9,9 @@ import { normalizeIncomingPdfUri } from '../lib/incomingPdfUri';
 export function redirectSystemPath({ path }: { path: string; initial: boolean }) {
   try {
     const externalPdfUri = normalizeIncomingPdfUri(path);
-    if (!externalPdfUri) return path;
-    return `/?incomingPdf=${encodeURIComponent(externalPdfUri)}`;
+    if (externalPdfUri) return `/?incomingPdf=${encodeURIComponent(externalPdfUri)}`;
+    if (/^pdfokuyucu:/i.test(path)) return '/';
+    return path;
   } catch {
     return '/';
   }
