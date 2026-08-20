@@ -97,7 +97,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       clearAd();
       finishColdGate();
     });
-  }, [cancelGateTimeout, clearAd, finishColdGate]);
+  }, [clearAd, finishColdGate]);
 
   useEffect(() => { showRef.current = showAd; }, [showAd]);
 

@@ -124,6 +124,7 @@ module.exports = ({ config }) => ({
         }
       }
     ],
+    'expo-sharing',
     './plugins/withAdsSdkPin',
     [
       'react-native-google-mobile-ads',
