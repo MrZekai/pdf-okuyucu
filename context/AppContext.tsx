@@ -3,7 +3,7 @@ import { AppState } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { PdfDocument, ReaderSettings } from '@/types/document';
 import { defaultSettings, loadDocuments, loadSettings, saveDocuments, saveSettings } from '@/lib/storage';
-import { cleanupPdfImportCache, deletePdfFile, downloadPdfFromUrl, importPdfFromUri, pickPdfFromDevice } from '@/lib/pdfFiles';
+import { cleanupPdfImportCache, cleanupPdfPrintCache, deletePdfFile, downloadPdfFromUrl, importPdfFromUri, pickPdfFromDevice } from '@/lib/pdfFiles';
 import { clearToolUsage } from '@/lib/toolUsage';
 import { detectDeviceLanguage, setActiveLanguage } from '@/constants/i18n';
 
@@ -56,6 +56,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setSettings(localizedSettings);
       setActiveLanguage(language);
       cleanupPdfImportCache();
+      cleanupPdfPrintCache();
       readyRef.current = true;
       setReady(true);
     });

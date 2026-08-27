@@ -28,7 +28,7 @@ export function UrlModal({ visible, onClose, onSubmit }: { visible: boolean; onC
         <View style={styles.card}>
           <View style={styles.head}><View style={styles.icon}><AppIcon name="link" color={palette.cyan}/></View><View style={{ flex: 1 }}><Text style={styles.title}>{t('url.title')}</Text><Text style={styles.caption}>{t('url.caption')}</Text></View><Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel={t('a11y.close')}><AppIcon name="close" color={palette.muted}/></Pressable></View>
           <TextInput
-            autoCapitalize="none" autoCorrect={false} keyboardType="url" value={value} onChangeText={setValue}
+            autoCapitalize="none" autoCorrect={false} keyboardType="url" value={value} onChangeText={(next) => { setValue(next); if (error) setError(''); }}
             placeholder={t('url.placeholder')} placeholderTextColor="#64748B" style={styles.input}
           />
           {error ? <Text style={styles.error}>{error}</Text> : null}

@@ -49,7 +49,6 @@ module.exports = ({ config }) => ({
         category: ['DEFAULT', 'BROWSABLE'],
         data: [
           { scheme: 'content', mimeType: 'application/pdf' },
-          { scheme: 'file', mimeType: 'application/pdf' },
           { scheme: 'content', mimeType: 'application/octet-stream' }
         ]
       }
@@ -127,6 +126,7 @@ module.exports = ({ config }) => ({
     ],
     'expo-sharing',
     './plugins/withAdsSdkPin',
+    './plugins/withExpoPdfFixes',
     [
       'react-native-google-mobile-ads',
       {

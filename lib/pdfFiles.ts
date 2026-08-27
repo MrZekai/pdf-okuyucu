@@ -5,6 +5,8 @@ import { t } from '@/constants/i18n';
 
 const libraryDirectory = new Directory(Paths.document, 'pdf-reader-library');
 const documentPickerCache = new Directory(Paths.cache, 'DocumentPicker');
+const printCache = new Directory(Paths.cache, 'pdf-print');
+const IMPORT_STAGING_PREFIX = '.import-';
 const MAX_PDF_BYTES = 250 * 1024 * 1024;
 const FINGERPRINT_MAX_BYTES = 24 * 1024 * 1024;
 const MIN_FREE_DISK_BYTES = 32 * 1024 * 1024;
@@ -135,6 +137,32 @@ export function cleanupPdfImportCache() {
   }
 }
 
+/**
+ * Android hands a document to the system print spooler asynchronously and
+ * expo-print resolves printAsync as soon as the spooler has been handed the
+ * adapter, long before it reads a single byte. Deleting the picked file at that
+ * point makes the adapter fail on its own background thread, which resumes an
+ * already resumed continuation and takes the whole process down. Printing
+ * therefore runs from a dedicated copy that outlives the call, and the copy also
+ * gets an ASCII-only name because the file:// adapter resolves the path through
+ * java.net.URL, which cannot handle spaces or non-Latin characters.
+ */
+export async function stagePdfForPrint(uri: string): Promise<string> {
+  if (!printCache.exists) printCache.create({ idempotent: true, intermediates: true });
+  const target = new File(printCache, `print-${makeId()}.pdf`);
+  await new File(uri).copy(target);
+  return target.uri;
+}
+
+/** Removes the previous session's print copies. Never blocks app start. */
+export function cleanupPdfPrintCache() {
+  try {
+    if (printCache.exists) printCache.delete();
+  } catch {
+    // Print cache cleanup must never block opening the app.
+  }
+}
+
 export async function pickPdfFromDevice(): Promise<PdfDocument | null> {
   const result = await DocumentPicker.getDocumentAsync({
     type: 'application/pdf',
@@ -191,18 +219,46 @@ export async function importPdfFromUri(uri: string): Promise<PdfDocument> {
   if (!/^(content|file):/i.test(uri)) throw new Error(t('files.invalidPdf'));
   ensureLibrary();
   const source = new File(uri);
-  if (!source.exists) throw new Error(t('files.invalidPdf'));
+  // A file:// document outside the app sandbox is unreadable on Android 11+
+  // because READ_EXTERNAL_STORAGE is deliberately blocked, so it deserves a
+  // message that tells the user what to do instead of "not a valid PDF".
+  if (!source.exists) throw new Error(/^file:/i.test(uri) ? t('files.fileUriUnsupported') : t('files.invalidPdf'));
   if ((source.size || 0) > MAX_PDF_BYTES) throw new Error(t('files.tooLarge'));
   if (Paths.availableDiskSpace < (source.size || 0) + MIN_FREE_DISK_BYTES) throw new Error(t('files.notEnoughSpace'));
   const id = makeId();
-  const originalName = source.name || t('files.defaultName');
+  let originalName = source.name || t('files.defaultName');
+  // BUG-09: File.name is only the last URI path segment, which for a MediaStore
+  // document is a bare numeric id such as 1000671402. Copying into a private
+  // staging folder first makes expo-file-system name the copy from the
+  // ContentResolver DISPLAY_NAME column, which is the real title.
+  const staging = new Directory(libraryDirectory, `${IMPORT_STAGING_PREFIX}${id}`);
+  let staged: File | null = null;
+  try {
+    staging.create({ idempotent: true, intermediates: true });
+    await source.copy(staging);
+    const copied = staging.list().find((item): item is File => item instanceof File);
+    if (copied) {
+      staged = copied;
+      if (copied.name) originalName = copied.name;
+    }
+  } catch {
+    // Providers that expose an unusable display name fall back to a plain copy.
+    staged = null;
+  }
   const destination = new File(libraryDirectory, `${id}-${safeName(originalName)}`);
   try {
-    await source.copy(destination);
+    if (staged) await staged.move(destination);
+    else await source.copy(destination);
     validatePdfFile(destination);
   } catch (error) {
     if (destination.exists) destination.delete();
     throw error;
+  } finally {
+    try {
+      if (staging.exists) staging.delete();
+    } catch {
+      // Staging cleanup is best effort and must never fail the import.
+    }
   }
   return createDocument(destination, id, originalName, 'device', uri);
 }

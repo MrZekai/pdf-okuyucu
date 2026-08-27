@@ -4,13 +4,20 @@ import * as Print from 'expo-print';
 import { File, Paths } from 'expo-file-system';
 import { PDFDocument, PDFImage, StandardFonts, degrees, rgb } from 'pdf-lib';
 import { PdfDocument } from '@/types/document';
-import { deletePdfFile, saveGeneratedPdf } from '@/lib/pdfFiles';
+import { deletePdfFile, saveGeneratedPdf, stagePdfForPrint } from '@/lib/pdfFiles';
 import { t } from '@/constants/i18n';
 
 export type PdfToolId = 'scan' | 'images' | 'create' | 'merge' | 'split' | 'extract' | 'remove' | 'reorder' | 'rotate' | 'watermark' | 'compress' | 'clean' | 'print';
 export type PdfToolResult = PdfDocument | PdfDocument[] | null;
 
 const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
+// BUG-08: pdf-lib keeps every embedded image in memory until the document is
+// serialised, and embedPng additionally decodes the whole bitmap, so a handful
+// of very large sources can exceed the heap on mid-range devices. These budgets
+// keep the peak bounded and turn an out-of-memory crash into a clear message.
+const MAX_IMAGE_TOTAL_BYTES = 40 * 1024 * 1024;
+const MAX_SINGLE_IMAGE_BYTES = 20 * 1024 * 1024;
+const MAX_PNG_PIXELS = 20 * 1000 * 1000;
 const A4_PORTRAIT = { width: 595.28, height: 841.89 };
 const PAGE_MARGIN = 24;
 
@@ -48,6 +55,20 @@ function enforceTotalSize(files: { size: number }[]) {
   if (files.reduce((sum, file) => sum + file.size, 0) > MAX_TOOL_INPUT_BYTES) throw new Error(t('tools.tooLarge'));
 }
 
+function enforceImageBudget(files: { size: number }[]) {
+  if (files.some((file) => file.size > MAX_SINGLE_IMAGE_BYTES)) throw new Error(t('tools.imageTooLarge'));
+  if (files.reduce((sum, file) => sum + file.size, 0) > MAX_IMAGE_TOTAL_BYTES) throw new Error(t('tools.imageTooLarge'));
+}
+
+/** Reads the IHDR block so an oversized PNG is rejected before it is decoded. */
+function pngPixelCount(bytes: Uint8Array) {
+  if (bytes.length < 24) return 0;
+  const width = (bytes[16] << 24) | (bytes[17] << 16) | (bytes[18] << 8) | bytes[19];
+  const height = (bytes[20] << 24) | (bytes[21] << 16) | (bytes[22] << 8) | bytes[23];
+  if (width <= 0 || height <= 0) return 0;
+  return width * height;
+}
+
 async function pickPdfs(multiple: boolean): Promise<PickedPdf[]> {
   const result = await DocumentPicker.getDocumentAsync({ type: 'application/pdf', copyToCacheDirectory: true, multiple });
   if (result.canceled) return [];
@@ -76,15 +97,22 @@ async function loadPdf(file: PickedPdf) {
 async function imageFilesToPdf(files: PickedImage[], requestedName: string): Promise<PdfDocument | null> {
   if (!files.length) return null;
   enforceTotalSize(files);
+  enforceImageBudget(files);
   const output = await PDFDocument.create();
   try {
     for (const source of files) {
       const file = new File(source.uri);
       let embedded: PDFImage;
+      const isPng = source.mimeType === 'image/png' || /\.png$/i.test(source.name);
+      let imageBytes: Uint8Array;
       try {
-        const bytes = await file.bytes();
-        const isPng = source.mimeType === 'image/png' || /\.png$/i.test(source.name);
-        embedded = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
+        imageBytes = await file.bytes();
+      } catch {
+        throw new Error(t('tools.unsupportedImage'));
+      }
+      if (isPng && pngPixelCount(imageBytes) > MAX_PNG_PIXELS) throw new Error(t('tools.imageTooLarge'));
+      try {
+        embedded = isPng ? await output.embedPng(imageBytes) : await output.embedJpg(imageBytes);
       } catch {
         throw new Error(t('tools.unsupportedImage'));
       }
@@ -96,6 +124,7 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
       const height = embedded.height * scale;
       const page = output.addPage([pageWidth, pageHeight]);
       page.drawImage(embedded, { x: (pageWidth - width) / 2, y: (pageHeight - height) / 2, width, height });
+      await new Promise<void>((resolve) => { setTimeout(resolve, 0); });
     }
     const bytes = await output.save({ useObjectStreams: true });
     return saveGeneratedPdf(bytes, requestedName);
@@ -258,6 +287,7 @@ export async function rotatePages(): Promise<PdfDocument | null> {
 }
 
 export async function addWatermark(text: string): Promise<PdfDocument | null> {
+  if (!text.trim()) throw new Error(t('tools.watermarkEmpty'));
   const [source] = await pickPdfs(false);
   if (!source) return null;
   const input = await loadPdf(source);
@@ -298,7 +328,10 @@ export async function printPdf(): Promise<null> {
   const [source] = await pickPdfs(false);
   if (!source) return null;
   try {
-    await Print.printAsync({ uri: source.uri });
+    // The spooler reads the file long after printAsync has resolved, so it must
+    // point at a copy that nothing deletes underneath it.
+    const printableUri = await stagePdfForPrint(source.uri);
+    await Print.printAsync({ uri: printableUri });
   } finally {
     cleanupCacheFile(source.uri);
   }

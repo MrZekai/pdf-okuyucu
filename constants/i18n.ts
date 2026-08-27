@@ -155,6 +155,8 @@ const tr = {
   'tools.createEmpty': 'PDF oluşturmak için bir metin girin.',
   'tools.cameraPermission': 'Belge taramak için kamera izni gereklidir.',
   'tools.unsupportedImage': 'Yalnızca geçerli JPG ve PNG görselleri kullanılabilir.',
+  'tools.watermarkEmpty': 'Filigran metni boş olamaz. Lütfen bir metin girin.',
+  'tools.imageTooLarge': 'Bu görsel PDF için çok büyük. Daha küçük bir görsel seçin.',
   'tools.invalidSplit': 'PDF’nin ilk ve son sayfası arasında geçerli bir bölme noktası girin.',
   'tools.compressionNoGain': 'Bu PDF zaten optimize edilmiş; kayıpsız yöntemle daha fazla küçültülemedi.',
 
@@ -184,7 +186,7 @@ const tr = {
   'settings.consentUpdatedTitle': 'Reklam izinleri güncellendi',
   'settings.consentUpdatedMessage': 'Google reklam izin durumu yeniden kontrol edildi.',
   'settings.consentErrorTitle': 'Gizlilik seçenekleri',
-  'settings.consentErrorMessage': 'AdMob izin akışı şu anda kullanılamıyor. AdMob > Privacy & messaging ayarlarını kontrol edin.',
+  'settings.consentErrorMessage': 'Reklam gizlilik seçenekleri şu anda açılamıyor. Lütfen daha sonra tekrar deneyin.',
   'settings.about': 'PDF: Okuyucu - Araçları • Expo SDK 57 • Yerel PDF işleme',
 
   'reader.notFound': 'Belge bulunamadı',
@@ -241,6 +243,7 @@ const tr = {
   'files.defaultName': 'Belge.pdf',
   'files.webName': 'internet-belgesi.pdf',
   'files.blockedHost': 'Bu adres güvenlik nedeniyle engellendi. Herkese açık bir bağlantı kullanın.',
+  'files.fileUriUnsupported': 'Bu dosyaya doğrudan erişilemiyor. PDF Aç düğmesiyle dosyayı seçin.',
 
   'reader.lastPageHint': 'En son {page}. sayfadaydın',
   'reader.lockedTitle': 'Şifreli belge',
@@ -370,6 +373,8 @@ const en: Record<keyof typeof tr, string> = {
   'tools.createEmpty': 'Enter some text to create a PDF.',
   'tools.cameraPermission': 'Camera permission is required to scan a document.',
   'tools.unsupportedImage': 'Only valid JPG and PNG images can be used.',
+  'tools.watermarkEmpty': 'The watermark text cannot be empty. Please enter some text.',
+  'tools.imageTooLarge': 'This image is too large to convert. Choose a smaller image.',
   'tools.invalidSplit': 'Enter a valid split point between the first and last page.',
   'tools.compressionNoGain': 'This PDF is already optimized and could not be made smaller losslessly.',
 
@@ -399,7 +404,7 @@ const en: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedTitle': 'Ad consent updated',
   'settings.consentUpdatedMessage': 'The Google ad consent state has been re-checked.',
   'settings.consentErrorTitle': 'Privacy options',
-  'settings.consentErrorMessage': 'The AdMob consent flow is unavailable right now. Check AdMob > Privacy & messaging.',
+  'settings.consentErrorMessage': 'Ad privacy options cannot be opened right now. Please try again later.',
   'settings.about': 'PDF: Reader - Tools • Expo SDK 57 • On-device PDF handling',
 
   'reader.notFound': 'Document not found',
@@ -456,6 +461,7 @@ const en: Record<keyof typeof tr, string> = {
   'files.defaultName': 'Document.pdf',
   'files.webName': 'web-document.pdf',
   'files.blockedHost': 'This address is blocked for security. Use a public link.',
+  'files.fileUriUnsupported': 'This file cannot be opened directly. Use the Open PDF button to pick it instead.',
 
   'reader.lastPageHint': 'You were last on page {page}',
   'reader.lockedTitle': 'Protected document',
@@ -585,6 +591,8 @@ const es: Record<keyof typeof tr, string> = {
   'tools.createEmpty': 'Introduce texto para crear un PDF.',
   'tools.cameraPermission': 'Se necesita permiso de cámara para escanear un documento.',
   'tools.unsupportedImage': 'Solo se pueden usar imágenes JPG y PNG válidas.',
+  'tools.watermarkEmpty': 'El texto de la marca de agua no puede estar vacío. Introduce un texto.',
+  'tools.imageTooLarge': 'Esta imagen es demasiado grande para convertirla. Elige una imagen más pequeña.',
   'tools.invalidSplit': 'Introduce un punto de división válido entre la primera y la última página.',
   'tools.compressionNoGain': 'Este PDF ya está optimizado y no se pudo reducir más sin pérdida.',
 
@@ -614,7 +622,7 @@ const es: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedTitle': 'Consentimiento actualizado',
   'settings.consentUpdatedMessage': 'Se ha vuelto a comprobar el estado de consentimiento de Google.',
   'settings.consentErrorTitle': 'Opciones de privacidad',
-  'settings.consentErrorMessage': 'El flujo de consentimiento de AdMob no está disponible ahora. Revisa AdMob > Privacy & messaging.',
+  'settings.consentErrorMessage': 'Las opciones de privacidad de anuncios no se pueden abrir ahora. Inténtalo de nuevo más tarde.',
   'settings.about': 'Lector de PDF • Expo SDK 57 • Procesamiento local de PDF',
 
   'reader.notFound': 'Documento no encontrado',
@@ -671,6 +679,7 @@ const es: Record<keyof typeof tr, string> = {
   'files.defaultName': 'Documento.pdf',
   'files.webName': 'documento-web.pdf',
   'files.blockedHost': 'Esta dirección está bloqueada por seguridad. Usa un enlace público.',
+  'files.fileUriUnsupported': 'Este archivo no se puede abrir directamente. Usa el botón Abrir PDF para seleccionarlo.',
 
   'reader.lastPageHint': 'Estabas en la página {page}',
   'reader.lockedTitle': 'Documento protegido',

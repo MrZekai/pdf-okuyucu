@@ -14,6 +14,7 @@ export function IncomingPdfHandler() {
   const params = useGlobalSearchParams<{ incomingPdf?: string | string[] }>();
   const checkedInitialUrl = useRef(false);
   const recentlyHandled = useRef(new Map<string, number>());
+  const handledParams = useRef(new Set<string>());
 
   const openExternalPdf = useCallback(async (value: string, notifyInvalid = false) => {
     const uri = normalizeIncomingPdfUri(value);
@@ -50,6 +51,12 @@ export function IncomingPdfHandler() {
 
   useEffect(() => {
     if (!ready || !navigationState?.key || !incomingPdf) return;
+    // The ?incomingPdf= query parameter stays on the home route, so it is read
+    // again every time the reader is popped. Without a permanent guard the
+    // document is re-imported and the reader is pushed straight back, which is
+    // what made both the hardware back button and the in-app arrow look dead.
+    if (handledParams.current.has(incomingPdf)) return;
+    handledParams.current.add(incomingPdf);
     openExternalPdf(incomingPdf).catch(() => undefined);
   }, [incomingPdf, navigationState?.key, openExternalPdf, ready]);
 

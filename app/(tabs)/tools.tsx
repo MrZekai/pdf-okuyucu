@@ -162,7 +162,7 @@ function FeaturedTool({ card, onPress, disabled }: { card: ToolCardData; onPress
       <LinearGradient colors={card.id === 'scan' ? ['#421113', '#211012', '#0D0E10'] : ['#292C30', '#17191C', '#0C0D0F']} style={styles.featuredCard}>
         <View style={styles.cardTopLine} />
         <View style={styles.featuredIcon}><AppIcon name={card.icon} size={31} color={card.id === 'scan' ? '#FF4844' : '#D8DADD'} /></View>
-        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.76} style={styles.featuredTitle}>{card.title}</Text>
+        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.66} textBreakStrategy="simple" style={styles.featuredTitle}>{card.title}</Text>
         <Text numberOfLines={3} style={styles.featuredDesc}>{card.desc}</Text>
         <View style={styles.roundGo}><AppIcon name="chevronRight" size={17} color="#FF4844" /></View>
       </LinearGradient>
@@ -175,7 +175,7 @@ function MetalTool({ card, onPress, disabled }: { card: ToolCardData; onPress: (
     <Pressable disabled={disabled} onPress={onPress} style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}>
       <View style={styles.cardBoltA} /><View style={styles.cardBoltB} />
       <View style={styles.cardIcon}><AppIcon name={card.icon} size={26} color="#D5D7DA" /></View>
-      <View style={styles.cardCopy}><Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.78} style={styles.cardTitle}>{card.title}</Text><Text numberOfLines={3} style={styles.cardDesc}>{card.desc}</Text></View>
+      <View style={styles.cardCopy}><Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} textBreakStrategy="simple" style={styles.cardTitle}>{card.title}</Text><Text numberOfLines={3} style={styles.cardDesc}>{card.desc}</Text></View>
       <View style={styles.cardChevron}><AppIcon name="chevronRight" size={15} color="#FF4844" /></View>
     </Pressable>
   );
@@ -204,11 +204,11 @@ const styles = StyleSheet.create({
   featuredDesc: { color: '#92979F', fontSize: 9.5, lineHeight: 13, textAlign: 'center', marginTop: 6 },
   roundGo: { width: 34, height: 34, borderRadius: 17, marginTop: 'auto', alignItems: 'center', justifyContent: 'center', backgroundColor: '#101113', borderWidth: 1, borderColor: '#4A4F55' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  card: { width: '48.7%', minHeight: 122, flexDirection: 'row', alignItems: 'center', gap: 9, padding: 11, backgroundColor: '#17191C', borderWidth: 1, borderColor: '#4B5056', overflow: 'hidden' },
+  card: { width: '48.7%', minHeight: 122, flexDirection: 'row', alignItems: 'center', gap: 7, padding: 9, backgroundColor: '#17191C', borderWidth: 1, borderColor: '#4B5056', overflow: 'hidden' },
   cardPressed: { opacity: 0.76, transform: [{ scale: 0.985 }] },
   cardBoltA: { position: 'absolute', start: 5, top: 5, width: 6, height: 6, borderRadius: 3, backgroundColor: '#111214', borderWidth: 1, borderColor: '#6C7075' },
   cardBoltB: { position: 'absolute', end: 5, bottom: 5, width: 6, height: 6, borderRadius: 3, backgroundColor: '#111214', borderWidth: 1, borderColor: '#6C7075' },
-  cardIcon: { width: 48, height: 54, alignItems: 'center', justifyContent: 'center', backgroundColor: '#202328', borderWidth: 1, borderColor: '#565B62' },
+  cardIcon: { width: 42, height: 54, alignItems: 'center', justifyContent: 'center', backgroundColor: '#202328', borderWidth: 1, borderColor: '#565B62' },
   cardCopy: { flex: 1, minWidth: 0 },
   cardTitle: { color: '#DDE0E2', fontSize: 12, lineHeight: 15, fontWeight: '900' },
   cardDesc: { color: '#8F949B', fontSize: 8.8, lineHeight: 12, marginTop: 4 },
