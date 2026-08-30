@@ -135,6 +135,23 @@ class KJExpoPdfView(context: Context, appContext: AppContext) : ExpoView(context
     this.reloadPdf()
   }
 
+  /**
+   * QA fix (BUG-14): jump to a logical page index.
+   *
+   * The jump is applied through the very same defaultPage path that the resize
+   * restore uses, so vertical, horizontal and post-rotation behaviour stay
+   * identical and no additional viewer API is required. A null value is ignored
+   * so JavaScript can clear the prop after a jump without triggering a reload,
+   * and a jump to the current page is a no-op.
+   */
+  fun setPage(page: Int?) {
+    val target = page ?: return
+    if (target < 0) return
+    if (target == this.lastPageIndex) return
+    this.lastPageIndex = target
+    this.reloadPdf()
+  }
+
   private fun reloadPdf() {
     if (!this.pdfView.isRecycled) {
       this.pdfView.recycle()

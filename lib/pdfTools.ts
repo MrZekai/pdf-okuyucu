@@ -10,6 +10,14 @@ import { t } from '@/constants/i18n';
 export type PdfToolId = 'scan' | 'images' | 'create' | 'merge' | 'split' | 'extract' | 'remove' | 'reorder' | 'rotate' | 'watermark' | 'compress' | 'clean' | 'print';
 export type PdfToolResult = PdfDocument | PdfDocument[] | null;
 
+/**
+ * NEW-01: marks the camera permission failure that Android will never prompt
+ * for again (USER_FIXED / canAskAgain === false). The Tools screen turns this
+ * into a Cancel / Open Settings dialog instead of a dead-end alert.
+ */
+export const CAMERA_PERMISSION_BLOCKED = 'camera_permission_blocked';
+export type ToolError = Error & { code?: string };
+
 const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
 // BUG-08: pdf-lib keeps every embedded image in memory until the document is
 // serialised, and embedPng additionally decodes the whole bitmap, so a handful
@@ -182,7 +190,13 @@ export function parsePageOrder(input: string, pageCount: number) {
 
 export async function scanToPdf(): Promise<PdfDocument | null> {
   const permission = await ImagePicker.requestCameraPermissionsAsync();
-  if (!permission.granted) throw new Error(t('tools.cameraPermission'));
+  if (!permission.granted) {
+    // A permanently denied permission resolves immediately without showing
+    // the system prompt, so the user needs a route to the app settings.
+    const error: ToolError = new Error(permission.canAskAgain ? t('tools.cameraPermission') : t('tools.cameraBlockedMessage'));
+    if (!permission.canAskAgain) error.code = CAMERA_PERMISSION_BLOCKED;
+    throw error;
+  }
   const result = await ImagePicker.launchCameraAsync({ mediaTypes: ['images'], quality: 0.9, allowsEditing: false });
   if (result.canceled || !result.assets.length) return null;
   const asset = result.assets[0];

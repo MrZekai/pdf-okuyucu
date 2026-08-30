@@ -43,6 +43,18 @@ module.exports = ({ config }) => ({
     package: 'com.aitolian.pdfokuyucu',
     allowBackup: false,
     versionCode: androidVersionCode,
+    // BUG-16 - intentional compatibility trade-off, do not narrow.
+    // Android matches scheme and mimeType independently inside one
+    // intent-filter, and a content:// URI carries no usable path or
+    // extension, so the only way to narrow application/octet-stream would
+    // be to allow-list provider authorities. WhatsApp, Telegram, Gmail,
+    // Drive and several OEM file managers all hand PDFs over as
+    // application/octet-stream from authorities that change over time, so
+    // an allow-list would silently break external PDF opening. Activity
+    // intent-filter priority does not influence chooser ordering either.
+    // The residual cost is chooser noise for non-PDF octet-stream files;
+    // lib/pdfFiles.ts validatePdfFile rejects those with a localized
+    // message before anything reaches the library.
     intentFilters: [
       {
         action: 'VIEW',

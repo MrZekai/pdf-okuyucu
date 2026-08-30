@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,7 +7,7 @@ import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
-import { addWatermark, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
+import { addWatermark, CAMERA_PERMISSION_BLOCKED, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
 import { palette } from '@/constants/theme';
 
@@ -51,6 +51,16 @@ export default function ToolsScreen() {
         { text: t('common.open'), onPress: () => router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }) }
       ]);
     } catch (error) {
+      const blocked = typeof error === 'object' && error !== null && (error as { code?: string }).code === CAMERA_PERMISSION_BLOCKED;
+      if (blocked) {
+        // Android will not show the permission prompt again, so the only way
+        // forward is the app settings page.
+        Alert.alert(t('tools.errorTitle'), t('tools.cameraBlockedMessage'), [
+          { text: t('common.cancel'), style: 'cancel' },
+          { text: t('common.openSettings'), onPress: () => { Linking.openSettings().catch(() => undefined); } }
+        ]);
+        return;
+      }
       Alert.alert(t('tools.errorTitle'), error instanceof Error ? error.message : t('tools.genericError'));
     } finally {
       setBusy(false);
