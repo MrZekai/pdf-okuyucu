@@ -421,8 +421,9 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-      - uses: actions/upload-artifact@v6
-        if: github.event_name == 'workflow_dispatch' && inputs.build_release
+      - name: İmzalı Play Store AAB'yi Actions artifact'ına yükle
+        if: false  # PLAN2: Actions artifact quota bypass
+        uses: actions/upload-artifact@v6
         with:
           name: pdf-okuyucu-${{ inputs.release_target }}-aab-v${{ github.run_number }}
           path: android/app/build/outputs/bundle/release/app-release.aab
