@@ -87,10 +87,17 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.build_release && inputs.release_target == 'production'
         run: |
           set -euo pipefail
+          # curl ciktisi dogrudan "grep -Fq"a borulanirsa grep ilk eslesmede
+          # cikar, curl'un kalan yazimi kapali boruya dusar ve curl 23
+          # (CURLE_WRITE_ERROR) ile biter. Bu, icerik dogru olsa bile adimi
+          # rastgele kirar. Govdeyi once dosyaya indirip sonra grepliyoruz;
+          # boylece --fail ve tam govde indirimi de zorunlu kalir.
           curl --fail --silent --show-error --location --max-time 20 \
-            https://mrzekai.github.io/privacy-policy.html | grep -Fq 'PDF: Okuyucu - Araçları'
+            https://mrzekai.github.io/privacy-policy.html > live-privacy-policy.html
+          grep -Fq 'PDF: Okuyucu - Araçları' live-privacy-policy.html
           curl --fail --silent --show-error --location --max-time 20 \
-            https://mrzekai.github.io/app-ads.txt | tr -d '\r' | \
+            https://mrzekai.github.io/app-ads.txt > live-app-ads.txt
+          tr -d '\r' < live-app-ads.txt | \
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
           echo 'Production canlı yasal sayfaları doğrulandı.'
 

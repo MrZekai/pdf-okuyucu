@@ -6,7 +6,16 @@ const ANDROID_PRODUCTION_APP_OPEN_ID = 'ca-app-pub-1380972808968213/1189880008';
 const PRIVACY_POLICY_URL = 'https://mrzekai.github.io/privacy-policy.html';
 
 const androidAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_ANDROID || ANDROID_PRODUCTION_APP_ID;
-const iosAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS || IOS_SAMPLE_APP_ID;
+// iOS icin kayitli bir AdMob uygulamasi yok. Google'in demo publisher'ina
+// (ca-app-pub-3940256099942544) dusen bir fallback, cozumlenmis Expo
+// yapilandirmasinin plugins dizisine giriyor ve bu dizi AAB icindeki
+// base/assets/app.config dosyasina aynen gomuluyor (@expo/config
+// isPublicConfig plugins'i temizlemiyor). Sonuc: Android'de hicbir zaman
+// okunmayan bu iOS App ID, production AAB'de test reklam kimligi olarak
+// gorunuyordu. Deger yoksa undefined birakiliyor; react-native-google-mobile-ads
+// plugin'i undefined iosAppId'de yalnizca uyari basar, Android prebuild'i
+// etkilemez ve string AAB'ye hic girmez.
+const iosAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS;
 const androidVersionCode = Number.parseInt(process.env.ANDROID_VERSION_CODE || '1', 10);
 
 if (!Number.isInteger(androidVersionCode) || androidVersionCode < 1) {
