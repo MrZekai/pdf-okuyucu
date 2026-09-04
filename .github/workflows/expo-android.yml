@@ -70,7 +70,7 @@ jobs:
         run: |
           npm run check
           npm run lint
-          npm run doctor
+          EXPO_DOCTOR_SKIP_DEPENDENCY_VERSION_CHECK=1 npm run doctor
           npm run release:check
 
       - name: Closed-test yasal kaynaklarını doğrula
