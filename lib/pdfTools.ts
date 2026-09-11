@@ -231,8 +231,8 @@ export async function mergePdfs(): Promise<PdfDocument | null> {
   const sources = await pickPdfs(true);
   if (!sources.length) return null;
   if (sources.length < 2) throw new Error(t('tools.minimumMerge'));
-  if (sources.length > MAX_MERGE_FILES) throw new Error(t('tools.tooLarge'));
-  if (sources.reduce((sum, file) => sum + file.size, 0) > MAX_MERGE_INPUT_BYTES) throw new Error(t('tools.tooLarge'));
+  if (sources.length > MAX_MERGE_FILES) throw new Error(t('tools.mergeTooManyFiles', { count: MAX_MERGE_FILES }));
+  if (sources.reduce((sum, file) => sum + file.size, 0) > MAX_MERGE_INPUT_BYTES) throw new Error(t('tools.mergeTooLarge'));
   const output = await PDFDocument.create();
   for (const source of sources) {
     const input = await loadPdf(source);

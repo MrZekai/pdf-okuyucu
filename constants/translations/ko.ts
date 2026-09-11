@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'작업을 완료할 수 없습니다',
   'tools.genericError':'이 PDF를 처리할 수 없습니다. 파일이 손상되었거나 암호로 보호되어 있을 수 있습니다.',
   'tools.minimumMerge':'합칠 PDF를 두 개 이상 선택하세요.',
+  'tools.mergeTooManyFiles':'한 번에 최대 {count}개의 PDF만 병합할 수 있습니다. 파일 수를 줄여 주세요.',
+  'tools.mergeTooLarge':'병합하려고 선택한 파일의 총 크기는 40MB를 넘을 수 없습니다.',
   'tools.invalidRange':'올바른 페이지 범위를 입력하세요.',
   'tools.removeAll':'PDF의 모든 페이지를 삭제할 수는 없습니다.',
   'tools.invalidOrder':'새 순서에는 PDF의 각 페이지가 정확히 한 번씩 포함되어야 합니다.',

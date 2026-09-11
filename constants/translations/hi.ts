@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'कार्य पूरा नहीं हो सका',
   'tools.genericError':'इस PDF को संसाधित नहीं किया जा सका। यह खराब या पासवर्ड से सुरक्षित हो सकता है।',
   'tools.minimumMerge':'जोड़ने के लिए कम से कम दो PDF चुनें।',
+  'tools.mergeTooManyFiles':'एक बार में अधिकतम {count} PDF जोड़े जा सकते हैं। कम फ़ाइलें चुनें।',
+  'tools.mergeTooLarge':'जोड़ने के लिए चुनी गई फ़ाइलों का कुल आकार 40 MB से अधिक नहीं हो सकता।',
   'tools.invalidRange':'मान्य पृष्ठ सीमा दर्ज करें।',
   'tools.removeAll':'PDF के सभी पृष्ठ हटाए नहीं जा सकते।',
   'tools.invalidOrder':'नए क्रम में PDF का हर पृष्ठ ठीक एक बार होना चाहिए।',

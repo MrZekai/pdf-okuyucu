@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useRef,useState} from 'react';
 import Constants from 'expo-constants';
 import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,7 +8,7 @@ import { useAdsRefresh, useAdsStatus } from '@/context/AdsContext';
 import { AppIcon } from '@/components/AppIcon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAdPause } from '@/hooks/useAdPause';
-import { watchRewardedForAdPause } from '@/lib/adGate';
+import { getAdDiagnostics, watchRewardedForAdPause } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 
 export default function SettingsScreen(){
@@ -26,6 +26,16 @@ export default function SettingsScreen(){
    else if(outcome==='unavailable')Alert.alert(t('settings.adPauseTitle'),t('settings.adPauseUnavailable'));
   }finally{setRewardBusy(false);}
  }
+ // Hidden developer readout: seven taps on the about line. Ad pacing depends on
+ // counters that are invisible on a device, and guessing at them wastes a whole
+ // test round. Deliberately untranslated - this is for the developer only.
+ const diagnosticTaps=useRef(0);
+ async function tapAbout(){
+  diagnosticTaps.current+=1;
+  if(diagnosticTaps.current<7)return;
+  diagnosticTaps.current=0;
+  try{Alert.alert('Ad diagnostics',await getAdDiagnostics());}catch{/* never blocks settings */}
+ }
  function wipe(){const message=documents.length===1?t('settings.wipeAlertMessageOne'):t('settings.wipeAlertMessage',{count:documents.length});Alert.alert(t('settings.wipeAlertTitle'),message,[{text:t('common.cancel'),style:'cancel'},{text:t('common.clear'),style:'destructive',onPress:clearHistory}]);}
  async function privacy(){try{const info=await AdsConsent.getConsentInfo();if(info.privacyOptionsRequirementStatus===AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)await AdsConsent.showPrivacyOptionsForm();else await AdsConsent.gatherConsent();await refreshAds();Alert.alert(t('settings.consentUpdatedTitle'),t('settings.consentUpdatedMessage'));}catch{Alert.alert(t('settings.consentErrorTitle'),t('settings.consentErrorMessage'));}}
  async function openPrivacyPolicy(){const url=Constants.expoConfig?.extra?.privacyPolicyUrl as string|undefined;if(!url){Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));return;}try{await Linking.openURL(url);}catch{Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));}}
@@ -33,7 +43,7 @@ export default function SettingsScreen(){
   <Section title={t('settings.readingSection')}><SettingRow icon="rotate" title={t('settings.horizontalTitle')} desc={t('settings.horizontalDesc')} value={settings.horizontal} onValueChange={v=>patchSettings({horizontal:v})}/><SettingRow icon="snap" title={t('settings.snapTitle')} desc={t('settings.snapDesc')} value={settings.pagingEnabled} onValueChange={v=>patchSettings({pagingEnabled:v})}/><SettingRow icon="moon" title={t('settings.nightTitle')} desc={t('settings.nightDesc')} value={settings.invertPdfPages} onValueChange={v=>patchSettings({invertPdfPages:v})}/></Section>
   <Section title={t('settings.adsSection')}>{adsStatus==='ready'||paused?<Pressable onPress={watchForAdFreeTime} disabled={rewardBusy||paused} accessibilityRole="button" accessibilityState={{disabled:rewardBusy||paused,busy:rewardBusy}} style={[styles.actionRow,styles.actionDivider,(rewardBusy||paused)&&styles.actionRowMuted]}><View style={styles.actionIcon}>{rewardBusy?<ActivityIndicator size="small" color={palette.pdfRedSoft}/>:<AppIcon name="clock" color={palette.pdfRedSoft}/>}</View><View style={{flex:1}}><Text style={styles.actionTitle}>{t('settings.adPauseTitle')}</Text><Text style={styles.actionDesc}>{paused?t('settings.adPauseActive',{minutes:remainingMinutes}):t('settings.adPauseDesc')}</Text></View>{paused||rewardBusy?null:<AppIcon name="chevronRight" size={17} color="#64748B"/>}</Pressable>:null}<Pressable onPress={privacy} style={[styles.actionRow,styles.actionDivider]}><View style={styles.actionIcon}><AppIcon name="shield" color={palette.emerald}/></View><View style={{flex:1}}><Text style={styles.actionTitle}>{t('settings.consentTitle')}</Text><Text style={styles.actionDesc}>{t('settings.consentDesc')}</Text></View><AppIcon name="chevronRight" size={17} color="#64748B"/></Pressable><Pressable onPress={openPrivacyPolicy} style={styles.actionRow}><View style={styles.actionIcon}><AppIcon name="info" color={palette.cyan}/></View><View style={{flex:1}}><Text style={styles.actionTitle}>{t('settings.policyTitle')}</Text><Text style={styles.actionDesc}>{t('settings.policyDesc')}</Text></View><AppIcon name="chevronRight" size={17} color="#64748B"/></Pressable></Section>
   <Section title={t('settings.dataSection')}><Pressable onPress={wipe} style={styles.actionRow}><View style={[styles.actionIcon,{backgroundColor:'rgba(248,113,113,.08)'}]}><AppIcon name="trash" color={palette.danger}/></View><View style={{flex:1}}><Text style={[styles.actionTitle,{color:'#FCA5A5'}]}>{t('settings.wipeTitle')}</Text><Text style={styles.actionDesc}>{t('settings.wipeDesc')}</Text></View></Pressable></Section>
-  <View style={styles.about}><AppIcon name="info" size={18} color="#64748B"/><Text style={styles.aboutText}>{t('settings.about')}</Text></View>
+  <Pressable onPress={tapAbout} style={styles.about}><AppIcon name="info" size={18} color="#64748B"/><Text style={styles.aboutText}>{t('settings.about')}</Text></Pressable>
  </ScrollView></SafeAreaView>;
 }
 function Section({title,children}:{title:string;children:React.ReactNode}){return <View style={{gap:9}}><Text style={styles.sectionTitle}>{title}</Text><View style={styles.sectionBox}>{children}</View></View>}

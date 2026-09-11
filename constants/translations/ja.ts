@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'処理を完了できませんでした',
   'tools.genericError':'このPDFを処理できません。破損しているか、パスワードで保護されている可能性があります。',
   'tools.minimumMerge':'結合するPDFを2つ以上選択してください。',
+  'tools.mergeTooManyFiles':'一度に結合できるPDFは最大{count}件です。ファイル数を減らしてください。',
+  'tools.mergeTooLarge':'結合するために選択したファイルの合計は40MBを超えられません。',
   'tools.invalidRange':'有効なページ範囲を入力してください。',
   'tools.removeAll':'PDFの全ページを削除することはできません。',
   'tools.invalidOrder':'新しい順序にはPDFの各ページを1回ずつ含めてください。',

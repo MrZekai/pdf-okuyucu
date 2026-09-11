@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'无法完成操作',
   'tools.genericError':'无法处理此 PDF。文件可能已损坏或受密码保护。',
   'tools.minimumMerge':'请至少选择两个要合并的 PDF。',
+  'tools.mergeTooManyFiles':'一次最多可合并 {count} 个 PDF，请减少所选文件。',
+  'tools.mergeTooLarge':'所选用于合并的文件总大小不能超过 40 MB。',
   'tools.invalidRange':'请输入有效的页面范围。',
   'tools.removeAll':'不能删除 PDF 的所有页面。',
   'tools.invalidOrder':'新顺序必须且只能包含 PDF 的每一页一次。',

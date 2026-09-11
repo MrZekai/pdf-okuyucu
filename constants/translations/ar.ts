@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'تعذر إكمال المهمة',
   'tools.genericError':'تعذرت معالجة هذا الملف. قد يكون تالفًا أو محميًا بكلمة مرور.',
   'tools.minimumMerge':'اختر ملفي PDF على الأقل للدمج.',
+  'tools.mergeTooManyFiles':'يمكن دمج {count} ملف PDF كحد أقصى في المرة الواحدة. اختر عددًا أقل من الملفات.',
+  'tools.mergeTooLarge':'لا يمكن أن يتجاوز إجمالي الملفات المختارة للدمج 40 ميغابايت.',
   'tools.invalidRange':'أدخل نطاق صفحات صالحًا.',
   'tools.removeAll':'لا يمكن حذف كل صفحات ملف PDF.',
   'tools.invalidOrder':'يجب أن يتضمن الترتيب الجديد كل صفحة في PDF مرة واحدة فقط.',

@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'Aufgabe konnte nicht abgeschlossen werden',
   'tools.genericError':'Dieses PDF konnte nicht verarbeitet werden. Es ist möglicherweise beschädigt oder passwortgeschützt.',
   'tools.minimumMerge':'Wähle mindestens zwei PDFs zum Zusammenfügen aus.',
+  'tools.mergeTooManyFiles':'Es können höchstens {count} PDFs auf einmal zusammengefügt werden. Bitte weniger Dateien wählen.',
+  'tools.mergeTooLarge':'Die zum Zusammenfügen gewählten Dateien dürfen insgesamt 40 MB nicht überschreiten.',
   'tools.invalidRange':'Gib einen gültigen Seitenbereich ein.',
   'tools.removeAll':'Es können nicht alle Seiten eines PDFs entfernt werden.',
   'tools.invalidOrder':'Die neue Reihenfolge muss jede PDF-Seite genau einmal enthalten.',

@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'Impossible de terminer la tâche',
   'tools.genericError':'Ce PDF n’a pas pu être traité. Il est peut-être endommagé ou protégé par mot de passe.',
   'tools.minimumMerge':'Sélectionnez au moins deux PDF à fusionner.',
+  'tools.mergeTooManyFiles':'Au maximum {count} PDF peuvent être fusionnés à la fois. Sélectionnez moins de fichiers.',
+  'tools.mergeTooLarge':'Les fichiers sélectionnés pour la fusion ne peuvent pas dépasser 40 Mo au total.',
   'tools.invalidRange':'Saisissez une plage de pages valide.',
   'tools.removeAll':'Il est impossible de supprimer toutes les pages d’un PDF.',
   'tools.invalidOrder':'Le nouvel ordre doit contenir chaque page du PDF une seule fois.',

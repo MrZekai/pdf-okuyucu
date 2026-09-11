@@ -1,0 +1,157 @@
+PDF OKUYUCU — SÜRÜM 54'Ü GITHUB'A AKTARMA
+
+Ödüllü teklifin ana sayfaya taşınması, geçiş reklamının önceden yüklenmesi,
+gizli tanılama ekranı ve birleştirme hata mesajlarının düzeltilmesi.
+
+package.json ve package-lock.json DEĞİŞMEDİ. npm ci gerekmez.
+Commit [skip ci] İÇERMEZ: push sonrası QA APK derlemesi çalışır.
+
+--------------------------------------------------------------------------------
+1) ZIP'i açın
+--------------------------------------------------------------------------------
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-v54.zip -d pdf-okuyucu-v54
+
+--------------------------------------------------------------------------------
+2) Depoya girin
+--------------------------------------------------------------------------------
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+Yalnızca "Claude outputs/" satırı beklenir. Başka değişiklik varsa durun.
+
+--------------------------------------------------------------------------------
+3) Kopyalayın
+--------------------------------------------------------------------------------
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-v54/pdf-okuyucu-main"
+
+if [ -f "$PATCH_DIR/components/AdPauseOffer.tsx" ] && [ -f "$PATCH_DIR/lib/adGate.ts" ]; then
+  cp -a "$PATCH_DIR"/. .
+  echo "V54 KAYNAKLARI BASARIYLA KOPYALANDI"
+else
+  echo "HATA: Kaynak klasoru bulunamadi, PATCH_DIR yolunu kontrol edin"
+fi
+
+--------------------------------------------------------------------------------
+4) Satır sonu gürültüsünü temizleyin
+--------------------------------------------------------------------------------
+
+ZIP LF, depo CRLF kullanıyor. İçeriği değişmemiş dosyalar yine de "M" görünebilir.
+Aşağıdaki komut yalnızca gerçek değişiklik içermeyenleri geri alır:
+
+for f in $(git --no-pager diff --name-only); do
+  if [ -z "$(git --no-pager diff -- "$f")" ]; then git checkout -- "$f"; fi
+done
+
+echo "=== kalan degisiklikler ==="
+git --no-pager status --short
+
+--------------------------------------------------------------------------------
+5) Kontroller
+--------------------------------------------------------------------------------
+
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+EXPO_DOCTOR_SKIP_DEPENDENCY_VERSION_CHECK=1 EXPO_NO_TELEMETRY=1 npm run doctor
+npm run release:check
+
+npm run check beklenen: 215 anahtar x 14 dil, tsc hatasiz, 13 routing testi,
+expo-pdf checksums match.
+
+--------------------------------------------------------------------------------
+6) Commit ve push
+--------------------------------------------------------------------------------
+
+git -c core.safecrlf=false add \
+  "app/(tabs)/index.tsx" \
+  "app/(tabs)/settings.tsx" \
+  components/AdPauseOffer.tsx \
+  constants/i18n.ts \
+  constants/translations/ar.ts \
+  constants/translations/de.ts \
+  constants/translations/fr.ts \
+  constants/translations/hi.ts \
+  constants/translations/id.ts \
+  constants/translations/it.ts \
+  constants/translations/ja.ts \
+  constants/translations/ko.ts \
+  constants/translations/pt.ts \
+  constants/translations/ru.ts \
+  constants/translations/zh.ts \
+  hooks/useAdPause.ts \
+  lib/adGate.ts \
+  lib/pdfTools.ts \
+  RELEASE_54_ADS_TR.md \
+  GITHUB-V54-KOMUTLARI.txt
+
+git --no-pager diff --cached --stat
+
+STAGED=$(git --no-pager diff --cached --name-only | wc -l)
+echo "=== hazirlanan dosya sayisi: $STAGED ==="
+if [ "$STAGED" -eq 20 ]; then
+  git commit -m "Odullu teklifi ana sayfaya tasi, gecis reklamini onceden yukle, tanilama ekrani"
+  git push origin main
+  echo "=== PUSH TAMAM ==="
+else
+  echo "=== DURUN: 20 bekleniyordu, $STAGED bulundu. Commit atilmadi. ==="
+fi
+
+--------------------------------------------------------------------------------
+7) QA APK ile test - SIRAYI BOZMAYIN
+--------------------------------------------------------------------------------
+
+Taslak sürümden APK'yı indirin, kurun.
+
+ÖNCE: Ayarlar > Uygulamalar > PDF: Okuyucu > Zorla durdur + Verileri temizle.
+Bu, reklamsız pencereyi de siler. Silmezseniz hicbir reklam gormezsiniz.
+
+A) GECIS REKLAMI  (Ayarlar sekmesine hic girmeyin)
+   1. Uygulamayi acin
+   2. Araclar > PDF dondur > bir PDF secin > sonucta "Bitti"   -> reklam yok
+   3. Ayni islem tekrar                                        -> reklam yok
+   4. Ayni islem ucuncu kez > "Bitti"                          -> GECIS REKLAMI
+   5. 3 dakika bekleyin, dorduncu islem > "Ac"                 -> reklam yok
+   6. Besinci islem > "Bitti"                                  -> gecis reklami
+   7. Altinci islem > "Bitti"                                  -> reklam yok (oturum siniri)
+
+B) TANILAMA
+   Ayarlar > en alttaki "hakkinda" yazisina 7 kez dokunun.
+   Acilan pencere sayaclari gosterir. A testinde takilirsaniz once buraya bakin.
+
+C) DISARIDAN PDF
+   1. Verileri temizle
+   2. Ac - zorla durdur, ac - zorla durdur  (sayac 2)
+   3. WhatsApp/Dosyalar'dan bir PDF'e dokunun, uygulamayi secin
+      -> REKLAM YOK, belge acilir
+   4. Zorla durdur, normal acin  -> simdi acilis reklami gelmeli
+
+   4. adimda reklam gelmesi sart; gelmezse 3. adimdaki sessizlik bir sey kanitlamaz.
+
+D) ODULLU TEKLIF
+   1. A veya C testinden sonra ana sayfaya bakin
+      -> marka cubugunun altinda "30 dakika reklamsiz" seridi gorunmeli
+      (Hic reklam gormemis temiz kurulumda gorunmemesi DOGRUDUR)
+   2. Dokunun, videoyu sonuna kadar izleyin
+      -> tesekkur mesaji, ardindan banner dahil tum reklamlar kaybolur
+      -> serit kalan dakikayi gosteren durum satirina doner
+   3. Zorla durdur, tekrar acin -> hala reklamsiz
+
+E) BIRLESTIRME MESAJLARI
+   13 dosya secin  -> "Tek seferde en fazla 12 PDF birlestirilebilir"
+   (Sürüm 53'te yanlislikla "80 MB" yaziyordu)
+
+--------------------------------------------------------------------------------
+8) AAB
+--------------------------------------------------------------------------------
+
+QA testi gecmeden calistirmayin.
+
+GitHub > Actions > Expo Android Build > Run workflow
+  build_release  : true
+  release_target : closed_test  veya  production
+
+AAB yine taslak GitHub Release icinde gelir. versionCode elle ayarlanmaz.

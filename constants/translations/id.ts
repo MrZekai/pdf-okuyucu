@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'Tugas tidak dapat diselesaikan',
   'tools.genericError':'PDF ini tidak dapat diproses. File mungkin rusak atau dilindungi kata sandi.',
   'tools.minimumMerge':'Pilih setidaknya dua PDF untuk digabungkan.',
+  'tools.mergeTooManyFiles':'Maksimal {count} PDF dapat digabungkan sekaligus. Pilih lebih sedikit berkas.',
+  'tools.mergeTooLarge':'Total berkas yang dipilih untuk digabungkan tidak boleh melebihi 40 MB.',
   'tools.invalidRange':'Masukkan rentang halaman yang valid.',
   'tools.removeAll':'Semua halaman PDF tidak dapat dihapus.',
   'tools.invalidOrder':'Urutan baru harus memuat setiap halaman PDF tepat satu kali.',

@@ -84,6 +84,8 @@ export default {
   'tools.errorTitle':'Não foi possível concluir a tarefa',
   'tools.genericError':'Este PDF não pôde ser processado. Ele pode estar danificado ou protegido por senha.',
   'tools.minimumMerge':'Selecione pelo menos dois PDFs para unir.',
+  'tools.mergeTooManyFiles':'No máximo {count} PDFs podem ser unidos de uma vez. Selecione menos arquivos.',
+  'tools.mergeTooLarge':'Os arquivos selecionados para unir não podem passar de 40 MB no total.',
   'tools.invalidRange':'Insira um intervalo de páginas válido.',
   'tools.removeAll':'Não é possível remover todas as páginas de um PDF.',
   'tools.invalidOrder':'A nova ordem deve incluir cada página do PDF exatamente uma vez.',

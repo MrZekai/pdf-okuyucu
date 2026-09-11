@@ -34,7 +34,11 @@ const MAX_INTERSTITIALS_PER_SESSION = 2;
 /** The first tool runs of a new install stay clean; trust before revenue. */
 const FREE_TOOL_RUNS = 2;
 const INTERSTITIAL_LOAD_TIMEOUT_MS = 5_000;
-const REWARDED_LOAD_TIMEOUT_MS = 8_000;
+// The viewer is watching a spinner here and asked for this ad, so waiting a
+// little longer is better than telling them nothing was available.
+const REWARDED_LOAD_TIMEOUT_MS = 12_000;
+/** A prepared interstitial is discarded after this, as AdMob recommends. */
+const PRIMED_AD_TTL_MS = 50 * 60 * 1000;
 /** Guards against an ad that opens and never reports that it closed. */
 const OPEN_AD_HANG_GUARD_MS = 5 * 60 * 1000;
 
@@ -152,6 +156,9 @@ export async function noteToolRun() {
   const current = await readTimestamp(TOOL_RUN_KEY);
   const next = current + 1;
   await writeTimestamp(TOOL_RUN_KEY, next);
+  // Start preparing the ad one run before it can be shown. Requesting it at the
+  // moment it is needed loses most of the fill on a slow connection.
+  if (next >= FREE_TOOL_RUNS && !(await adsArePaused())) primeInterstitial();
   return next;
 }
 
@@ -258,6 +265,111 @@ function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: n
   });
 }
 
+type PreparedAd = { ad: FullScreenAd; loadedAt: number };
+let preparedInterstitial: PreparedAd | null = null;
+let preparingInterstitial = false;
+
+function discardPreparedInterstitial() {
+  const prepared = preparedInterstitial;
+  preparedInterstitial = null;
+  if (!prepared) return;
+  try {
+    prepared.ad.removeAllListeners();
+  } catch {
+    // The instance is dropped either way.
+  }
+}
+
+/** Requests an interstitial in the background so it is ready when needed. */
+export function primeInterstitial() {
+  if (preparedInterstitial || preparingInterstitial) return;
+  const unitId = resolveUnitId('interstitial');
+  if (!unitId) return;
+  preparingInterstitial = true;
+  let ad: FullScreenAd | null = null;
+  let unsubscribe: (() => void) | null = null;
+  const detach = () => {
+    try {
+      unsubscribe?.();
+    } catch {
+      // Nothing else to do.
+    }
+    unsubscribe = null;
+  };
+  try {
+    ad = InterstitialAd.createForAdRequest(unitId) as unknown as FullScreenAd;
+    unsubscribe = ad.addAdEventsListener(({ type }) => {
+      if (type === AdEventType.LOADED) {
+        preparingInterstitial = false;
+        // The presenter attaches its own listener, so this one is released now.
+        detach();
+        if (ad) preparedInterstitial = { ad, loadedAt: Date.now() };
+      } else if (type === AdEventType.ERROR) {
+        preparingInterstitial = false;
+        detach();
+        try {
+          ad?.removeAllListeners();
+        } catch {
+          // Nothing else to do.
+        }
+        ad = null;
+      }
+    });
+    ad.load();
+  } catch {
+    preparingInterstitial = false;
+    detach();
+  }
+}
+
+/** Shows an already loaded ad. Never throws and always settles exactly once. */
+function presentPreparedAd(ad: FullScreenAd): Promise<FullScreenResult> {
+  return new Promise<FullScreenResult>((resolve) => {
+    let settled = false;
+    let earned = false;
+    let unsubscribe: (() => void) | null = null;
+    let guard: ReturnType<typeof setTimeout> | null = null;
+
+    const settle = (result: FullScreenResult) => {
+      if (settled) return;
+      settled = true;
+      if (guard) clearTimeout(guard);
+      try {
+        unsubscribe?.();
+      } catch {
+        // Nothing else to do.
+      }
+      try {
+        ad.removeAllListeners();
+      } catch {
+        // Nothing else to do.
+      }
+      resolve(result);
+    };
+
+    try {
+      unsubscribe = ad.addAdEventsListener(({ type }) => {
+        if (type === RewardedAdEventType.EARNED_REWARD) {
+          earned = true;
+          return;
+        }
+        if (type === AdEventType.CLOSED) {
+          settle(earned ? 'earned' : 'shown');
+          return;
+        }
+        if (type === AdEventType.ERROR) settle('unavailable');
+      });
+      guard = setTimeout(() => settle(earned ? 'earned' : 'shown'), OPEN_AD_HANG_GUARD_MS);
+      const shown = ad.show();
+      if (shown && typeof (shown as Promise<void>).catch === 'function') {
+        (shown as Promise<void>).catch(() => settle('unavailable'));
+      }
+    } catch {
+      settle('unavailable');
+    }
+  });
+}
+
 /**
  * Called after a tool has produced a document and the user has dismissed the
  * result dialog. Returns quietly when any limit is hit.
@@ -279,14 +391,46 @@ export async function maybeShowToolInterstitial() {
     const shownToday = stored.day === today ? stored.count : 0;
     if (shownToday >= MAX_INTERSTITIALS_PER_DAY) return;
 
-    const result = await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS);
+    if (preparedInterstitial && now - preparedInterstitial.loadedAt >= PRIMED_AD_TTL_MS) discardPreparedInterstitial();
+    const prepared = preparedInterstitial;
+    preparedInterstitial = null;
+
+    const result = prepared
+      ? await presentPreparedAd(prepared.ad)
+      : await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS);
     if (result === 'unavailable') return;
 
     sessionInterstitials += 1;
     await Promise.all([noteFullScreenShown(Date.now()), writeDayCount(INTERSTITIAL_DAY_KEY, today, shownToday + 1)]);
+    // Warm the next one only while a further interstitial is still allowed.
+    if (sessionInterstitials < MAX_INTERSTITIALS_PER_SESSION && shownToday + 1 < MAX_INTERSTITIALS_PER_DAY) primeInterstitial();
   } catch {
     // A tool result must never fail because of advertising.
   }
+}
+
+/**
+ * Developer-facing snapshot of every gate. Surfaced behind a hidden tap in
+ * Settings so ad pacing can be verified on a real device without a debugger.
+ */
+export async function getAdDiagnostics() {
+  const now = Date.now();
+  const [runs, lastFullScreenAt, pausedUntil, day] = await Promise.all([
+    readTimestamp(TOOL_RUN_KEY),
+    getLastFullScreenAt(),
+    readTimestamp(AD_PAUSE_UNTIL_KEY),
+    readDayCount(INTERSTITIAL_DAY_KEY)
+  ]);
+  const minutesSince = lastFullScreenAt ? Math.round((now - lastFullScreenAt) / 60_000) : null;
+  return [
+    `tool runs: ${runs} (free: ${FREE_TOOL_RUNS})`,
+    `interstitials this session: ${sessionInterstitials}/${MAX_INTERSTITIALS_PER_SESSION}`,
+    `interstitials today: ${day.day === dayStamp(now) ? day.count : 0}/${MAX_INTERSTITIALS_PER_DAY}`,
+    `last full screen ad: ${minutesSince === null ? 'never' : `${minutesSince} min ago`}`,
+    `min gap: ${Math.round(MIN_FULL_SCREEN_GAP_MS / 60_000)} min`,
+    `ad pause: ${pausedUntil > now ? `${Math.ceil((pausedUntil - now) / 60_000)} min left` : 'off'}`,
+    `interstitial prepared: ${preparedInterstitial ? 'yes' : preparingInterstitial ? 'loading' : 'no'}`
+  ].join('\n');
 }
 
 export type RewardedOutcome = 'earned' | 'dismissed' | 'unavailable';

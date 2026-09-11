@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
+import { AdPauseOffer } from '@/components/AdPauseOffer';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { UrlModal } from '@/components/UrlModal';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -67,6 +68,8 @@ export default function HomeScreen() {
           <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={styles.brandTitle}>{t('app.name')}</Text>
           <View style={styles.brandRule} />
         </View>
+
+        <AdPauseOffer />
 
         <View style={styles.dashboard}>
           <View style={styles.leftColumn}>
