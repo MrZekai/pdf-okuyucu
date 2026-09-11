@@ -1,16 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Image, Linking, Platform, StyleSheet, View } from 'react-native';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
 import { useTranslation } from '@/hooks/useTranslation';
+import { adsArePaused, getLastFullScreenAt, noteFullScreenShown } from '@/lib/adGate';
+import { normalizeIncomingPdfUri } from '@/lib/incomingPdfUri';
 import { palette } from '@/constants/theme';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
-const LAST_SHOWN_KEY = '@pdf-reader/app-open-last-shown-v1';
 const FIRST_AD_LAUNCH = 3;
-const COLD_START_WAIT_MS = 2500;
+// Long enough for a warm ad request, short enough that a launch without a
+// filled ad does not feel like the app hung on the splash screen.
+const COLD_START_WAIT_MS = 1400;
 const AD_VALIDITY_MS = 4 * 60 * 60 * 1000;
 
 function getUnitId() {
@@ -75,7 +78,8 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       } else if (type === AdEventType.OPENED) {
         cancelGateTimeout();
         showingRef.current = true;
-        AsyncStorage.setItem(LAST_SHOWN_KEY, String(Date.now())).catch(() => undefined);
+        // Shared with the tool interstitial so the two can never stack.
+        noteFullScreenShown(Date.now()).catch(() => undefined);
       } else if (type === AdEventType.CLOSED || type === AdEventType.ERROR) {
         clearAd();
         finishColdGate();
@@ -107,20 +111,48 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     launchInitializedRef.current = true;
     let mounted = true;
     gateTimeoutRef.current = setTimeout(() => { clearAd(); finishColdGate(); }, COLD_START_WAIT_MS);
-    Promise.all([AsyncStorage.getItem(LAUNCH_COUNT_KEY), AsyncStorage.getItem(LAST_SHOWN_KEY)])
-      .then(([launchRaw, lastShownRaw]) => {
-        if (!mounted) return;
-        const launches = Math.max(0, Number.parseInt(launchRaw || '0', 10) || 0) + 1;
-        const lastShownAt = Math.max(0, Number.parseInt(lastShownRaw || '0', 10) || 0);
-        AsyncStorage.setItem(LAUNCH_COUNT_KEY, String(launches)).catch(() => undefined);
-        if (launches >= FIRST_AD_LAUNCH && Date.now() - lastShownAt >= AD_VALIDITY_MS) {
-          coldEligibleRef.current = true;
-          setColdEligible(true);
-        } else {
-          finishColdGate();
-        }
-      })
-      .catch(finishColdGate);
+
+    (async () => {
+      // A launch that came from another app's PDF is not an app launch: the
+      // user tapped a document and is waiting for it. Showing a full screen ad
+      // in front of their file is the single fastest way to a one star review,
+      // so this path never becomes eligible.
+      let openedWithDocument = false;
+      try {
+        openedWithDocument = Boolean(normalizeIncomingPdfUri(await Linking.getInitialURL()));
+      } catch {
+        openedWithDocument = false;
+      }
+      if (!mounted) return;
+      if (openedWithDocument) {
+        finishColdGate();
+        return;
+      }
+
+      if (await adsArePaused()) {
+        if (mounted) finishColdGate();
+        return;
+      }
+      if (!mounted) return;
+
+      const launchRaw = await AsyncStorage.getItem(LAUNCH_COUNT_KEY).catch(() => null);
+      const launches = Math.max(0, Number.parseInt(launchRaw || '0', 10) || 0) + 1;
+      AsyncStorage.setItem(LAUNCH_COUNT_KEY, String(launches)).catch(() => undefined);
+      const lastShownAt = await getLastFullScreenAt();
+      if (!mounted) return;
+
+      // The gate may already have timed out while storage was being read.
+      if (!gateVisibleRef.current) return;
+
+      if (launches >= FIRST_AD_LAUNCH && Date.now() - lastShownAt >= AD_VALIDITY_MS) {
+        coldEligibleRef.current = true;
+        setColdEligible(true);
+      } else {
+        finishColdGate();
+      }
+    })().catch(() => {
+      if (mounted) finishColdGate();
+    });
     return () => {
       mounted = false;
       cancelGateTimeout();

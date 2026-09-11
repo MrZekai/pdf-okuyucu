@@ -19,6 +19,11 @@ export const CAMERA_PERMISSION_BLOCKED = 'camera_permission_blocked';
 export type ToolError = Error & { code?: string };
 
 const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
+// Merge is the only tool that holds every source document in memory at once and
+// then serialises the combined result, so its peak is roughly two to three
+// times the input. The single file tools stay on the wider budget above.
+const MAX_MERGE_INPUT_BYTES = 40 * 1024 * 1024;
+const MAX_MERGE_FILES = 12;
 // BUG-08: pdf-lib keeps every embedded image in memory until the document is
 // serialised, and embedPng additionally decodes the whole bitmap, so a handful
 // of very large sources can exceed the heap on mid-range devices. These budgets
@@ -226,11 +231,16 @@ export async function mergePdfs(): Promise<PdfDocument | null> {
   const sources = await pickPdfs(true);
   if (!sources.length) return null;
   if (sources.length < 2) throw new Error(t('tools.minimumMerge'));
+  if (sources.length > MAX_MERGE_FILES) throw new Error(t('tools.tooLarge'));
+  if (sources.reduce((sum, file) => sum + file.size, 0) > MAX_MERGE_INPUT_BYTES) throw new Error(t('tools.tooLarge'));
   const output = await PDFDocument.create();
   for (const source of sources) {
     const input = await loadPdf(source);
     const pages = await output.copyPages(input, input.getPageIndices());
     pages.forEach((page) => output.addPage(page));
+    // Give the bridge a chance to collect the source document before the next
+    // one is parsed; without it several large inputs peak at the same time.
+    await new Promise<void>((resolve) => { setTimeout(resolve, 0); });
   }
   return saveGeneratedPdf(await output.save({ useObjectStreams: true }), outputName(sources[0].name, 'merged'));
 }

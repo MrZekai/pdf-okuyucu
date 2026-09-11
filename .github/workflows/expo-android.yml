@@ -31,6 +31,8 @@ jobs:
       EXPO_PUBLIC_ADMOB_APP_ID_ANDROID: ca-app-pub-1380972808968213~3816043340
       EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-1380972808968213/7265047779
       EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-1380972808968213/1189880008
+      EXPO_PUBLIC_ADMOB_INTERSTITIAL_ANDROID: ca-app-pub-1380972808968213/1706694218
+      EXPO_PUBLIC_ADMOB_REWARDED_ANDROID: ca-app-pub-1380972808968213/2249619690
       # Kotlin derleyicisi ayri bir daemon'da calisir ve varsayilan heap'i
       # bu bagimlilik grafigi icin yetersiz kalabiliyor. Bellek kaynakli
       # "internal compiler error" ihtimalini elemek icin acikca yukseltiliyor.
@@ -171,6 +173,8 @@ jobs:
           # Google'ın resmi demo birimleri: QA release APK'sında canlı reklam olmaz.
           EXPO_PUBLIC_ADMOB_BANNER_ANDROID: ca-app-pub-3940256099942544/9214589741
           EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID: ca-app-pub-3940256099942544/9257395921
+          EXPO_PUBLIC_ADMOB_INTERSTITIAL_ANDROID: ca-app-pub-3940256099942544/1033173712
+          EXPO_PUBLIC_ADMOB_REWARDED_ANDROID: ca-app-pub-3940256099942544/5224354917
         run: |
           set -o pipefail
           ./gradlew assembleRelease --no-daemon --no-build-cache --max-workers=2 --stacktrace --console=plain --warning-mode=summary 2>&1 | tee ../gradle-qa.log
@@ -183,7 +187,9 @@ jobs:
           unzip -p "$qa_apk" assets/app.config > qa-app.config.json
           grep -Fq 'ca-app-pub-3940256099942544/9214589741' qa-app.config.json
           grep -Fq 'ca-app-pub-3940256099942544/9257395921' qa-app.config.json
-          if grep -Eq '7265047779|1189880008' qa-app.config.json; then
+          grep -Fq 'ca-app-pub-3940256099942544/1033173712' qa-app.config.json
+          grep -Fq 'ca-app-pub-3940256099942544/5224354917' qa-app.config.json
+          if grep -Eq '7265047779|1189880008|1706694218|2249619690' qa-app.config.json; then
             echo 'HATA: QA APK içinde production reklam birimi bulundu.' >&2
             exit 1
           fi
@@ -346,10 +352,14 @@ jobs:
           if [ "$RELEASE_TARGET" = "closed_test" ]; then
             export EXPO_PUBLIC_ADMOB_BANNER_ANDROID='ca-app-pub-3940256099942544/9214589741'
             export EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID='ca-app-pub-3940256099942544/9257395921'
+            export EXPO_PUBLIC_ADMOB_INTERSTITIAL_ANDROID='ca-app-pub-3940256099942544/1033173712'
+            export EXPO_PUBLIC_ADMOB_REWARDED_ANDROID='ca-app-pub-3940256099942544/5224354917'
             echo 'Closed-test AAB: Google demo reklam birimleri kullanılacak.'
           else
             export EXPO_PUBLIC_ADMOB_BANNER_ANDROID='ca-app-pub-1380972808968213/7265047779'
             export EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID='ca-app-pub-1380972808968213/1189880008'
+            export EXPO_PUBLIC_ADMOB_INTERSTITIAL_ANDROID='ca-app-pub-1380972808968213/1706694218'
+            export EXPO_PUBLIC_ADMOB_REWARDED_ANDROID='ca-app-pub-1380972808968213/2249619690'
             echo 'Production AAB: gerçek AdMob reklam birimleri kullanılacak.'
           fi
           set -o pipefail
@@ -366,7 +376,9 @@ jobs:
           if [ "$RELEASE_TARGET" = "closed_test" ]; then
             grep -Fq 'ca-app-pub-3940256099942544/9214589741' aab-app.config.json
             grep -Fq 'ca-app-pub-3940256099942544/9257395921' aab-app.config.json
-            if grep -Eq '7265047779|1189880008' aab-app.config.json; then
+            grep -Fq 'ca-app-pub-3940256099942544/1033173712' aab-app.config.json
+            grep -Fq 'ca-app-pub-3940256099942544/5224354917' aab-app.config.json
+            if grep -Eq '7265047779|1189880008|1706694218|2249619690' aab-app.config.json; then
               echo 'HATA: Closed-test AAB içinde production reklam birimi bulundu.' >&2
               exit 1
             fi
@@ -374,6 +386,8 @@ jobs:
           else
             grep -Fq 'ca-app-pub-1380972808968213/7265047779' aab-app.config.json
             grep -Fq 'ca-app-pub-1380972808968213/1189880008' aab-app.config.json
+            grep -Fq 'ca-app-pub-1380972808968213/1706694218' aab-app.config.json
+            grep -Fq 'ca-app-pub-1380972808968213/2249619690' aab-app.config.json
             if grep -Fq 'ca-app-pub-3940256099942544' aab-app.config.json; then
               echo 'HATA: Production AAB içinde Google demo reklam birimi bulundu.' >&2
               exit 1

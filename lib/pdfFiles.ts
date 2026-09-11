@@ -8,7 +8,11 @@ const documentPickerCache = new Directory(Paths.cache, 'DocumentPicker');
 const printCache = new Directory(Paths.cache, 'pdf-print');
 const IMPORT_STAGING_PREFIX = '.import-';
 const MAX_PDF_BYTES = 250 * 1024 * 1024;
-const FINGERPRINT_MAX_BYTES = 24 * 1024 * 1024;
+// File.md5 is a synchronous getter, so the whole read happens on the JS thread.
+// 24 MB measured as a visible freeze while importing on mid range hardware;
+// 8 MB keeps the duplicate check useful without a stutter. Larger documents
+// simply fall back to sourceUri matching for duplicate detection.
+const FINGERPRINT_MAX_BYTES = 8 * 1024 * 1024;
 const MIN_FREE_DISK_BYTES = 32 * 1024 * 1024;
 const MAX_FILE_NAME_CHARS = 100;
 const MAX_FILE_NAME_BYTES = 180;

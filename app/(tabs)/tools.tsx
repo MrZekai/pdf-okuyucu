@@ -9,6 +9,7 @@ import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
 import { addWatermark, CAMERA_PERMISSION_BLOCKED, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
+import { maybeShowToolInterstitial, noteToolRun } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 
 const TOOL_IDS: PdfToolId[] = ['scan', 'images', 'create', 'merge', 'split', 'extract', 'remove', 'reorder', 'rotate', 'watermark', 'compress', 'clean', 'print'];
@@ -45,11 +46,29 @@ export default function ToolsScreen() {
       await recordToolUse(id).catch(() => undefined);
       if (!result) return;
       addGeneratedDocument(result);
+      await noteToolRun().catch(() => undefined);
       const documents = Array.isArray(result) ? result : [result];
-      Alert.alert(t('tools.successTitle'), documents.length > 1 ? t('tools.successManyMessage', { count: documents.length }) : t('tools.successMessage', { name: documents[0].name }), [
-        { text: t('common.done') },
-        { text: t('common.open'), onPress: () => router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }) }
-      ]);
+
+      // The interstitial belongs to the moment the user leaves the result, and
+      // only when they are not continuing into the reader. Interrupting someone
+      // who just asked to open their document would be the wrong trade.
+      let followUpSettled = false;
+      const showFollowUpAd = () => {
+        if (followUpSettled) return;
+        followUpSettled = true;
+        void maybeShowToolInterstitial();
+      };
+      const skipFollowUpAd = () => { followUpSettled = true; };
+
+      Alert.alert(
+        t('tools.successTitle'),
+        documents.length > 1 ? t('tools.successManyMessage', { count: documents.length }) : t('tools.successMessage', { name: documents[0].name }),
+        [
+          { text: t('common.done'), onPress: showFollowUpAd },
+          { text: t('common.open'), onPress: () => { skipFollowUpAd(); router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }); } }
+        ],
+        { onDismiss: showFollowUpAd }
+      );
     } catch (error) {
       const blocked = typeof error === 'object' && error !== null && (error as { code?: string }).code === CAMERA_PERMISSION_BLOCKED;
       if (blocked) {

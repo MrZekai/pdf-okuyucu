@@ -3,14 +3,19 @@ import Constants from 'expo-constants';
 import { AppState, Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import { useAdsStatus } from '@/context/AdsContext';
+import { useAdPause } from '@/hooks/useAdPause';
 import { chrome, layout, palette } from '@/constants/theme';
 
 type AdBannerProps = { separateFromNavigation?: boolean };
 const MAX_ATTEMPTS = 3;
 const RETRY_DELAY_MS = 45_000;
+// After a run of failures the banner rests instead of disappearing for the
+// whole session: a temporary no-fill should not cost every later impression.
+const LONG_RETRY_DELAY_MS = 5 * 60_000;
 
 export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
   const adsStatus = useAdsStatus();
+  const { paused } = useAdPause();
   const [hidden, setHidden] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
   const attempts = useRef(0);
@@ -43,17 +48,21 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
 
   function handleFailure() {
     attempts.current += 1;
-    if (attempts.current >= MAX_ATTEMPTS) {
+    const exhausted = attempts.current >= MAX_ATTEMPTS;
+    if (exhausted) {
+      attempts.current = 0;
       setHidden(true);
-      return;
     }
     if (retryTimer.current) clearTimeout(retryTimer.current);
     retryTimer.current = setTimeout(() => {
       retryTimer.current = null;
+      setHidden(false);
       setRetryKey((key) => key + 1);
-    }, RETRY_DELAY_MS);
+    }, exhausted ? LONG_RETRY_DELAY_MS : RETRY_DELAY_MS);
   }
 
+  // The rewarded ad free window covers every surface, banner included.
+  if (paused) return null;
   if (hidden) return null;
   if (adsStatus !== 'ready') {
     if (adsStatus !== 'loading') return null;

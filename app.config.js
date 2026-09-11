@@ -3,6 +3,8 @@ const IOS_SAMPLE_APP_ID = 'ca-app-pub-3940256099942544~1458002511';
 const ANDROID_PRODUCTION_APP_ID = 'ca-app-pub-1380972808968213~3816043340';
 const ANDROID_PRODUCTION_BANNER_ID = 'ca-app-pub-1380972808968213/7265047779';
 const ANDROID_PRODUCTION_APP_OPEN_ID = 'ca-app-pub-1380972808968213/1189880008';
+const ANDROID_PRODUCTION_INTERSTITIAL_ID = 'ca-app-pub-1380972808968213/1706694218';
+const ANDROID_PRODUCTION_REWARDED_ID = 'ca-app-pub-1380972808968213/2249619690';
 const PRIVACY_POLICY_URL = 'https://mrzekai.github.io/privacy-policy.html';
 
 const androidAppId = process.env.EXPO_PUBLIC_ADMOB_APP_ID_ANDROID || ANDROID_PRODUCTION_APP_ID;
@@ -170,6 +172,10 @@ module.exports = ({ config }) => ({
       bannerIos: process.env.EXPO_PUBLIC_ADMOB_BANNER_IOS,
       appOpenAndroid: process.env.EXPO_PUBLIC_ADMOB_APP_OPEN_ANDROID || ANDROID_PRODUCTION_APP_OPEN_ID,
       appOpenIos: process.env.EXPO_PUBLIC_ADMOB_APP_OPEN_IOS,
+      interstitialAndroid: process.env.EXPO_PUBLIC_ADMOB_INTERSTITIAL_ANDROID || ANDROID_PRODUCTION_INTERSTITIAL_ID,
+      interstitialIos: process.env.EXPO_PUBLIC_ADMOB_INTERSTITIAL_IOS,
+      rewardedAndroid: process.env.EXPO_PUBLIC_ADMOB_REWARDED_ANDROID || ANDROID_PRODUCTION_REWARDED_ID,
+      rewardedIos: process.env.EXPO_PUBLIC_ADMOB_REWARDED_IOS,
       usesAndroidSampleAppId: androidAppId === ANDROID_SAMPLE_APP_ID,
       usesIosSampleAppId: iosAppId === IOS_SAMPLE_APP_ID
     }

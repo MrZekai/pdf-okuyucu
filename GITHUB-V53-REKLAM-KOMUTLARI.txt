@@ -1,0 +1,161 @@
+PDF OKUYUCU — SÜRÜM 53 REKLAM MİMARİSİNİ GITHUB'A AKTARMA VE AAB ÜRETME
+
+Bu sürüm iki yeni AdMob birimi (geçiş + ödüllü), ortak tam ekran reklam bütçesi
+ve üç kararlılık düzeltmesi içerir. package.json ve package-lock.json DEĞİŞMEDİ,
+bu yüzden npm ci çalıştırmanız gerekmez.
+
+Commit [skip ci] İÇERMEZ: push sonrası QA APK workflow'u bilinçli olarak çalışır.
+AAB, QA testi geçtikten sonra elle tetiklenir (adım 7).
+
+--------------------------------------------------------------------------------
+1) ZIP'i Downloads klasöründe açın
+--------------------------------------------------------------------------------
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-v53.zip -d pdf-okuyucu-v53
+
+--------------------------------------------------------------------------------
+2) Mevcut depoya girin ve temiz olduğunu doğrulayın
+--------------------------------------------------------------------------------
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+Beklenmeyen yerel değişiklik varsa burada durun, kopyalamayın.
+
+--------------------------------------------------------------------------------
+3) Güncellenen kaynakları depo üzerine kopyalayın
+--------------------------------------------------------------------------------
+
+Bu komutta exit yoktur; hata olsa bile Git Bash kapanmaz.
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-v53/pdf-okuyucu-main"
+
+if [ -f "$PATCH_DIR/lib/adGate.ts" ] && [ -f "$PATCH_DIR/app.config.js" ] && [ -f "$PATCH_DIR/.github/workflows/expo-android.yml" ]; then
+  cp -a "$PATCH_DIR"/. .
+  echo "V53 KAYNAKLARI BASARIYLA KOPYALANDI"
+else
+  echo "HATA: Kaynak klasoru bulunamadi, PATCH_DIR yolunu kontrol edin"
+fi
+
+--------------------------------------------------------------------------------
+4) Yeni reklam kimliklerinin yerinde olduğunu doğrulayın
+--------------------------------------------------------------------------------
+
+grep -n "1706694218\|2249619690" app.config.js .github/workflows/expo-android.yml
+
+Beklenen: app.config.js içinde 2 satır, workflow içinde 6 satır.
+
+--------------------------------------------------------------------------------
+5) Kaynak kontrollerini çalıştırın
+--------------------------------------------------------------------------------
+
+git --no-pager status --short
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+EXPO_NO_TELEMETRY=1 npm run doctor
+npm run release:check
+
+npm run check dört adımın hepsini geçmeli:
+  i18n  -> 213 anahtar x 14 dil
+  tsc   -> hata yok
+  incoming routing -> 13 test
+  expo-pdf patch   -> checksums match
+
+npm run lint yalnızca şu bilinen hatayı vermeli:
+  plugins/expoPdfPatch.js  67:32  '__dirname' is not defined
+Bu hata bu sürümden önce de vardı, yeni bir sorun değildir.
+
+Bu aşamada expo prebuild, gradlew, APK veya AAB komutu ÇALIŞTIRMAYIN.
+
+--------------------------------------------------------------------------------
+6) Commit edip gönderin (QA APK derlemesini başlatır)
+--------------------------------------------------------------------------------
+
+git -c core.safecrlf=false add \
+  .github/workflows/expo-android.yml \
+  app.config.js \
+  "app/(tabs)/settings.tsx" \
+  "app/(tabs)/tools.tsx" \
+  components/AdBanner.tsx \
+  components/AppOpenAdController.tsx \
+  constants/i18n.ts \
+  constants/translations/ar.ts \
+  constants/translations/de.ts \
+  constants/translations/fr.ts \
+  constants/translations/hi.ts \
+  constants/translations/id.ts \
+  constants/translations/it.ts \
+  constants/translations/ja.ts \
+  constants/translations/ko.ts \
+  constants/translations/pt.ts \
+  constants/translations/ru.ts \
+  constants/translations/zh.ts \
+  hooks/useAdPause.ts \
+  lib/adGate.ts \
+  lib/pdfFiles.ts \
+  lib/pdfTools.ts \
+  RELEASE_53_ADS_TR.md \
+  GITHUB-V53-REKLAM-KOMUTLARI.txt
+
+git --no-pager diff --cached --stat
+git commit -m "Gecis ve odullu reklam, ortak tam ekran butce, md5 ve merge limitleri"
+git push origin main
+
+--------------------------------------------------------------------------------
+7) QA APK'yı bekleyin ve GERÇEK CİHAZDA test edin
+--------------------------------------------------------------------------------
+
+GitHub Actions > Expo Android Build çalışmasını bekleyin (~20-40 dk).
+
+APK, Actions artifact yerine TASLAK GitHub Release olarak teslim ediliyor:
+  GitHub > Releases > Drafts > "PDF Okuyucu CI Delivery #<run_number>"
+İçinden <run_number>-apk__release__app-release.apk dosyasını indirin.
+
+QA APK'da yalnızca Google demo reklamları görünür, gerçek reklam görünmez.
+Bu bilinçlidir: kendi reklamlarınıza tıklamak AdMob hesabınızı riske atar.
+
+Test listesi:
+  [ ] Uygulamayı 3 kez kapatıp açın -> 3. açılışta demo açılış reklamı gelmeli
+  [ ] WhatsApp/Drive'dan bir PDF'e dokunun -> AÇILIŞ REKLAMI GELMEMELİ, belge açılmalı
+  [ ] Üç kez araç çalıştırın (birleştir/döndür) -> 3. işlem sonrası "Bitti" deyince geçiş reklamı
+  [ ] Aynı işlemde "Aç" deyin -> reklam GELMEMELİ, okuyucu açılmalı
+  [ ] Ayarlar > "30 dakika reklamsız" -> demo ödüllü video, sonra banner dahil tüm reklamlar kaybolmalı
+  [ ] 30 dakika dolunca veya uygulamayı tekrar açınca banner geri gelmeli
+  [ ] 20 MB üstü bir PDF içe aktarın -> arayüz donmamalı
+  [ ] 13 dosya seçip birleştirmeyi deneyin -> nazik "çok büyük" hatası, çökme yok
+
+--------------------------------------------------------------------------------
+8) AAB üretin (elle tetiklenir)
+--------------------------------------------------------------------------------
+
+QA testi geçmeden bu adımı çalıştırmayın.
+
+GitHub > Actions > "Expo Android Build" > Run workflow
+  build_release  : true
+  release_target : closed_test    (kapalı test için)
+                   production     (Play production için)
+
+closed_test seçilirse AAB Google demo reklam birimlerini kullanır ve workflow
+production birimlerinin sızmadığını doğrular. production seçilirse gerçek
+birimler kullanılır ve canlı gizlilik politikası ile app-ads.txt sayfaları
+kontrol edilir; bu sayfalar erişilemezse build bilinçli olarak durur.
+
+AAB yine taslak GitHub Release içinde gelir:
+  <run_number>-bundle__release__app-release.aab
+
+versionCode elle ayarlanmaz; workflow github.run_number değerini kullanır.
+Bir önceki yayın 52 idi, sıradaki çalıştırma 53 üretir.
+
+--------------------------------------------------------------------------------
+9) Play Console'a yükledikten sonra
+--------------------------------------------------------------------------------
+
+İçerik derecelendirme anketini YENİDEN DOLDURMANIZ GEREKMEZ: bu sürüm yeni izin,
+uygulama içi tarayıcı, kullanıcılar arası iletişim veya satın alma eklemiyor.
+Anket cevaplarını değiştiren tek şey böyle bir özellik olurdu.
+
+AdMob tarafında son iki ayar (yapılmadıysa):
+  PDF BANNER            -> Otomatik yenileme: 60 saniye
+  PDF Uygulama açıkken  -> Sıklık sınırı: kullanıcı başına günde 4
