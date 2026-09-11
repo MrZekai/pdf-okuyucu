@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'يعكس ألوان صفحات PDF فقط',
   'settings.adsSection':'الإعلانات والخصوصية',
   'settings.adPauseTitle':'30 دقيقة بدون إعلانات',
-  'settings.adPauseDesc':'شاهد فيديو قصيرًا ولن ترى أي إعلان لمدة 30 دقيقة.',
+  'settings.adPauseDesc':'شاهد فيديو إعلاني قصيرًا واستخدم التطبيق بدون إعلانات لمدة 30 دقيقة.',
   'settings.adPauseActive':'الوقت بدون إعلانات جارٍ: بقيت {minutes} دقيقة.',
   'settings.adPauseThanks':'شكرًا لك. لن ترى أي إعلان خلال الثلاثين دقيقة القادمة.',
   'settings.adPauseUnavailable':'لا يتوفر فيديو في الوقت الحالي. حاول مرة أخرى بعد قليل.',

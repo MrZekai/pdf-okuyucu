@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Инвертирует только цвета страниц PDF',
   'settings.adsSection':'РЕКЛАМА И КОНФИДЕНЦИАЛЬНОСТЬ',
   'settings.adPauseTitle':'30 минут без рекламы',
-  'settings.adPauseDesc':'Посмотрите короткое видео и 30 минут не увидите рекламы.',
+  'settings.adPauseDesc':'Посмотрите короткое рекламное видео и 30 минут пользуйтесь без рекламы.',
   'settings.adPauseActive':'Время без рекламы: осталось {minutes} мин.',
   'settings.adPauseThanks':'Спасибо. Ближайшие 30 минут рекламы не будет.',
   'settings.adPauseUnavailable':'Сейчас нет доступного видео. Попробуйте немного позже.',

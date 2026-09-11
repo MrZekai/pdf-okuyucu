@@ -1,0 +1,145 @@
+PDF OKUYUCU — SÜRÜM 55: PRODUCTION AAB HAZIRLIĞI
+
+Bu sürümde çalışma zamanı mantığı DEĞİŞMEDİ. Sadece beyan, metin ve yayın
+kapıları düzeltildi. Uygulamanın davranışı v54 ile birebir aynıdır.
+
+Değişenler:
+  - Gizlilik politikası artık dört reklam biçimini de sayıyor (3 dil)
+  - Ödüllü teklif metni "video" yerine "reklam videosu" diyor (14 dil)
+  - release:check artık interstitial + rewarded unit ID'lerini de doğruluyor
+  - release:check gizlilik politikasında reklam biçimi beyanını zorunlu kılıyor
+  - Production workflow CANLI gizlilik politikasını da denetliyor
+
+package.json / package-lock.json DEĞİŞMEDİ. npm ci gerekmez.
+
+================================================================================
+ADIM 0 — CANLI SİTEYİ GÜNCELLEYİN  (bunu atlarsanız production build DURUR)
+================================================================================
+
+Gizlilik politikası iki yerde yaşıyor:
+  1. Bu depodaki  docs/privacy-policy.html
+  2. Canlı site:  MrZekai/MrZekai.github.io deposunun kökü
+
+ZIP'teki docs/privacy-policy.html dosyasını HER İKİSİNE de koyun.
+Production workflow artık canlı sayfayı indirip "ödüllü" ve "geçiş"
+kelimelerini arıyor; eski sayfa kalırsa AAB üretilmez. Bu bilinçli:
+eksik veri beyanıyla yayına çıkmak, gecikmekten kötüdür.
+
+Canlı sitenin güncellendiğini şöyle doğrulayın (tarayıcıdan da bakabilirsiniz):
+
+  curl -s https://mrzekai.github.io/privacy-policy.html | grep -c "ödüllü"
+
+Sonuç 0'dan büyük olmalı. GitHub Pages yayılması birkaç dakika sürebilir.
+
+================================================================================
+ADIM 1 — KAYNAKLARI KOPYALAYIN
+================================================================================
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-v55.zip -d pdf-okuyucu-v55
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-v55/pdf-okuyucu-main"
+
+if [ -f "$PATCH_DIR/docs/privacy-policy.html" ] && [ -f "$PATCH_DIR/scripts/validate-release.mjs" ]; then
+  cp -a "$PATCH_DIR"/. .
+  echo "V55 KAYNAKLARI BASARIYLA KOPYALANDI"
+else
+  echo "HATA: Kaynak klasoru bulunamadi, PATCH_DIR yolunu kontrol edin"
+fi
+
+for f in $(git --no-pager diff --name-only); do
+  if [ -z "$(git --no-pager diff -- "$f")" ]; then git checkout -- "$f"; fi
+done
+
+git --no-pager status --short
+
+================================================================================
+ADIM 2 — KONTROLLER
+================================================================================
+
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+npm run release:check
+
+release:check artık dört unit ID'yi ve gizlilik politikası beyanını da
+kontrol ediyor. "Release kontrolü başarılı" görmeden devam etmeyin.
+
+================================================================================
+ADIM 3 — COMMIT VE PUSH
+================================================================================
+
+git -c core.safecrlf=false add \
+  .github/workflows/expo-android.yml \
+  constants/i18n.ts \
+  constants/translations/ar.ts \
+  constants/translations/de.ts \
+  constants/translations/fr.ts \
+  constants/translations/hi.ts \
+  constants/translations/id.ts \
+  constants/translations/it.ts \
+  constants/translations/ja.ts \
+  constants/translations/ko.ts \
+  constants/translations/pt.ts \
+  constants/translations/ru.ts \
+  constants/translations/zh.ts \
+  docs/privacy-policy.html \
+  scripts/validate-release.mjs \
+  RELEASE_55_PRODUCTION_TR.md \
+  GITHUB-V55-PRODUCTION-KOMUTLARI.txt
+
+git --no-pager diff --cached --stat
+
+STAGED=$(git --no-pager diff --cached --name-only | wc -l)
+echo "=== hazirlanan dosya sayisi: $STAGED ==="
+if [ "$STAGED" -eq 17 ]; then
+  git commit -m "Reklam bicimi beyanini tamamla, release kapilarini genislet"
+  git push origin main
+  echo "=== PUSH TAMAM ==="
+else
+  echo "=== DURUN: 17 bekleniyordu, $STAGED bulundu. Commit atilmadi. ==="
+fi
+
+Push bir QA APK derlemesi baslatir. Bu iyidir: yeni release:check kurallari
+ve tum kapilar orada bir kez daha calisir. Yesil olmasini bekleyin.
+
+================================================================================
+ADIM 4 — PRODUCTION AAB
+================================================================================
+
+Once QA derlemesi yesile donsun.
+
+GitHub > Actions > Expo Android Build > Run workflow
+  build_release  : true
+  release_target : production
+
+Bu hedefte workflow sunlari dogrular ve biri bile tutmazsa AAB uretmez:
+  - Canli gizlilik politikasi erisilebilir mi, uygulama adini ve dort reklam
+    biciminin beyanini iceriyor mu
+  - Canli app-ads.txt dogru satiri iceriyor mu
+  - AAB icinde GERCEK reklam birimleri var mi, demo birim sizmis mi
+  - AAB upload anahtariyla imzalanmis mi, debug sertifikasi degil mi
+  - 64-bit native kitapliklar 16 KB hizali mi
+
+AAB yine taslak GitHub Release icinde gelir:
+  <run_number>-bundle__release__app-release.aab
+
+Magaza ekran goruntuleri eski arayuz hashindeyse workflow UYARI verir ama
+durmaz. Ana sayfa degistigi icin screenshot-01-home yenilenmeli.
+
+================================================================================
+ADIM 5 — PLAY CONSOLE
+================================================================================
+
+  - AAB'yi yukleyin
+  - Icerik derecelendirme anketini YENIDEN DOLDURMAYIN; bu surum yeni izin,
+    uygulama ici tarayici, kullanicilar arasi iletisim veya satin alma eklemiyor
+  - "Reklam iceriyor" beyani isaretli kalsin
+  - Veri guvenligi formu degismiyor; yeni veri turu toplanmiyor
+
+AdMob panelinde eksik kaldiysa:
+  PDF BANNER            -> Otomatik yenileme: 60 saniye
+  PDF Uygulama aciken   -> Siklik siniri: kullanici basina gunde 4

@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'केवल PDF पृष्ठों के रंग उलटता है',
   'settings.adsSection':'विज्ञापन और गोपनीयता',
   'settings.adPauseTitle':'30 मिनट बिना विज्ञापन',
-  'settings.adPauseDesc':'एक छोटा वीडियो देखें और 30 मिनट तक कोई विज्ञापन न देखें।',
+  'settings.adPauseDesc':'एक छोटा विज्ञापन वीडियो देखें और 30 मिनट तक बिना विज्ञापन इस्तेमाल करें।',
   'settings.adPauseActive':'विज्ञापन रहित समय चल रहा है: {minutes} मिनट बाकी।',
   'settings.adPauseThanks':'धन्यवाद। अगले 30 मिनट तक कोई विज्ञापन नहीं दिखेगा।',
   'settings.adPauseUnavailable':'अभी कोई वीडियो उपलब्ध नहीं है। थोड़ी देर बाद फिर कोशिश करें।',

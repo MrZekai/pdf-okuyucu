@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Inverse uniquement les couleurs des pages du PDF',
   'settings.adsSection':'PUBLICITÉ ET CONFIDENTIALITÉ',
   'settings.adPauseTitle':'30 minutes sans publicité',
-  'settings.adPauseDesc':'Regarde une courte vidéo et profite de 30 minutes sans publicité.',
+  'settings.adPauseDesc':'Regarde une courte vidéo publicitaire, puis 30 minutes sans publicité.',
   'settings.adPauseActive':'Temps sans publicité : il reste {minutes} minutes.',
   'settings.adPauseThanks':'Merci. Aucune publicité pendant les 30 prochaines minutes.',
   'settings.adPauseUnavailable':'Aucune vidéo disponible pour le moment. Réessaie dans un instant.',

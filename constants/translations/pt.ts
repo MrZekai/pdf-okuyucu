@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Inverte apenas as cores das páginas do PDF',
   'settings.adsSection':'ANÚNCIOS E PRIVACIDADE',
   'settings.adPauseTitle':'30 minutos sem anúncios',
-  'settings.adPauseDesc':'Assista a um vídeo curto e fique 30 minutos sem anúncios.',
+  'settings.adPauseDesc':'Assista a um vídeo de anúncio curto e use o app sem anúncios por 30 minutos.',
   'settings.adPauseActive':'Tempo sem anúncios: faltam {minutes} minutos.',
   'settings.adPauseThanks':'Obrigado. Você não verá anúncios nos próximos 30 minutos.',
   'settings.adPauseUnavailable':'Nenhum vídeo disponível agora. Tente novamente em instantes.',

@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Kehrt nur die Farben der PDF-Seiten um',
   'settings.adsSection':'WERBUNG & DATENSCHUTZ',
   'settings.adPauseTitle':'30 Minuten ohne Werbung',
-  'settings.adPauseDesc':'Sieh dir ein kurzes Video an und bleibe 30 Minuten ohne Werbung.',
+  'settings.adPauseDesc':'Sieh dir ein kurzes Werbevideo an und nutze die App 30 Minuten ohne Werbung.',
   'settings.adPauseActive':'Werbefreie Zeit läuft: noch {minutes} Minuten.',
   'settings.adPauseThanks':'Danke. In den nächsten 30 Minuten siehst du keine Werbung.',
   'settings.adPauseUnavailable':'Gerade ist kein Video verfügbar. Bitte versuche es gleich noch einmal.',

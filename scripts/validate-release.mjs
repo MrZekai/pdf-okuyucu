@@ -82,8 +82,19 @@ const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');
 if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.bannerAndroid || '')) fail('Geçerli Android banner unit ID yok.');
 if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.appOpenAndroid || '')) fail('Geçerli Android app-open unit ID yok.');
+if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.interstitialAndroid || '')) fail('Geçerli Android interstitial unit ID yok.');
+if (!/^ca-app-pub-\d{16}\/\d{10}$/.test(admob.rewardedAndroid || '')) fail('Geçerli Android rewarded unit ID yok.');
 if ((admob.bannerAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release banner test ID kullanıyor.');
 if ((admob.appOpenAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release app-open test ID kullanıyor.');
+if ((admob.interstitialAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release interstitial test ID kullanıyor.');
+if ((admob.rewardedAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release rewarded test ID kullanıyor.');
+
+// Gizlilik politikası dört reklam biçimini de saymalı; eksik beyan hem Play
+// kullanıcı verisi politikası hem AdMob açısından risktir.
+const policySource = text('docs/privacy-policy.html');
+for (const marker of ['ödüllü', 'geçiş', 'rewarded', 'interstitial']) {
+  if (!policySource.toLowerCase().includes(marker)) fail(`Gizlilik politikasında "${marker}" reklam biçimi beyan edilmemiş.`);
+}
 
 const i18nSource = text('constants/i18n.ts');
 const homeSource = text('app/(tabs)/index.tsx');

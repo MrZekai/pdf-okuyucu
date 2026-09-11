@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Hanya membalik warna halaman PDF',
   'settings.adsSection':'IKLAN & PRIVASI',
   'settings.adPauseTitle':'30 menit tanpa iklan',
-  'settings.adPauseDesc':'Tonton video singkat dan bebas iklan selama 30 menit.',
+  'settings.adPauseDesc':'Tonton video iklan singkat dan gunakan aplikasi tanpa iklan selama 30 menit.',
   'settings.adPauseActive':'Waktu bebas iklan berjalan: sisa {minutes} menit.',
   'settings.adPauseThanks':'Terima kasih. Tidak ada iklan selama 30 menit ke depan.',
   'settings.adPauseUnavailable':'Tidak ada video yang tersedia saat ini. Coba lagi sebentar lagi.',

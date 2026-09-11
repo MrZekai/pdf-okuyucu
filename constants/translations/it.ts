@@ -119,7 +119,7 @@ export default {
   'settings.nightDesc':'Inverte solo i colori delle pagine PDF',
   'settings.adsSection':'ANNUNCI E PRIVACY',
   'settings.adPauseTitle':'30 minuti senza pubblicità',
-  'settings.adPauseDesc':'Guarda un video breve e resta 30 minuti senza pubblicità.',
+  'settings.adPauseDesc':'Guarda un breve video pubblicitario, poi 30 minuti senza pubblicità.',
   'settings.adPauseActive':'Tempo senza pubblicità: mancano {minutes} minuti.',
   'settings.adPauseThanks':'Grazie. Non vedrai pubblicità per i prossimi 30 minuti.',
   'settings.adPauseUnavailable':'Nessun video disponibile al momento. Riprova tra poco.',

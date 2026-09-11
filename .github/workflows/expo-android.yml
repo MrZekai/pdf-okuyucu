@@ -97,6 +97,11 @@ jobs:
           curl --fail --silent --show-error --location --max-time 20 \
             https://mrzekai.github.io/privacy-policy.html > live-privacy-policy.html
           grep -Fq 'PDF: Okuyucu - Araçları' live-privacy-policy.html
+          # Depodaki docs/ kopyasini guncelleyip canli siteyi senkronlamayi
+          # unutmak, eksik veri beyaniyla yayina cikmak demektir. Canli sayfa
+          # dort reklam bicimini de saymadan production AAB uretilemez.
+          grep -Fq 'ödüllü' live-privacy-policy.html
+          grep -Fq 'geçiş' live-privacy-policy.html
           curl --fail --silent --show-error --location --max-time 20 \
             https://mrzekai.github.io/app-ads.txt > live-app-ads.txt
           tr -d '\r' < live-app-ads.txt | \
