@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 Minuten ohne Werbung',
   'settings.adPauseDesc':'Sieh dir ein kurzes Werbevideo an und nutze die App 10 Minuten ohne Werbung.',
   'settings.adPauseActive':'Werbefreie Zeit läuft: noch {minutes} Minuten.',
-  'settings.adPauseThanks':'Danke. In den nächsten 30 Minuten siehst du keine Werbung.',
+  'settings.adPauseThanks':'Danke. In den nächsten 10 Minuten siehst du keine Werbung.',
   'settings.adPauseUnavailable':'Gerade ist kein Video verfügbar. Bitte versuche es gleich noch einmal.',
   'settings.consentTitle':'Werbeeinwilligung aktualisieren',
   'settings.consentDesc':'Google-UMP-Einwilligung erneut prüfen',

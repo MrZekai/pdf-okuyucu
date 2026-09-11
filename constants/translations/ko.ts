@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10분 광고 없음',
   'settings.adPauseDesc':'짧은 광고 영상을 보면 10분 동안 광고 없이 사용할 수 있습니다.',
   'settings.adPauseActive':'광고 없는 시간 진행 중: {minutes}분 남음.',
-  'settings.adPauseThanks':'감사합니다. 앞으로 30분 동안 광고가 표시되지 않습니다.',
+  'settings.adPauseThanks':'감사합니다. 앞으로 10분 동안 광고가 표시되지 않습니다.',
   'settings.adPauseUnavailable':'지금은 사용할 수 있는 영상이 없습니다. 잠시 후 다시 시도해 주세요.',
   'settings.consentTitle':'광고 동의 새로고침',
   'settings.consentDesc':'Google UMP 동의 상태 다시 확인',

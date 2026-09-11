@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 دقائق بدون إعلانات',
   'settings.adPauseDesc':'شاهد فيديو إعلاني قصيرًا واستخدم التطبيق بدون إعلانات لمدة 10 دقائق.',
   'settings.adPauseActive':'الوقت بدون إعلانات جارٍ: بقيت {minutes} دقيقة.',
-  'settings.adPauseThanks':'شكرًا لك. لن ترى أي إعلان خلال الثلاثين دقيقة القادمة.',
+  'settings.adPauseThanks':'شكرًا لك. لن ترى أي إعلان خلال العشر دقائق القادمة.',
   'settings.adPauseUnavailable':'لا يتوفر فيديو في الوقت الحالي. حاول مرة أخرى بعد قليل.',
   'settings.consentTitle':'تحديث موافقة الإعلانات',
   'settings.consentDesc':'إعادة التحقق من موافقة Google UMP',

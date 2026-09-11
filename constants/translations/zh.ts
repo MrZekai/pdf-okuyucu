@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 分钟无广告',
   'settings.adPauseDesc':'观看一段简短的广告视频，即可 10 分钟无广告使用。',
   'settings.adPauseActive':'无广告时间进行中：还剩 {minutes} 分钟。',
-  'settings.adPauseThanks':'谢谢。接下来 30 分钟不会显示广告。',
+  'settings.adPauseThanks':'谢谢。接下来 10 分钟不会显示广告。',
   'settings.adPauseUnavailable':'当前没有可用视频，请稍后再试。',
   'settings.consentTitle':'刷新广告同意状态',
   'settings.consentDesc':'重新检查 Google UMP 同意状态',

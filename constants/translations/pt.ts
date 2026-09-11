@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 minutos sem anúncios',
   'settings.adPauseDesc':'Assista a um vídeo de anúncio curto e use o app sem anúncios por 10 minutos.',
   'settings.adPauseActive':'Tempo sem anúncios: faltam {minutes} minutos.',
-  'settings.adPauseThanks':'Obrigado. Você não verá anúncios nos próximos 30 minutos.',
+  'settings.adPauseThanks':'Obrigado. Você não verá anúncios nos próximos 10 minutos.',
   'settings.adPauseUnavailable':'Nenhum vídeo disponível agora. Tente novamente em instantes.',
   'settings.consentTitle':'Atualizar consentimento de anúncios',
   'settings.consentDesc':'Verificar novamente o consentimento do Google UMP',

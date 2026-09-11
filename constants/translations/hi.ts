@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 मिनट बिना विज्ञापन',
   'settings.adPauseDesc':'एक छोटा विज्ञापन वीडियो देखें और 10 मिनट तक बिना विज्ञापन इस्तेमाल करें।',
   'settings.adPauseActive':'विज्ञापन रहित समय चल रहा है: {minutes} मिनट बाकी।',
-  'settings.adPauseThanks':'धन्यवाद। अगले 30 मिनट तक कोई विज्ञापन नहीं दिखेगा।',
+  'settings.adPauseThanks':'धन्यवाद। अगले 10 मिनट तक कोई विज्ञापन नहीं दिखेगा।',
   'settings.adPauseUnavailable':'अभी कोई वीडियो उपलब्ध नहीं है। थोड़ी देर बाद फिर कोशिश करें।',
   'settings.consentTitle':'विज्ञापन सहमति रीफ़्रेश करें',
   'settings.consentDesc':'Google UMP सहमति फिर जाँचें',

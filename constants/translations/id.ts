@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 menit tanpa iklan',
   'settings.adPauseDesc':'Tonton video iklan singkat dan gunakan aplikasi tanpa iklan selama 10 menit.',
   'settings.adPauseActive':'Waktu bebas iklan berjalan: sisa {minutes} menit.',
-  'settings.adPauseThanks':'Terima kasih. Tidak ada iklan selama 30 menit ke depan.',
+  'settings.adPauseThanks':'Terima kasih. Tidak ada iklan selama 10 menit ke depan.',
   'settings.adPauseUnavailable':'Tidak ada video yang tersedia saat ini. Coba lagi sebentar lagi.',
   'settings.consentTitle':'Perbarui persetujuan iklan',
   'settings.consentDesc':'Periksa ulang persetujuan Google UMP',

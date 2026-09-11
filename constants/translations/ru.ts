@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 минут без рекламы',
   'settings.adPauseDesc':'Посмотрите короткое рекламное видео и 10 минут пользуйтесь без рекламы.',
   'settings.adPauseActive':'Время без рекламы: осталось {minutes} мин.',
-  'settings.adPauseThanks':'Спасибо. Ближайшие 30 минут рекламы не будет.',
+  'settings.adPauseThanks':'Спасибо. Ближайшие 10 минут рекламы не будет.',
   'settings.adPauseUnavailable':'Сейчас нет доступного видео. Попробуйте немного позже.',
   'settings.consentTitle':'Обновить согласие на рекламу',
   'settings.consentDesc':'Повторно проверить согласие Google UMP',

@@ -180,6 +180,13 @@ if (!appOpenSource.includes('Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS'
 if (!appOpenSource.includes('openedWithDocument')) fail('PDF niyetiyle açılışta app-open reklamını bastırma koruması eksik.');
 if (!adGateSource.includes('export const MIN_FULL_SCREEN_GAP_MS = 60 * 1000')) fail('Tam ekran reklamlar arası tek pacing kuralı (60 sn) değişmiş.');
 if (!adGateSource.includes('export const AD_PAUSE_DURATION_MS = 10 * 60 * 1000')) fail('Ödüllü reklam karşılığı reklamsız süre 10 dakika değil.');
+// Ödül süresi koddan değişip metinlerde eski değer kalırsa kullanıcıya yanlış
+// vaat edilir; AdMob ödüllü politikası ödülün doğru bildirilmesini şart koşar.
+for (const dict of ['constants/i18n.ts', ...['ar','de','fr','hi','id','it','ja','ko','pt','ru','zh'].map((l) => `constants/translations/${l}.ts`)]) {
+  for (const line of text(dict).split('\n')) {
+    if (line.includes("settings.adPause") && line.includes('30')) fail(`${dict}: ödül metni hâlâ 30 dakika vaat ediyor, süre 10 dakika.`);
+  }
+}
 if (adGateSource.includes('MAX_INTERSTITIALS_PER_SESSION') || adGateSource.includes('MAX_INTERSTITIALS_PER_DAY') || adGateSource.includes('FREE_TOOL_RUNS')) fail('Geçiş reklamı yeniden koddaki sessiz kotalara bağlanmış; tempo AdMob panelinde olmalı.');
 if (!adGateSource.includes('export async function prepareToolAd') || !toolsScreenSource.includes('void prepareToolAd()')) fail('Araçlar ekranı açılırken geçiş reklamını önden yükleme eksik.');
 if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.includes('void maybeShowPendingInterstitial()')) fail('"Aç" sonrası ertelenen geçiş reklamı okuyucudan dönüşte gösterilmiyor.');

@@ -121,7 +121,7 @@ export default {
   'settings.adPauseTitle':'10 minutes sans publicité',
   'settings.adPauseDesc':'Regarde une courte vidéo publicitaire, puis 10 minutes sans publicité.',
   'settings.adPauseActive':'Temps sans publicité : il reste {minutes} minutes.',
-  'settings.adPauseThanks':'Merci. Aucune publicité pendant les 30 prochaines minutes.',
+  'settings.adPauseThanks':'Merci. Aucune publicité pendant les 10 prochaines minutes.',
   'settings.adPauseUnavailable':'Aucune vidéo disponible pour le moment. Réessaie dans un instant.',
   'settings.consentTitle':'Actualiser le consentement publicitaire',
   'settings.consentDesc':'Revérifier le consentement Google UMP',
