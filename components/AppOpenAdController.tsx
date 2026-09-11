@@ -5,12 +5,13 @@ import { ActivityIndicator, Image, Linking, Platform, StyleSheet, View } from 'r
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
 import { useTranslation } from '@/hooks/useTranslation';
-import { adsArePaused, getLastFullScreenAt, noteFullScreenShown } from '@/lib/adGate';
+import { adsArePaused, getLastFullScreenAt, MIN_FULL_SCREEN_GAP_MS, noteFullScreenShown } from '@/lib/adGate';
 import { normalizeIncomingPdfUri } from '@/lib/incomingPdfUri';
 import { palette } from '@/constants/theme';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
-const FIRST_AD_LAUNCH = 3;
+/** The very first launch of a new install stays clean. Nothing else gates it. */
+const FIRST_AD_LAUNCH = 2;
 // Long enough for a warm ad request, short enough that a launch without a
 // filled ad does not feel like the app hung on the splash screen.
 const COLD_START_WAIT_MS = 1400;
@@ -144,7 +145,12 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       // The gate may already have timed out while storage was being read.
       if (!gateVisibleRef.current) return;
 
-      if (launches >= FIRST_AD_LAUNCH && Date.now() - lastShownAt >= AD_VALIDITY_MS) {
+      // Only the shared "do not stack two full screen ads" rule applies here.
+      // How many app open ads a viewer may see per day is capped on the ad unit
+      // in the AdMob console, not in this build. The previous release compared
+      // against AD_VALIDITY_MS, which is a creative freshness window, and so
+      // silently suppressed the app open ad for four hours after any other ad.
+      if (launches >= FIRST_AD_LAUNCH && Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS) {
         coldEligibleRef.current = true;
         setColdEligible(true);
       } else {

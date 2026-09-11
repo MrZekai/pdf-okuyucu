@@ -11,15 +11,15 @@ import { palette } from '@/constants/theme';
  * The ad free window offer.
  *
  * Placement rules matter more than the styling here:
- *  - It stays hidden until the viewer has actually seen a full screen ad. To a
- *    brand new user the offer means nothing and reads as begging.
+ *  - It appears as soon as ads are ready. The banner is already on screen from
+ *    the first second, so an ad free window is meaningful immediately.
  *  - While the window is open it becomes a plain status line, so the reward is
  *    visibly real rather than a promise that disappears once taken.
  *  - It never uses the red accent reserved for the primary document actions.
  */
 export function AdPauseOffer() {
   const adsStatus = useAdsStatus();
-  const { paused, remainingMinutes, seenFullScreenAd } = useAdPause();
+  const { paused, remainingMinutes } = useAdPause();
   const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
 
@@ -47,7 +47,11 @@ export function AdPauseOffer() {
     );
   }
 
-  if (adsStatus !== 'ready' || !seenFullScreenAd) return null;
+  // Görünürlük yalnızca reklamların hazır olmasına bağlı. Daha önce "kullanıcı
+  // bir tam ekran reklam görmeden teklif etme" kuralı vardı; yanlıştı, çünkü
+  // banner zaten ilk saniyeden itibaren ekranda. Teklif o andan itibaren
+  // anlamlıdır ve eski kural en yüksek eCPM'li birimi görünmez kılıyordu.
+  if (adsStatus !== 'ready') return null;
 
   return (
     <Pressable

@@ -1,0 +1,188 @@
+PDF OKUYUCU - SURUM 58: REKLAM MODELI SADELESTIRMESI
+
+Bu surum tek bir isi yapiyor: gecis reklaminin neden hic cikmadigini
+duzeltiyor. Yeni ozellik yok, yeni izin yok, yeni veri toplama yok.
+
+Cihazdaki tanilama ekrani sunu gosterdi:
+  tool runs: 5  /  interstitial prepared: YES  /  interstitials: 0
+Yani reklam yuklenmisti ama gosterim hic cagrilmadi. Sebep: sonuc
+penceresinde "Ac" butonu reklami tamamen iptal ediyordu.
+
+package.json / package-lock.json DEGISMEDI. npm ci gerekmez.
+
+================================================================================
+ADIM 0 - CANLI SITEYI GUNCELLEYIN  (atlarsaniz production build DURUR)
+================================================================================
+
+Odul suresi 30 dakikadan 10 dakikaya indi. Gizlilik politikasi bunu beyan
+etmek zorunda. Politika iki yerde yasiyor:
+
+  1. Bu depodaki  docs/privacy-policy.html
+  2. Canli site:  MrZekai/MrZekai.github.io deposunun koku
+
+ZIP'teki docs/privacy-policy.html dosyasini HER IKISINE de koyun.
+
+Dogrulama (birkac dakika GitHub Pages yayilmasi bekleyebilir):
+
+  curl -s https://mrzekai.github.io/privacy-policy.html | grep -c "10 dakikalık"
+
+Sonuc 0'dan buyuk olmali.
+
+================================================================================
+ADIM 1 - KAYNAKLARI KOPYALAYIN
+================================================================================
+
+cd ~/Downloads
+unzip -o pdf-okuyucu-v58.zip -d pdf-okuyucu-v58
+
+cd ~/Downloads/pdf-okuyucu-github/pdf-okuyucu-github-2
+git status --short
+
+PATCH_DIR="/c/Users/limno/Downloads/pdf-okuyucu-v58/pdf-okuyucu-main"
+
+if [ -f "$PATCH_DIR/lib/adGate.ts" ] && [ -f "$PATCH_DIR/RELEASE_58_ADS_TR.md" ]; then
+  cp -a "$PATCH_DIR"/. .
+  echo "V58 KAYNAKLARI BASARIYLA KOPYALANDI"
+else
+  echo "HATA: Kaynak klasoru bulunamadi, PATCH_DIR yolunu kontrol edin"
+fi
+
+for f in $(git --no-pager diff --name-only); do
+  if [ -z "$(git --no-pager diff -- "$f")" ]; then git checkout -- "$f"; fi
+done
+
+git --no-pager status --short
+
+================================================================================
+ADIM 2 - KONTROLLER
+================================================================================
+
+git -c core.safecrlf=false --no-pager diff --check
+npm run check
+EXPO_NO_TELEMETRY=1 npm run lint
+npm run release:check
+
+"Release kontrolu basarili" gormeden devam etmeyin.
+
+================================================================================
+ADIM 3 - COMMIT VE PUSH
+================================================================================
+
+git -c core.safecrlf=false add -A
+
+git --no-pager diff --cached --stat
+
+MUST="lib/adGate.ts app/(tabs)/tools.tsx components/AppOpenAdController.tsx scripts/validate-release.mjs docs/privacy-policy.html"
+OK=1
+for f in $MUST; do
+  if ! git --no-pager diff --cached --name-only | grep -Fxq "$f"; then
+    echo "EKSIK: $f"
+    OK=0
+  fi
+done
+
+if [ "$OK" -eq 1 ]; then
+  git commit -m "Gecis reklamini sessiz kotalardan kurtar, tempoyu AdMob paneline tasi"
+  git push origin main
+  echo "=== PUSH TAMAM ==="
+else
+  echo "=== DURUN: kritik dosyalar hazirlanmamis. Commit atilmadi. ==="
+fi
+
+Push bir QA APK derlemesi baslatir. Yesil olmasini bekleyin.
+
+================================================================================
+ADIM 4 - QA APK ILE CIHAZ TESTI   (bu adimi ATLAMAYIN)
+================================================================================
+
+Draft GitHub Release icindeki APK'yi telefona kurun, sonra sirayla:
+
+  Ayarlar > Uygulamalar > PDF: Okuyucu > Zorla durdur + Verileri temizle
+
+  TEST 1 - GECIS REKLAMI, "Bitti" yolu
+    1. Uygulamayi ac
+    2. Araclar sekmesine gec, 5 saniye bekle (reklam onden yukleniyor)
+    3. Herhangi bir arac calistir (en kolayi: PDF dondur)
+    4. Cikan pencerede "Bitti"ye bas
+    5. GECIS REKLAMI CIKMALI
+
+  TEST 2 - GECIS REKLAMI, "Ac" yolu  (eskiden calismayan yol)
+    1. En az 60 saniye bekle
+    2. Araclar > bir arac calistir
+    3. Cikan pencerede "Ac"a bas, PDF acilsin
+    4. Geri tusuna bas, Araclar ekranina don
+    5. GECIS REKLAMI CIKMALI
+
+  TEST 3 - ODULLU REKLAM
+    1. Ana Sayfa > "10 dakika reklamsiz" seridine bas
+    2. Reklam izlenince banner kaybolmali
+    3. Serit "Reklamsiz sure suruyor: 10 dakika kaldi" haline gelmeli
+    4. Bu 10 dakika boyunca gecis reklami CIKMAMALI (dogru davranis)
+
+  TEST 4 - ACILIS REKLAMI
+    1. Uygulamayi tamamen kapat, tekrar ac  (2. acilistan itibaren)
+    2. ACILIS REKLAMI CIKMALI
+    3. Simdi baska bir uygulamadan bir PDF dosyasina tikla
+    4. ACILIS REKLAMI CIKMAMALI, dogrudan PDF acilmali  <- politika korumasi
+
+  HERHANGI BIRI TUTMAZSA:
+    Ayarlar ekranini en asagi kaydir. Kirmizi "Kutuphaneyi temizle"
+    bolumunun de altinda, sayfanin en sonunda, ortalanmis kucuk gri bir
+    satir var: basinda (i) ikonu, yaninda uygulama adi ve "Expo SDK 57"
+    yaziyor. O gri satira arka arkaya 7 kez dokun.
+
+    Acilan pencerenin en alt satiri artik dogrudan sonucu yaziyor:
+      "SONUC: Gecis reklami cikabilir"        -> sart yok, reklam gelmeli
+      "SONUC: 60 sn dolmadi, biraz bekleyin"  -> normal, bekleyin
+      "SONUC: Reklamsiz sure acik, ..."       -> odul devrede, normal
+
+    Ekran goruntusunu gonderin.
+
+================================================================================
+ADIM 5 - PRODUCTION AAB
+================================================================================
+
+Once QA derlemesi yesile donsun VE Adim 4 testleri gecsin.
+
+GitHub > Actions > Expo Android Build > Run workflow
+  build_release  : true
+  release_target : production
+
+Bu hedefte workflow sunlari dogrular, biri bile tutmazsa AAB uretmez:
+  - Canli gizlilik politikasi dort reklam bicimini VE 10 dakikayi beyan
+    ediyor mu
+  - Canli app-ads.txt dogru satiri iceriyor mu
+  - AAB icinde GERCEK reklam birimleri var mi, demo birim sizmis mi
+  - AAB upload anahtariyla imzalanmis mi
+  - 64-bit native kitapliklar 16 KB hizali mi
+
+================================================================================
+ADIM 6 - ADMOB PANELI   (kod artik buna guveniyor)
+================================================================================
+
+  PDF Gecis            -> Siklik siniri: kullanici basina saatte 3
+  PDF Uygulama aciken  -> Siklik siniri: kullanici basina gunde 4
+  PDF BANNER           -> Otomatik yenileme: 60 saniye
+
+Bundan sonra reklam sikligini degistirmek icin YENI SURUM GEREKMEZ.
+Panelden dondurursunuz. Bu surumun asil kazanci budur.
+
+================================================================================
+ADIM 7 - PLAY CONSOLE
+================================================================================
+
+  - AAB'yi yukleyin
+  - Icerik derecelendirme anketini YENIDEN DOLDURMAYIN
+  - "Reklam iceriyor" beyani isaretli kalsin
+  - Veri guvenligi formu degismiyor
+
+Surum notlari (tr-TR):
+  Reklam gosterimi sadelestirildi ve daha ongorulebilir hale getirildi.
+  Odullu reklam karsiligi reklamsiz sure artik ana ekrandan tek dokunusla
+  baslatiliyor. Baska uygulamadan acilan PDF dosyalarinda acilis reklami
+  artik gosterilmiyor.
+
+Surum notlari (en-US):
+  Simplified and more predictable ad behaviour. The ad free reward is now
+  one tap away on the home screen. Opening a PDF from another app no
+  longer shows a full screen ad first.

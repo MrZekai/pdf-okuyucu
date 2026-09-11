@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
@@ -9,7 +9,7 @@ import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
 import { addWatermark, CAMERA_PERMISSION_BLOCKED, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
-import { maybeShowToolInterstitial, noteToolRun } from '@/lib/adGate';
+import { markInterstitialPending, maybeShowPendingInterstitial, maybeShowToolInterstitial, noteToolRun, prepareToolAd } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 
 const TOOL_IDS: PdfToolId[] = ['scan', 'images', 'create', 'merge', 'split', 'extract', 'remove', 'reorder', 'rotate', 'watermark', 'compress', 'clean', 'print'];
@@ -25,6 +25,14 @@ export default function ToolsScreen() {
   const [primaryInput, setPrimaryInput] = useState('');
   const [secondaryInput, setSecondaryInput] = useState('');
   const handledParam = useRef<string | undefined>(undefined);
+
+  // Request the interstitial while the viewer is still picking a tool, so the
+  // ad is in memory before the document is finished rather than being fetched
+  // at the exact moment it is needed.
+  useEffect(() => { void prepareToolAd(); }, []);
+
+  // Coming back from the reader after a tool run is the deferred ad's moment.
+  useFocusEffect(useCallback(() => { void maybeShowPendingInterstitial(); }, []));
 
   const execute = useCallback(async (id: PdfToolId, primary = '', secondary = '') => {
     if (busy) return;
@@ -49,23 +57,29 @@ export default function ToolsScreen() {
       await noteToolRun().catch(() => undefined);
       const documents = Array.isArray(result) ? result : [result];
 
-      // The interstitial belongs to the moment the user leaves the result, and
-      // only when they are not continuing into the reader. Interrupting someone
-      // who just asked to open their document would be the wrong trade.
+      // The interstitial belongs to the moment the user leaves the result.
+      // Closing the dialog shows it straight away; opening the document defers
+      // it until they come back out of the reader, which is the next natural
+      // break. Interrupting someone on their way into their own file would be
+      // the wrong trade, but cancelling the ad outright - what the previous
+      // release did - meant it almost never ran.
       let followUpSettled = false;
       const showFollowUpAd = () => {
         if (followUpSettled) return;
         followUpSettled = true;
         void maybeShowToolInterstitial();
       };
-      const skipFollowUpAd = () => { followUpSettled = true; };
+      const deferFollowUpAd = () => {
+        followUpSettled = true;
+        markInterstitialPending();
+      };
 
       Alert.alert(
         t('tools.successTitle'),
         documents.length > 1 ? t('tools.successManyMessage', { count: documents.length }) : t('tools.successMessage', { name: documents[0].name }),
         [
           { text: t('common.done'), onPress: showFollowUpAd },
-          { text: t('common.open'), onPress: () => { skipFollowUpAd(); router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }); } }
+          { text: t('common.open'), onPress: () => { deferFollowUpAd(); router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }); } }
         ],
         { onDismiss: showFollowUpAd }
       );

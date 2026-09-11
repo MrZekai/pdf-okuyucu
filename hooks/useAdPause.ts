@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
-import { getCachedAdPauseUntil, getLastFullScreenAt, loadAdPauseUntil, subscribeAdPause } from '@/lib/adGate';
+import { getCachedAdPauseUntil, loadAdPauseUntil, subscribeAdPause } from '@/lib/adGate';
 
 const COUNTDOWN_TICK_MS = 30_000;
 
@@ -14,8 +14,6 @@ const COUNTDOWN_TICK_MS = 30_000;
 export function useAdPause() {
   const [pausedUntil, setPausedUntil] = useState(getCachedAdPauseUntil);
   const [remainingMs, setRemainingMs] = useState(0);
-  // The ad free offer is only meaningful to someone who has already seen an ad.
-  const [seenFullScreenAd, setSeenFullScreenAd] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -24,11 +22,6 @@ export function useAdPause() {
       loadAdPauseUntil()
         .then((value) => {
           if (mounted) setPausedUntil(value);
-        })
-        .catch(() => undefined);
-      getLastFullScreenAt()
-        .then((value) => {
-          if (mounted) setSeenFullScreenAd(value > 0);
         })
         .catch(() => undefined);
     };
@@ -77,7 +70,6 @@ export function useAdPause() {
   return {
     paused: remainingMs > 0,
     remainingMs,
-    remainingMinutes: Math.ceil(remainingMs / 60_000),
-    seenFullScreenAd
+    remainingMinutes: Math.ceil(remainingMs / 60_000)
   };
 }

@@ -109,6 +109,7 @@ const toolsScreenSource = text('app/(tabs)/tools.tsx');
 const pdfViewerSource = text('components/PdfViewer.tsx');
 const adsBootstrapSource = text('hooks/useAdsBootstrap.ts');
 const appOpenSource = text('components/AppOpenAdController.tsx');
+const adGateSource = text('lib/adGate.ts');
 const appContextSource = text('context/AppContext.tsx');
 const pdfFilesSource = text('lib/pdfFiles.ts');
 const storageSource = text('lib/storage.ts');
@@ -173,7 +174,15 @@ if (settingsSource.includes('languageLabels') || settingsSource.includes("t('set
 if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includes('startInFlight')) fail('UMP sonrası reklam başlatma yenilemesi veya yarış koruması eksik.');
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
 if (appOpenSource.includes("AppState.addEventListener('change'") || appOpenSource.includes('MIN_BACKGROUND_MS') || appOpenSource.includes("'warm'")) fail('App-open reklamı banner bulunan warm-resume içeriği üzerine çıkabilecek yol içeriyor.');
-if (!appOpenSource.includes('FIRST_AD_LAUNCH = 3') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk kullanım/frequency-cap/tek launch sayımı koruması eksik.');
+if (!appOpenSource.includes('FIRST_AD_LAUNCH = 2') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk kullanım/creative tazelik/tek launch sayımı koruması eksik.');
+// v58 reklam modeli: tempo AdMob panelinde, kodda tek kural var.
+if (!appOpenSource.includes('Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS')) fail('App-open paylaşılan tam ekran aralığı kuralını kullanmıyor.');
+if (!appOpenSource.includes('openedWithDocument')) fail('PDF niyetiyle açılışta app-open reklamını bastırma koruması eksik.');
+if (!adGateSource.includes('export const MIN_FULL_SCREEN_GAP_MS = 60 * 1000')) fail('Tam ekran reklamlar arası tek pacing kuralı (60 sn) değişmiş.');
+if (!adGateSource.includes('export const AD_PAUSE_DURATION_MS = 10 * 60 * 1000')) fail('Ödüllü reklam karşılığı reklamsız süre 10 dakika değil.');
+if (adGateSource.includes('MAX_INTERSTITIALS_PER_SESSION') || adGateSource.includes('MAX_INTERSTITIALS_PER_DAY') || adGateSource.includes('FREE_TOOL_RUNS')) fail('Geçiş reklamı yeniden koddaki sessiz kotalara bağlanmış; tempo AdMob panelinde olmalı.');
+if (!adGateSource.includes('export async function prepareToolAd') || !toolsScreenSource.includes('void prepareToolAd()')) fail('Araçlar ekranı açılırken geçiş reklamını önden yükleme eksik.');
+if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.includes('void maybeShowPendingInterstitial()')) fail('"Aç" sonrası ertelenen geçiş reklamı okuyucudan dönüşte gösterilmiyor.');
 if (!appOpenSource.includes('showingRef.current = true;\n    cancelGateTimeout();\n    ad.show()')) fail('App-open show/OPENED yarışına karşı gate timeout iptali eksik.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
 if (!readerSource.includes("AppState.addEventListener('change'") || !readerSource.includes("state==='inactive'||state==='background'") || !readerSource.includes('flushProgress()')) fail('Reader background progress flush koruması eksik.');

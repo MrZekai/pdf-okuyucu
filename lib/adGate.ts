@@ -24,16 +24,27 @@ const INTERSTITIAL_DAY_KEY = '@pdf-reader/ads/interstitial-day-v1';
 const TOOL_RUN_KEY = '@pdf-reader/ads/tool-runs-v1';
 const AD_PAUSE_UNTIL_KEY = '@pdf-reader/ads/paused-until-v1';
 
-/** No two full screen ads, of any type, may be closer together than this. */
-export const MIN_FULL_SCREEN_GAP_MS = 3 * 60 * 1000;
+/**
+ * Pacing lives in the AdMob console, not here.
+ *
+ * The previous release enforced a session cap, a daily cap, a free run quota
+ * and a three minute gap in code. Six conditions had to hold at once and every
+ * one of them failed silently, which made the interstitial impossible to
+ * observe on a device and impossible to tune without shipping a new build.
+ *
+ * Now exactly one rule is enforced in code: two full screen ads may never land
+ * back to back. Everything else - how many interstitials per hour, how many app
+ * open ads per day - is configured on the ad units themselves, where it can be
+ * changed without a release.
+ */
+export const MIN_FULL_SCREEN_GAP_MS = 60 * 1000;
 /** Reward for watching one rewarded video: a completely ad free window. */
-export const AD_PAUSE_DURATION_MS = 30 * 60 * 1000;
+export const AD_PAUSE_DURATION_MS = 10 * 60 * 1000;
 
-const MAX_INTERSTITIALS_PER_DAY = 6;
-const MAX_INTERSTITIALS_PER_SESSION = 2;
-/** The first tool runs of a new install stay clean; trust before revenue. */
-const FREE_TOOL_RUNS = 2;
-const INTERSTITIAL_LOAD_TIMEOUT_MS = 5_000;
+// A slow connection needs more than five seconds to fill. The user is looking
+// at their finished document here, not waiting on a spinner, so a longer wait
+// costs nothing and recovers the impressions the old timeout was discarding.
+const INTERSTITIAL_LOAD_TIMEOUT_MS = 9_000;
 // The viewer is watching a spinner here and asked for this ad, so waiting a
 // little longer is better than telling them nothing was available.
 const REWARDED_LOAD_TIMEOUT_MS = 12_000;
@@ -156,9 +167,6 @@ export async function noteToolRun() {
   const current = await readTimestamp(TOOL_RUN_KEY);
   const next = current + 1;
   await writeTimestamp(TOOL_RUN_KEY, next);
-  // Start preparing the ad one run before it can be shown. Requesting it at the
-  // moment it is needed loses most of the fill on a slow connection.
-  if (next >= FREE_TOOL_RUNS && !(await adsArePaused())) primeInterstitial();
   return next;
 }
 
@@ -322,6 +330,22 @@ export function primeInterstitial() {
   }
 }
 
+/**
+ * Called when the tools screen opens. The ad is requested while the viewer is
+ * still choosing a tool, so by the time the document is finished the creative
+ * is already in memory and the interstitial appears instantly. Requesting it at
+ * the moment it is needed is what made the previous build look broken on a slow
+ * connection.
+ */
+export async function prepareToolAd() {
+  try {
+    if (await adsArePaused()) return;
+    primeInterstitial();
+  } catch {
+    // Preparing an ad is best effort by definition.
+  }
+}
+
 /** Shows an already loaded ad. Never throws and always settles exactly once. */
 function presentPreparedAd(ad: FullScreenAd): Promise<FullScreenResult> {
   return new Promise<FullScreenResult>((resolve) => {
@@ -374,22 +398,38 @@ function presentPreparedAd(ad: FullScreenAd): Promise<FullScreenResult> {
  * Called after a tool has produced a document and the user has dismissed the
  * result dialog. Returns quietly when any limit is hit.
  */
+/**
+ * Set when a tool finished and the viewer chose to open the document instead of
+ * closing the dialog. Interrupting someone on their way into their own file is
+ * the wrong trade, so the ad waits for the next natural break: the moment they
+ * come back out of the reader.
+ *
+ * The previous release simply cancelled the ad on that path. Since opening the
+ * finished document is what most people do, the interstitial almost never had a
+ * chance to appear at all.
+ */
+let interstitialPending = false;
+
+export function markInterstitialPending() {
+  interstitialPending = true;
+}
+
+export async function maybeShowPendingInterstitial() {
+  if (!interstitialPending) return;
+  interstitialPending = false;
+  await maybeShowToolInterstitial();
+}
+
 export async function maybeShowToolInterstitial() {
   try {
-    if (sessionInterstitials >= MAX_INTERSTITIALS_PER_SESSION) return;
+    // Rule one: the ad free window the viewer earned is honoured. This is a
+    // promise, not pacing, so it stays in code.
     if (await adsArePaused()) return;
 
-    const runs = await readTimestamp(TOOL_RUN_KEY);
-    if (runs <= FREE_TOOL_RUNS) return;
-
+    // Rule two, and the only pacing rule left: never stack two full screen ads.
     const now = Date.now();
     const lastFullScreenAt = await getLastFullScreenAt();
     if (now - lastFullScreenAt < MIN_FULL_SCREEN_GAP_MS) return;
-
-    const today = dayStamp(now);
-    const stored = await readDayCount(INTERSTITIAL_DAY_KEY);
-    const shownToday = stored.day === today ? stored.count : 0;
-    if (shownToday >= MAX_INTERSTITIALS_PER_DAY) return;
 
     if (preparedInterstitial && now - preparedInterstitial.loadedAt >= PRIMED_AD_TTL_MS) discardPreparedInterstitial();
     const prepared = preparedInterstitial;
@@ -401,9 +441,13 @@ export async function maybeShowToolInterstitial() {
     if (result === 'unavailable') return;
 
     sessionInterstitials += 1;
+    const today = dayStamp(now);
+    const stored = await readDayCount(INTERSTITIAL_DAY_KEY);
+    const shownToday = stored.day === today ? stored.count : 0;
+    // The counters are kept for the diagnostics screen. AdMob enforces the
+    // real hourly cap on the unit itself.
     await Promise.all([noteFullScreenShown(Date.now()), writeDayCount(INTERSTITIAL_DAY_KEY, today, shownToday + 1)]);
-    // Warm the next one only while a further interstitial is still allowed.
-    if (sessionInterstitials < MAX_INTERSTITIALS_PER_SESSION && shownToday + 1 < MAX_INTERSTITIALS_PER_DAY) primeInterstitial();
+    primeInterstitial();
   } catch {
     // A tool result must never fail because of advertising.
   }
@@ -421,15 +465,20 @@ export async function getAdDiagnostics() {
     readTimestamp(AD_PAUSE_UNTIL_KEY),
     readDayCount(INTERSTITIAL_DAY_KEY)
   ]);
-  const minutesSince = lastFullScreenAt ? Math.round((now - lastFullScreenAt) / 60_000) : null;
+  const secondsSince = lastFullScreenAt ? Math.round((now - lastFullScreenAt) / 1000) : null;
+  const gapOk = secondsSince === null || secondsSince >= MIN_FULL_SCREEN_GAP_MS / 1000;
+  const pauseOn = pausedUntil > now;
   return [
-    `tool runs: ${runs} (free: ${FREE_TOOL_RUNS})`,
-    `interstitials this session: ${sessionInterstitials}/${MAX_INTERSTITIALS_PER_SESSION}`,
-    `interstitials today: ${day.day === dayStamp(now) ? day.count : 0}/${MAX_INTERSTITIALS_PER_DAY}`,
-    `last full screen ad: ${minutesSince === null ? 'never' : `${minutesSince} min ago`}`,
-    `min gap: ${Math.round(MIN_FULL_SCREEN_GAP_MS / 60_000)} min`,
-    `ad pause: ${pausedUntil > now ? `${Math.ceil((pausedUntil - now) / 60_000)} min left` : 'off'}`,
-    `interstitial prepared: ${preparedInterstitial ? 'yes' : preparingInterstitial ? 'loading' : 'no'}`
+    `Arac kullanimi: ${runs}`,
+    `Bu oturumda gecis reklami: ${sessionInterstitials}`,
+    `Bugun gecis reklami: ${day.day === dayStamp(now) ? day.count : 0}`,
+    `Son tam ekran reklam: ${secondsSince === null ? 'hic' : `${secondsSince} sn once`}`,
+    `60 sn kurali: ${gapOk ? 'UYGUN' : 'BEKLIYOR'}`,
+    `Reklamsiz sure: ${pauseOn ? `${Math.ceil((pausedUntil - now) / 60_000)} dk kaldi` : 'kapali'}`,
+    `Reklam hazir mi: ${preparedInterstitial ? 'EVET' : preparingInterstitial ? 'yukleniyor' : 'hayir'}`,
+    `Bekleyen reklam: ${interstitialPending ? 'var (okuyucudan cikinca)' : 'yok'}`,
+    '',
+    `SONUC: ${pauseOn ? 'Reklamsiz sure acik, gecis reklami cikmaz' : gapOk ? 'Gecis reklami cikabilir' : '60 sn dolmadi, biraz bekleyin'}`
   ].join('\n');
 }
 
