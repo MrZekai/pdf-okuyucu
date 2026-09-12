@@ -158,6 +158,16 @@ if (!config.plugins.includes('./plugins/withExpoPdfFixes')) fail('expo-pdf QA ya
 exists('plugins/withExpoPdfFixes.js');
 exists('plugins/expoPdfPatch.js');
 exists('plugins/expo-pdf/KJExpoPdfView.patched.kt');
+// BUG-17: sayfa ilk açılışta %30 çözünürlüklü ön katmanda kalıyordu, ancak
+// parmakla yakınlaştırınca netleşiyordu. Bu üç değer olmadan hata geri gelir.
+{
+  const viewSource = text('plugins/expo-pdf/KJExpoPdfView.patched.kt');
+  if (!viewSource.includes('Constants.THUMBNAIL_RATIO = SHARP_THUMBNAIL_RATIO') ||
+      !viewSource.includes('Constants.PRELOAD_OFFSET = TILE_PRELOAD_OFFSET') ||
+      !viewSource.includes('Constants.Cache.CACHE_SIZE = TILE_CACHE_SIZE')) fail('PDF çizim kalitesi ayarları (BUG-17) kaldırılmış; sayfalar yeniden bulanık açılır.');
+  if (!/private const val SHARP_THUMBNAIL_RATIO = 0\.6f/.test(viewSource)) fail('Ön katman çözünürlüğü 0.6 değil; okunabilirlik veya bellek dengesi bozulmuş.');
+  if (viewSource.includes('Constants.PART_SIZE')) fail('PART_SIZE değiştirilmiş; bellek riski için cihazda ölçülmeden dokunulmamalı.');
+}
 exists('plugins/expo-pdf/KJExpoPdfModule.patched.kt');
 if (!toolsSource.includes('CAMERA_PERMISSION_BLOCKED') || !toolsSource.includes('permission.canAskAgain')) fail('Kalici kamera izni reddi icin canAskAgain isareti eksik.');
 if (!toolsScreenSource.includes('CAMERA_PERMISSION_BLOCKED') || !toolsScreenSource.includes('Linking.openSettings()')) fail('Kalici kamera izni reddinde Ayarlari Ac yolu eksik.');

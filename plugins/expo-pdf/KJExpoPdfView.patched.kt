@@ -7,6 +7,7 @@ import android.net.Uri
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
 import com.github.barteksc.pdfviewer.PDFView
+import com.github.barteksc.pdfviewer.util.Constants
 import expo.modules.kotlin.viewevent.EventDispatcher
 import java.io.FileNotFoundException
 import androidx.core.net.toUri
@@ -23,6 +24,50 @@ class KJExpoPdfView(context: Context, appContext: AppContext) : ExpoView(context
     internal val DEFAULT_CONTENT_PADDING = Rect(0, 0, 0, 0)
     internal val DEFAULT_FIT_MODE = FitMode.both
     internal val DEFAULT_PAGE_COLOR_INVERTED_ENABLED = false
+
+    /**
+     * QA fix (BUG-17): every page opened blurred, with characters colliding and
+     * overrunning their rules, until the reader was pinched.
+     *
+     * The viewer draws a page twice. First a whole page "thumbnail" rendered at
+     * THUMBNAIL_RATIO of the display size and stretched to fill, then the sharp
+     * layer, tile by tile. Upstream renders that first layer at 30 per cent, so
+     * the state the reader actually opens on is a quarter resolution image of a
+     * dense text page. A pinch forces the sharp tiles and the page "repairs
+     * itself", which is exactly what the reports described.
+     *
+     * Three values, chosen to buy legibility without buying an out of memory
+     * crash on a cheap device:
+     *  - the first layer is rendered at 60 per cent, so it is readable on its own
+     *  - tiles start rendering further ahead of the viewport, so on a normal
+     *    scroll the first layer is usually never the visible state at all
+     *  - the tile cache holds more, so paging back does not redraw from scratch
+     *
+     * PART_SIZE is deliberately left alone: enlarging the tiles is what would
+     * actually threaten memory, and it is not needed to fix this.
+     */
+    private const val SHARP_THUMBNAIL_RATIO = 0.6f
+    private const val TILE_PRELOAD_OFFSET = 60
+    private const val TILE_CACHE_SIZE = 180
+
+    /**
+     * The values are global to the library and CACHE_SIZE is read while PDFView
+     * is being constructed, so they are applied from the companion initialiser.
+     * That runs when the class is first loaded, before any instance and its
+     * PDFView exist; applying them from the instance init block would be too
+     * late for the cache. A failure here must never stop a document from
+     * opening, so the worst case is the blurred first layer the app already
+     * shipped with.
+     */
+    init {
+      try {
+        Constants.THUMBNAIL_RATIO = SHARP_THUMBNAIL_RATIO
+        Constants.PRELOAD_OFFSET = TILE_PRELOAD_OFFSET
+        Constants.Cache.CACHE_SIZE = TILE_CACHE_SIZE
+      } catch (_: Throwable) {
+        // Keep the upstream defaults rather than failing to render at all.
+      }
+    }
   }
 
   private val onLoadComplete by EventDispatcher()
