@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
@@ -9,6 +9,7 @@ import { AdPauseOffer } from '@/components/AdPauseOffer';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { UrlModal } from '@/components/UrlModal';
 import { useTranslation } from '@/hooks/useTranslation';
+import { markInterstitialPending, maybeShowPendingInterstitial, prepareToolAd } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 import { PdfToolId } from '@/lib/pdfTools';
 
@@ -34,14 +35,31 @@ export default function HomeScreen() {
   const [urlOpen, setUrlOpen] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  // Bringing a new document into the app is the busiest action on this screen,
+  // and until now it earned nothing. The ad never runs in front of the
+  // document: putting one between "I tapped my file" and the file appearing is
+  // the pattern Play's Better Ads Experiences policy targets, and it is the
+  // same mistake we removed from the external PDF launch path. Instead the ad
+  // waits for the natural break - the moment the reader is closed - using the
+  // same deferred mechanism the tool screen already uses. The shared 60 second
+  // gap and the rewarded ad free window both still apply, and re-opening a
+  // recent document stays completely clean.
+  useFocusEffect(useCallback(() => { void maybeShowPendingInterstitial(); }, []));
+
   const goReader = (id: string) => router.push({ pathname: '/reader/[id]', params: { id } });
   const goTool = (id: PdfToolId) => router.push({ pathname: '/tools', params: { tool: id, launch: String(Date.now()) } });
 
   async function choosePdf() {
     setBusy(true);
+    // The picker takes the viewer a few seconds; request the ad now so it is in
+    // memory by the time they come back out of the reader.
+    void prepareToolAd();
     try {
       const doc = await openPicker();
-      if (doc) goReader(doc.id);
+      if (doc) {
+        markInterstitialPending();
+        goReader(doc.id);
+      }
     } catch (error) {
       Alert.alert(t('files.openErrorTitle'), error instanceof Error ? error.message : t('files.openErrorMessage'));
     } finally {
@@ -51,6 +69,7 @@ export default function HomeScreen() {
 
   async function fromUrl(url: string) {
     const doc = await addFromUrl(url);
+    markInterstitialPending();
     goReader(doc.id);
   }
 
@@ -86,7 +105,7 @@ export default function HomeScreen() {
                   </View>
                   <View style={styles.roundAction}>{busy ? <ActivityIndicator color="#fff" /> : <AppIcon name="chevronRight" size={23} color="#FF514D" />}</View>
                 </View>
-                <Pressable onPress={() => setUrlOpen(true)} hitSlop={8} style={styles.urlLink}>
+                <Pressable onPress={() => { void prepareToolAd(); setUrlOpen(true); }} hitSlop={8} style={styles.urlLink}>
                   <AppIcon name="link" size={15} color="#BFC3C9" />
                   <Text numberOfLines={1} style={styles.urlLinkText}>{t('home.openFromUrl')}</Text>
                 </Pressable>

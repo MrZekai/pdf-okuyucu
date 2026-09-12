@@ -190,6 +190,11 @@ for (const dict of ['constants/i18n.ts', ...['ar','de','fr','hi','id','it','ja',
 if (adGateSource.includes('MAX_INTERSTITIALS_PER_SESSION') || adGateSource.includes('MAX_INTERSTITIALS_PER_DAY') || adGateSource.includes('FREE_TOOL_RUNS')) fail('Geçiş reklamı yeniden koddaki sessiz kotalara bağlanmış; tempo AdMob panelinde olmalı.');
 if (!adGateSource.includes('export async function prepareToolAd') || !toolsScreenSource.includes('void prepareToolAd()')) fail('Araçlar ekranı açılırken geçiş reklamını önden yükleme eksik.');
 if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.includes('void maybeShowPendingInterstitial()')) fail('"Aç" sonrası ertelenen geçiş reklamı okuyucudan dönüşte gösterilmiyor.');
+// Ana sayfadan belge açma en yoğun eylem. Reklam belgenin ÖNÜNE asla konmaz;
+// okuyucudan dönüşte gösterilir. Bu iki satırdan biri düşerse ya gelir kaybolur
+// ya da Better Ads Experiences riski geri gelir.
+if (!homeSource.includes('markInterstitialPending()') || !homeSource.includes('void maybeShowPendingInterstitial()')) fail('Ana sayfada belge açıldıktan sonra ertelenen geçiş reklamı eksik.');
+if (homeSource.includes('maybeShowToolInterstitial')) fail('Ana sayfa reklamı belgenin önünde gösteriyor; yalnızca ertelemeli yol kullanılmalı.');
 if (!appOpenSource.includes('showingRef.current = true;\n    cancelGateTimeout();\n    ad.show()')) fail('App-open show/OPENED yarışına karşı gate timeout iptali eksik.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
 if (!readerSource.includes("AppState.addEventListener('change'") || !readerSource.includes("state==='inactive'||state==='background'") || !readerSource.includes('flushProgress()')) fail('Reader background progress flush koruması eksik.');
