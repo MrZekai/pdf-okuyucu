@@ -195,6 +195,11 @@ if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.inclu
 // ya da Better Ads Experiences riski geri gelir.
 if (!homeSource.includes('markInterstitialPending()') || !homeSource.includes('void maybeShowPendingInterstitial()')) fail('Ana sayfada belge açıldıktan sonra ertelenen geçiş reklamı eksik.');
 if (homeSource.includes('maybeShowToolInterstitial')) fail('Ana sayfa reklamı belgenin önünde gösteriyor; yalnızca ertelemeli yol kullanılmalı.');
+// Başka uygulamadan tıklanan PDF, uygulamaya en yoğun giriş yolu. Reklam
+// belgenin önüne konmaz (app-open bu açılışta zaten bastırılıyor), okuyucudan
+// dönüşte gösterilir.
+if (!incomingHandlerSource.includes('markInterstitialPending()')) fail('Harici PDF açılışından sonra ertelenen geçiş reklamı eksik.');
+if (incomingHandlerSource.includes('maybeShowToolInterstitial') || incomingHandlerSource.includes('maybeShowPendingInterstitial')) fail('Harici PDF yolunda reklam belgenin önünde gösteriliyor.');
 if (!appOpenSource.includes('showingRef.current = true;\n    cancelGateTimeout();\n    ad.show()')) fail('App-open show/OPENED yarışına karşı gate timeout iptali eksik.');
 if (!readerSource.includes("if(id&&doc.pageCount!==pageCount)updateProgress(id,doc.lastPage,pageCount)")) fail('PDF yüklenirken kayıtlı son sayfayı 1’e sıfırlamama koruması eksik.');
 if (!readerSource.includes("AppState.addEventListener('change'") || !readerSource.includes("state==='inactive'||state==='background'") || !readerSource.includes('flushProgress()')) fail('Reader background progress flush koruması eksik.');

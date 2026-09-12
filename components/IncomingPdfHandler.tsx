@@ -3,6 +3,7 @@ import { Alert, Linking } from 'react-native';
 import { router, useGlobalSearchParams, useRootNavigationState } from 'expo-router';
 import { useApp } from '@/context/AppContext';
 import { useTranslation } from '@/hooks/useTranslation';
+import { markInterstitialPending, prepareToolAd } from '@/lib/adGate';
 import { normalizeIncomingPdfUri } from '@/lib/incomingPdfUri';
 
 const DEDUPE_WINDOW_MS = 2_000;
@@ -37,8 +38,21 @@ export function IncomingPdfHandler() {
       }
     }
 
+    // Ask for the ad now, while the document is still being imported, so it is
+    // ready by the time the reader is closed.
+    void prepareToolAd();
+
     try {
       const doc = await addFromExternalUri(uri);
+      // A PDF tapped in another app is the busiest way into this app, and it
+      // earned nothing. The full screen ad is still suppressed in FRONT of the
+      // document - AppOpenAdController refuses the app open ad on this launch,
+      // and nothing is shown before the reader - because putting an ad between
+      // "I tapped my file" and the file appearing is what Play's Better Ads
+      // Experiences policy prohibits. The ad is deferred to the moment the
+      // reader is closed, where the home screen presents it. The shared 60
+      // second gap and the rewarded ad free window still apply.
+      markInterstitialPending();
       router.push({ pathname: '/reader/[id]', params: { id: doc.id } });
     } catch (error) {
       recentlyHandled.current.delete(uri);
