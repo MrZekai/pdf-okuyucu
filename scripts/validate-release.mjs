@@ -163,10 +163,13 @@ exists('plugins/expo-pdf/KJExpoPdfView.patched.kt');
 {
   const viewSource = text('plugins/expo-pdf/KJExpoPdfView.patched.kt');
   if (!viewSource.includes('Constants.THUMBNAIL_RATIO = SHARP_THUMBNAIL_RATIO') ||
-      !viewSource.includes('Constants.PRELOAD_OFFSET = TILE_PRELOAD_OFFSET') ||
       !viewSource.includes('Constants.Cache.CACHE_SIZE = TILE_CACHE_SIZE')) fail('PDF çizim kalitesi ayarları (BUG-17) kaldırılmış; sayfalar yeniden bulanık açılır.');
   if (!/private const val SHARP_THUMBNAIL_RATIO = 0\.6f/.test(viewSource)) fail('Ön katman çözünürlüğü 0.6 değil; okunabilirlik veya bellek dengesi bozulmuş.');
   if (viewSource.includes('Constants.PART_SIZE')) fail('PART_SIZE değiştirilmiş; bellek riski için cihazda ölçülmeden dokunulmamalı.');
+  // PagesLoader ön yükleme alanını ÖNCE dolaşır ve parça sayısı CACHE_SIZE'a
+  // ulaşınca durur. Bu değeri büyütmek bütçeyi ekran dışına harcar, bakılan
+  // sayfa keskin katmanını hiç alamaz ve yazılar kalın/şişkin görünür.
+  if (viewSource.includes('Constants.PRELOAD_OFFSET')) fail('PRELOAD_OFFSET değiştirilmiş; keskin katman bütçesi ekran dışına harcanır ve yazılar kalınlaşır.');
 }
 exists('plugins/expo-pdf/KJExpoPdfModule.patched.kt');
 if (!toolsSource.includes('CAMERA_PERMISSION_BLOCKED') || !toolsSource.includes('permission.canAskAgain')) fail('Kalici kamera izni reddi icin canAskAgain isareti eksik.');

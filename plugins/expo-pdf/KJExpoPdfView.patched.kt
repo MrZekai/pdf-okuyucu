@@ -36,18 +36,28 @@ class KJExpoPdfView(context: Context, appContext: AppContext) : ExpoView(context
      * dense text page. A pinch forces the sharp tiles and the page "repairs
      * itself", which is exactly what the reports described.
      *
-     * Three values, chosen to buy legibility without buying an out of memory
-     * crash on a cheap device:
-     *  - the first layer is rendered at 60 per cent, so it is readable on its own
-     *  - tiles start rendering further ahead of the viewport, so on a normal
-     *    scroll the first layer is usually never the visible state at all
-     *  - the tile cache holds more, so paging back does not redraw from scratch
+     * Two values:
+     *  - the first layer is rendered at 60 per cent, so even before the sharp
+     *    tiles land the page is readable rather than mangled
+     *  - the tile cache holds more, so more of the sharp layer survives and
+     *    paging back does not redraw from scratch
      *
-     * PART_SIZE is deliberately left alone: enlarging the tiles is what would
-     * actually threaten memory, and it is not needed to fix this.
+     * PRELOAD_OFFSET is deliberately LEFT AT ITS DEFAULT, and raising it is a
+     * trap worth recording. PagesLoader walks the preload area first and stops
+     * as soon as the number of rendered tiles reaches CACHE_SIZE:
+     *
+     *     parts += loadPage(... CACHE_SIZE - parts);
+     *     if (parts >= CACHE_SIZE) break;
+     *
+     * so a larger preload area spends the tile budget off screen and the page
+     * the reader is actually looking at never gets its sharp tiles. Raising it
+     * to 60 made text on screen look heavy and smeared - the stretched preview
+     * layer - which is the opposite of the fix.
+     *
+     * PART_SIZE is left alone too: enlarging tiles is what would really
+     * threaten memory, and it is not needed here.
      */
     private const val SHARP_THUMBNAIL_RATIO = 0.6f
-    private const val TILE_PRELOAD_OFFSET = 60
     private const val TILE_CACHE_SIZE = 180
 
     /**
@@ -62,7 +72,6 @@ class KJExpoPdfView(context: Context, appContext: AppContext) : ExpoView(context
     init {
       try {
         Constants.THUMBNAIL_RATIO = SHARP_THUMBNAIL_RATIO
-        Constants.PRELOAD_OFFSET = TILE_PRELOAD_OFFSET
         Constants.Cache.CACHE_SIZE = TILE_CACHE_SIZE
       } catch (_: Throwable) {
         // Keep the upstream defaults rather than failing to render at all.
