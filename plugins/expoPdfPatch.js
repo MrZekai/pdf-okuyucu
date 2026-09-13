@@ -36,14 +36,15 @@ const TARGETS = [
     relativePath: path.join(KOTLIN_DIR, 'KJExpoPdfView.kt'),
     patchedFile: 'KJExpoPdfView.patched.kt',
     upstreamSha256: 'd086763caa2aca4a15fb9b505dce11cd02740ce6e50b85f10498cd239d330e00',
-    patchedSha256: '40ea324f55d9e30e0550d1a36812e66dee985e228341b3b5ef122bef242e2505',
+    patchedSha256: '4ec37eeba51d72e49cabbc417c9d2defade749cdac3515e9d41cb25c5a53c12d',
     // Build 41 shipped an earlier revision of this file, and builds 42-62 the
     // revision before the render quality fix. Both are valid sources to patch
     // from, so an already prebuilt tree upgrades cleanly.
     supersededSha256: [
       'e882880bc9275ee77c349adf69d41c04c9217fb02de1c0282ba61f854c65882f',
       '64488bb81494aa21cabda11103f1796acaa9ab9b3c49a94c031671fa513b32d1',
-      'f8d0a9984b0a5d36941eb79f814756ce87584b497f5ef65240e14106083462f0'
+      'f8d0a9984b0a5d36941eb79f814756ce87584b497f5ef65240e14106083462f0',
+      '40ea324f55d9e30e0550d1a36812e66dee985e228341b3b5ef122bef242e2505'
     ]
   },
   {

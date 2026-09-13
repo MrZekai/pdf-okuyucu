@@ -164,7 +164,8 @@ exists('plugins/expo-pdf/KJExpoPdfView.patched.kt');
   const viewSource = text('plugins/expo-pdf/KJExpoPdfView.patched.kt');
   if (!viewSource.includes('Constants.THUMBNAIL_RATIO = SHARP_THUMBNAIL_RATIO') ||
       !viewSource.includes('Constants.Cache.CACHE_SIZE = TILE_CACHE_SIZE')) fail('PDF çizim kalitesi ayarları (BUG-17) kaldırılmış; sayfalar yeniden bulanık açılır.');
-  if (!/private const val SHARP_THUMBNAIL_RATIO = 0\.6f/.test(viewSource)) fail('Ön katman çözünürlüğü 0.6 değil; okunabilirlik veya bellek dengesi bozulmuş.');
+  if (!/private const val SHARP_THUMBNAIL_RATIO = 1\.0f/.test(viewSource)) fail('Ön katman tam çözünürlükte değil; aynı sayfa bir kalın bir ince görünmeye geri döner.');
+  if (!viewSource.includes('Constants.Cache.THUMBNAILS_CACHE_SIZE = THUMBNAIL_CACHE_SIZE')) fail('Ön katman önbellek sınırı kaldırılmış; tam çözünürlüklü önizlemeler belleği zorlar.');
   if (viewSource.includes('Constants.PART_SIZE')) fail('PART_SIZE değiştirilmiş; bellek riski için cihazda ölçülmeden dokunulmamalı.');
   // PagesLoader ön yükleme alanını ÖNCE dolaşır ve parça sayısı CACHE_SIZE'a
   // ulaşınca durur. Bu değeri büyütmek bütçeyi ekran dışına harcar, bakılan
