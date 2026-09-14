@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'“{name}” ditambahkan ke pustaka di perangkat ini.',
   'tools.successManyMessage':'{count} PDF baru ditambahkan ke pustaka perangkat ini.',
   'tools.errorTitle':'Tugas tidak dapat diselesaikan',
+  'tools.infoTitle':'Informasi',
   'tools.genericError':'PDF ini tidak dapat diproses. File mungkin rusak atau dilindungi kata sandi.',
   'tools.minimumMerge':'Pilih setidaknya dua PDF untuk digabungkan.',
   'tools.mergeTooManyFiles':'Maksimal {count} PDF dapat digabungkan sekaligus. Pilih lebih sedikit berkas.',

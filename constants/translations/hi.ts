@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'“{name}” इस डिवाइस की लाइब्रेरी में जोड़ दिया गया।',
   'tools.successManyMessage':'{count} नए PDF इस डिवाइस की लाइब्रेरी में जोड़े गए।',
   'tools.errorTitle':'कार्य पूरा नहीं हो सका',
+  'tools.infoTitle':'जानकारी',
   'tools.genericError':'इस PDF को संसाधित नहीं किया जा सका। यह खराब या पासवर्ड से सुरक्षित हो सकता है।',
   'tools.minimumMerge':'जोड़ने के लिए कम से कम दो PDF चुनें।',
   'tools.mergeTooManyFiles':'एक बार में अधिकतम {count} PDF जोड़े जा सकते हैं। कम फ़ाइलें चुनें।',

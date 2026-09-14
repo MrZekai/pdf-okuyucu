@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'“{name}”已添加到此设备的文档库。',
   'tools.successManyMessage':'已将 {count} 个新 PDF 添加到此设备的文档库。',
   'tools.errorTitle':'无法完成操作',
+  'tools.infoTitle':'提示',
   'tools.genericError':'无法处理此 PDF。文件可能已损坏或受密码保护。',
   'tools.minimumMerge':'请至少选择两个要合并的 PDF。',
   'tools.mergeTooManyFiles':'一次最多可合并 {count} 个 PDF，请减少所选文件。',

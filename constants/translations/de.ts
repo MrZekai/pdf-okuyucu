@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'„{name}“ wurde der Bibliothek auf diesem Gerät hinzugefügt.',
   'tools.successManyMessage':'{count} neue PDFs wurden der Bibliothek auf diesem Gerät hinzugefügt.',
   'tools.errorTitle':'Aufgabe konnte nicht abgeschlossen werden',
+  'tools.infoTitle':'Hinweis',
   'tools.genericError':'Dieses PDF konnte nicht verarbeitet werden. Es ist möglicherweise beschädigt oder passwortgeschützt.',
   'tools.minimumMerge':'Wähle mindestens zwei PDFs zum Zusammenfügen aus.',
   'tools.mergeTooManyFiles':'Es können höchstens {count} PDFs auf einmal zusammengefügt werden. Bitte weniger Dateien wählen.',

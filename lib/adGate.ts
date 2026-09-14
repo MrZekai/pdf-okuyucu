@@ -414,22 +414,24 @@ export function markInterstitialPending() {
   interstitialPending = true;
 }
 
+/** Returns whether a full screen ad was actually presented. */
 export async function maybeShowPendingInterstitial() {
-  if (!interstitialPending) return;
+  if (!interstitialPending) return false;
   interstitialPending = false;
-  await maybeShowToolInterstitial();
+  return maybeShowToolInterstitial();
 }
 
+/** Returns whether a full screen ad was actually presented. */
 export async function maybeShowToolInterstitial() {
   try {
     // Rule one: the ad free window the viewer earned is honoured. This is a
     // promise, not pacing, so it stays in code.
-    if (await adsArePaused()) return;
+    if (await adsArePaused()) return false;
 
     // Rule two, and the only pacing rule left: never stack two full screen ads.
     const now = Date.now();
     const lastFullScreenAt = await getLastFullScreenAt();
-    if (now - lastFullScreenAt < MIN_FULL_SCREEN_GAP_MS) return;
+    if (now - lastFullScreenAt < MIN_FULL_SCREEN_GAP_MS) return false;
 
     if (preparedInterstitial && now - preparedInterstitial.loadedAt >= PRIMED_AD_TTL_MS) discardPreparedInterstitial();
     const prepared = preparedInterstitial;
@@ -438,7 +440,7 @@ export async function maybeShowToolInterstitial() {
     const result = prepared
       ? await presentPreparedAd(prepared.ad)
       : await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS);
-    if (result === 'unavailable') return;
+    if (result === 'unavailable') return false;
 
     sessionInterstitials += 1;
     const today = dayStamp(now);
@@ -448,8 +450,10 @@ export async function maybeShowToolInterstitial() {
     // real hourly cap on the unit itself.
     await Promise.all([noteFullScreenShown(Date.now()), writeDayCount(INTERSTITIAL_DAY_KEY, today, shownToday + 1)]);
     primeInterstitial();
+    return true;
   } catch {
     // A tool result must never fail because of advertising.
+    return false;
   }
 }
 

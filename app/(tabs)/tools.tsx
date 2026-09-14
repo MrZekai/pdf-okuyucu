@@ -7,8 +7,9 @@ import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
-import { addWatermark, CAMERA_PERMISSION_BLOCKED, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
+import { addWatermark, CAMERA_PERMISSION_BLOCKED, COMPRESSION_NO_GAIN, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
+import { maybeAskForReview, noteSuccessfulRun } from '@/lib/reviewPrompt';
 import { markInterstitialPending, maybeShowPendingInterstitial, maybeShowToolInterstitial, noteToolRun, prepareToolAd } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 
@@ -31,8 +32,15 @@ export default function ToolsScreen() {
   // at the exact moment it is needed.
   useEffect(() => { void prepareToolAd(); }, []);
 
-  // Coming back from the reader after a tool run is the deferred ad's moment.
-  useFocusEffect(useCallback(() => { void maybeShowPendingInterstitial(); }, []));
+  // Coming back from the reader after a tool run is the deferred ad's moment,
+  // and - when no ad was due - the right moment to ask for a rating: the viewer
+  // has just seen the app do its job and nothing is in their way.
+  useFocusEffect(useCallback(() => {
+    void (async () => {
+      const shownAd = await maybeShowPendingInterstitial();
+      if (!shownAd) await maybeAskForReview();
+    })();
+  }, []));
 
   const execute = useCallback(async (id: PdfToolId, primary = '', secondary = '') => {
     if (busy) return;
@@ -74,6 +82,12 @@ export default function ToolsScreen() {
         markInterstitialPending();
       };
 
+      // The rating prompt belongs to a turn where no ad is shown. Asking for
+      // stars straight after a full screen ad is the fastest way to a one star
+      // answer, so it only rides along on the path that skips the interstitial:
+      // the viewer opened their finished document and came back satisfied.
+      void noteSuccessfulRun().catch(() => undefined);
+
       Alert.alert(
         t('tools.successTitle'),
         documents.length > 1 ? t('tools.successManyMessage', { count: documents.length }) : t('tools.successMessage', { name: documents[0].name }),
@@ -84,7 +98,14 @@ export default function ToolsScreen() {
         { onDismiss: showFollowUpAd }
       );
     } catch (error) {
-      const blocked = typeof error === 'object' && error !== null && (error as { code?: string }).code === CAMERA_PERMISSION_BLOCKED;
+      const code = typeof error === 'object' && error !== null ? (error as { code?: string }).code : undefined;
+      if (code === COMPRESSION_NO_GAIN) {
+        // A file that is already compact is a normal answer, not a fault, so it
+        // is reported with the neutral title rather than the error one.
+        Alert.alert(t('tools.infoTitle'), error instanceof Error ? error.message : t('tools.compressionNoGain'));
+        return;
+      }
+      const blocked = code === CAMERA_PERMISSION_BLOCKED;
       if (blocked) {
         // Android will not show the permission prompt again, so the only way
         // forward is the app settings page.

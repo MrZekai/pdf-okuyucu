@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'“{name}” è stato aggiunto alla libreria di questo dispositivo.',
   'tools.successManyMessage':'{count} nuovi PDF sono stati aggiunti alla libreria del dispositivo.',
   'tools.errorTitle':'Impossibile completare l’operazione',
+  'tools.infoTitle':'Informazione',
   'tools.genericError':'Impossibile elaborare questo PDF. Potrebbe essere danneggiato o protetto da password.',
   'tools.minimumMerge':'Seleziona almeno due PDF da unire.',
   'tools.mergeTooManyFiles':'Si possono unire al massimo {count} PDF alla volta. Seleziona meno file.',

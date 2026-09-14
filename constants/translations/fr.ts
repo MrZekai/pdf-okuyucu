@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'« {name} » a été ajouté à la bibliothèque de cet appareil.',
   'tools.successManyMessage':'{count} nouveaux PDF ont été ajoutés à la bibliothèque de cet appareil.',
   'tools.errorTitle':'Impossible de terminer la tâche',
+  'tools.infoTitle':'Information',
   'tools.genericError':'Ce PDF n’a pas pu être traité. Il est peut-être endommagé ou protégé par mot de passe.',
   'tools.minimumMerge':'Sélectionnez au moins deux PDF à fusionner.',
   'tools.mergeTooManyFiles':'Au maximum {count} PDF peuvent être fusionnés à la fois. Sélectionnez moins de fichiers.',

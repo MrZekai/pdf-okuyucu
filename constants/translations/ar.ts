@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'أُضيف «{name}» إلى المكتبة على هذا الجهاز.',
   'tools.successManyMessage':'تمت إضافة {count} ملفات PDF جديدة إلى مكتبة هذا الجهاز.',
   'tools.errorTitle':'تعذر إكمال المهمة',
+  'tools.infoTitle':'معلومة',
   'tools.genericError':'تعذرت معالجة هذا الملف. قد يكون تالفًا أو محميًا بكلمة مرور.',
   'tools.minimumMerge':'اختر ملفي PDF على الأقل للدمج.',
   'tools.mergeTooManyFiles':'يمكن دمج {count} ملف PDF كحد أقصى في المرة الواحدة. اختر عددًا أقل من الملفات.',

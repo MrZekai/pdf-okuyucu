@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'「{name}」をこの端末のライブラリに追加しました。',
   'tools.successManyMessage':'{count}個の新しいPDFをこの端末のライブラリに追加しました。',
   'tools.errorTitle':'処理を完了できませんでした',
+  'tools.infoTitle':'お知らせ',
   'tools.genericError':'このPDFを処理できません。破損しているか、パスワードで保護されている可能性があります。',
   'tools.minimumMerge':'結合するPDFを2つ以上選択してください。',
   'tools.mergeTooManyFiles':'一度に結合できるPDFは最大{count}件です。ファイル数を減らしてください。',

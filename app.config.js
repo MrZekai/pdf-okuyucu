@@ -28,7 +28,12 @@ module.exports = ({ config }) => ({
   ...config,
   name: 'PDF: Reader - Tools',
   slug: 'pdf-okuyucu-premium',
-  version: '1.0.0',
+  // The user visible version is derived from the build number rather than being
+  // a constant. Sixty-odd releases all reporting "1.0.0" in the system app
+  // information looked abandoned, and made it impossible to tell which build a
+  // bug report or a release note belonged to. Derived means it can never be
+  // forgotten on a release.
+  version: `1.${androidVersionCode}.0`,
   icon: './assets/icon.png',
   orientation: 'default',
   scheme: 'pdfokuyucu',
@@ -80,7 +85,11 @@ module.exports = ({ config }) => ({
       'android.permission.SYSTEM_ALERT_WINDOW',
       'android.permission.READ_EXTERNAL_STORAGE',
       'android.permission.WRITE_EXTERNAL_STORAGE',
-      'android.permission.RECORD_AUDIO'
+      'android.permission.RECORD_AUDIO',
+      // Pulled in by a transitive WorkManager dependency of the ads SDK. The
+      // app never starts a foreground service, so the permission only served to
+      // make the permission list look larger than the app actually is.
+      'android.permission.FOREGROUND_SERVICE'
     ],
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',

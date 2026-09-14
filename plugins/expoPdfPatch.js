@@ -1,4 +1,3 @@
-/* eslint-env node */
 /**
  * Reproducible source patch for @kishannareshpal/expo-pdf 0.3.2.
  *

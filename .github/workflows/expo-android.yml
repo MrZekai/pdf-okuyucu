@@ -105,6 +105,14 @@ jobs:
           # Odul suresi uygulamada 10 dakikaya indi. Canli politika hala 30
           # dakika vaat ediyorsa beyan ile davranis celisir.
           grep -Fq '10 dakikalık reklamsız kullanım' live-privacy-policy.html
+          # Play "User Data" politikasi, gizlilik politikasinin ICINDE bir
+          # iletisim noktasi ister. Depodaki dosyayi guncelleyip canli siteyi
+          # senkronlamayi unutmak, bu sarti karsilamadan yayina cikmak demektir.
+          grep -Eq 'mailto:[^"'"'"'@[:space:]]+@[^"'"'"'[:space:]]+' live-privacy-policy.html
+          if grep -q 'ILETISIM_EPOSTA_BURAYA\|example\.com' live-privacy-policy.html; then
+            echo 'Canli gizlilik politikasinda yer tutucu e-posta kalmis.' >&2
+            exit 1
+          fi
           curl --fail --silent --show-error --location --max-time 20 \
             https://mrzekai.github.io/app-ads.txt > live-app-ads.txt
           tr -d '\r' < live-app-ads.txt | \

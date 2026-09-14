@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'«{name}» добавлен в библиотеку на этом устройстве.',
   'tools.successManyMessage':'В библиотеку на этом устройстве добавлено файлов: {count}.',
   'tools.errorTitle':'Не удалось выполнить действие',
+  'tools.infoTitle':'Информация',
   'tools.genericError':'Этот PDF не удалось обработать. Возможно, он повреждён или защищён паролем.',
   'tools.minimumMerge':'Выберите не менее двух PDF для объединения.',
   'tools.mergeTooManyFiles':'За один раз можно объединить не более {count} PDF. Выберите меньше файлов.',

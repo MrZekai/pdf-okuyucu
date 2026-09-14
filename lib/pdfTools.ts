@@ -16,6 +16,13 @@ export type PdfToolResult = PdfDocument | PdfDocument[] | null;
  * into a Cancel / Open Settings dialog instead of a dead-end alert.
  */
 export const CAMERA_PERMISSION_BLOCKED = 'camera_permission_blocked';
+/**
+ * "Already optimised" is an outcome, not a failure. It used to surface through
+ * the red error dialog, so a viewer who ran the tool on a file that was already
+ * compact was told something had gone wrong. Nothing had. The caller uses this
+ * code to present it as information instead.
+ */
+export const COMPRESSION_NO_GAIN = 'compression_no_gain';
 export type ToolError = Error & { code?: string };
 
 const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
@@ -331,7 +338,11 @@ export async function compressPdf(): Promise<PdfDocument | null> {
   if (!source) return null;
   const input = await loadPdf(source);
   const optimized = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
-  if (source.size > 0 && optimized.length >= source.size) throw new Error(t('tools.compressionNoGain'));
+  if (source.size > 0 && optimized.length >= source.size) {
+    const outcome = new Error(t('tools.compressionNoGain')) as Error & { code?: string };
+    outcome.code = COMPRESSION_NO_GAIN;
+    throw outcome;
+  }
   return saveGeneratedPdf(optimized, outputName(source.name, 'compressed'));
 }
 

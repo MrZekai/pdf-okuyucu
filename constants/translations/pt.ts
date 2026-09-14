@@ -82,6 +82,7 @@ export default {
   'tools.successMessage':'“{name}” foi adicionado à biblioteca deste dispositivo.',
   'tools.successManyMessage':'{count} novos PDFs foram adicionados à biblioteca deste dispositivo.',
   'tools.errorTitle':'Não foi possível concluir a tarefa',
+  'tools.infoTitle':'Informação',
   'tools.genericError':'Este PDF não pôde ser processado. Ele pode estar danificado ou protegido por senha.',
   'tools.minimumMerge':'Selecione pelo menos dois PDFs para unir.',
   'tools.mergeTooManyFiles':'No máximo {count} PDFs podem ser unidos de uma vez. Selecione menos arquivos.',

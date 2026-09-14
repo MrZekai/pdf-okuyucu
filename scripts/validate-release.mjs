@@ -89,6 +89,16 @@ if ((admob.appOpenAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail
 if ((admob.interstitialAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release interstitial test ID kullanıyor.');
 if ((admob.rewardedAndroid || '').startsWith('ca-app-pub-3940256099942544')) fail('Release rewarded test ID kullanıyor.');
 
+// Play "User Data" politikası, gizlilik politikasının İÇİNDE bir iletişim
+// noktası ister; "Play kaydındaki adresi kullanın" yeterli sayılmaz ve bu,
+// politika kaldırma bildirimlerinin en sık sebeplerinden biridir.
+{
+  const policy = text('docs/privacy-policy.html');
+  if (!/mailto:[^"'@\s]+@[^"'\s]+/.test(policy)) fail('Gizlilik politikasında tıklanabilir bir iletişim e-postası yok (Play User Data şartı).');
+  if (policy.includes('ILETISIM_EPOSTA_BURAYA')) fail('Gizlilik politikasındaki e-posta hâlâ yer tutucu; gerçek adresle değiştirin.');
+  if (policy.includes('example.com')) fail('Gizlilik politikasında example.com adresi kalmış.');
+}
+
 // Gizlilik politikası dört reklam biçimini de saymalı; eksik beyan hem Play
 // kullanıcı verisi politikası hem AdMob açısından risktir.
 const policySource = text('docs/privacy-policy.html');
@@ -203,7 +213,7 @@ for (const dict of ['constants/i18n.ts', ...['ar','de','fr','hi','id','it','ja',
 }
 if (adGateSource.includes('MAX_INTERSTITIALS_PER_SESSION') || adGateSource.includes('MAX_INTERSTITIALS_PER_DAY') || adGateSource.includes('FREE_TOOL_RUNS')) fail('Geçiş reklamı yeniden koddaki sessiz kotalara bağlanmış; tempo AdMob panelinde olmalı.');
 if (!adGateSource.includes('export async function prepareToolAd') || !toolsScreenSource.includes('void prepareToolAd()')) fail('Araçlar ekranı açılırken geçiş reklamını önden yükleme eksik.');
-if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.includes('void maybeShowPendingInterstitial()')) fail('"Aç" sonrası ertelenen geçiş reklamı okuyucudan dönüşte gösterilmiyor.');
+if (!toolsScreenSource.includes('deferFollowUpAd()') || !toolsScreenSource.includes('maybeShowPendingInterstitial()')) fail('"Aç" sonrası ertelenen geçiş reklamı okuyucudan dönüşte gösterilmiyor.');
 // Ana sayfadan belge açma en yoğun eylem. Reklam belgenin ÖNÜNE asla konmaz;
 // okuyucudan dönüşte gösterilir. Bu iki satırdan biri düşerse ya gelir kaybolur
 // ya da Better Ads Experiences riski geri gelir.
@@ -228,6 +238,38 @@ for (const guard of ['scanToPdf', 'imagesToPdf', 'createPdf', 'mergePdfs', 'spli
 if (!toolsSource.includes('deletePdfFile(firstDocument.uri)')) fail('splitPdf ikinci çıktı başarısızlığında ilk dosya rollback koruması eksik.');
 if (!toolsSource.includes('const bytes = await output.save({ useObjectStreams: true });') || toolsSource.includes("return saveGeneratedPdf(await output.save({ useObjectStreams: true }), requestedName);\n  } catch {\n    throw new Error(t('tools.unsupportedImage'))")) fail('Resimden PDF kaydetme hataları unsupported-image hatasıyla maskelenmemeli.');
 if (!tabsSource.includes('name="tools"') || !tabsSource.includes('name="favorites" options={{ href: null }}')) fail('Araçlar sekmesi veya Kütüphane içi favori mimarisi eksik.');
+// Reklam içerik derecelendirmesi: bir PDF okuyucuya yetişkin içerikli reklam
+// düşmesi hem kullanıcı şikayeti hem politika sorunudur. Ayar initialize()
+// çağrısından ÖNCE uygulanmalı, sonra uygulanırsa ilk istekler kaçar.
+{
+  const adsBootstrap = text('hooks/useAdsBootstrap.ts');
+  if (!adsBootstrap.includes('maxAdContentRating: MaxAdContentRating.PG')) fail('AdMob içerik derecelendirmesi (PG) ayarlanmamış.');
+  if (adsBootstrap.indexOf('setRequestConfiguration') > adsBootstrap.indexOf('mobileAds().initialize()')) fail('Reklam içerik derecelendirmesi initialize() sonrasına kalmış.');
+}
+
+// "Zaten optimize" bir sonuçtur, hata değil. Kırmızı hata penceresiyle
+// gösterilmesi kullanıcıya bir şeyin bozulduğunu düşündürüyordu.
+{
+  const toolsLib = text('lib/pdfTools.ts');
+  if (!toolsLib.includes('COMPRESSION_NO_GAIN')) fail('Sıkıştırma "kazanç yok" durumu ayrı bir kodla işaretlenmiyor.');
+  if (!toolsScreenSource.includes("t('tools.infoTitle')")) fail('Sıkıştırma sonucu hâlâ hata başlığıyla gösteriliyor.');
+}
+
+// Uygulama içi puan isteme: yıldız ortalaması Play sıralamasında doğrudan
+// sinyaldir ve kendiliğinden yorum yazanların çoğu memnun olmayanlardır.
+{
+  const review = text('lib/reviewPrompt.ts');
+  if (!review.includes('StoreReview.requestReview()')) fail('Uygulama içi puan isteme akışı eksik.');
+  if (!review.includes('MIN_SUCCESSFUL_RUNS')) fail('Puan isteme eşiği yok; ilk kullanımda sorulması ortalamayı düşürür.');
+  if (!toolsScreenSource.includes('maybeAskForReview()')) fail('Puan isteme hiçbir yerden çağrılmıyor.');
+  if (!toolsScreenSource.includes('if (!shownAd) await maybeAskForReview()')) fail('Puan isteme reklamdan hemen sonra sorulabiliyor; ayrı turda olmalı.');
+}
+
+// Sürüm adı derlemeden türetilmeli; 60+ sürüm boyunca "1.0.0" görünmek hem
+// güvensiz duruyor hem hata raporlarını takip edilemez yapıyor.
+if (!appConfigSource.includes('version: `1.${androidVersionCode}.0`')) fail('versionName derleme numarasından türetilmiyor.');
+if (!config.android?.blockedPermissions?.includes('android.permission.FOREGROUND_SERVICE')) fail('Kullanılmayan FOREGROUND_SERVICE izni engellenmemiş.');
+
 if (!i18nSource.includes("return 'en';") || !i18nSource.includes("let activeLanguage: AppLanguage = 'en'")) fail('Desteklenmeyen dil için İngilizce yedekleme eksik.');
 
 pngSize('assets/icon.png', 1024, 1024);
