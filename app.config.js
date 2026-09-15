@@ -53,7 +53,17 @@ module.exports = ({ config }) => ({
     ar: './locales/ar.json',
     ja: './locales/ja.json',
     ko: './locales/ko.json',
-    zh: './locales/zh.json'
+    zh: './locales/zh.json',
+    vi: './locales/vi.json',
+    th: './locales/th.json',
+    fil: './locales/fil.json',
+    ms: './locales/ms.json',
+    bn: './locales/bn.json',
+    ur: './locales/ur.json',
+    pl: './locales/pl.json',
+    uk: './locales/uk.json',
+    nl: './locales/nl.json',
+    ro: './locales/ro.json'
   },
   android: {
     package: 'com.aitolian.pdfokuyucu',
@@ -151,8 +161,8 @@ module.exports = ({ config }) => ({
       'expo-localization',
       {
         supportedLocales: {
-          android: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'],
-          ios: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh']
+          android: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh', 'vi', 'th', 'fil', 'ms', 'bn', 'ur', 'pl', 'uk', 'nl', 'ro'],
+          ios: ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh', 'vi', 'th', 'fil', 'ms', 'bn', 'ur', 'pl', 'uk', 'nl', 'ro']
         }
       }
     ],

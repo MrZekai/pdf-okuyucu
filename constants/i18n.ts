@@ -10,8 +10,18 @@ import arRaw from './translations/ar';
 import jaRaw from './translations/ja';
 import koRaw from './translations/ko';
 import zhRaw from './translations/zh';
+import viRaw from './translations/vi';
+import thRaw from './translations/th';
+import filRaw from './translations/fil';
+import msRaw from './translations/ms';
+import bnRaw from './translations/bn';
+import urRaw from './translations/ur';
+import plRaw from './translations/pl';
+import ukRaw from './translations/uk';
+import nlRaw from './translations/nl';
+import roRaw from './translations/ro';
 
-export const languages = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'] as const;
+export const languages = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh', 'vi', 'th', 'fil', 'ms', 'bn', 'ur', 'pl', 'uk', 'nl', 'ro'] as const;
 
 export type AppLanguage = (typeof languages)[number];
 
@@ -29,7 +39,17 @@ export const languageLabels: Record<AppLanguage, string> = {
   ar: 'العربية',
   ja: '日本語',
   ko: '한국어',
-  zh: '简体中文'
+  zh: '简体中文',
+  vi: 'Tiếng Việt',
+  th: 'ไทย',
+  fil: 'Filipino',
+  ms: 'Bahasa Melayu',
+  bn: 'বাংলা',
+  ur: 'اردو',
+  pl: 'Polski',
+  uk: 'Українська',
+  nl: 'Nederlands',
+  ro: 'Română'
 };
 
 export const languageTags: Record<AppLanguage, string> = {
@@ -46,7 +66,18 @@ export const languageTags: Record<AppLanguage, string> = {
   ar: 'ar-SA',
   ja: 'ja-JP',
   ko: 'ko-KR',
-  zh: 'zh-CN'
+  zh: 'zh-CN',
+  vi: 'vi-VN',
+  th: 'th-TH',
+  fil: 'fil-PH',
+  ms: 'ms-MY',
+  bn: 'bn-BD',
+  ur: 'ur-PK',
+  pl: 'pl-PL',
+  uk: 'uk-UA',
+  nl: 'nl-NL',
+  ro: 'ro-RO'
+
 };
 
 const tr = {
@@ -759,8 +790,18 @@ const ar: Record<keyof typeof tr, string> = arRaw;
 const ja: Record<keyof typeof tr, string> = jaRaw;
 const ko: Record<keyof typeof tr, string> = koRaw;
 const zh: Record<keyof typeof tr, string> = zhRaw;
+const vi: Record<keyof typeof tr, string> = viRaw;
+const th: Record<keyof typeof tr, string> = thRaw;
+const fil: Record<keyof typeof tr, string> = filRaw;
+const ms: Record<keyof typeof tr, string> = msRaw;
+const bn: Record<keyof typeof tr, string> = bnRaw;
+const ur: Record<keyof typeof tr, string> = urRaw;
+const pl: Record<keyof typeof tr, string> = plRaw;
+const uk: Record<keyof typeof tr, string> = ukRaw;
+const nl: Record<keyof typeof tr, string> = nlRaw;
+const ro: Record<keyof typeof tr, string> = roRaw;
 
-const dictionaries: Record<AppLanguage, Record<keyof typeof tr, string>> = { en, tr, es, pt, de, fr, it, ru, hi, id, ar, ja, ko, zh };
+const dictionaries: Record<AppLanguage, Record<keyof typeof tr, string>> = { en, tr, es, pt, de, fr, it, ru, hi, id, ar, ja, ko, zh, vi, th, fil, ms, bn, ur, pl, uk, nl, ro };
 
 export type TranslationKey = keyof typeof tr;
 export type TranslationVars = Record<string, string | number>;
@@ -795,7 +836,8 @@ export function isAppLanguage(value: unknown): value is AppLanguage {
 }
 
 export function isRtlLanguage(language: AppLanguage) {
-  return language === 'ar';
+  // Urdu is written right to left, exactly like Arabic.
+  return language === 'ar' || language === 'ur';
 }
 
 /** Reads the native device/app language. Unsupported locales fall back to English. */

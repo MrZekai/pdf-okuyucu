@@ -16,7 +16,12 @@ function text(relativePath) {
     fail(`Eksik dosya: ${relativePath}`);
     return '';
   }
-  return fs.readFileSync(fullPath, 'utf8');
+  // Satir sonlari normalize edilir. Windows'ta git, calisma kopyasini CRLF ile
+  // olusturur; bu dosyadaki cok satirli kapilar ise '\n' arar. Normalize
+  // edilmezse o kapilar CRLF'li bir kopyada sessizce yanlis sonuc verir -
+  // ZIP'ten (LF) calisirken gecen bir kontrol, temiz bir klonda duser. Kapinin
+  // sonucu dosyanin nasil teslim edildigine degil, icerigine bagli olmali.
+  return fs.readFileSync(fullPath, 'utf8').replace(/\r\n/g, '\n');
 }
 function pngSize(relativePath, expectedWidth, expectedHeight) {
   const fullPath = path.join(root, relativePath);
@@ -51,14 +56,25 @@ if (packageLock.packages?.['']?.dependencies?.['pdf-lib'] !== '1.17.1' || packag
 const localizationRange = packageJson.dependencies?.['expo-localization'] || '';
 if (!/^~57\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(localizationRange)) fail('expo-localization Expo SDK 57 ile uyumlu tilde sürüm aralığında olmalı.');
 const localizationPlugin = config.plugins.find((item) => Array.isArray(item) && item[0] === 'expo-localization')?.[1];
-const expectedLocales = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'it', 'ru', 'hi', 'id', 'ar', 'ja', 'ko', 'zh'];
+// Beklenen dil listesi elle yazılmaz: tek kaynak constants/i18n.ts içindeki
+// languages dizisidir. Elle yazıldığında uygulama arayüzü 24 dile çıkarken bu
+// kapı 14'te kalıyor ve yeni dillerin sistem ayarlarında görünmediği fark
+// edilmiyordu. Kod 'fil' gibi üç harfli kodları da kapsar.
+const languagesMatch = text('constants/i18n.ts').match(/export const languages\s*=\s*\[([^\]]+)\]/);
+if (!languagesMatch) fail('constants/i18n.ts içinde languages dizisi bulunamadı.');
+const expectedLocales = [...(languagesMatch?.[1] || '').matchAll(/'([a-z]{2,3})'/g)].map((match) => match[1]);
+if (expectedLocales.length < 24) fail(`Uygulama arayüzü dil sayısı 24'ün altına düşmüş (${expectedLocales.length}).`);
 for (const platform of ['android', 'ios']) {
   const supported = localizationPlugin?.supportedLocales?.[platform] || [];
   for (const language of expectedLocales) {
     if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
   }
 }
-for (const [language, expectedName] of Object.entries({ en:'PDF: Reader - Tools',tr:'PDF: Okuyucu - Araçları',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器' })) {
+const expectedAppNames = { en:'PDF: Reader - Tools',tr:'PDF: Okuyucu - Araçları',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器',vi:'Đọc PDF',th:'อ่าน PDF',fil:'PDF Reader',ms:'Pembaca PDF',bn:'PDF রিডার',ur:'PDF ریڈر',pl:'Czytnik PDF',uk:'PDF читалка',nl:'PDF Reader',ro:'Cititor PDF' };
+for (const language of expectedLocales) {
+  if (!(language in expectedAppNames)) fail(`${language} için beklenen uygulama adı tanımlanmamış.`);
+}
+for (const [language, expectedName] of Object.entries(expectedAppNames)) {
   const localePath = config.locales?.[language];
   if (!localePath) {
     fail(`Yerelleştirilmiş uygulama adı yapılandırmasında ${language} eksik.`);
@@ -206,7 +222,10 @@ if (!adGateSource.includes('export const MIN_FULL_SCREEN_GAP_MS = 60 * 1000')) f
 if (!adGateSource.includes('export const AD_PAUSE_DURATION_MS = 10 * 60 * 1000')) fail('Ödüllü reklam karşılığı reklamsız süre 10 dakika değil.');
 // Ödül süresi koddan değişip metinlerde eski değer kalırsa kullanıcıya yanlış
 // vaat edilir; AdMob ödüllü politikası ödülün doğru bildirilmesini şart koşar.
-for (const dict of ['constants/i18n.ts', ...['ar','de','fr','hi','id','it','ja','ko','pt','ru','zh'].map((l) => `constants/translations/${l}.ts`)]) {
+// tr/en/es sözlükleri i18n.ts içinde satır içi durur; geri kalan her dil ayrı
+// dosyadadır. Liste yine languages dizisinden türetilir ki yeni bir dil
+// eklendiğinde bu kapı sessizce o dili atlamasın.
+for (const dict of ['constants/i18n.ts', ...expectedLocales.filter((l) => !['tr','en','es'].includes(l)).map((l) => `constants/translations/${l}.ts`)]) {
   for (const line of text(dict).split('\n')) {
     if (line.includes("settings.adPause") && line.includes('30')) fail(`${dict}: ödül metni hâlâ 30 dakika vaat ediyor, süre 10 dakika.`);
   }
@@ -315,4 +334,4 @@ if (errors.length) {
   console.error(`Release kontrolü başarısız (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, 14 dil ve cihaz içi PDF araçları hazır.`);
+console.log(`Release kontrolü başarılı. package=${config.android.package}, versionCode=${config.android.versionCode}, R8+resource shrink açık, ${expectedLocales.length} dil ve cihaz içi PDF araçları hazır.`);

@@ -41,7 +41,10 @@ function extractDictionary(sourceText, name, startToken = `const ${name}`) {
 
 const languagesMatch = source.match(/export const languages\s*=\s*\[([^\]]+)\]/);
 if (!languagesMatch) throw new Error('languages array not found in constants/i18n.ts');
-const languages = [...languagesMatch[1].matchAll(/'([a-z]{2})'/g)].map((match) => match[1]);
+// Codes are two or three letters: 'fil' (Filipino) has no two letter ISO 639-1
+// form, so a {2} only pattern silently dropped one whole dictionary from every
+// check below while still reporting OK.
+const languages = [...languagesMatch[1].matchAll(/'([a-z]{2,3})'/g)].map((match) => match[1]);
 if (new Set(languages).size !== languages.length) throw new Error('languages array contains a duplicate language code');
 const inline = new Set(['tr', 'en', 'es']);
 const dictionaries = Object.fromEntries(languages.map((language) => {
