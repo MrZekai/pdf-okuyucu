@@ -147,6 +147,13 @@ if (!nativeIntentSource.includes('redirectSystemPath') || !nativeIntentSource.in
 if (!incomingUriSource.includes('parsed.protocol.toLowerCase() !== APP_SCHEME') || !incomingUriSource.includes('return `content://${authority}') || !incomingUriSource.includes('/^content:\\/\\//i')) fail('Android content URI / Expo custom-scheme normalizasyonu eksik.');
 if (!incomingHandlerSource.includes('useGlobalSearchParams') || !incomingHandlerSource.includes('params.incomingPdf') || !incomingHandlerSource.includes('normalizeIncomingPdfUri')) fail('Incoming PDF handler native-intent query yolunu işlemiyor.');
 if (i18nSource.includes('Belgelerin. Hızın. Odağın.')) fail('Eski ve belirsiz ana ekran sloganı kaynakta kalmış.');
+// Cihaz dili languageCode'dan okunursa Android, Endonezce'yi Java'nin eski
+// kodu olan "in" ile bildirir ve tam bir Endonezce sozluk dururken kullanici
+// Ingilizce ekran gorur. languageTag her zaman modern BCP 47 kodunu verir;
+// once o okunmali. Bu iki satirdan biri duserse kayip sessiz olur - kimse
+// sikayet etmez, sadece o pazarda dil yanlis acilir.
+if (!i18nSource.includes('locale?.languageTag?.toLowerCase().split(/[-_]/)[0]')) fail('Cihaz dili once languageTag üzerinden okunmuyor; Android eski dil kodlarında yanlış dil açılır.');
+if (!i18nSource.includes("in: 'id'") || !i18nSource.includes("tl: 'fil'")) fail('Eski ISO dil kodu eşlemesi (in->id, tl->fil) eksik.');
 if (storeHomeSource.includes('Belgelerin,') || storeHomeSource.includes('her an yanında')) fail('Eski ana ekran sloganı Türkçe mağaza görselinde kalmış.');
 if (homeSource.includes('name="sparkles"')) fail('İşlevsiz ana ekran yıldız düğmesi yeniden eklenmiş.');
 if (homeSource.includes("t('home.welcome')")) fail('İstenmeyen ana ekran sloganı yeniden eklenmiş.');

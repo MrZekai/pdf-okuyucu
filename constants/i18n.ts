@@ -840,11 +840,40 @@ export function isRtlLanguage(language: AppLanguage) {
   return language === 'ar' || language === 'ur';
 }
 
-/** Reads the native device/app language. Unsupported locales fall back to English. */
+/**
+ * Language codes that still arrive in their pre-1989 ISO 639 spelling.
+ *
+ * On Android expo-localization fills languageCode from Java's
+ * Locale.getLanguage(), which is documented to always return the OLD code for
+ * the handful of languages whose code changed. Indonesian is the one that
+ * matters here: it arrives as "in", never as "id". Read on its own, that value
+ * sends every Indonesian device to English while a complete Indonesian
+ * dictionary sits unused - in one of the largest Android markets there is.
+ *
+ * Filipino has no such remap, but Android devices are split between the modern
+ * "fil" and the older "tl", so both have to resolve to the same dictionary.
+ */
+const LEGACY_LANGUAGE_CODES: Record<string, AppLanguage> = {
+  in: 'id',
+  tl: 'fil'
+};
+
+/**
+ * Reads the native device/app language. Unsupported locales fall back to English.
+ *
+ * languageTag is read first because it comes from Locale.toLanguageTag(), which
+ * always produces the modern BCP 47 code regardless of the legacy behaviour
+ * above. The languageCode read and the legacy map are the nets underneath it.
+ */
 export function detectDeviceLanguage(): AppLanguage {
   try {
-    const short = getLocales()[0]?.languageCode?.toLowerCase();
+    const locale = getLocales()[0];
+    const fromTag = locale?.languageTag?.toLowerCase().split(/[-_]/)[0];
+    if (isAppLanguage(fromTag)) return fromTag;
+    const short = locale?.languageCode?.toLowerCase();
     if (isAppLanguage(short)) return short;
+    const legacy = LEGACY_LANGUAGE_CODES[fromTag ?? ''] ?? LEGACY_LANGUAGE_CODES[short ?? ''];
+    if (legacy) return legacy;
   } catch {
     // Native locale lookup must never block app startup.
   }
