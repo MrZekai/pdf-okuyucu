@@ -7,7 +7,8 @@ import { useApp } from '@/context/AppContext';
 import { AppIcon } from '@/components/AppIcon';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
-import { addWatermark, CAMERA_PERMISSION_BLOCKED, COMPRESSION_NO_GAIN, cleanMetadata, compressPdf, createPdf, extractPages, imagesToPdf, mergePdfs, PdfToolId, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
+import { PdfDocument } from '@/types/document';
+import { CAMERA_PERMISSION_BLOCKED, COMPRESSION_NO_GAIN, CompressOutcome, PdfToolId, ToolError, addWatermark, cleanMetadata, compressPdf, compressPdfWithImages, createPdf, extractPages, formatBytes, imagesToPdf, isCompressOutcome, mergePdfs, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
 import { maybeAskForReview, noteSuccessfulRun } from '@/lib/reviewPrompt';
 import { markInterstitialPending, maybeShowPendingInterstitial, maybeShowToolInterstitial, noteToolRun, prepareToolAd } from '@/lib/adGate';
@@ -42,6 +43,43 @@ export default function ToolsScreen() {
     })();
   }, []));
 
+  /**
+   * Second compression pass, reached only from the viewer tapping Continue on
+   * the prompt. It works on the file the first pass already staged, so nobody
+   * is asked to find their document twice.
+   */
+  const runLossyCompression = useCallback(async (source: { name: string; uri: string; size: number }) => {
+    setBusy(true);
+    try {
+      const outcome = await compressPdfWithImages(source);
+      addGeneratedDocument(outcome.document);
+      Alert.alert(
+        t('tools.successTitle'),
+        [
+          t('tools.successMessage', { name: outcome.document.name }),
+          t('tools.compressResult', {
+            before: formatBytes(outcome.beforeBytes),
+            after: formatBytes(outcome.afterBytes),
+            percent: Math.max(1, Math.round((1 - outcome.afterBytes / outcome.beforeBytes) * 100))
+          })
+        ].join('\n\n'),
+        [{ text: t('common.done'), onPress: () => { void maybeShowToolInterstitial(); } }],
+        { onDismiss: () => { void maybeShowToolInterstitial(); } }
+      );
+    } catch (error) {
+      const code = typeof error === 'object' && error !== null ? (error as ToolError).code : undefined;
+      // Even the lossy pass can come up empty on a document whose pictures are
+      // already small. That is information, not a fault.
+      if (code === COMPRESSION_NO_GAIN) {
+        Alert.alert(t('tools.infoTitle'), error instanceof Error ? error.message : t('tools.compressionNoGain'));
+        return;
+      }
+      Alert.alert(t('tools.errorTitle'), error instanceof Error ? error.message : t('tools.genericError'));
+    } finally {
+      setBusy(false);
+    }
+  }, [addGeneratedDocument, t]);
+
   const execute = useCallback(async (id: PdfToolId, primary = '', secondary = '') => {
     if (busy) return;
     setBusy(true);
@@ -61,9 +99,19 @@ export default function ToolsScreen() {
         : await cleanMetadata();
       await recordToolUse(id).catch(() => undefined);
       if (!result) return;
-      addGeneratedDocument(result);
+      // Compress reports what it achieved alongside the document; every other
+      // tool returns the document alone.
+      let outcome: CompressOutcome | null = null;
+      let produced: PdfDocument | PdfDocument[];
+      if (isCompressOutcome(result)) {
+        outcome = result;
+        produced = result.document;
+      } else {
+        produced = result;
+      }
+      addGeneratedDocument(produced);
       await noteToolRun().catch(() => undefined);
-      const documents = Array.isArray(result) ? result : [result];
+      const documents = Array.isArray(produced) ? produced : [produced];
 
       // The interstitial belongs to the moment the user leaves the result.
       // Closing the dialog shows it straight away; opening the document defers
@@ -90,7 +138,19 @@ export default function ToolsScreen() {
 
       Alert.alert(
         t('tools.successTitle'),
-        documents.length > 1 ? t('tools.successManyMessage', { count: documents.length }) : t('tools.successMessage', { name: documents[0].name }),
+        [
+          documents.length > 1
+            ? t('tools.successManyMessage', { count: documents.length })
+            : t('tools.successMessage', { name: documents[0].name }),
+          // A tool whose whole job is to make the file smaller has to show what
+          // it achieved. Without this the viewer taps Compress, sees "ready",
+          // and has no way to tell whether anything happened at all.
+          outcome ? t('tools.compressResult', {
+            before: formatBytes(outcome.beforeBytes),
+            after: formatBytes(outcome.afterBytes),
+            percent: Math.max(1, Math.round((1 - outcome.afterBytes / outcome.beforeBytes) * 100))
+          }) : ''
+        ].filter(Boolean).join('\n\n'),
         [
           { text: t('common.done'), onPress: showFollowUpAd },
           { text: t('common.open'), onPress: () => { deferFollowUpAd(); router.push({ pathname: '/reader/[id]', params: { id: documents[0].id } }); } }
@@ -100,6 +160,22 @@ export default function ToolsScreen() {
     } catch (error) {
       const code = typeof error === 'object' && error !== null ? (error as { code?: string }).code : undefined;
       if (code === COMPRESSION_NO_GAIN) {
+        const staged = typeof error === 'object' && error !== null ? (error as ToolError).source : undefined;
+        if (staged) {
+          // Repacking the file structure won nothing, which means the weight is
+          // in the pictures. Re-encoding them is lossy, so it is offered rather
+          // than done: the viewer asked for a smaller file, not for a document
+          // they did not agree to change. Declining leaves the original alone.
+          Alert.alert(
+            t('tools.compressTitle'),
+            t('tools.compressLossyMessage'),
+            [
+              { text: t('common.cancel'), style: 'cancel' },
+              { text: t('tools.run'), onPress: () => { void runLossyCompression(staged); } }
+            ]
+          );
+          return;
+        }
         // A file that is already compact is a normal answer, not a fault, so it
         // is reported with the neutral title rather than the error one.
         Alert.alert(t('tools.infoTitle'), error instanceof Error ? error.message : t('tools.compressionNoGain'));
@@ -119,7 +195,7 @@ export default function ToolsScreen() {
     } finally {
       setBusy(false);
     }
-  }, [addGeneratedDocument, busy, t]);
+  }, [addGeneratedDocument, busy, runLossyCompression, t]);
 
   const start = useCallback((id: PdfToolId) => {
     if (['split', 'extract', 'remove', 'reorder', 'watermark', 'create'].includes(id)) {

@@ -108,6 +108,44 @@ if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSour
 if (!appConfigSource.includes("['expo-router', { sitemap: false }]")) fail('Expo Router sitemap production buildde kapalı değil.');
 if (!appConfigSource.includes("{ scheme: 'content', mimeType: 'application/octet-stream' }")) fail('PDF dış açma intent filtresinde application/octet-stream desteği eksik.');
 
+// --- Filigran: sessiz yanlis sonuc bir daha olmasin ---------------------
+// Eski kod, gomulu fontun cizemedigi her karakteri bosluga cevirip geriye bir
+// sey kalmayinca belgeye "PDF" basiyordu. Rusca СЕКРЕТНО yazan kullanici
+// belgesinde "PDF" goruyordu - ve uygulama basarili diyordu. Bir aracin
+// istenenden baska bir sey yapip basardim demesi, yapamam demesinden kotudur.
+const toolsLibSource = text('lib/pdfTools.ts');
+exists('assets/fonts/NotoSans-Watermark.ttf');
+if (!packageJson.dependencies?.['@pdf-lib/fontkit']) fail('Unicode filigran için @pdf-lib/fontkit eksik.');
+if (!packageJson.dependencies?.['expo-asset']) fail('Font varlığını okumak için expo-asset eksik.');
+if (!toolsLibSource.includes('function prepareWatermark')) fail('Filigran metni doğrulanmıyor; desteklenmeyen karakterler sessizce düşürülebilir.');
+if (!toolsLibSource.includes("t('tools.watermarkUnsupported'")) fail('Desteklenmeyen yazı sistemi kullanıcıya bildirilmiyor.');
+if (/\(ascii \|\| 'PDF'\)/.test(toolsLibSource)) fail('Filigranda "PDF" yedek metni geri gelmiş; bu sessiz yanlış sonuç demektir.');
+if (!toolsLibSource.includes('registerFontkit(fontkit)')) fail('Filigran gömülü Unicode fontunu kullanmıyor.');
+
+// --- Sikistirma: vaat, davranis ve sonuc ayni seyi soylemeli --------------
+// Magazanin kisa aciklamasi "compress PDF" diyor. Arac yalnizca dosya yapisini
+// toparlasaydi bu vaat karsilanmazdi; goruntuleri yeniden kodlama olmadan
+// taranmis bir belge kucultulemez. Kayipli gecis izin istemeden calismamali.
+if (!toolsLibSource.includes('export async function compressPdfWithImages')) fail('Görsel yeniden kodlayan ikinci sıkıştırma geçişi yok.');
+if (!toolsLibSource.includes('export type CompressOutcome')) fail('Sıkıştırma önce/sonra boyutunu döndürmüyor.');
+const toolsScreen = text('app/(tabs)/tools.tsx');
+if (!toolsScreen.includes("t('tools.compressResult'")) fail('Sıkıştırma sonucu kullanıcıya gösterilmiyor.');
+if (!toolsScreen.includes("t('tools.compressLossyMessage')")) fail('Kayıplı sıkıştırma için kullanıcı onayı sorulmuyor.');
+if (!toolsScreen.includes('runLossyCompression(staged)')) fail('Kayıplı geçiş yalnızca onaydan sonra çalışmıyor olabilir.');
+
+// Yeniden kodlama yalnizca DeviceRGB akislara dokunabilir. DeviceGray hem
+// seffaflik maskelerinin kendi renk uzayi hem de kodlayicinin uc kanalli JPEG
+// dondurdugu durum; ikisinde de sayfa buyuk degil, yanlis cizilir. Ayrica yeni
+// akis DeviceRGB sozluguyle yazildigi icin gercekten uc kanalli oldugu JPEG
+// basligindan dogrulanmali - "kodlayici herhalde boyle yapar" bir dogrulama
+// degildir.
+if (toolsLibSource.includes("PDFName.of('DeviceGray')")) fail('Sıkıştırma DeviceGray akışlara dokunuyor; maske ve renk uzayı bozulabilir.');
+if (!toolsLibSource.includes('function jpegComponentCount')) fail('Yeniden kodlanan JPEG kanal sayısı doğrulanmıyor.');
+if (!toolsLibSource.includes('if (jpegComponentCount(bytes) !== 3) continue;')) fail('Kanal sayısı doğrulanmadan akış değiştiriliyor.');
+
+// --- Meta veri: tarihler da meta veridir ---------------------------------
+if (!toolsLibSource.includes('input.setCreationDate(cleared)') || !toolsLibSource.includes('input.setModificationDate(cleared)')) fail('Meta veri temizlemede tarihler bırakılıyor.');
+
 const workflowSource = text('.github/workflows/expo-android.yml');
 // Uygulama adlari bir zamanlar hem burada hem workflow'da sabit yaziliydi.
 // Buradaki liste 24 dile cikarildi, workflow'daki 14'te kaldi ve uygulama adi
@@ -211,7 +249,9 @@ if (!readerSource.includes("edges={['bottom','left','right']}") || !readerSource
 if (!readerSource.includes('router.canGoBack()') || !readerSource.includes('LOAD_TIMEOUT_MS')) fail('Okuyucu için garantili çıkış yolu veya yükleme zaman aşımı koruması eksik.');
 if (!incomingHandlerSource.includes('handledParams.current.has(incomingPdf)')) fail('Harici PDF açılışında geri tuşunu kilitleyen tekrar yönlendirme koruması eksik.');
 if (!toolsSource.includes('stagePdfForPrint(source.uri)') || toolsSource.includes('await Print.printAsync({ uri: source.uri })')) fail('Yazdırma, spooler hâlâ okurken silinen geçici dosyayı kullanıyor.');
-if (!toolsSource.includes("if (!text.trim()) throw new Error(t('tools.watermarkEmpty'))")) fail('Boş filigran metni doğrulaması eksik.');
+// Bos filigran hala reddedilmeli. Kontrol prepareWatermark'a tasindi; kapi
+// artik satirin tam metnini degil, davranisin yerinde durdugunu ariyor.
+if (!toolsSource.includes("if (!text) throw new Error(t('tools.watermarkEmpty'))")) fail('Boş filigran metni doğrulaması eksik.');
 if (!toolsSource.includes('MAX_PNG_PIXELS') || !toolsSource.includes('enforceImageBudget')) fail('Resimden PDF için tepe bellek sınırlaması eksik.');
 if (!pdfFilesSource.includes('IMPORT_STAGING_PREFIX') || !pdfFilesSource.includes('cleanupPdfPrintCache')) fail('content:// görünen ad çözümü veya yazdırma önbelleği temizliği eksik.');
 if (i18nSource.includes('Privacy & messaging')) fail('Kullanıcıya AdMob geliştirici konsolu yönergesi gösteriliyor.');

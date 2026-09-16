@@ -2,14 +2,16 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 import * as Print from 'expo-print';
+import { Asset } from 'expo-asset';
 import { File, Paths } from 'expo-file-system';
-import { PDFDocument, PDFImage, StandardFonts, degrees, rgb } from 'pdf-lib';
+import fontkit from '@pdf-lib/fontkit';
+import { PDFDocument, PDFImage, degrees, rgb } from 'pdf-lib';
 import { PdfDocument } from '@/types/document';
 import { deletePdfFile, saveGeneratedPdf, stagePdfForPrint } from '@/lib/pdfFiles';
 import { t } from '@/constants/i18n';
 
 export type PdfToolId = 'scan' | 'images' | 'create' | 'merge' | 'split' | 'extract' | 'remove' | 'reorder' | 'rotate' | 'watermark' | 'compress' | 'clean' | 'print';
-export type PdfToolResult = PdfDocument | PdfDocument[] | null;
+export type PdfToolResult = PdfDocument | PdfDocument[] | CompressOutcome | null;
 
 /**
  * NEW-01: marks the camera permission failure that Android will never prompt
@@ -24,7 +26,7 @@ export const CAMERA_PERMISSION_BLOCKED = 'camera_permission_blocked';
  * code to present it as information instead.
  */
 export const COMPRESSION_NO_GAIN = 'compression_no_gain';
-export type ToolError = Error & { code?: string };
+export type ToolError = Error & { code?: string; source?: { name: string; uri: string; size: number } };
 
 const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
 // Merge is the only tool that holds every source document in memory at once and
@@ -213,10 +215,46 @@ function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character] || character));
 }
 
-function safeWatermark(value: string) {
-  const mapped = value.replace(/ı/g, 'i').replace(/İ/g, 'I').replace(/ş/g, 's').replace(/Ş/g, 'S').replace(/ğ/g, 'g').replace(/Ğ/g, 'G');
-  const ascii = mapped.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^\x20-\x7E]/g, ' ').replace(/\s+/g, ' ').trim();
-  return (ascii || 'PDF').slice(0, 80);
+const WATERMARK_MAX_CHARS = 80;
+
+/**
+ * The scripts the bundled font can actually draw.
+ *
+ * This is not a preference, it is the contents of
+ * assets/fonts/NotoSans-Watermark.ttf: Latin with its extensions, Vietnamese,
+ * Cyrillic and Greek. Arabic, the Indic scripts, Thai and CJK each need their
+ * own font, and CJK alone would add several megabytes to the download.
+ *
+ * What this replaces matters more than what it adds. The old code mapped every
+ * character the base font could not encode to a space and fell back to the
+ * literal string "PDF" when nothing survived. A Russian viewer typed
+ * SEKRETNO in Cyrillic, the app reported success, and stamped "PDF" across
+ * their document. Turkish lost its dotted capital I, Vietnamese lost its tones.
+ * A tool that quietly does something other than what it was asked is worse than
+ * one that says it cannot.
+ */
+const WATERMARK_SUPPORTED = /^[\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}\p{Script=Common}\p{Script=Inherited}]*$/u;
+
+/** Characters the font has no glyph for, deduplicated, to name in the message. */
+function unsupportedWatermarkCharacters(value: string) {
+  const missing: string[] = [];
+  for (const character of value) {
+    if (character === ' ' || WATERMARK_SUPPORTED.test(character)) continue;
+    if (!missing.includes(character)) missing.push(character);
+  }
+  return missing;
+}
+
+/**
+ * Normalises the watermark and refuses anything the font cannot draw, naming the
+ * characters so the viewer knows why.
+ */
+function prepareWatermark(value: string) {
+  const text = value.replace(/\s+/g, ' ').trim().slice(0, WATERMARK_MAX_CHARS);
+  if (!text) throw new Error(t('tools.watermarkEmpty'));
+  const missing = unsupportedWatermarkCharacters(text);
+  if (missing.length) throw new Error(t('tools.watermarkUnsupported', { characters: missing.slice(0, 8).join(' ') }));
+  return text;
 }
 
 export function parsePageRange(input: string, pageCount: number) {
@@ -373,13 +411,31 @@ export async function rotatePages(): Promise<PdfDocument | null> {
   return saveGeneratedPdf(await input.save({ useObjectStreams: true }), outputName(source.name, 'rotated'));
 }
 
+/**
+ * Loads the bundled Unicode font once per session.
+ *
+ * The asset is only read when somebody actually watermarks a document, so the
+ * 192 KB never touches memory for the viewers who never use the tool.
+ */
+let watermarkFontBytes: Uint8Array | null = null;
+async function loadWatermarkFont(): Promise<Uint8Array> {
+  if (watermarkFontBytes) return watermarkFontBytes;
+  const asset = Asset.fromModule(require('../assets/fonts/NotoSans-Watermark.ttf'));
+  await asset.downloadAsync();
+  const uri = asset.localUri || asset.uri;
+  watermarkFontBytes = await new File(uri).bytes();
+  return watermarkFontBytes;
+}
+
 export async function addWatermark(text: string): Promise<PdfDocument | null> {
-  if (!text.trim()) throw new Error(t('tools.watermarkEmpty'));
+  // Validated before the picker opens: being asked to choose a file and only
+  // then told the text cannot be used wastes the viewer's time.
+  const watermark = prepareWatermark(text);
   const [source] = await pickPdfs(false);
   if (!source) return null;
   const input = await loadPdf(source);
-  const font = await input.embedFont(StandardFonts.HelveticaBold);
-  const watermark = safeWatermark(text);
+  input.registerFontkit(fontkit);
+  const font = await input.embedFont(await loadWatermarkFont(), { subset: true });
   input.getPages().forEach((page) => {
     const { width, height } = page.getSize();
     const size = Math.max(24, Math.min(64, width / Math.max(8, watermark.length * 0.55)));
@@ -389,17 +445,193 @@ export async function addWatermark(text: string): Promise<PdfDocument | null> {
   return saveGeneratedPdf(await input.save({ useObjectStreams: true }), outputName(source.name, 'watermarked'));
 }
 
-export async function compressPdf(): Promise<PdfDocument | null> {
+/**
+ * Re-encodes the photographs inside a PDF.
+ *
+ * This is the only way to make a scanned document meaningfully smaller: its
+ * weight is in its images, and repacking the file structure - which is all the
+ * lossless pass can do - never touches them. pdf-lib has no image encoder, so
+ * each picture is written out, re-encoded through the platform encoder at a
+ * lower resolution and quality, and put back in place of the original stream.
+ *
+ * It only touches streams it is certain about:
+ *   - /Subtype /Image carrying a plain JPEG payload (/DCTDecode, no chain)
+ *   - DeviceRGB at 8 bits per component
+ *   - no /SMask, /Mask, /Decode or /ColorSpace indirection
+ *   - big enough that re-encoding can actually win something
+ * Anything else is left exactly as it was. A picture put back wrongly does not
+ * look worse, it corrupts the page - so when in doubt this does nothing.
+ *
+ * DeviceGray is deliberately excluded even though grey scans would compress
+ * well. Two reasons, and either one on its own is enough. A soft mask - the
+ * channel that makes part of a picture transparent - is itself an image object
+ * with /Subtype /Image and DeviceGray, and it is reached from another image's
+ * /SMask, so skipping images that *have* an /SMask does not skip the mask. And
+ * the platform encoder returns a three channel JPEG, so a grey stream comes
+ * back as colour and the dictionary would have to be rewritten to match. Either
+ * way the page renders wrong rather than merely larger. Grey pages stay as they
+ * are; the lossless pass still repacks the file around them.
+ */
+const COMPRESS_IMAGE_MAX_EDGE = 1400;
+const COMPRESS_IMAGE_QUALITY = 0.6;
+/** Below this a re-encode costs more in overhead than it saves. */
+const COMPRESS_IMAGE_MIN_BYTES = 48 * 1024;
+
+/**
+ * Number of colour channels a JPEG actually carries, read from its frame
+ * header. The encoder is expected to return three (YCbCr), but "expected" is
+ * not "verified", and writing /DeviceRGB over a single channel payload is
+ * exactly the kind of quietly corrupted page this whole pass is built to avoid.
+ * Returns 0 when the markers cannot be walked, which means: leave it alone.
+ */
+function jpegComponentCount(bytes: Uint8Array) {
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) return 0;
+  let offset = 2;
+  while (offset + 3 < bytes.length) {
+    if (bytes[offset] !== 0xff) return 0;
+    const marker = bytes[offset + 1];
+    if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) { offset += 2; continue; }
+    if (marker === 0xd9 || marker === 0xda) return 0;
+    const length = (bytes[offset + 2] << 8) | bytes[offset + 3];
+    if (length < 2) return 0;
+    // SOF0/1/2/3, 5/6/7, 9/10/11, 13/14/15 - every frame header except the
+    // DHT/DAC/DRI markers that share the 0xC0 block.
+    const isFrameHeader = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isFrameHeader) return offset + 9 < bytes.length ? bytes[offset + 9] : 0;
+    offset += 2 + length;
+  }
+  return 0;
+}
+
+async function recompressImages(document: PDFDocument): Promise<number> {
+  const { PDFName, PDFRawStream, PDFNumber } = await import('pdf-lib');
+  let replaced = 0;
+
+  for (const [ref, object] of document.context.enumerateIndirectObjects()) {
+    if (!(object instanceof PDFRawStream)) continue;
+    const dict = object.dict;
+    if (dict.get(PDFName.of('Subtype')) !== PDFName.of('Image')) continue;
+    if (dict.get(PDFName.of('Filter')) !== PDFName.of('DCTDecode')) continue;
+    if (dict.get(PDFName.of('ColorSpace')) !== PDFName.of('DeviceRGB')) continue;
+    if (dict.get(PDFName.of('SMask')) || dict.get(PDFName.of('Mask')) || dict.get(PDFName.of('Decode'))) continue;
+    const bits = dict.get(PDFName.of('BitsPerComponent'));
+    if (bits instanceof PDFNumber && bits.asNumber() !== 8) continue;
+
+    const original = object.getContents();
+    if (original.length < COMPRESS_IMAGE_MIN_BYTES) continue;
+
+    const scratch = new File(Paths.cache, `recompress-${replaced}-${Date.now()}.jpg`);
+    let savedUri: string | null = null;
+    try {
+      scratch.create({ overwrite: true });
+      scratch.write(original);
+      const measured = await ImageManipulator.manipulate(scratch.uri).renderAsync();
+      const longestEdge = Math.max(measured.width, measured.height);
+      if (!Number.isFinite(longestEdge) || longestEdge < 2) continue;
+
+      const context = ImageManipulator.manipulate(scratch.uri);
+      if (longestEdge > COMPRESS_IMAGE_MAX_EDGE) {
+        context.resize(measured.width >= measured.height
+          ? { width: COMPRESS_IMAGE_MAX_EDGE }
+          : { height: COMPRESS_IMAGE_MAX_EDGE });
+      }
+      const rendered = await context.renderAsync();
+      const saved = await rendered.saveAsync({ compress: COMPRESS_IMAGE_QUALITY, format: SaveFormat.JPEG });
+      savedUri = saved.uri;
+      const bytes = await new File(saved.uri).bytes();
+      // A re-encode that grew the picture is a re-encode not worth keeping.
+      if (!bytes.length || bytes.length >= original.length) continue;
+      // The dictionary says DeviceRGB, so the payload has to have three
+      // channels. If it does not, or the header cannot be read, the original
+      // stream stays: a slightly larger file beats a wrongly rendered page.
+      if (jpegComponentCount(bytes) !== 3) continue;
+
+      const replacement = PDFRawStream.of(dict.clone(document.context), bytes);
+      replacement.dict.set(PDFName.of('Width'), PDFNumber.of(rendered.width));
+      replacement.dict.set(PDFName.of('Height'), PDFNumber.of(rendered.height));
+      replacement.dict.set(PDFName.of('Length'), PDFNumber.of(bytes.length));
+      document.context.assign(ref, replacement);
+      replaced += 1;
+    } catch {
+      // One picture that refuses to re-encode must not cost the whole document.
+    } finally {
+      if (savedUri) cleanupCacheFile(savedUri);
+      cleanupCacheFile(scratch.uri);
+      // Let the bridge reclaim the decoded bitmap before the next page.
+      await new Promise<void>((resolve) => { setTimeout(resolve, 0); });
+    }
+  }
+  return replaced;
+}
+
+/** Narrows the tool runner's union without it having to know each tool's shape. */
+export function isCompressOutcome(value: unknown): value is CompressOutcome {
+  return typeof value === 'object' && value !== null && 'beforeBytes' in value && 'afterBytes' in value;
+}
+
+/**
+ * Sizes as a person reads them. Kept here so the before and after in one
+ * sentence are always produced by the same rounding.
+ */
+export function formatBytes(bytes: number) {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  if (bytes >= 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${bytes} B`;
+}
+
+export type CompressOutcome = {
+  document: PdfDocument;
+  beforeBytes: number;
+  afterBytes: number;
+};
+
+/**
+ * Pass one: repack the file structure. Lossless, and enough on documents whose
+ * weight is bookkeeping rather than pictures.
+ *
+ * When it wins nothing the caller is told the document has images that could be
+ * re-encoded, so it can ask the viewer before touching their picture quality.
+ * Nothing here degrades a document without being asked.
+ */
+export async function compressPdf(): Promise<CompressOutcome | null> {
   const [source] = await pickPdfs(false);
   if (!source) return null;
   const input = await loadPdf(source);
-  const optimized = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
-  if (source.size > 0 && optimized.length >= source.size) {
-    const outcome = new Error(t('tools.compressionNoGain')) as Error & { code?: string };
+  const repacked = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
+
+  if (source.size > 0 && repacked.length < source.size) {
+    return {
+      document: saveGeneratedPdf(repacked, outputName(source.name, 'compressed')),
+      beforeBytes: source.size,
+      afterBytes: repacked.length
+    };
+  }
+
+  const outcome = new Error(t('tools.compressionNoGain')) as ToolError;
+  outcome.code = COMPRESSION_NO_GAIN;
+  outcome.source = { name: source.name, uri: source.uri, size: source.size };
+  throw outcome;
+}
+
+/**
+ * Pass two, and only ever after the viewer has agreed to it: re-encode the
+ * pictures. Runs on the file the first pass already staged, so the viewer is
+ * not asked to choose their document a second time.
+ */
+export async function compressPdfWithImages(source: PickedPdf): Promise<CompressOutcome> {
+  const input = await loadPdf(source);
+  const replaced = await recompressImages(input);
+  const bytes = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
+  if (!replaced || (source.size > 0 && bytes.length >= source.size)) {
+    const outcome = new Error(t('tools.compressionNoGain')) as ToolError;
     outcome.code = COMPRESSION_NO_GAIN;
     throw outcome;
   }
-  return saveGeneratedPdf(optimized, outputName(source.name, 'compressed'));
+  return {
+    document: saveGeneratedPdf(bytes, outputName(source.name, 'compressed')),
+    beforeBytes: source.size,
+    afterBytes: bytes.length
+  };
 }
 
 export async function cleanMetadata(): Promise<PdfDocument | null> {
@@ -412,6 +644,14 @@ export async function cleanMetadata(): Promise<PdfDocument | null> {
   input.setKeywords([]);
   input.setCreator('');
   input.setProducer('');
+  // The dates are metadata too, and they are the part that actually leaks
+  // something: when a contract was drafted, when a scan was taken. Clearing the
+  // text fields while leaving the timestamps in place would be a half measure
+  // in an app that promises documents stay private. The epoch is used because
+  // the PDF structure expects dates to be present, not absent.
+  const cleared = new Date(0);
+  input.setCreationDate(cleared);
+  input.setModificationDate(cleared);
   return saveGeneratedPdf(await input.save({ useObjectStreams: true }), outputName(source.name, 'clean'));
 }
 

@@ -19,8 +19,10 @@
   },
   "dependencies": {
     "@kishannareshpal/expo-pdf": "0.3.2",
+    "@pdf-lib/fontkit": "^1.1.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.18",
+    "expo-asset": "~57.0.15",
     "expo-build-properties": "~57.0.15",
     "expo-constants": "~57.0.13",
     "expo-dev-client": "~57.0.16",
