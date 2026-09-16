@@ -108,6 +108,16 @@ if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSour
 if (!appConfigSource.includes("['expo-router', { sitemap: false }]")) fail('Expo Router sitemap production buildde kapalı değil.');
 if (!appConfigSource.includes("{ scheme: 'content', mimeType: 'application/octet-stream' }")) fail('PDF dış açma intent filtresinde application/octet-stream desteği eksik.');
 
+const workflowSource = text('.github/workflows/expo-android.yml');
+// Uygulama adlari bir zamanlar hem burada hem workflow'da sabit yaziliydi.
+// Buradaki liste 24 dile cikarildi, workflow'daki 14'te kaldi ve uygulama adi
+// degisince build, kodda hicbir hata olmadigi halde dustu. Iki kaynak bir arada
+// duramaz: workflow artik listeyi scripts/check-android-locales.mjs uzerinden
+// locales/*.json dosyalarindan turetiyor.
+if (!workflowSource.includes('node scripts/check-android-locales.mjs')) fail('Workflow, Android dil kontrolunu turetilmis betik uzerinden yapmiyor.');
+if (/^\s+(en|tr)\|PDF/m.test(workflowSource)) fail('Workflow icinde sabit uygulama adi listesi geri gelmis.');
+exists('scripts/check-android-locales.mjs');
+
 const pdfToolsSource = text('lib/pdfTools.ts');
 if (!pdfToolsSource.includes('const EMBED_MAX_EDGE = 1700')) fail('Gömme öncesi görsel küçültme sınırı kaldırılmış.');
 if (!pdfToolsSource.includes('const scaled = await downscaleForEmbedding(source.uri, isPng);')) fail('Görsel, PDF\'e gömülmeden önce küçültülmüyor.');

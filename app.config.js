@@ -129,7 +129,7 @@ module.exports = ({ config }) => ({
     [
       'expo-image-picker',
       {
-        cameraPermission: 'Allow PDF: Reader - Tools to use the camera to create a PDF from camera images.',
+        cameraPermission: 'Allow PDF Reader to use the camera to create a PDF from camera images.',
         photosPermission: false,
         microphonePermission: false
       }
