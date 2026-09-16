@@ -8,7 +8,7 @@ import { AppIcon } from '@/components/AppIcon';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { useTranslation } from '@/hooks/useTranslation';
 import { PdfDocument } from '@/types/document';
-import { CAMERA_PERMISSION_BLOCKED, COMPRESSION_NO_GAIN, CompressOutcome, PdfToolId, ToolError, addWatermark, cleanMetadata, compressPdf, compressPdfWithImages, createPdf, extractPages, formatBytes, imagesToPdf, isCompressOutcome, mergePdfs, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
+import { CAMERA_PERMISSION_BLOCKED, COMPRESSION_NO_GAIN, CompressOutcome, PdfToolId, ToolError, addWatermark, cleanMetadata, compressPdf, compressPdfWithImages, createPdf, discardStagedPdf, extractPages, formatBytes, imagesToPdf, isCompressOutcome, mergePdfs, printPdf, removePages, reorderPages, rotatePages, scanToPdf, splitPdf } from '@/lib/pdfTools';
 import { recordToolUse } from '@/lib/toolUsage';
 import { maybeAskForReview, noteSuccessfulRun } from '@/lib/reviewPrompt';
 import { markInterstitialPending, maybeShowPendingInterstitial, maybeShowToolInterstitial, noteToolRun, prepareToolAd } from '@/lib/adGate';
@@ -166,13 +166,17 @@ export default function ToolsScreen() {
           // in the pictures. Re-encoding them is lossy, so it is offered rather
           // than done: the viewer asked for a smaller file, not for a document
           // they did not agree to change. Declining leaves the original alone.
+          // The first pass kept the picked file on disk so this pass can read
+          // it. Declining has to release it, or the viewer's document sits in
+          // cache storage until Android decides to clear it.
           Alert.alert(
             t('tools.compressTitle'),
             t('tools.compressLossyMessage'),
             [
-              { text: t('common.cancel'), style: 'cancel' },
+              { text: t('common.cancel'), style: 'cancel', onPress: () => { discardStagedPdf(staged.uri); } },
               { text: t('tools.run'), onPress: () => { void runLossyCompression(staged); } }
-            ]
+            ],
+            { onDismiss: () => { discardStagedPdf(staged.uri); } }
           );
           return;
         }

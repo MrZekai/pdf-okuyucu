@@ -151,6 +151,16 @@ if (!toolsLibSource.includes('const MEANINGFUL_GAIN = 0.1')) fail('Kayıpsız s�
 if (!toolsLibSource.includes('if (gain >= MEANINGFUL_GAIN) return keepRepacked();')) fail('Kayıpsız sonuç eşiğe bakmadan döndürülüyor.');
 if (!toolsLibSource.includes('if (countRecompressableImages(input) > 0) {')) fail('Görsel geçişi, yeniden kodlanacak görsel olup olmadığına bakmadan öneriliyor.');
 if (!toolsLibSource.includes('function isRecompressableImage')) fail('Görsel seçim ölçütü tek yerde tanımlı değil; sayım ile iş birbirinden ayrılabilir.');
+
+// Iki gecisli sikistirmanin dosya omru. loadPdf, okudugu secici kopyasini
+// varsayilan olarak siler. Sikistirma ayni dosyayi iki kez okur ve arada
+// kullaniciya soru sorar; birinci gecis dosyayi silince ikinci gecis, kullanici
+// "devam et" dedikten SONRA ENOENT ile oluyordu. Onay alindiktan sonra basarisiz
+// olmak, hic denememekten kotudur.
+if (!toolsLibSource.includes('const input = await loadPdf(source, true);')) fail('Sıkıştırmanın ilk geçişi kaynağı ikinci geçiş için saklamıyor.');
+if (!toolsLibSource.includes('if (!keepSource) cleanupCacheFile(source.uri);')) fail('loadPdf kaynağı koşulsuz siliyor.');
+if (!toolsLibSource.includes('export function discardStagedPdf')) fail('Saklanan kaynağı serbest bırakacak yol yok.');
+if (!toolsScreen.includes('discardStagedPdf(staged.uri)')) fail('Kullanıcı vazgeçtiğinde saklanan dosya önbellekte kalıyor.');
 if (!toolsLibSource.includes('if (jpegComponentCount(bytes) !== 3) continue;')) fail('Kanal sayısı doğrulanmadan akış değiştiriliyor.');
 
 // --- Meta veri: tarihler da meta veridir ---------------------------------

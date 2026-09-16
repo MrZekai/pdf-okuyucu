@@ -108,13 +108,30 @@ async function pickImages(): Promise<PickedImage[]> {
   return files;
 }
 
-async function loadPdf(file: PickedPdf) {
+/**
+ * Reads a picked document and, by default, removes the copy the picker left in
+ * the cache: every tool here is a one shot operation, and leaving the user's
+ * documents lying around in cache storage is not something to do casually.
+ *
+ * `keepSource` exists for the one flow that reads the same file twice. Compress
+ * asks the viewer between its two passes, so the file has to survive that
+ * question. Without this the second pass opened a path the first pass had
+ * already deleted and the tool died with ENOENT after the viewer had said yes -
+ * the worst possible moment to fail. Whoever passes true owns the cleanup:
+ * discardStagedPdf on every path that does not go on to read it again.
+ */
+async function loadPdf(file: PickedPdf, keepSource = false) {
   const source = new File(file.uri);
   try {
     return await PDFDocument.load(await source.bytes(), { updateMetadata: false });
   } finally {
-    cleanupCacheFile(source.uri);
+    if (!keepSource) cleanupCacheFile(source.uri);
   }
+}
+
+/** Releases a file held back by loadPdf(..., true). Safe to call twice. */
+export function discardStagedPdf(uri: string) {
+  cleanupCacheFile(uri);
 }
 
 /**
@@ -631,14 +648,20 @@ const MEANINGFUL_GAIN = 0.1;
 export async function compressPdf(): Promise<CompressOutcome | null> {
   const [source] = await pickPdfs(false);
   if (!source) return null;
-  const input = await loadPdf(source);
+  // Held back deliberately: the second pass may still need this file, and the
+  // viewer is about to be asked a question in between. Every path below either
+  // hands it to that pass or releases it.
+  const input = await loadPdf(source, true);
   const repacked = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
 
-  const keepRepacked = (): CompressOutcome => ({
-    document: saveGeneratedPdf(repacked, outputName(source.name, 'compressed')),
-    beforeBytes: source.size,
-    afterBytes: repacked.length
-  });
+  const keepRepacked = (): CompressOutcome => {
+    discardStagedPdf(source.uri);
+    return {
+      document: saveGeneratedPdf(repacked, outputName(source.name, 'compressed')),
+      beforeBytes: source.size,
+      afterBytes: repacked.length
+    };
+  };
 
   const gain = source.size > 0 ? 1 - repacked.length / source.size : 0;
   if (gain >= MEANINGFUL_GAIN) return keepRepacked();
@@ -648,7 +671,8 @@ export async function compressPdf(): Promise<CompressOutcome | null> {
   if (countRecompressableImages(input) > 0) {
     // Only offer the second pass when there is something for it to do. Asking a
     // viewer to approve lower picture quality on a document whose pictures this
-    // app cannot touch would spend their trust on nothing.
+    // app cannot touch would spend their trust on nothing. The file stays on
+    // disk until they answer; the caller releases it if they decline.
     outcome.source = { name: source.name, uri: source.uri, size: source.size };
     throw outcome;
   }
@@ -656,6 +680,7 @@ export async function compressPdf(): Promise<CompressOutcome | null> {
   // No pictures to re-encode. A small lossless win is then the best available
   // answer and worth keeping rather than discarding.
   if (source.size > 0 && repacked.length < source.size) return keepRepacked();
+  discardStagedPdf(source.uri);
   throw outcome;
 }
 
