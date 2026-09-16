@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF دبائیں',
   'tools.compressDesc':'بھیجنے کے لیے فائل چھوٹی کریں',
   'tools.compressResult': '{before} ← {after} ({percent}% چھوٹی)',
-  'tools.compressLossyMessage': 'اس PDF کو اس کی تصاویر چھوئے بغیر چھوٹا نہیں کیا جا سکا۔ تصویری معیار کم کر کے چھوٹا کریں؟',
+  'tools.compressLossyMessage': 'اس PDF کو اس کی تصاویر چھوئے بغیر زیادہ چھوٹا نہیں کیا جا سکا۔ تصویری معیار کم کر کے چھوٹا کریں؟',
   'tools.cleanTitle':'میٹا ڈیٹا صاف کریں',
   'tools.cleanDesc':'عنوان، مصنف اور موضوع کے خانے ہٹائیں',
   'tools.printTitle':'PDF پرنٹ کریں',

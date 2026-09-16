@@ -5,7 +5,7 @@ import * as Print from 'expo-print';
 import { Asset } from 'expo-asset';
 import { File, Paths } from 'expo-file-system';
 import fontkit from '@pdf-lib/fontkit';
-import { PDFDocument, PDFImage, degrees, rgb } from 'pdf-lib';
+import { PDFDocument, PDFImage, PDFName, PDFNumber, PDFRawStream, degrees, rgb } from 'pdf-lib';
 import { PdfDocument } from '@/types/document';
 import { deletePdfFile, saveGeneratedPdf, stagePdfForPrint } from '@/lib/pdfFiles';
 import { t } from '@/constants/i18n';
@@ -503,22 +503,42 @@ function jpegComponentCount(bytes: Uint8Array) {
   return 0;
 }
 
+/**
+ * The single definition of "a picture this tool may re-encode".
+ *
+ * It has to be one function because two different places ask the question: the
+ * pass that does the work, and the check that decides whether to offer the pass
+ * at all. If those two ever disagreed, the app would either offer to re-encode
+ * a document with nothing to re-encode, or stay silent about one it could have
+ * halved. Both are the tool lying about itself.
+ */
+function isRecompressableImage(object: unknown): object is PDFRawStream {
+  if (!(object instanceof PDFRawStream)) return false;
+  const dict = object.dict;
+  if (dict.get(PDFName.of('Subtype')) !== PDFName.of('Image')) return false;
+  if (dict.get(PDFName.of('Filter')) !== PDFName.of('DCTDecode')) return false;
+  if (dict.get(PDFName.of('ColorSpace')) !== PDFName.of('DeviceRGB')) return false;
+  if (dict.get(PDFName.of('SMask')) || dict.get(PDFName.of('Mask')) || dict.get(PDFName.of('Decode'))) return false;
+  const bits = dict.get(PDFName.of('BitsPerComponent'));
+  if (bits instanceof PDFNumber && bits.asNumber() !== 8) return false;
+  return object.getContents().length >= COMPRESS_IMAGE_MIN_BYTES;
+}
+
+function countRecompressableImages(document: PDFDocument) {
+  let count = 0;
+  for (const [, object] of document.context.enumerateIndirectObjects()) {
+    if (isRecompressableImage(object)) count += 1;
+  }
+  return count;
+}
+
 async function recompressImages(document: PDFDocument): Promise<number> {
-  const { PDFName, PDFRawStream, PDFNumber } = await import('pdf-lib');
   let replaced = 0;
 
   for (const [ref, object] of document.context.enumerateIndirectObjects()) {
-    if (!(object instanceof PDFRawStream)) continue;
+    if (!isRecompressableImage(object)) continue;
     const dict = object.dict;
-    if (dict.get(PDFName.of('Subtype')) !== PDFName.of('Image')) continue;
-    if (dict.get(PDFName.of('Filter')) !== PDFName.of('DCTDecode')) continue;
-    if (dict.get(PDFName.of('ColorSpace')) !== PDFName.of('DeviceRGB')) continue;
-    if (dict.get(PDFName.of('SMask')) || dict.get(PDFName.of('Mask')) || dict.get(PDFName.of('Decode'))) continue;
-    const bits = dict.get(PDFName.of('BitsPerComponent'));
-    if (bits instanceof PDFNumber && bits.asNumber() !== 8) continue;
-
     const original = object.getContents();
-    if (original.length < COMPRESS_IMAGE_MIN_BYTES) continue;
 
     const scratch = new File(Paths.cache, `recompress-${replaced}-${Date.now()}.jpg`);
     let savedUri: string | null = null;
@@ -586,11 +606,26 @@ export type CompressOutcome = {
 };
 
 /**
+ * Anything under this and the repack has not delivered what the tool's name
+ * promises. A scan repacked from 3.9 MB to 3.9 MB is not a compressed document;
+ * showing "3.9 MB -> 3.9 MB (1% smaller)" and stopping there is the tool
+ * declaring success for work nobody asked for. Above this the viewer keeps a
+ * lossless file and is never asked to trade away picture quality.
+ */
+const MEANINGFUL_GAIN = 0.1;
+
+/**
  * Pass one: repack the file structure. Lossless, and enough on documents whose
  * weight is bookkeeping rather than pictures.
  *
- * When it wins nothing the caller is told the document has images that could be
- * re-encoded, so it can ask the viewer before touching their picture quality.
+ * Three outcomes, in order:
+ *   - the repack won something worth having, so it is returned;
+ *   - it did not, but the document carries pictures this app can re-encode, so
+ *     the caller is handed the staged file and asks the viewer first;
+ *   - it did not and there is nothing to re-encode, which is simply the answer:
+ *     the file is already compact.
+ * A token win on a document full of photographs falls into the second case, not
+ * the first - that mistake is exactly what made this tool useless on scans.
  * Nothing here degrades a document without being asked.
  */
 export async function compressPdf(): Promise<CompressOutcome | null> {
@@ -599,17 +634,28 @@ export async function compressPdf(): Promise<CompressOutcome | null> {
   const input = await loadPdf(source);
   const repacked = await input.save({ useObjectStreams: true, addDefaultPage: false, objectsPerTick: 25 });
 
-  if (source.size > 0 && repacked.length < source.size) {
-    return {
-      document: saveGeneratedPdf(repacked, outputName(source.name, 'compressed')),
-      beforeBytes: source.size,
-      afterBytes: repacked.length
-    };
-  }
+  const keepRepacked = (): CompressOutcome => ({
+    document: saveGeneratedPdf(repacked, outputName(source.name, 'compressed')),
+    beforeBytes: source.size,
+    afterBytes: repacked.length
+  });
+
+  const gain = source.size > 0 ? 1 - repacked.length / source.size : 0;
+  if (gain >= MEANINGFUL_GAIN) return keepRepacked();
 
   const outcome = new Error(t('tools.compressionNoGain')) as ToolError;
   outcome.code = COMPRESSION_NO_GAIN;
-  outcome.source = { name: source.name, uri: source.uri, size: source.size };
+  if (countRecompressableImages(input) > 0) {
+    // Only offer the second pass when there is something for it to do. Asking a
+    // viewer to approve lower picture quality on a document whose pictures this
+    // app cannot touch would spend their trust on nothing.
+    outcome.source = { name: source.name, uri: source.uri, size: source.size };
+    throw outcome;
+  }
+
+  // No pictures to re-encode. A small lossless win is then the best available
+  // answer and worth keeping rather than discarding.
+  if (source.size > 0 && repacked.length < source.size) return keepRepacked();
   throw outcome;
 }
 

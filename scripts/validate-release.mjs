@@ -141,6 +141,16 @@ if (!toolsScreen.includes('runLossyCompression(staged)')) fail('Kayıplı geçi�
 // degildir.
 if (toolsLibSource.includes("PDFName.of('DeviceGray')")) fail('Sıkıştırma DeviceGray akışlara dokunuyor; maske ve renk uzayı bozulabilir.');
 if (!toolsLibSource.includes('function jpegComponentCount')) fail('Yeniden kodlanan JPEG kanal sayısı doğrulanmıyor.');
+
+// Kayipsiz gecisin "kazandim" esigi. Ilk surumde kosul `repacked < source` idi:
+// tek baytlik kazanc bile basari sayiliyordu. Taranmis bir belgede yeniden
+// paketleme %1 kazanir, arac "3.9 MB -> 3.9 MB" yazip dururdu ve gercekten ise
+// yarayacak goruntu gecisi hic onerilmezdi. Kullanicinin gordugu sey, araci
+// calistirip hicbir sey olmamasiydi.
+if (!toolsLibSource.includes('const MEANINGFUL_GAIN = 0.1')) fail('Kayıpsız sıkıştırma için anlamlı kazanç eşiği yok.');
+if (!toolsLibSource.includes('if (gain >= MEANINGFUL_GAIN) return keepRepacked();')) fail('Kayıpsız sonuç eşiğe bakmadan döndürülüyor.');
+if (!toolsLibSource.includes('if (countRecompressableImages(input) > 0) {')) fail('Görsel geçişi, yeniden kodlanacak görsel olup olmadığına bakmadan öneriliyor.');
+if (!toolsLibSource.includes('function isRecompressableImage')) fail('Görsel seçim ölçütü tek yerde tanımlı değil; sayım ile iş birbirinden ayrılabilir.');
 if (!toolsLibSource.includes('if (jpegComponentCount(bytes) !== 3) continue;')) fail('Kanal sayısı doğrulanmadan akış değiştiriliyor.');
 
 // --- Meta veri: tarihler da meta veridir ---------------------------------

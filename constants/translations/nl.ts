@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF comprimeren',
   'tools.compressDesc':'Maak het bestand kleiner om te versturen',
   'tools.compressResult': '{before} → {after} ({percent}% kleiner)',
-  'tools.compressLossyMessage': 'Deze PDF kon niet kleiner worden zonder de afbeeldingen aan te raken. Beeldkwaliteit verlagen om te comprimeren?',
+  'tools.compressLossyMessage': 'Deze PDF kon niet noemenswaardig kleiner worden zonder de afbeeldingen aan te raken. Beeldkwaliteit verlagen om te comprimeren?',
   'tools.cleanTitle':'Metadata wissen',
   'tools.cleanDesc':'Verwijder titel-, auteur- en onderwerpvelden',
   'tools.printTitle':'PDF afdrukken',

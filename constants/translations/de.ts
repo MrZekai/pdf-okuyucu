@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF verkleinern',
   'tools.compressDesc':'Dateigröße zum Versenden reduzieren',
   'tools.compressResult': '{before} → {after} ({percent}% kleiner)',
-  'tools.compressLossyMessage': 'Dieses PDF ließ sich ohne Eingriff in die Bilder nicht verkleinern. Bildqualität verringern, um es zu verkleinern?',
+  'tools.compressLossyMessage': 'Dieses PDF ließ sich ohne Eingriff in die Bilder nicht nennenswert verkleinern. Bildqualität verringern, um es zu verkleinern?',
   'tools.cleanTitle':'Metadaten bereinigen',
   'tools.cleanDesc':'Titel-, Autor- und Betrefffelder entfernen',
   'tools.printTitle':'PDF drucken',

@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Nén PDF',
   'tools.compressDesc':'Thu nhỏ tệp để gửi đi',
   'tools.compressResult': '{before} → {after} (nhỏ hơn {percent}%)',
-  'tools.compressLossyMessage': 'Không thể thu nhỏ PDF này mà không đụng tới ảnh. Giảm chất lượng ảnh để nén lại?',
+  'tools.compressLossyMessage': 'Không thể thu nhỏ PDF này đáng kể mà không đụng tới ảnh. Giảm chất lượng ảnh để nén lại?',
   'tools.cleanTitle':'Xóa siêu dữ liệu',
   'tools.cleanDesc':'Xóa tiêu đề, tác giả và chủ đề',
   'tools.printTitle':'In PDF',

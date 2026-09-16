@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Kompresuj PDF',
   'tools.compressDesc':'Zmniejsz plik, aby go wysłać',
   'tools.compressResult': '{before} → {after} (mniejszy o {percent}%)',
-  'tools.compressLossyMessage': 'Tego PDF nie dało się zmniejszyć bez ruszania obrazów. Obniżyć jakość obrazów, aby go skompresować?',
+  'tools.compressLossyMessage': 'Tego PDF nie dało się znacząco zmniejszyć bez ruszania obrazów. Obniżyć jakość obrazów, aby go skompresować?',
   'tools.cleanTitle':'Wyczyść metadane',
   'tools.cleanDesc':'Usuń pola tytułu, autora i tematu',
   'tools.printTitle':'Drukuj PDF',

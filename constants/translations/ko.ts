@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF 압축',
   'tools.compressDesc':'전송을 위해 파일 크기 줄이기',
   'tools.compressResult': '{before} → {after} ({percent}% 감소)',
-  'tools.compressLossyMessage': '이 PDF는 이미지를 건드리지 않고는 줄일 수 없었습니다. 이미지 품질을 낮춰 압축할까요?',
+  'tools.compressLossyMessage': '이 PDF는 이미지를 건드리지 않고는 크게 줄일 수 없었습니다. 이미지 품질을 낮춰 압축할까요?',
   'tools.cleanTitle':'메타데이터 정리',
   'tools.cleanDesc':'제목, 작성자, 주제 필드 삭제',
   'tools.printTitle':'PDF 인쇄',

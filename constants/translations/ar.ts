@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'ضغط PDF',
   'tools.compressDesc':'قلّل حجم الملف لإرساله',
   'tools.compressResult': '{before} ← {after} (أصغر بنسبة {percent}%)',
-  'tools.compressLossyMessage': 'تعذّر تصغير هذا الملف دون المساس بصوره. هل نخفّض جودة الصور لضغطه؟',
+  'tools.compressLossyMessage': 'تعذّر تصغير هذا الملف كثيرًا دون المساس بصوره. هل نخفّض جودة الصور لضغطه؟',
   'tools.cleanTitle':'تنظيف البيانات الوصفية',
   'tools.cleanDesc':'أزل حقول العنوان والمؤلف والموضوع',
   'tools.printTitle':'طباعة PDF',

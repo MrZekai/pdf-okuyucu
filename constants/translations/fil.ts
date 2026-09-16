@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'I-compress ang PDF',
   'tools.compressDesc':'Paliitin ang file para maipadala',
   'tools.compressResult': '{before} → {after} ({percent}% mas maliit)',
-  'tools.compressLossyMessage': 'Hindi napaliit ang PDF na ito nang hindi ginagalaw ang mga larawan. Babaan ang kalidad ng larawan para paliitin ito?',
+  'tools.compressLossyMessage': 'Hindi gaanong napaliit ang PDF na ito nang hindi ginagalaw ang mga larawan. Babaan ang kalidad ng larawan para paliitin ito?',
   'tools.cleanTitle':'Linisin ang metadata',
   'tools.cleanDesc':'Alisin ang pamagat, may-akda at paksa',
   'tools.printTitle':'I-print ang PDF',

@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Сжать PDF',
   'tools.compressDesc':'Уменьшить размер файла для отправки',
   'tools.compressResult': '{before} → {after} (меньше на {percent}%)',
-  'tools.compressLossyMessage': 'Этот PDF не удалось уменьшить, не затронув изображения. Снизить качество изображений, чтобы сжать его?',
+  'tools.compressLossyMessage': 'Этот PDF не удалось заметно уменьшить, не затронув изображения. Снизить качество изображений, чтобы сжать его?',
   'tools.cleanTitle':'Очистить метаданные',
   'tools.cleanDesc':'Удалить поля названия, автора и темы',
   'tools.printTitle':'Печать PDF',

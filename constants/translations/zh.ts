@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'压缩 PDF',
   'tools.compressDesc':'缩小文件便于发送',
   'tools.compressResult': '{before} → {after}（减少 {percent}%）',
-  'tools.compressLossyMessage': '不改动图片就无法缩小这个 PDF。要降低图片质量来压缩吗？',
+  'tools.compressLossyMessage': '不改动图片就无法明显缩小这个 PDF。要降低图片质量来压缩吗？',
   'tools.cleanTitle':'清除元数据',
   'tools.cleanDesc':'移除标题、作者和主题信息',
   'tools.printTitle':'打印 PDF',

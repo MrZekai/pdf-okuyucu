@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF কমপ্রেস করুন',
   'tools.compressDesc':'পাঠানোর জন্য ফাইল ছোট করুন',
   'tools.compressResult': '{before} → {after} ({percent}% ছোট)',
-  'tools.compressLossyMessage': 'ছবিতে হাত না দিয়ে এই PDF ছোট করা গেল না। ছবির মান কমিয়ে ছোট করব?',
+  'tools.compressLossyMessage': 'ছবিতে হাত না দিয়ে এই PDF উল্লেখযোগ্যভাবে ছোট করা গেল না। ছবির মান কমিয়ে ছোট করব?',
   'tools.cleanTitle':'মেটাডেটা পরিষ্কার',
   'tools.cleanDesc':'শিরোনাম, লেখক ও বিষয় মুছে ফেলুন',
   'tools.printTitle':'PDF প্রিন্ট করুন',

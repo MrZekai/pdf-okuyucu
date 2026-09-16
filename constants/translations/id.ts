@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Kompres PDF',
   'tools.compressDesc':'Perkecil ukuran berkas untuk dikirim',
   'tools.compressResult': '{before} → {after} ({percent}% lebih kecil)',
-  'tools.compressLossyMessage': 'PDF ini tidak bisa diperkecil tanpa mengubah gambarnya. Turunkan kualitas gambar untuk memperkecilnya?',
+  'tools.compressLossyMessage': 'PDF ini tidak bisa diperkecil banyak tanpa mengubah gambarnya. Turunkan kualitas gambar untuk memperkecilnya?',
   'tools.cleanTitle':'Bersihkan metadata',
   'tools.cleanDesc':'Hapus kolom judul, penulis, dan subjek',
   'tools.printTitle':'Cetak PDF',

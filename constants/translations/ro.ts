@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Comprimă PDF',
   'tools.compressDesc':'Micșorează fișierul pentru a-l trimite',
   'tools.compressResult': '{before} → {after} (cu {percent}% mai mic)',
-  'tools.compressLossyMessage': 'Acest PDF nu a putut fi micșorat fără a atinge imaginile. Reducem calitatea imaginilor ca să îl comprimăm?',
+  'tools.compressLossyMessage': 'Acest PDF nu a putut fi micșorat semnificativ fără a atinge imaginile. Reducem calitatea imaginilor ca să îl comprimăm?',
   'tools.cleanTitle':'Curăță metadatele',
   'tools.cleanDesc':'Elimină câmpurile titlu, autor și subiect',
   'tools.printTitle':'Tipărește PDF',

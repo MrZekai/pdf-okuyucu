@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'PDF कंप्रेस करें',
   'tools.compressDesc':'भेजने के लिए फ़ाइल छोटी करें',
   'tools.compressResult': '{before} → {after} ({percent}% छोटा)',
-  'tools.compressLossyMessage': 'यह PDF इसकी इमेज को छुए बिना छोटा नहीं हो सका। इमेज क्वालिटी घटाकर छोटा करें?',
+  'tools.compressLossyMessage': 'यह PDF इसकी इमेज को छुए बिना खास छोटा नहीं हो सका। इमेज क्वालिटी घटाकर छोटा करें?',
   'tools.cleanTitle':'मेटाडेटा साफ़ करें',
   'tools.cleanDesc':'शीर्षक, लेखक और विषय फ़ील्ड हटाएँ',
   'tools.printTitle':'PDF प्रिंट करें',

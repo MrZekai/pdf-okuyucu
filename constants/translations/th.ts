@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'บีบอัด PDF',
   'tools.compressDesc':'ลดขนาดไฟล์เพื่อส่งต่อ',
   'tools.compressResult': '{before} → {after} (เล็กลง {percent}%)',
-  'tools.compressLossyMessage': 'ลดขนาด PDF นี้ไม่ได้หากไม่แตะต้องรูปภาพ ลดคุณภาพรูปเพื่อบีบอัดไหม',
+  'tools.compressLossyMessage': 'ลดขนาด PDF นี้ได้ไม่มากหากไม่แตะต้องรูปภาพ ลดคุณภาพรูปเพื่อบีบอัดไหม',
   'tools.cleanTitle':'ล้างข้อมูลเมตา',
   'tools.cleanDesc':'ลบชื่อเรื่อง ผู้เขียน และหัวข้อ',
   'tools.printTitle':'พิมพ์ PDF',

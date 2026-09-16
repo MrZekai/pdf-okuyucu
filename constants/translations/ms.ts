@@ -68,7 +68,7 @@ export default {
   'tools.compressTitle':'Mampatkan PDF',
   'tools.compressDesc':'Kecilkan saiz fail untuk dihantar',
   'tools.compressResult': '{before} → {after} ({percent}% lebih kecil)',
-  'tools.compressLossyMessage': 'PDF ini tidak dapat dikecilkan tanpa menyentuh imejnya. Turunkan kualiti imej untuk memampatkannya?',
+  'tools.compressLossyMessage': 'PDF ini tidak dapat dikecilkan dengan ketara tanpa menyentuh imejnya. Turunkan kualiti imej untuk memampatkannya?',
   'tools.cleanTitle':'Bersihkan metadata',
   'tools.cleanDesc':'Buang medan tajuk, pengarang dan subjek',
   'tools.printTitle':'Cetak PDF',
