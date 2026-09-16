@@ -33,7 +33,7 @@ function pngSize(relativePath, expectedWidth, expectedHeight) {
 }
 
 if (config.android?.package !== 'com.aitolian.pdfokuyucu') fail('Android package beklenen com.aitolian.pdfokuyucu değil.');
-if (config.name !== 'PDF: Reader - Tools') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF: Reader - Tools olmalı.');
+if (config.name !== 'PDF Reader') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF Reader olmalı.');
 if (!Number.isInteger(config.android?.versionCode) || config.android.versionCode < 1) fail('android.versionCode pozitif tam sayı olmalı.');
 if (!config.android?.adaptiveIcon?.foregroundImage) fail('Adaptive icon foregroundImage eksik.');
 if (!config.icon) fail('Uygulama icon alanı eksik.');
@@ -51,6 +51,14 @@ exists('.env.example');
 if (packageJson.dependencies?.['pdf-lib'] !== '1.17.1') fail('Cihaz içi PDF araçları için pdf-lib 1.17.1 sabiti eksik.');
 if (!packageJson.dependencies?.['expo-image-picker']) fail('Kamera ile PDF tarama için expo-image-picker eksik.');
 if (!packageJson.dependencies?.['expo-print']) fail('PDF oluşturma/yazdırma için expo-print eksik.');
+// Kamera ve galeriden gelen gorsel, gomulmeden once kucultulur. Bu olmazsa
+// 12 MP'lik bir fotograf 4 MB olarak gomulur, uc fotograf 12 MB'lik bir PDF
+// uretir ve uygulamanin kendi Optimize araci onu kucultemez - cunku pdf-lib
+// belgenin icine girmis bir gorseli yeniden kodlayamaz. Sikayetin kaynagi
+// burasiydi; bu satirlardan biri duserse sessizce geri gelir.
+if (!packageJson.dependencies?.['expo-image-manipulator']) fail('Gorsel kucultme icin expo-image-manipulator eksik.');
+const manipulatorRange = packageJson.dependencies?.['expo-image-manipulator'] || '';
+if (!/^~57\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(manipulatorRange)) fail('expo-image-manipulator Expo SDK 57 tilde aralığında olmalı.');
 const packageLock = JSON.parse(text('package-lock.json'));
 if (packageLock.packages?.['']?.dependencies?.['pdf-lib'] !== '1.17.1' || packageLock.packages?.['node_modules/pdf-lib']?.version !== '1.17.1') fail('package-lock.json içindeki pdf-lib sabiti package.json ile eşleşmiyor.');
 const localizationRange = packageJson.dependencies?.['expo-localization'] || '';
@@ -70,9 +78,15 @@ for (const platform of ['android', 'ios']) {
     if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
   }
 }
-const expectedAppNames = { en:'PDF: Reader - Tools',tr:'PDF: Okuyucu - Araçları',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器',vi:'Đọc PDF',th:'อ่าน PDF',fil:'PDF Reader',ms:'Pembaca PDF',bn:'PDF রিডার',ur:'PDF ریڈر',pl:'Czytnik PDF',uk:'PDF читалка',nl:'PDF Reader',ro:'Cititor PDF' };
+const expectedAppNames = { en:'PDF Reader',tr:'PDF Okuyucu',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器',vi:'Đọc PDF',th:'อ่าน PDF',fil:'PDF Reader',ms:'Pembaca PDF',bn:'PDF রিডার',ur:'PDF ریڈر',pl:'Czytnik PDF',uk:'PDF читалка',nl:'PDF Reader',ro:'Cititor PDF' };
 for (const language of expectedLocales) {
   if (!(language in expectedAppNames)) fail(`${language} için beklenen uygulama adı tanımlanmamış.`);
+}
+// Ikonun altindaki yazi kisa olmali. 14 karakteri asan ad launcher'da iki
+// satira tasar ve kirpilir; kullanici uygulamayi adiyla taniyamaz hale gelir.
+// Magaza baslugi uzun olabilir ve olmalidir da - o ayri bir alandir.
+for (const [language, name] of Object.entries(expectedAppNames)) {
+  if (name.length > 14) fail(`${language} uygulama adı ${name.length} karakter; ikon altında kırpılır (sınır 14).`);
 }
 for (const [language, expectedName] of Object.entries(expectedAppNames)) {
   const localePath = config.locales?.[language];
@@ -93,6 +107,10 @@ if (!config.android?.blockedPermissions?.includes('android.permission.RECORD_AUD
 if (appConfigSource.includes('supportsOpeningDocumentsInPlace') || appConfigSource.includes('enableFileSharing')) fail('iOS belge paylaşımı gizlilik politikasıyla çelişiyor.');
 if (!appConfigSource.includes("['expo-router', { sitemap: false }]")) fail('Expo Router sitemap production buildde kapalı değil.');
 if (!appConfigSource.includes("{ scheme: 'content', mimeType: 'application/octet-stream' }")) fail('PDF dış açma intent filtresinde application/octet-stream desteği eksik.');
+
+const pdfToolsSource = text('lib/pdfTools.ts');
+if (!pdfToolsSource.includes('const EMBED_MAX_EDGE = 1700')) fail('Gömme öncesi görsel küçültme sınırı kaldırılmış.');
+if (!pdfToolsSource.includes('const scaled = await downscaleForEmbedding(source.uri, isPng);')) fail('Görsel, PDF\'e gömülmeden önce küçültülmüyor.');
 
 const admob = config.extra?.admob || {};
 if (!/^ca-app-pub-\d{16}~\d{10}$/.test(config.plugins.find((item) => Array.isArray(item) && item[0] === 'react-native-google-mobile-ads')?.[1]?.androidAppId || '')) fail('Geçerli production Android AdMob App ID yok.');

@@ -26,7 +26,7 @@ if (!Number.isInteger(androidVersionCode) || androidVersionCode < 1) {
 
 module.exports = ({ config }) => ({
   ...config,
-  name: 'PDF: Reader - Tools',
+  name: 'PDF Reader',
   slug: 'pdf-okuyucu-premium',
   // The user visible version is derived from the build number rather than being
   // a constant. Sixty-odd releases all reporting "1.0.0" in the system app

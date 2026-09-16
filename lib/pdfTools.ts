@@ -1,5 +1,6 @@
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
+import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 import * as Print from 'expo-print';
 import { File, Paths } from 'expo-file-system';
 import { PDFDocument, PDFImage, StandardFonts, degrees, rgb } from 'pdf-lib';
@@ -114,6 +115,57 @@ async function loadPdf(file: PickedPdf) {
   }
 }
 
+/**
+ * An A4 page is 595 points wide. At 1700 pixels across that page the image is
+ * rendered at roughly 200 dpi, which is past what a phone screen shows and past
+ * what an office printer resolves. Every pixel above it is weight the reader
+ * carries and never sees.
+ *
+ * This matters more than it looks. A 12 megapixel phone photo is about 4 MB, and
+ * the embed path used to store it untouched - so three camera shots produced a
+ * 12 MB PDF, and the app's own Optimize tool could not shrink it afterwards
+ * because pdf-lib cannot re-encode an image once it is inside the document. The
+ * cheapest place to fix that is here, before it goes in.
+ */
+const EMBED_MAX_EDGE = 1700;
+const EMBED_JPEG_QUALITY = 0.75;
+
+/**
+ * Scales one picked image down to the embedding budget.
+ *
+ * Returns null whenever the original should be kept: an image already inside the
+ * budget, or an encoder that refused the file. The caller then embeds the source
+ * bytes exactly as before, so a failure here can never cost the viewer their
+ * document - it only costs the saving.
+ *
+ * A JPEG source is re-encoded as JPEG, which is what photographs want. A PNG
+ * source stays PNG: screenshots and diagrams are mostly text and flat colour,
+ * and JPEG smears both. Fewer pixels already carries most of the saving there.
+ */
+async function downscaleForEmbedding(uri: string, isPng: boolean): Promise<Uint8Array | null> {
+  let savedUri: string | null = null;
+  try {
+    const measured = await ImageManipulator.manipulate(uri).renderAsync();
+    const longestEdge = Math.max(measured.width, measured.height);
+    if (!Number.isFinite(longestEdge) || longestEdge <= EMBED_MAX_EDGE) return null;
+
+    const context = ImageManipulator.manipulate(uri);
+    context.resize(measured.width >= measured.height ? { width: EMBED_MAX_EDGE } : { height: EMBED_MAX_EDGE });
+    const rendered = await context.renderAsync();
+    const saved = await rendered.saveAsync({
+      compress: isPng ? 1 : EMBED_JPEG_QUALITY,
+      format: isPng ? SaveFormat.PNG : SaveFormat.JPEG
+    });
+    savedUri = saved.uri;
+    const bytes = await new File(saved.uri).bytes();
+    return bytes.length ? bytes : null;
+  } catch {
+    return null;
+  } finally {
+    if (savedUri) cleanupCacheFile(savedUri);
+  }
+}
+
 async function imageFilesToPdf(files: PickedImage[], requestedName: string): Promise<PdfDocument | null> {
   if (!files.length) return null;
   enforceTotalSize(files);
@@ -130,6 +182,10 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
       } catch {
         throw new Error(t('tools.unsupportedImage'));
       }
+      // Scaled down before the pixel-count guard runs: an oversized photo that
+      // used to be rejected outright now simply fits.
+      const scaled = await downscaleForEmbedding(source.uri, isPng);
+      if (scaled) imageBytes = scaled;
       if (isPng && pngPixelCount(imageBytes) > MAX_PNG_PIXELS) throw new Error(t('tools.imageTooLarge'));
       try {
         embedded = isPng ? await output.embedPng(imageBytes) : await output.embedJpg(imageBytes);

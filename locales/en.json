@@ -1,8 +1,1 @@
-{
-  "android": {
-    "app_name": "PDF: Reader - Tools"
-  },
-  "ios": {
-    "CFBundleDisplayName": "PDF: Reader - Tools"
-  }
-}
+{"android": {"app_name": "PDF Reader"}, "ios": {"CFBundleDisplayName": "PDF Reader"}}
