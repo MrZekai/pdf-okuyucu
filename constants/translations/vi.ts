@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Đọc PDF',
+  'app.name':'Đọc PDF, Quét & Công cụ',
   'tabs.home':'Trang chính',
   'tabs.library':'Thư viện',
   'tabs.tools':'Công cụ',

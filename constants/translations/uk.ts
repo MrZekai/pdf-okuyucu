@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF читалка',
+  'app.name':'PDF читалка, сканер та інструменти',
   'tabs.home':'Головна',
   'tabs.library':'Бібліотека',
   'tabs.tools':'Інструменти',

@@ -1,5 +1,5 @@
 export default {
-  'app.name':'قارئ PDF',
+  'app.name':'قارئ PDF وماسح وأدوات',
   'tabs.home':'الرئيسية',
   'tabs.library':'المكتبة',
   'tabs.tools':'الأدوات',

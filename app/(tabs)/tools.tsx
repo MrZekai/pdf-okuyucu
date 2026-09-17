@@ -249,7 +249,7 @@ export default function ToolsScreen() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.brandBar}>
           <PdfBrandMark size={40} />
-          <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={styles.brandTitle}>{t('app.name')}</Text>
+          <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.brandTitle}>{t('app.name')}</Text>
         </View>
 
         <LinearGradient colors={['#292C31', '#17191C', '#0B0C0E']} style={styles.toolsHeader}>

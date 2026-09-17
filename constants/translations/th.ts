@@ -1,5 +1,5 @@
 export default {
-  'app.name':'อ่าน PDF',
+  'app.name':'อ่าน PDF สแกน และเครื่องมือ',
   'tabs.home':'หน้าแรก',
   'tabs.library':'คลัง',
   'tabs.tools':'เครื่องมือ',

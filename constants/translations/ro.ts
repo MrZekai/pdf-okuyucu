@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Cititor PDF',
+  'app.name':'Cititor PDF, Scanner și Instrumente',
   'tabs.home':'Acasă',
   'tabs.library':'Bibliotecă',
   'tabs.tools':'Instrumente',

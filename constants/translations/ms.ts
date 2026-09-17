@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Pembaca PDF',
+  'app.name':'Pembaca PDF, Pengimbas & Alat',
   'tabs.home':'Utama',
   'tabs.library':'Perpustakaan',
   'tabs.tools':'Alat',

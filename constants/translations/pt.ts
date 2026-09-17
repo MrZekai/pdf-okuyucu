@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Leitor de PDF',
+  'app.name':'Leitor de PDF, Scanner e Ferramentas',
   'tabs.home':'Início',
   'tabs.library':'Biblioteca',
   'tabs.tools':'Ferramentas',

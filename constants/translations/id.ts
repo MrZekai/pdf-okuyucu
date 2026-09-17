@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Pembaca PDF',
+  'app.name':'Pembaca PDF, Pemindai & Alat',
   'tabs.home':'Beranda',
   'tabs.library':'Pustaka',
   'tabs.tools':'Alat',

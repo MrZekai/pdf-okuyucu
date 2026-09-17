@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF Reader',
+  'app.name':'PDF Reader, Scanner at Tools',
   'tabs.home':'Home',
   'tabs.library':'Aklatan',
   'tabs.tools':'Mga Tool',

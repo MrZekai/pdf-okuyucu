@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF 阅读器',
+  'app.name':'PDF 阅读器、扫描与工具',
   'tabs.home':'首页',
   'tabs.library':'文档库',
   'tabs.tools':'工具',

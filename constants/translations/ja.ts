@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDFリーダー',
+  'app.name':'PDFリーダー・スキャナー・ツール',
   'tabs.home':'ホーム',
   'tabs.library':'ライブラリ',
   'tabs.tools':'ツール',

@@ -101,6 +101,26 @@ for (const [language, expectedName] of Object.entries(expectedAppNames)) {
     if (locale.ios?.CFBundleDisplayName !== expectedName) fail(`${language} iOS uygulama adı beklenen değer değil.`);
   }
 }
+// Uygulamanin KENDI ICINDEKI adi ile IKON ALTINDAKI ad ayni sey degil ve ayni
+// olmamali. Ikon altindaki yazi yukaridaki 14 karakter sinirina tabidir, cunku
+// launcher onu kirpar. Uygulamanin icindeki baslik ise magaza basligiyla ayni
+// olmali: "PDF Reader, Scanner & Tools". Kisa ad oraya da yazilirsa uygulama
+// kendini yalnizca okuyucu gibi tanitir; magaza baslugu tarayici ve araclari
+// sayarken uygulamanin ilk ekrani sadece "PDF Okuyucu" der.
+{
+  const launcherNames = new Set(Object.values(expectedAppNames));
+  const dictionaryFiles = ['constants/i18n.ts', ...fs.readdirSync(path.join(root, 'constants/translations')).map((file) => `constants/translations/${file}`)];
+  let brandCount = 0;
+  for (const file of dictionaryFiles) {
+    for (const match of text(file).matchAll(/'app\.name'\s*:\s*'([^']*)'/g)) {
+      brandCount += 1;
+      if (launcherNames.has(match[1])) fail(`${file}: uygulama içi ad "${match[1]}" ikon altındaki kısa ad; mağaza başlığıyla aynı tam ad olmalı.`);
+    }
+  }
+  if (brandCount !== expectedLocales.length) fail(`app.name tanımı ${brandCount} dilde bulundu, ${expectedLocales.length} bekleniyordu.`);
+  if (!text('constants/i18n.ts').includes("'app.name': 'PDF Reader, Scanner & Tools'")) fail('İngilizce uygulama içi ad mağaza başlığıyla eşleşmiyor.');
+}
+
 const appConfigSource = text('app.config.js');
 if (!config.plugins.some((item) => Array.isArray(item) && item[0] === 'expo-image-picker')) fail('expo-image-picker config plugin eksik.');
 if (!config.android?.blockedPermissions?.includes('android.permission.RECORD_AUDIO')) fail('Belge tarama özelliğinde gereksiz mikrofon izni engellenmemiş.');
@@ -161,6 +181,33 @@ if (!toolsLibSource.includes('const input = await loadPdf(source, true);')) fail
 if (!toolsLibSource.includes('if (!keepSource) cleanupCacheFile(source.uri);')) fail('loadPdf kaynağı koşulsuz siliyor.');
 if (!toolsLibSource.includes('export function discardStagedPdf')) fail('Saklanan kaynağı serbest bırakacak yol yok.');
 if (!toolsScreen.includes('discardStagedPdf(staged.uri)')) fail('Kullanıcı vazgeçtiğinde saklanan dosya önbellekte kalıyor.');
+
+// --- Meta veri: gorunmeyen kopya da silinmeli ----------------------------
+// Adlandirilmis alanlari bosaltmak isin yarisi. Ayni baslik ve yazar genelde
+// katalogdaki XMP paketinde tekrarlanir ve okuyucularin cogu basligi ORADAN
+// okur; olculdu: temizlenmis bir police belgesinde Info bombostu ama XMP hala
+// sigortalinin adini tasiyordu. Ureticiye ozel anahtarlar (/Company,
+// /SourceModified) da hicbir setter'in dokunmadigi yerde duruyordu.
+if (!toolsLibSource.includes('function stripDocumentMetadata')) fail('Meta veri temizleme yalnızca adlandırılmış alanları siliyor.');
+if (!toolsLibSource.includes("input.catalog.delete(key)")) fail('XMP paketi katalogdan silinmiyor.');
+if (!toolsLibSource.includes('for (const key of [...info.keys()]) info.delete(key);')) fail('Info sözlüğündeki üreticiye özel anahtarlar bırakılıyor.');
+if (!toolsLibSource.includes('stripDocumentMetadata(input);')) fail('cleanMetadata yeni temizlemeyi çağırmıyor.');
+
+// --- Filigran: olculerek yerlesmeli, tahmin edilerek degil ---------------
+// Eski yerlesim punto'yu karakter SAYISINDAN turetiyor ve metni donmemis gibi
+// konumlandiriyordu. Olculdu: 18 durumun 8'inde metin sayfanin disina tasiyor,
+// tasmadigi durumlarda da gozle gorulur sekilde sola kaciyordu.
+if (!toolsLibSource.includes('export function layoutWatermark')) fail('Filigran yerleşimi ölçülerek hesaplanmıyor.');
+if (!toolsLibSource.includes('measured * cos + size * sin <= usableWidth')) fail('Filigran döndürülmüş genişliğe göre sığdırılmıyor.');
+if (/const size = Math\.max\(24, Math\.min\(64, width \//.test(toolsLibSource)) fail('Filigran punto tahmini karakter sayısından geri gelmiş.');
+
+// --- Resimden PDF: butce gomulen baytlara bakmali ------------------------
+// Eski butce secilen dosyalara bakiyordu (40 MB). Artik her gorsel gomulmeden
+// once kucultuldugu icin bu olcu yanlis: siradan bir onikili fotograf destesi,
+// sonucta uc megabayt tutacak bir belge icin reddediliyordu.
+if (!toolsLibSource.includes('const MAX_EMBEDDED_TOTAL_BYTES')) fail('Gömülen bayt bütçesi yok.');
+if (!toolsLibSource.includes('if (embeddedBytes > MAX_EMBEDDED_TOTAL_BYTES)')) fail('Gömülen bayt bütçesi kontrol edilmiyor.');
+if (toolsLibSource.includes('MAX_IMAGE_TOTAL_BYTES')) fail('Ham girdiye bakan eski toplam görsel bütçesi geri gelmiş.');
 if (!toolsLibSource.includes('if (jpegComponentCount(bytes) !== 3) continue;')) fail('Kanal sayısı doğrulanmadan akış değiştiriliyor.');
 
 // --- Meta veri: tarihler da meta veridir ---------------------------------

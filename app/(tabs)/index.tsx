@@ -84,7 +84,7 @@ export default function HomeScreen() {
           <View style={styles.brandFlag}>
             <PdfBrandMark size={42} />
           </View>
-          <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={styles.brandTitle}>{t('app.name')}</Text>
+          <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.brandTitle}>{t('app.name')}</Text>
           <View style={styles.brandRule} />
         </View>
 
@@ -174,7 +174,7 @@ export default function HomeScreen() {
     return (
       <Pressable onPress={() => goTool(id)} style={({ pressed }) => [styles.railItem, pressed && styles.pressed]}>
         <View style={styles.railIcon}><AppIcon name={icon} size={24} color="#D4D7DB" /></View>
-        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={styles.railText}>{title}</Text>
+        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.railText}>{title}</Text>
         <AppIcon name="chevronRight" size={15} color="#8F949C" />
       </Pressable>
     );
@@ -186,7 +186,7 @@ function ActionPanel({ title, icon, accent = false, onPress }: ActionPanelProps)
     <Pressable onPress={onPress} style={({ pressed }) => [styles.actionPressable, pressed && styles.pressed]}>
       <LinearGradient colors={accent ? ['#351011', '#1B0B0C', '#0E0E10'] : ['#25282D', '#15171A', '#0B0C0E']} style={styles.actionPanel}>
         <PanelCorners />
-        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={styles.actionTitle}>{title}</Text>
+        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.actionTitle}>{title}</Text>
         <View style={styles.actionBody}>
           <View style={styles.actionIconPlate}><AppIcon name={icon} size={31} color={accent ? '#FF4B47' : '#C7CBD0'} /></View>
           <View style={styles.smallRoundAction}><AppIcon name="chevronRight" size={17} color="#FF4B47" /></View>

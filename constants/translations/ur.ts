@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF ریڈر',
+  'app.name':'PDF ریڈر، اسکینر اور ٹولز',
   'tabs.home':'ہوم',
   'tabs.library':'لائبریری',
   'tabs.tools':'ٹولز',

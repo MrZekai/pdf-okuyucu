@@ -81,7 +81,7 @@ export const languageTags: Record<AppLanguage, string> = {
 };
 
 const tr = {
-  'app.name': 'PDF Okuyucu',
+  'app.name': 'PDF Okuyucu, Tarayıcı ve Araçlar',
   'tabs.home': 'Ana Sayfa',
   'tabs.library': 'Kütüphane',
   'tabs.tools': 'Araçlar',
@@ -317,7 +317,7 @@ const tr = {
 };
 
 const en: Record<keyof typeof tr, string> = {
-  'app.name': 'PDF Reader',
+  'app.name': 'PDF Reader, Scanner & Tools',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
   'tabs.tools': 'Tools',
@@ -553,7 +553,7 @@ const en: Record<keyof typeof tr, string> = {
 };
 
 const es: Record<keyof typeof tr, string> = {
-  'app.name': 'Lector PDF',
+  'app.name': 'Lector PDF, Escáner y Herramientas',
   'tabs.home': 'Inicio',
   'tabs.library': 'Biblioteca',
   'tabs.tools': 'Herramientas',

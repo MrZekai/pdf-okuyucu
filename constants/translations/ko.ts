@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF 리더',
+  'app.name':'PDF 리더, 스캐너 및 도구',
   'tabs.home':'홈',
   'tabs.library':'라이브러리',
   'tabs.tools':'도구',

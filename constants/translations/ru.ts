@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF-ридер',
+  'app.name':'PDF-ридер, сканер и инструменты',
   'tabs.home':'Главная',
   'tabs.library':'Библиотека',
   'tabs.tools':'Инструменты',

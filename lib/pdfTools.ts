@@ -5,7 +5,7 @@ import * as Print from 'expo-print';
 import { Asset } from 'expo-asset';
 import { File, Paths } from 'expo-file-system';
 import fontkit from '@pdf-lib/fontkit';
-import { PDFDocument, PDFImage, PDFName, PDFNumber, PDFRawStream, degrees, rgb } from 'pdf-lib';
+import { PDFDocument, PDFDict, PDFImage, PDFName, PDFNumber, PDFRawStream, degrees, rgb } from 'pdf-lib';
 import { PdfDocument } from '@/types/document';
 import { deletePdfFile, saveGeneratedPdf, stagePdfForPrint } from '@/lib/pdfFiles';
 import { t } from '@/constants/i18n';
@@ -38,8 +38,18 @@ const MAX_MERGE_FILES = 12;
 // serialised, and embedPng additionally decodes the whole bitmap, so a handful
 // of very large sources can exceed the heap on mid-range devices. These budgets
 // keep the peak bounded and turn an out-of-memory crash into a clear message.
-const MAX_IMAGE_TOTAL_BYTES = 40 * 1024 * 1024;
 const MAX_SINGLE_IMAGE_BYTES = 20 * 1024 * 1024;
+/**
+ * What actually accumulates is the bytes that end up inside the document, and
+ * every picture is now scaled down before it goes in - an ordinary 5 MB phone
+ * photo embeds at a few hundred kilobytes. The budget used to be checked
+ * against the picked files instead, at 40 MB total, so a perfectly normal batch
+ * of a dozen photos was refused with "image too large" for a document that
+ * would have come out around three megabytes. Counting the embedded bytes as
+ * they add up measures the number that can really exhaust the heap, and it does
+ * it after the saving rather than before it.
+ */
+const MAX_EMBEDDED_TOTAL_BYTES = 45 * 1024 * 1024;
 const MAX_PNG_PIXELS = 20 * 1000 * 1000;
 const A4_PORTRAIT = { width: 595.28, height: 841.89 };
 const PAGE_MARGIN = 24;
@@ -78,9 +88,14 @@ function enforceTotalSize(files: { size: number }[]) {
   if (files.reduce((sum, file) => sum + file.size, 0) > MAX_TOOL_INPUT_BYTES) throw new Error(t('tools.tooLarge'));
 }
 
+/**
+ * The per picture ceiling stays on the picked file, because decoding one very
+ * large image is a single memory event that happens before anything can be
+ * scaled down. The batch total is not checked here any more; see
+ * MAX_EMBEDDED_TOTAL_BYTES.
+ */
 function enforceImageBudget(files: { size: number }[]) {
   if (files.some((file) => file.size > MAX_SINGLE_IMAGE_BYTES)) throw new Error(t('tools.imageTooLarge'));
-  if (files.reduce((sum, file) => sum + file.size, 0) > MAX_IMAGE_TOTAL_BYTES) throw new Error(t('tools.imageTooLarge'));
 }
 
 /** Reads the IHDR block so an oversized PNG is rejected before it is decoded. */
@@ -190,6 +205,7 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
   enforceTotalSize(files);
   enforceImageBudget(files);
   const output = await PDFDocument.create();
+  let embeddedBytes = 0;
   try {
     for (const source of files) {
       const file = new File(source.uri);
@@ -206,6 +222,8 @@ async function imageFilesToPdf(files: PickedImage[], requestedName: string): Pro
       const scaled = await downscaleForEmbedding(source.uri, isPng);
       if (scaled) imageBytes = scaled;
       if (isPng && pngPixelCount(imageBytes) > MAX_PNG_PIXELS) throw new Error(t('tools.imageTooLarge'));
+      embeddedBytes += imageBytes.length;
+      if (embeddedBytes > MAX_EMBEDDED_TOTAL_BYTES) throw new Error(t('tools.imageTooLarge'));
       try {
         embedded = isPng ? await output.embedPng(imageBytes) : await output.embedJpg(imageBytes);
       } catch {
@@ -444,6 +462,48 @@ async function loadWatermarkFont(): Promise<Uint8Array> {
   return watermarkFontBytes;
 }
 
+const WATERMARK_ANGLE = 35;
+
+/**
+ * Where the diagonal mark goes and how big it can be.
+ *
+ * The old code sized the text from its character count and placed it as if it
+ * were horizontal. Both assumptions break on real input. Character count says
+ * nothing about width - "IIIII" and "WWWWW" are the same length and nowhere near
+ * the same size - and a line rotated 35 degrees does not occupy the box an
+ * unrotated one would, so a long watermark ran off the right edge and climbed
+ * off the top. drawText also rotates around the anchor rather than the middle of
+ * the line, which is why the mark sat visibly left of centre even when it fitted.
+ *
+ * So the size is found by measuring the actual glyphs, the fit is checked
+ * against the rotated bounding box, and the anchor is offset by half that box so
+ * the centre of the text lands on the centre of the page. Split out from the
+ * drawing loop because geometry is worth being able to test on its own.
+ */
+export function layoutWatermark(text: string, width: number, height: number, measure: (value: string, size: number) => number) {
+  const radians = (WATERMARK_ANGLE * Math.PI) / 180;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+  const usableWidth = width * 0.86;
+  const usableHeight = height * 0.86;
+  let size = 64;
+  while (size > 10) {
+    const measured = measure(text, size);
+    if (measured * cos + size * sin <= usableWidth && measured * sin + size * cos <= usableHeight) break;
+    size -= 1;
+  }
+  // The line's own centre sits at (measured / 2, size / 2) before rotation.
+  // Rotating that offset and subtracting it from the middle of the page is what
+  // puts the mark in the middle; using only the horizontal half - which is what
+  // an unrotated layout would do - leaves it low and to one side.
+  const measured = measure(text, size);
+  return {
+    size,
+    x: width / 2 - (measured * cos - size * sin) / 2,
+    y: height / 2 - (measured * sin + size * cos) / 2
+  };
+}
+
 export async function addWatermark(text: string): Promise<PdfDocument | null> {
   // Validated before the picker opens: being asked to choose a file and only
   // then told the text cannot be used wastes the viewer's time.
@@ -455,9 +515,8 @@ export async function addWatermark(text: string): Promise<PdfDocument | null> {
   const font = await input.embedFont(await loadWatermarkFont(), { subset: true });
   input.getPages().forEach((page) => {
     const { width, height } = page.getSize();
-    const size = Math.max(24, Math.min(64, width / Math.max(8, watermark.length * 0.55)));
-    const textWidth = font.widthOfTextAtSize(watermark, size);
-    page.drawText(watermark, { x: Math.max(18, (width - textWidth) / 2), y: height / 2, size, font, color: rgb(0.78, 0.08, 0.1), opacity: 0.2, rotate: degrees(35) });
+    const { size, x, y } = layoutWatermark(watermark, width, height, (value, at) => font.widthOfTextAtSize(value, at));
+    page.drawText(watermark, { x, y, size, font, color: rgb(0.78, 0.08, 0.1), opacity: 0.2, rotate: degrees(WATERMARK_ANGLE) });
   });
   return saveGeneratedPdf(await input.save({ useObjectStreams: true }), outputName(source.name, 'watermarked'));
 }
@@ -705,10 +764,44 @@ export async function compressPdfWithImages(source: PickedPdf): Promise<Compress
   };
 }
 
+/**
+ * Everything a PDF can carry about who made it, where and when.
+ *
+ * Emptying the document information dictionary through the named setters is
+ * half the job, and it is the half nobody looks at. The same title and author
+ * are normally repeated in an XMP packet hanging off the catalog, and most
+ * readers show THAT copy in the title bar - so a document "cleaned" by the old
+ * code still opened with its owner's name on it. Measured on a real policy
+ * document: the information dictionary came out empty while the XMP packet
+ * still read dc:title = the holder's name, dc:creator = the agent's name.
+ *
+ * Producers also write their own keys into the information dictionary that no
+ * named setter knows about - /Company, /SourceModified - and those survived too.
+ *
+ * So the rule here is removal, not overwriting: every key in the information
+ * dictionary goes rather than a known list of them, the XMP packet goes from the
+ * catalog and from every page, and the producer's private scratch space
+ * (/PieceInfo) goes with them.
+ */
+function stripDocumentMetadata(input: PDFDocument) {
+  const info = input.context.lookup(input.context.trailerInfo.Info);
+  if (info instanceof PDFDict) {
+    for (const key of [...info.keys()]) info.delete(key);
+  }
+  const removable = [PDFName.of('Metadata'), PDFName.of('PieceInfo')];
+  for (const key of removable) input.catalog.delete(key);
+  input.getPages().forEach((page) => {
+    for (const key of removable) page.node.delete(key);
+  });
+}
+
 export async function cleanMetadata(): Promise<PdfDocument | null> {
   const [source] = await pickPdfs(false);
   if (!source) return null;
   const input = await loadPdf(source);
+  stripDocumentMetadata(input);
+  // The dictionary is empty at this point; these write back the handful of
+  // entries the format expects to find, carrying nothing.
   input.setTitle('');
   input.setAuthor('');
   input.setSubject('');

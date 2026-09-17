@@ -1,5 +1,5 @@
 export default {
-  'app.name':'PDF রিডার',
+  'app.name':'PDF রিডার, স্ক্যানার ও টুলস',
   'tabs.home':'হোম',
   'tabs.library':'লাইব্রেরি',
   'tabs.tools':'টুলস',
