@@ -33,7 +33,7 @@ function pngSize(relativePath, expectedWidth, expectedHeight) {
 }
 
 if (config.android?.package !== 'com.aitolian.pdfokuyucu') fail('Android package beklenen com.aitolian.pdfokuyucu değil.');
-if (config.name !== 'PDF Reader') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı PDF Reader olmalı.');
+if (config.name !== 'Offline PDF') fail('Desteklenmeyen cihaz dilleri için varsayılan uygulama adı Offline PDF olmalı.');
 if (!Number.isInteger(config.android?.versionCode) || config.android.versionCode < 1) fail('android.versionCode pozitif tam sayı olmalı.');
 if (!config.android?.adaptiveIcon?.foregroundImage) fail('Adaptive icon foregroundImage eksik.');
 if (!config.icon) fail('Uygulama icon alanı eksik.');
@@ -78,7 +78,7 @@ for (const platform of ['android', 'ios']) {
     if (!supported.includes(language)) fail(`${platform} desteklenen dillerinde ${language} eksik.`);
   }
 }
-const expectedAppNames = { en:'PDF Reader',tr:'PDF Okuyucu',es:'Lector PDF',pt:'Leitor de PDF',de:'PDF-Reader',fr:'Lecteur PDF',it:'Lettore PDF',ru:'PDF-ридер',hi:'PDF रीडर',id:'Pembaca PDF',ar:'قارئ PDF',ja:'PDFリーダー',ko:'PDF 리더',zh:'PDF 阅读器',vi:'Đọc PDF',th:'อ่าน PDF',fil:'PDF Reader',ms:'Pembaca PDF',bn:'PDF রিডার',ur:'PDF ریڈر',pl:'Czytnik PDF',uk:'PDF читалка',nl:'PDF Reader',ro:'Cititor PDF' };
+const expectedAppNames = { en:'Offline PDF',tr:'Çevrimdışı PDF',de:'Offline PDF',es:'PDF Offline',fr:'PDF Hors Ligne',it:'PDF Offline',pt:'PDF Offline',nl:'Offline PDF',pl:'PDF Offline',ro:'PDF Offline',ru:'Офлайн PDF',uk:'Офлайн PDF',ar:'PDF أوفلاين',ur:'آف لائن PDF',hi:'ऑफ़लाइन PDF',bn:'অফলাইন PDF',id:'PDF Offline',ms:'PDF Offline',fil:'Offline PDF',vi:'PDF Offline',th:'PDF ออฟไลน์',ja:'オフラインPDF',ko:'오프라인 PDF',zh:'离线PDF' };
 for (const language of expectedLocales) {
   if (!(language in expectedAppNames)) fail(`${language} için beklenen uygulama adı tanımlanmamış.`);
 }
@@ -104,7 +104,7 @@ for (const [language, expectedName] of Object.entries(expectedAppNames)) {
 // Uygulamanin KENDI ICINDEKI adi ile IKON ALTINDAKI ad ayni sey degil ve ayni
 // olmamali. Ikon altindaki yazi yukaridaki 14 karakter sinirina tabidir, cunku
 // launcher onu kirpar. Uygulamanin icindeki baslik ise magaza basligiyla ayni
-// olmali: "PDF Reader, Scanner & Tools". Kisa ad oraya da yazilirsa uygulama
+// olmali: "Offline PDF Reader & Tools". Kisa ad oraya da yazilirsa uygulama
 // kendini yalnizca okuyucu gibi tanitir; magaza baslugu tarayici ve araclari
 // sayarken uygulamanin ilk ekrani sadece "PDF Okuyucu" der.
 {
@@ -118,7 +118,7 @@ for (const [language, expectedName] of Object.entries(expectedAppNames)) {
     }
   }
   if (brandCount !== expectedLocales.length) fail(`app.name tanımı ${brandCount} dilde bulundu, ${expectedLocales.length} bekleniyordu.`);
-  if (!text('constants/i18n.ts').includes("'app.name': 'PDF Reader, Scanner & Tools'")) fail('İngilizce uygulama içi ad mağaza başlığıyla eşleşmiyor.');
+  if (!text('constants/i18n.ts').includes("'app.name': 'Offline PDF Reader & Tools'")) fail('İngilizce uygulama içi ad mağaza başlığıyla eşleşmiyor.');
 }
 
 const appConfigSource = text('app.config.js');

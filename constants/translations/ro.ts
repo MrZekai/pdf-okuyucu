@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Cititor PDF, Scanner și Instrumente',
+  'app.name':'Cititor PDF Offline',
   'tabs.home':'Acasă',
   'tabs.library':'Bibliotecă',
   'tabs.tools':'Instrumente',
   'tabs.settings':'Setări',
-  'home.eyebrow':'CITITOR PDF',
+  'home.eyebrow':'PDF OFFLINE',
   'home.heroPill':'RAPID • PRIVAT • PE DISPOZITIV',
   'home.heroTitle':'Deschide-ți fișierele PDF\\nîntr-o clipă.',
   'home.heroText':'Fără dezordine. Fără cont. Alege un document și începe să citești.',

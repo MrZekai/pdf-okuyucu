@@ -1,8 +1,8 @@
 {
   "android": {
-    "app_name": "Lector PDF"
+    "app_name": "PDF Offline"
   },
   "ios": {
-    "CFBundleDisplayName": "Lector PDF"
+    "CFBundleDisplayName": "PDF Offline"
   }
 }

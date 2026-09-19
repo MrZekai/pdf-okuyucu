@@ -1,1 +1,8 @@
-{"android":{"app_name":"Leitor de PDF"},"ios":{"CFBundleDisplayName":"Leitor de PDF"}}
+{
+  "android": {
+    "app_name": "PDF Offline"
+  },
+  "ios": {
+    "CFBundleDisplayName": "PDF Offline"
+  }
+}

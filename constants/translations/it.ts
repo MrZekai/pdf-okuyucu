@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Lettore PDF, Scanner e Strumenti',
+  'app.name':'Lettore PDF Offline',
   'tabs.home':'Home',
   'tabs.library':'Libreria',
   'tabs.tools':'Strumenti',
   'tabs.settings':'Impostazioni',
-  'home.eyebrow':'LETTORE PDF',
+  'home.eyebrow':'PDF OFFLINE',
   'home.heroPill':'VELOCE • PRIVATO • SUL DISPOSITIVO',
   'home.heroTitle':'Apri i tuoi PDF\nin un attimo.',
   'home.heroText':'Niente confusione. Nessun account. Scegli un documento e inizia a leggere.',

@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF-ридер, сканер и инструменты',
+  'app.name':'Офлайн PDF Ридер',
   'tabs.home':'Главная',
   'tabs.library':'Библиотека',
   'tabs.tools':'Инструменты',
   'tabs.settings':'Настройки',
-  'home.eyebrow':'PDF-РИДЕР',
+  'home.eyebrow':'ОФЛАЙН PDF',
   'home.heroPill':'БЫСТРО • КОНФИДЕНЦИАЛЬНО • НА УСТРОЙСТВЕ',
   'home.heroTitle':'Открывайте PDF\nмгновенно.',
   'home.heroText':'Без лишнего. Без аккаунта. Выберите документ и начните читать.',

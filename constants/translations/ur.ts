@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF ریڈر، اسکینر اور ٹولز',
+  'app.name':'آف لائن PDF ریڈر',
   'tabs.home':'ہوم',
   'tabs.library':'لائبریری',
   'tabs.tools':'ٹولز',
   'tabs.settings':'ترتیبات',
-  'home.eyebrow':'PDF ریڈر',
+  'home.eyebrow':'آف لائن PDF',
   'home.heroPill':'تیز • نجی • آلے پر',
   'home.heroTitle':'اپنی PDF فائلیں\\nلمحوں میں کھولیں۔',
   'home.heroText':'کوئی الجھن نہیں۔ کوئی اکاؤنٹ نہیں۔ ایک دستاویز چنیں اور پڑھنا شروع کریں۔',

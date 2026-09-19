@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF রিডার, স্ক্যানার ও টুলস',
+  'app.name':'অফলাইন PDF রিডার',
   'tabs.home':'হোম',
   'tabs.library':'লাইব্রেরি',
   'tabs.tools':'টুলস',
   'tabs.settings':'সেটিংস',
-  'home.eyebrow':'PDF রিডার',
+  'home.eyebrow':'অফলাইন PDF',
   'home.heroPill':'দ্রুত • ব্যক্তিগত • ডিভাইসেই',
   'home.heroTitle':'আপনার PDF খুলুন\\nমুহূর্তেই।',
   'home.heroText':'কোনো ঝামেলা নেই। অ্যাকাউন্ট নেই। একটি নথি বেছে নিন আর পড়া শুরু করুন।',

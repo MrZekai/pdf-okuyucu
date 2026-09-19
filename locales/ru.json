@@ -1,1 +1,8 @@
-{"android":{"app_name":"PDF-ридер"},"ios":{"CFBundleDisplayName":"PDF-ридер"}}
+{
+  "android": {
+    "app_name": "Офлайн PDF"
+  },
+  "ios": {
+    "CFBundleDisplayName": "Офлайн PDF"
+  }
+}

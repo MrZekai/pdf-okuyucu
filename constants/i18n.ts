@@ -81,13 +81,13 @@ export const languageTags: Record<AppLanguage, string> = {
 };
 
 const tr = {
-  'app.name': 'PDF Okuyucu, Tarayıcı ve Araçlar',
+  'app.name': 'Çevrimdışı PDF Okuyucu',
   'tabs.home': 'Ana Sayfa',
   'tabs.library': 'Kütüphane',
   'tabs.tools': 'Araçlar',
   'tabs.settings': 'Ayarlar',
 
-  'home.eyebrow': 'PDF OKUYUCU',
+  'home.eyebrow': 'ÇEVRİMDIŞI PDF',
   'home.heroPill': 'HIZLI • GİZLİ • CİHAZINDA',
   'home.heroTitle': 'PDF’lerini\nanında aç.',
   'home.heroText': 'Karmaşa yok. Hesap yok. Belgeni seç ve okumaya başla.',
@@ -317,13 +317,13 @@ const tr = {
 };
 
 const en: Record<keyof typeof tr, string> = {
-  'app.name': 'PDF Reader, Scanner & Tools',
+  'app.name': 'Offline PDF Reader & Tools',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
   'tabs.tools': 'Tools',
   'tabs.settings': 'Settings',
 
-  'home.eyebrow': 'PDF READER',
+  'home.eyebrow': 'OFFLINE PDF',
   'home.heroPill': 'FAST • PRIVATE • ON DEVICE',
   'home.heroTitle': 'Open your PDFs\nin an instant.',
   'home.heroText': 'No clutter. No account. Pick a document and start reading.',
@@ -553,13 +553,13 @@ const en: Record<keyof typeof tr, string> = {
 };
 
 const es: Record<keyof typeof tr, string> = {
-  'app.name': 'Lector PDF, Escáner y Herramientas',
+  'app.name': 'Lector PDF Offline',
   'tabs.home': 'Inicio',
   'tabs.library': 'Biblioteca',
   'tabs.tools': 'Herramientas',
   'tabs.settings': 'Ajustes',
 
-  'home.eyebrow': 'LECTOR DE PDF',
+  'home.eyebrow': 'PDF OFFLINE',
   'home.heroPill': 'RÁPIDO • PRIVADO • EN EL DISPOSITIVO',
   'home.heroTitle': 'Abre tus PDF\nal instante.',
   'home.heroText': 'Sin desorden. Sin cuenta. Elige un documento y empieza a leer.',

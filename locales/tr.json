@@ -1,1 +1,8 @@
-{"android": {"app_name": "PDF Okuyucu"}, "ios": {"CFBundleDisplayName": "PDF Okuyucu"}}
+{
+  "android": {
+    "app_name": "Çevrimdışı PDF"
+  },
+  "ios": {
+    "CFBundleDisplayName": "Çevrimdışı PDF"
+  }
+}

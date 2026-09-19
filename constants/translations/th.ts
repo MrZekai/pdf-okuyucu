@@ -1,10 +1,10 @@
 export default {
-  'app.name':'อ่าน PDF สแกน และเครื่องมือ',
+  'app.name':'อ่าน PDF ออฟไลน์',
   'tabs.home':'หน้าแรก',
   'tabs.library':'คลัง',
   'tabs.tools':'เครื่องมือ',
   'tabs.settings':'ตั้งค่า',
-  'home.eyebrow':'อ่าน PDF',
+  'home.eyebrow':'PDF ออฟไลน์',
   'home.heroPill':'เร็ว • เป็นส่วนตัว • บนเครื่อง',
   'home.heroTitle':'เปิดไฟล์ PDF ของคุณ\\nได้ทันที',
   'home.heroText':'ไม่รก ไม่ต้องมีบัญชี เลือกเอกสารแล้วเริ่มอ่านได้เลย',

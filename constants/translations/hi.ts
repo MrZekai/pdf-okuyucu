@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF रीडर, स्कैनर और टूल्स',
+  'app.name':'ऑफ़लाइन PDF रीडर',
   'tabs.home':'होम',
   'tabs.library':'लाइब्रेरी',
   'tabs.tools':'टूल्स',
   'tabs.settings':'सेटिंग्स',
-  'home.eyebrow':'PDF रीडर',
+  'home.eyebrow':'ऑफ़लाइन PDF',
   'home.heroPill':'तेज़ • निजी • डिवाइस पर',
   'home.heroTitle':'अपने PDF तुरंत\nखोलें।',
   'home.heroText':'कोई झंझट नहीं। कोई खाता नहीं। दस्तावेज़ चुनें और पढ़ना शुरू करें।',

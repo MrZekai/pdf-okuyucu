@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF 리더, 스캐너 및 도구',
+  'app.name':'오프라인 PDF 뷰어',
   'tabs.home':'홈',
   'tabs.library':'라이브러리',
   'tabs.tools':'도구',
   'tabs.settings':'설정',
-  'home.eyebrow':'PDF 리더',
+  'home.eyebrow':'오프라인 PDF',
   'home.heroPill':'빠르게 • 비공개로 • 기기에서',
   'home.heroTitle':'PDF를 바로\n열어 보세요.',
   'home.heroText':'복잡함도 계정도 없습니다. 문서를 선택하고 읽기 시작하세요.',

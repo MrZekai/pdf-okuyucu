@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF Reader, Scanner at Tools',
+  'app.name':'Offline PDF Reader & Tools',
   'tabs.home':'Home',
   'tabs.library':'Aklatan',
   'tabs.tools':'Mga Tool',
   'tabs.settings':'Mga Setting',
-  'home.eyebrow':'PDF READER',
+  'home.eyebrow':'OFFLINE PDF',
   'home.heroPill':'MABILIS • PRIBADO • NASA DEVICE',
   'home.heroTitle':'Buksan ang mga PDF mo\\nsa isang iglap.',
   'home.heroText':'Walang kalat. Walang account. Pumili ng dokumento at magsimulang magbasa.',

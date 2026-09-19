@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Đọc PDF, Quét & Công cụ',
+  'app.name':'Đọc PDF Ngoại Tuyến',
   'tabs.home':'Trang chính',
   'tabs.library':'Thư viện',
   'tabs.tools':'Công cụ',
   'tabs.settings':'Cài đặt',
-  'home.eyebrow':'ĐỌC PDF',
+  'home.eyebrow':'PDF NGOẠI TUYẾN',
   'home.heroPill':'NHANH • RIÊNG TƯ • TRÊN MÁY',
   'home.heroTitle':'Mở PDF của bạn\\nngay lập tức.',
   'home.heroText':'Không rườm rà. Không tài khoản. Chọn tài liệu và bắt đầu đọc.',

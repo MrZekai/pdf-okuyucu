@@ -1,1 +1,8 @@
-{"android": {"app_name": "Đọc PDF"}, "ios": {"CFBundleDisplayName": "Đọc PDF"}}
+{
+  "android": {
+    "app_name": "PDF Offline"
+  },
+  "ios": {
+    "CFBundleDisplayName": "PDF Offline"
+  }
+}

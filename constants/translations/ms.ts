@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Pembaca PDF, Pengimbas & Alat',
+  'app.name':'Pembaca PDF Luar Talian',
   'tabs.home':'Utama',
   'tabs.library':'Perpustakaan',
   'tabs.tools':'Alat',
   'tabs.settings':'Tetapan',
-  'home.eyebrow':'PEMBACA PDF',
+  'home.eyebrow':'PDF OFFLINE',
   'home.heroPill':'PANTAS • PERIBADI • DALAM PERANTI',
   'home.heroTitle':'Buka fail PDF anda\\ndalam sekelip mata.',
   'home.heroText':'Tiada kekusutan. Tiada akaun. Pilih dokumen dan mula membaca.',

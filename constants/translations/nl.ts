@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF Reader, Scanner & Tools',
+  'app.name':'Offline PDF Lezer',
   'tabs.home':'Start',
   'tabs.library':'Bibliotheek',
   'tabs.tools':'Gereedschap',
   'tabs.settings':'Instellingen',
-  'home.eyebrow':'PDF READER',
+  'home.eyebrow':'OFFLINE PDF',
   'home.heroPill':'SNEL • PRIVÉ • OP HET APPARAAT',
   'home.heroTitle':'Open je PDF-bestanden\\nin een oogwenk.',
   'home.heroText':'Geen rommel. Geen account. Kies een document en begin met lezen.',

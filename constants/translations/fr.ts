@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Lecteur PDF, Scanner et Outils',
+  'app.name':'Lecteur PDF Hors Ligne',
   'tabs.home':'Accueil',
   'tabs.library':'Bibliothèque',
   'tabs.tools':'Outils',
   'tabs.settings':'Réglages',
-  'home.eyebrow':'LECTEUR PDF',
+  'home.eyebrow':'PDF HORS LIGNE',
   'home.heroPill':'RAPIDE • PRIVÉ • SUR L’APPAREIL',
   'home.heroTitle':'Ouvrez vos PDF\ninstantanément.',
   'home.heroText':'Sans encombrement. Sans compte. Choisissez un document et commencez à lire.',

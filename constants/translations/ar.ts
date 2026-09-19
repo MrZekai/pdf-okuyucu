@@ -1,10 +1,10 @@
 export default {
-  'app.name':'قارئ PDF وماسح وأدوات',
+  'app.name':'قارئ PDF بدون إنترنت',
   'tabs.home':'الرئيسية',
   'tabs.library':'المكتبة',
   'tabs.tools':'الأدوات',
   'tabs.settings':'الإعدادات',
-  'home.eyebrow':'قارئ PDF',
+  'home.eyebrow':'PDF أوفلاين',
   'home.heroPill':'سريع • خاص • على جهازك',
   'home.heroTitle':'افتح ملفات PDF\nفورًا.',
   'home.heroText':'بلا تعقيد وبلا حساب. اختر مستندًا وابدأ القراءة.',

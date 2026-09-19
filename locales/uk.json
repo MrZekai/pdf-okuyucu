@@ -1,1 +1,8 @@
-{"android": {"app_name": "PDF читалка"}, "ios": {"CFBundleDisplayName": "PDF читалка"}}
+{
+  "android": {
+    "app_name": "Офлайн PDF"
+  },
+  "ios": {
+    "CFBundleDisplayName": "Офлайн PDF"
+  }
+}

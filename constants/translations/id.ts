@@ -1,10 +1,10 @@
 export default {
-  'app.name':'Pembaca PDF, Pemindai & Alat',
+  'app.name':'Pembaca PDF Offline',
   'tabs.home':'Beranda',
   'tabs.library':'Pustaka',
   'tabs.tools':'Alat',
   'tabs.settings':'Pengaturan',
-  'home.eyebrow':'PEMBACA PDF',
+  'home.eyebrow':'PDF OFFLINE',
   'home.heroPill':'CEPAT • PRIVAT • DI PERANGKAT',
   'home.heroTitle':'Buka PDF Anda\ndalam sekejap.',
   'home.heroText':'Tanpa kerumitan. Tanpa akun. Pilih dokumen dan mulai membaca.',

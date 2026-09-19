@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDFリーダー・スキャナー・ツール',
+  'app.name':'オフラインPDFリーダー',
   'tabs.home':'ホーム',
   'tabs.library':'ライブラリ',
   'tabs.tools':'ツール',
   'tabs.settings':'設定',
-  'home.eyebrow':'PDFリーダー',
+  'home.eyebrow':'オフラインPDF',
   'home.heroPill':'高速 • プライベート • 端末内',
   'home.heroTitle':'PDFをすぐに\n開けます。',
   'home.heroText':'面倒な操作もアカウントも不要。文書を選んで読み始めましょう。',

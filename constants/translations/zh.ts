@@ -1,10 +1,10 @@
 export default {
-  'app.name':'PDF 阅读器、扫描与工具',
+  'app.name':'离线PDF阅读器',
   'tabs.home':'首页',
   'tabs.library':'文档库',
   'tabs.tools':'工具',
   'tabs.settings':'设置',
-  'home.eyebrow':'PDF 阅读器',
+  'home.eyebrow':'离线PDF',
   'home.heroPill':'快速 • 私密 • 仅在设备上',
   'home.heroTitle':'立即打开\n你的 PDF。',
   'home.heroText':'没有繁琐操作，无需账号。选择文档即可开始阅读。',
