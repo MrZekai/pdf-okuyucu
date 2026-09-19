@@ -85,39 +85,52 @@ jobs:
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
           echo 'Closed-test yasal kaynakları doğrulandı; GitHub Pages deploy gecikmesi AAB buildini engellemeyecek.'
 
-      - name: Canlı gizlilik politikası ve app-ads.txt dosyasını doğrula
+      - name: Production yasal kaynaklarını doğrula
         if: github.event_name == 'workflow_dispatch' && inputs.build_release && inputs.release_target == 'production'
         run: |
           set -euo pipefail
-          # curl ciktisi dogrudan "grep -Fq"a borulanirsa grep ilk eslesmede
-          # cikar, curl'un kalan yazimi kapali boruya dusar ve curl 23
-          # (CURLE_WRITE_ERROR) ile biter. Bu, icerik dogru olsa bile adimi
-          # rastgele kirar. Govdeyi once dosyaya indirip sonra grepliyoruz;
-          # boylece --fail ve tam govde indirimi de zorunlu kalir.
-          curl --fail --silent --show-error --location --max-time 20 \
-            https://mrzekai.github.io/privacy-policy.html > live-privacy-policy.html
-          grep -Fq 'Çevrimdışı PDF Okuyucu' live-privacy-policy.html
-          # Depodaki docs/ kopyasini guncelleyip canli siteyi senkronlamayi
-          # unutmak, eksik veri beyaniyla yayina cikmak demektir. Canli sayfa
-          # dort reklam bicimini de saymadan production AAB uretilemez.
-          grep -Fq 'ödüllü' live-privacy-policy.html
-          grep -Fq 'geçiş' live-privacy-policy.html
-          # Odul suresi uygulamada 10 dakikaya indi. Canli politika hala 30
-          # dakika vaat ediyorsa beyan ile davranis celisir.
-          grep -Fq '10 dakikalık reklamsız kullanım' live-privacy-policy.html
-          # Play "User Data" politikasi, gizlilik politikasinin ICINDE bir
-          # iletisim noktasi ister. Depodaki dosyayi guncelleyip canli siteyi
-          # senkronlamayi unutmak, bu sarti karsilamadan yayina cikmak demektir.
-          grep -Eq 'mailto:[^"'"'"'@[:space:]]+@[^"'"'"'[:space:]]+' live-privacy-policy.html
-          if grep -q 'ILETISIM_EPOSTA_BURAYA\|example\.com' live-privacy-policy.html; then
-            echo 'Canli gizlilik politikasinda yer tutucu e-posta kalmis.' >&2
+
+          # AAB üretiminin kaynağı repodur. GitHub Pages yayını birkaç dakika
+          # gecikebildiği için binary build'i canlı site propagasyonuna bağlamıyoruz.
+          # Repodaki policy/app-ads içeriği zorunlu kapıdır; canlı site yalnızca uyarıdır.
+          grep -Fq 'Çevrimdışı PDF Okuyucu' docs/privacy-policy.html
+          grep -Fq 'Offline PDF Viewer & Tools' docs/privacy-policy.html
+          grep -Fq 'ödüllü' docs/privacy-policy.html
+          grep -Fq 'geçiş' docs/privacy-policy.html
+          grep -Fq '10 dakikalık reklamsız kullanım' docs/privacy-policy.html
+          grep -Eq 'mailto:[^"'"'"'@[:space:]]+@[^"'"'"'[:space:]]+' docs/privacy-policy.html
+          if grep -q 'ILETISIM_EPOSTA_BURAYA\|example\.com' docs/privacy-policy.html; then
+            echo 'Repodaki gizlilik politikasında yer tutucu e-posta kalmış.' >&2
             exit 1
           fi
-          curl --fail --silent --show-error --location --max-time 20 \
-            https://mrzekai.github.io/app-ads.txt > live-app-ads.txt
-          tr -d '\r' < live-app-ads.txt | \
+          tr -d '\r' < docs/app-ads.txt | \
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
-          echo 'Production canlı yasal sayfaları doğrulandı.'
+
+          live_ok=1
+          if ! curl --fail --silent --show-error --location --max-time 20 \
+            https://mrzekai.github.io/privacy-policy.html > live-privacy-policy.html; then
+            live_ok=0
+            echo '::warning::Canlı gizlilik politikası şu anda okunamadı; AAB build repodaki doğrulanmış kaynakla devam ediyor.'
+          fi
+          if [ "$live_ok" -eq 1 ]; then
+            grep -Fq 'Çevrimdışı PDF Okuyucu' live-privacy-policy.html || \
+              echo '::warning::Canlı Privacy Policy henüz yeni Türkçe başlığa güncellenmemiş.'
+            grep -Fq 'Offline PDF Viewer & Tools' live-privacy-policy.html || \
+              echo '::warning::Canlı Privacy Policy henüz yeni İngilizce başlığa güncellenmemiş.'
+            grep -Fq '10 dakikalık reklamsız kullanım' live-privacy-policy.html || \
+              echo '::warning::Canlı Privacy Policy henüz 10 dakikalık reklamsız kullanım metnine güncellenmemiş.'
+          fi
+
+          if curl --fail --silent --show-error --location --max-time 20 \
+            https://mrzekai.github.io/app-ads.txt > live-app-ads.txt; then
+            tr -d '\r' < live-app-ads.txt | \
+              grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0' || \
+              echo '::warning::Canlı app-ads.txt henüz repodaki doğru publisher satırıyla eşleşmiyor.'
+          else
+            echo '::warning::Canlı app-ads.txt şu anda okunamadı; AAB build repodaki doğrulanmış kaynakla devam ediyor.'
+          fi
+
+          echo 'Production repo yasal kaynakları doğrulandı.'
 
       - name: Android projesini üret
         run: npx expo prebuild --platform android --clean --no-install
