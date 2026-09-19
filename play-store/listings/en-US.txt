@@ -1,29 +1,54 @@
 TITLE
-PDF: Reader - Tools
+Offline PDF Viewer & Tools
 
 SHORT DESCRIPTION
-Read and edit PDFs on your device, with no account and no document uploads.
+View PDFs offline without internet. Merge, split and compress on your device.
 
 FULL DESCRIPTION
-PDF Reader is a local-first app designed to make viewing documents fast, simple, and secure.
+Open, read and manage PDF files without uploading your documents to the cloud. Offline PDF Viewer & Tools works directly on your Android device. No account or sign-in is required. Read saved PDFs, merge files, split pages and compress documents even without an internet connection.
 
-Choose PDF files from your device or download them directly from a web link. Documents stay in the app’s private on-device folder; you do not need an account or upload files to a server operated by the developer to read them.
+READ PDFS OFFLINE
 
-Key features:
+Use the app as an offline PDF viewer and reader. Scroll continuously, swipe one page at a time, lock the view to a single page and jump directly to any page number. Dark mode inverts the PDF page itself for more comfortable night reading. The app remembers your last page and returns you to where you stopped.
 
-• Pick and open PDFs from your device
-• Download PDFs from a URL
-• Vertical and horizontal reading
-• Single-page snap mode
-• Pinch zoom and double-tap zoom
-• Night mode for PDF pages
-• Favourites and a searchable local library
-• Last-page and reading-progress metadata
-• Password-protected PDF support
-• Document sharing
-• Merge PDFs, extract or remove pages, rotate pages and clean metadata
-• Interface in 14 languages
+Open password-protected PDFs with their password. Open PDF files received through chat, email or a file manager. You can also open a PDF link directly in the app when you are online.
 
-PDF Reader keeps your documents organised, stores reading information on your device, and gives you quick access to the tools you need through a clean interface.
+COMPRESS PDF FILE SIZE
 
-The app contains ads. Ad privacy choices can be managed from Settings.
+Reduce PDF file size on your phone before sending a document by email, meeting an upload limit or saving storage space. The app first attempts a lossless repack. If more compression is possible, it offers to re-encode the images inside the PDF and asks for your permission before doing so.
+
+Compression works best on scanned and image-heavy documents. In one measured example, a 3.9 MB scanned PDF became 248 KB—94% smaller. Results vary by document. Text-only PDFs may already be optimized, and the app tells you honestly when a file cannot be reduced further. The original and compressed sizes are displayed for comparison.
+
+MERGE, SPLIT AND EXTRACT PAGES
+
+Merge multiple PDF files into one document. Split a PDF into two files at a page you choose, extract selected pages into a new PDF or delete unwanted pages from a copy. Your original document is not overwritten; each tool creates a new output file.
+
+ORGANIZE PDF PAGES
+
+Reorder pages in any sequence, rotate selected PDF pages by 90 degrees and add a diagonal text watermark to every page. When your document is ready, print it through the Android print dialog or save it as a PDF.
+
+CREATE PDF FILES ON YOUR DEVICE
+
+Turn JPG and PNG images into one PDF, take a photo and save it as a PDF, or create a simple document from a title and typed text. Creation happens locally on your device.
+
+REMOVE HIDDEN PDF METADATA
+
+PDF files may contain information that is not visible on the page, including title, author, subject, keywords, producer, creation dates and XMP metadata. The metadata cleaning tool removes these fields from a new copy before you share the document.
+
+ON-DEVICE PDF LIBRARY
+
+PDFs you open can be kept in an on-device library. Mark favorites and search documents by filename. Clear the library from Settings whenever you want to remove local copies, reading history and tool counters.
+
+FILES STAY ON YOUR DEVICE
+
+Reading, merging, splitting, compressing, page organization and metadata cleaning run on your phone. Your PDF contents are not uploaded to a developer server. This makes the core reader and tools useful on a plane, on the metro or anywhere without a reliable connection.
+
+INTERFACE IN 24 LANGUAGES
+
+The interface follows your device language across 24 supported languages, including English, Turkish, German, Spanish, French, Portuguese, Italian, Dutch, Polish, Russian, Arabic, Hindi, Indonesian, Vietnamese, Japanese, Korean and Chinese.
+
+CLEAR LIMITATIONS
+
+The app does not provide OCR, text editing inside an existing PDF, electronic signatures or PDF-to-Word conversion. The camera currently creates one photo per document rather than a multi-page scan.
+
+Offline PDF Viewer & Tools is supported by ads and has no subscription. Watching an optional rewarded video gives you 10 minutes without ads. No PDF tool is locked behind a payment or mandatory video.

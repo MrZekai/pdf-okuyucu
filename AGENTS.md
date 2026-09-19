@@ -20,7 +20,7 @@ The owner has a very limited Emergent credit budget. Read this file fully before
 14. Preserve the app-open ad safeguards: development TestIds, cold-start loading gate, first eligibility on launch 3, and four-hour cap.
 15. Do not reintroduce `SYSTEM_ALERT_WINDOW`, `READ_EXTERNAL_STORAGE` or `WRITE_EXTERNAL_STORAGE`; the SAF document picker does not need them.
 
-## Localisation — 14 languages, hard requirement
+## Localisation — 24 interface languages, hard requirement
 The app ships in **English, Turkish, Spanish, Portuguese, German, French, Italian, Russian, Hindi, Indonesian, Arabic, Japanese, Korean and Simplified Chinese**.
 
 - **Language contract:** `constants/i18n.ts`; additional dictionaries are in `constants/translations/`.
@@ -46,7 +46,7 @@ The app ships in **English, Turkish, Spanish, Portuguese, German, French, Italia
 - `app/(tabs)/tools.tsx` — real on-device PDF creation, page, watermark, optimization and print tools
 - `app/(tabs)/settings.tsx` — reader / privacy settings; language follows the system/app locale automatically
 - `app/reader/[id].tsx` — native PDF reader
-- `constants/i18n.ts` + `constants/translations/` — **all user-facing strings, 14 languages**
+- `constants/i18n.ts` + `constants/translations/` — **all user-facing strings, 24 languages**
 - `constants/theme.ts` — colour palette
 - `context/AppContext.tsx` — app state, persistence, language sync
 - `context/AdsContext.tsx` — ads readiness

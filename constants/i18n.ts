@@ -230,7 +230,7 @@ const tr = {
   'settings.consentUpdatedMessage': 'Google reklam izin durumu yeniden kontrol edildi.',
   'settings.consentErrorTitle': 'Gizlilik seçenekleri',
   'settings.consentErrorMessage': 'Reklam gizlilik seçenekleri şu anda açılamıyor. Lütfen daha sonra tekrar deneyin.',
-  'settings.about': 'PDF Okuyucu • Expo SDK 57 • Yerel PDF işleme',
+  'settings.about': 'Çevrimdışı PDF Okuyucu • Expo SDK 57 • Yerel PDF işleme',
 
   'reader.notFound': 'Belge bulunamadı',
   'reader.goBack': 'Geri dön',
@@ -317,7 +317,7 @@ const tr = {
 };
 
 const en: Record<keyof typeof tr, string> = {
-  'app.name': 'Offline PDF Reader & Tools',
+  'app.name': 'Offline PDF Viewer & Tools',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
   'tabs.tools': 'Tools',
@@ -466,7 +466,7 @@ const en: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedMessage': 'The Google ad consent state has been re-checked.',
   'settings.consentErrorTitle': 'Privacy options',
   'settings.consentErrorMessage': 'Ad privacy options cannot be opened right now. Please try again later.',
-  'settings.about': 'PDF Reader • Expo SDK 57 • On-device PDF handling',
+  'settings.about': 'Offline PDF Viewer & Tools • Expo SDK 57 • On-device PDF handling',
 
   'reader.notFound': 'Document not found',
   'reader.goBack': 'Go back',
@@ -553,7 +553,7 @@ const en: Record<keyof typeof tr, string> = {
 };
 
 const es: Record<keyof typeof tr, string> = {
-  'app.name': 'Lector PDF Offline',
+  'app.name': 'Lector PDF sin conexión',
   'tabs.home': 'Inicio',
   'tabs.library': 'Biblioteca',
   'tabs.tools': 'Herramientas',
@@ -702,7 +702,7 @@ const es: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedMessage': 'Se ha vuelto a comprobar el estado de consentimiento de Google.',
   'settings.consentErrorTitle': 'Opciones de privacidad',
   'settings.consentErrorMessage': 'Las opciones de privacidad de anuncios no se pueden abrir ahora. Inténtalo de nuevo más tarde.',
-  'settings.about': 'Lector de PDF • Expo SDK 57 • Procesamiento local de PDF',
+  'settings.about': 'Lector PDF sin conexión • Expo SDK 57 • Procesamiento local de PDF',
 
   'reader.notFound': 'Documento no encontrado',
   'reader.goBack': 'Volver',

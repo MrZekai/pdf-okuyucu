@@ -1,0 +1,46 @@
+TITLE
+Pembaca PDF Offline & Alat
+
+SHORT DESCRIPTION
+Baca PDF tanpa internet. Gabungkan, pisahkan, dan kompres di perangkat Anda.
+
+FULL DESCRIPTION
+Buka, baca, dan kelola file PDF tanpa mengunggah dokumen ke cloud. Pembaca PDF Offline & Alat bekerja langsung di perangkat Android Anda. Tidak perlu akun atau login. Baca PDF tersimpan, gabungkan file, pisahkan halaman, dan kompres dokumen meski tanpa koneksi internet.
+
+BACA PDF SECARA OFFLINE
+
+Gunakan aplikasi sebagai pembaca PDF offline dan penampil PDF. Gulir terus-menerus, geser halaman satu per satu, kunci tampilan ke satu halaman, atau langsung lompat ke nomor halaman tertentu. Mode gelap membalik warna halaman PDF agar lebih nyaman dibaca pada malam hari. Aplikasi mengingat halaman terakhir dan membukanya kembali saat Anda melanjutkan.
+
+Buka PDF yang dilindungi kata sandi dengan memasukkan kata sandinya. File dari chat, email, atau pengelola file juga dapat dibuka langsung. Tautan PDF dapat dibuka di aplikasi saat perangkat terhubung ke internet.
+
+KOMPRES PDF DAN KURANGI UKURAN FILE
+
+Kurangi ukuran PDF di ponsel sebelum mengirimkannya melalui email, memenuhi batas unggahan, atau menghemat penyimpanan. Aplikasi terlebih dahulu mencoba mengemas ulang file tanpa kehilangan kualitas. Jika masih bisa diperkecil, aplikasi menawarkan pengodean ulang gambar di dalam PDF dan hanya melakukannya setelah Anda memberi izin.
+
+Kompresi PDF paling efektif untuk dokumen hasil pindai dan file yang banyak berisi gambar. Dalam satu contoh terukur, PDF pindai berukuran 3,9 MB menjadi 248 KB—94% lebih kecil. Hasil berbeda untuk setiap dokumen. PDF yang hanya berisi teks mungkin sudah optimal; aplikasi akan memberi tahu dengan jelas jika ukurannya tidak dapat dikurangi lagi. Ukuran sebelum dan sesudah ditampilkan.
+
+GABUNGKAN PDF, PISAHKAN PDF, DAN EKSTRAK HALAMAN
+
+Gabungkan beberapa file PDF menjadi satu dokumen. Pisahkan PDF menjadi dua file pada halaman pilihan Anda, ekstrak halaman tertentu ke PDF baru, atau hapus halaman yang tidak diperlukan dari salinan. File asli tidak pernah ditimpa; setiap alat membuat file keluaran baru.
+
+ATUR HALAMAN DAN BUAT PDF
+
+Susun ulang halaman sesuka Anda, putar halaman terpilih 90 derajat, dan tambahkan tanda air teks diagonal ke setiap halaman. Setelah selesai, cetak melalui dialog cetak Android atau simpan kembali sebagai PDF.
+
+Ubah gambar JPG dan PNG menjadi satu PDF, ambil foto lalu simpan sebagai PDF, atau buat dokumen sederhana dari judul dan teks yang Anda ketik. Semua dibuat secara lokal di perangkat.
+
+HAPUS METADATA PDF TERSEMBUNYI
+
+PDF dapat menyimpan informasi yang tidak tampak di halaman, seperti judul, penulis, subjek, kata kunci, aplikasi pembuat, tanggal, dan metadata XMP. Alat pembersih metadata menghapus bidang tersebut dari salinan baru sebelum Anda membagikannya.
+
+PERPUSTAKAAN LOKAL DAN PRIVASI FILE
+
+Simpan PDF yang dibuka di perpustakaan pada perangkat, tandai sebagai favorit, dan cari berdasarkan nama file. Dari Setelan, Anda dapat menghapus salinan lokal, riwayat membaca, dan penghitung penggunaan alat.
+
+Membaca, menggabungkan, memisahkan, mengompres, mengatur halaman, dan membersihkan metadata dilakukan di ponsel. Isi PDF tidak diunggah ke server pengembang. Karena itu, pembaca dan alat utama tetap berguna di pesawat, kereta, atau tempat tanpa sinyal. Antarmuka mendukung 24 bahasa.
+
+BATASAN YANG JELAS
+
+Aplikasi tidak menyediakan OCR, pengeditan teks di dalam PDF yang sudah ada, tanda tangan elektronik, atau konversi PDF ke Word. Kamera saat ini membuat satu foto per dokumen, bukan pemindaian multi-halaman.
+
+Aplikasi didukung iklan dan tidak memiliki langganan. Video reward opsional memberi Anda 10 menit tanpa iklan. Tidak ada alat PDF yang dikunci di balik pembayaran atau video wajib.

@@ -1,5 +1,5 @@
 export default {
-  'app.name':'오프라인 PDF 뷰어',
+  'app.name':'오프라인 PDF 뷰어 및 도구',
   'tabs.home':'홈',
   'tabs.library':'라이브러리',
   'tabs.tools':'도구',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Google 광고 동의 상태를 다시 확인했습니다.',
   'settings.consentErrorTitle':'개인정보 옵션',
   'settings.consentErrorMessage':'지금은 광고 개인정보 옵션을 열 수 없습니다. 잠시 후 다시 시도해 주세요.',
-  'settings.about':'PDF 리더 • Expo SDK 57 • 기기 내 PDF 처리',
+  'settings.about':'오프라인 PDF 뷰어 및 도구 • Expo SDK 57 • 기기 내 PDF 처리',
   'reader.notFound':'문서를 찾을 수 없습니다',
   'reader.goBack':'뒤로',
   'reader.pageOf':'{total}페이지 중 {page}페이지',

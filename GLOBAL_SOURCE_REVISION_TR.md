@@ -1,40 +1,27 @@
-# Global kaynak revizyonu — teslim özeti
+# Global kaynak revizyonu — güncel teslim özeti
 
-Bu tur yalnız kaynak kodu günceller. APK/AAB üretilmedi ve hiçbir depoya otomatik push yapılmadı.
+Bu kaynak seti `Offline PDF Viewer & Tools` marka/ASO kararıyla eşlenmiştir. Android paket kimliği değişmemiştir: `com.aitolian.pdfokuyucu`.
 
-## Uygulananlar
+## Güncel sözleşme
 
-- Desteklenmeyen cihaz dilleri ve eksik çeviriler artık İngilizceye düşer.
-- Görünen varsayılan uygulama adı `PDF Reader`; 14 dilin launcher adı ayrı yerelleştirilmiştir.
-- TR, EN, ES, PT, DE, FR, IT, RU, HI, ID, AR, JA, KO ve ZH için eksiksiz ve eş anahtarlı arayüz sözlükleri vardır.
-- Dil denetimi dil listesini otomatik okur; yeni bir sözlük doğrulama dışında bırakılamaz.
-- Uygulama içi manuel dil seçici kaldırılmıştır. Arayüz cihazın/Android uygulama dilini otomatik izler; desteklenmeyen dil İngilizceye düşer.
-- Arapça uygulama içi RTL yönü, mantıksal boşluklar ve aynalanan yön ikonları uygulanmıştır.
-- Tarih, göreli zaman, dosya boyutu ve sayılar seçili BCP-47 etiketiyle biçimlendirilir.
-- `Araçlar` sekmesi gerçek işlevlerle genişletildi: kamerayla tara, JPG/PNG’den PDF, metinden PDF, birleştir, böl, sayfa çıkar/sil/sırala/döndür, filigran ekle, kayıpsız optimize et, meta veri temizle ve sistem yazdırmayı aç.
-- Araçlar `pdf-lib` ile cihaz içinde çalışır; kaynak PDF değiştirilmez, sonuç yeni yerel PDF olarak kitaplığa eklenir.
-- Ana sayfa yalnız gerçek özellikleri önerir. Word/Excel/PPT dönüştürme eklenmedi; mevcut teknolojiyle gerçek ve güvenilir dönüşüm sunulmadan bu düğmeler yanıltıcı olurdu.
-- Öneri sırası yalnız cihazdaki kullanım sayaçları ve günlük keşif sırası ile belirlenir; analitik veya sunucuya gönderim yoktur.
-- TR/en-US/es-ES mağaza ekranları yeni Araçlar ve Kütüphane yapısına göre yenilenmiştir.
-- 14 dilin mağaza metni vardır; yeni 11 taslak `play-store/LISTING_REVIEW_STATUS.md` uyarısı gereği ana dili konuşan biri tarafından kontrol edilmeden yayınlanmamalıdır.
+- Google Play varsayılan başlık: `Offline PDF Viewer & Tools`.
+- Uygulama içi İngilizce başlık: `Offline PDF Viewer & Tools`.
+- İngilizce launcher/ikon altı adı: `Offline PDF`.
+- Türkçe mağaza ve uygulama içi başlık: `Çevrimdışı PDF Okuyucu`.
+- Türkçe launcher/ikon altı adı: `Çevrimdışı PDF`.
+- Arayüz 24 dil destekler; launcher adları `locales/` altında ayrı yerelleştirilir.
+- Google Play için 26 locale vardır. `es-419`/`es-ES` ve `pt-BR`/`pt-PT` mağazada ayrı tutulduğu için mağaza locale sayısı arayüz dilinden fazladır.
+- Kanonik mağaza metni `play-store/FINAL_26_LOCALES_ASO.txt`; kopyalanabilir alanlar `play-store/listings/*.txt` içindedir.
 
-## Bilinçli olarak değiştirilmedi
+## Ürün ve gizlilik
 
-- Android paket adı `com.aitolian.pdfokuyucu` kaldı. Bu kullanıcıya gösterilen marka değil, Play kimliğidir. İlk Play yüklemesinden sonra paket adı değiştirilemez; yeni ve benzersiz bir paket adı isteniyorsa ilk yüklemeden önce ayrıca karar verilmelidir.
-- Kotlin 2.1.20, Ads SDK 24.6.0 sabiti ve üretim AdMob kimlikleri korunmuştur.
-- PDF motoru değiştirilmemiştir.
-- OCR, Office (Word/Excel/PowerPoint) dönüştürme, kriptografik imza ve taranmış görselleri yeniden kodlayan güçlü sıkıştırma uygulanmış gibi gösterilmez; bunlar ek bir yerel motor gerektirir.
+- PDF okuma ve temel PDF araçları cihazda çalışır; PDF içeriği geliştirici sunucusuna yüklenmez.
+- URL’den PDF alma ve kullanıcı tarafından başlatılan Android Paylaş işlemi bu yerel işleme ilkesinin açık istisnalarıdır.
+- Google Mobile Ads SDK / UMP reklam ve izin akışı için kullanılır. UMP durumu uygulama açılışında ilk reklam isteğinden önce yenilenir.
+- Ödüllü reklam isteğe bağlıdır ve 10 dakika reklamsız kullanım sağlar; hiçbir PDF aracı reklam izlemeye kilitli değildir.
+- Son okunan sayfa cihazda saklanır ve belge yeniden açıldığında okuyucu bu sayfaya geri döner.
 
-## Yayın öncesi insan testi
-
-1. 14 dilde ekran taşması; özellikle Almanca, Rusça, Hintçe, Arapça, Japonca ve Çince.
-2. Arapça sekme, liste, modal ve yön ikonları.
-3. Her araç için küçük, bozuk, parolalı ve 50–80 MB arası PDF.
-4. Düşük/orta segment cihazda araç işlemi sırasında bellek davranışı.
-5. Sonuç PDF'lerin açılması, paylaşılması ve kaynak dosyanın değişmeden kalması.
-6. AdMob UMP, test reklamları ve banner ile gezinme arasındaki güvenli boşluk.
-
-## Kaynak kalite kapıları
+## Yayın öncesi kalite kapıları
 
 ```bash
 npm ci --legacy-peer-deps
@@ -43,3 +30,5 @@ npm run lint
 npm run doctor
 npm run release:check
 ```
+
+Ek olarak gerçek cihazda 24 dilde taşma, Arapça RTL, parola korumalı PDF, URL açma, paylaşma, sıkıştırma, sayfa araçları, UMP ve reklam akışları test edilmelidir.

@@ -1,29 +1,46 @@
-BAŞLIK
-PDF: Okuyucu - Araçları
+TITLE
+Çevrimdışı PDF Okuyucu
 
-KISA AÇIKLAMA
-PDF’lerini hesap açmadan ve yüklemeden cihazında oku ve düzenle.
+SHORT DESCRIPTION
+PDF'leri internetsiz okuyun; cihazda birleştirin, bölün ve sıkıştırın.
 
-UZUN AÇIKLAMA
-PDF Okuyucu; belgelerini hızlı, sade ve güvenli biçimde görüntülemek için tasarlanmış yerel odaklı bir PDF okuma uygulamasıdır.
+FULL DESCRIPTION
+Belgelerinizi buluta yüklemeden PDF dosyalarını açın, okuyun ve yönetin. Çevrimdışı PDF Okuyucu doğrudan Android cihazınızda çalışır. Hesap açmanız veya oturum açmanız gerekmez. İnternet bağlantısı olmadan kayıtlı PDF'leri okuyabilir, dosyaları birleştirebilir, sayfaları bölebilir ve belgeleri sıkıştırabilirsiniz.
 
-PDF dosyalarını cihazından seçebilir veya doğrudan bir internet bağlantısından indirebilirsin. Belgeler uygulamanın cihazındaki özel klasöründe tutulur; okumak için hesap oluşturman ya da dosyalarını bir geliştirici sunucusuna yüklemen gerekmez.
+PDF'LERİ ÇEVRİMDIŞI OKUYUN
 
-Öne çıkan özellikler:
+Uygulamayı çevrimdışı PDF okuyucu ve PDF görüntüleyici olarak kullanın. Sürekli kaydırın, sayfaları tek tek geçin, görünümü tek sayfaya sabitleyin veya doğrudan istediğiniz sayfa numarasına gidin. Karanlık mod PDF sayfasının kendi renklerini ters çevirerek gece okumayı kolaylaştırır. Uygulama kaldığınız sayfayı hatırlar.
 
-• Cihazdan PDF seçme ve açma
-• URL bağlantısından PDF indirme
-• Dikey ve yatay okuma
-• Sayfaya yapışan tek sayfa modu
-• Yakınlaştırma ve çift dokunarak büyütme
-• PDF sayfaları için gece modu
-• Favori belgeler ve aranabilir yerel kütüphane
-• Son görüntülenen sayfa ve okuma ilerlemesi kaydı
-• Parola korumalı PDF desteği
-• Belge paylaşma
-• PDF birleştirme, sayfa ayırma/silme/döndürme ve meta veri temizleme
-• 14 dilde arayüz
+Parola korumalı PDF'leri parolalarını girerek açın. Sohbetten, e-postadan veya dosya yöneticisinden gelen PDF dosyalarını da doğrudan açabilirsiniz. İnternet bağlantısı varken bir PDF bağlantısını uygulamada açabilirsiniz.
 
-PDF Okuyucu belgelerini düzenli tutar, son okuma bilgilerini cihazında saklar ve sade arayüzüyle ihtiyacın olan araçlara hızla ulaşmanı sağlar.
+PDF SIKIŞTIRIN VE DOSYA BOYUTUNU KÜÇÜLTÜN
 
-Uygulama reklam içerir. Reklam gizliliği tercihleri Ayarlar bölümünden yönetilebilir.
+Bir belgeyi e-postayla göndermeden, yükleme sınırına uydurmadan veya depolama alanı açmadan önce PDF boyutunu telefonunuzda azaltın. Uygulama önce kalite kaybı olmadan yeniden paketlemeyi dener. Daha fazla sıkıştırma mümkünse PDF içindeki görselleri yeniden kodlamayı teklif eder ve yalnızca izninizden sonra uygular.
+
+PDF sıkıştırma en iyi sonucu taranmış ve bol görselli belgelerde verir. Ölçülen bir örnekte 3,9 MB boyutundaki taranmış PDF 248 KB'ye indi; dosya %94 küçüldü. Sonuç belgeye göre değişir. Yalnızca metin içeren PDF'ler zaten optimize edilmiş olabilir; dosya daha fazla küçültülemiyorsa uygulama bunu açıkça söyler. Önceki ve sonraki boyutlar gösterilir.
+
+PDF BİRLEŞTİRİN, BÖLÜN VE SAYFA ÇIKARIN
+
+Birden fazla PDF dosyasını tek belgede birleştirin. PDF'yi seçtiğiniz sayfadan iki dosyaya bölün, belirli sayfaları yeni bir PDF'ye çıkarın veya istenmeyen sayfaları bir kopyadan silin. Özgün dosyanın üzerine yazılmaz; her araç yeni bir çıktı dosyası oluşturur.
+
+SAYFALARI DÜZENLEYİN VE PDF OLUŞTURUN
+
+Sayfaları istediğiniz sıraya koyun, seçilen sayfaları 90 derece döndürün ve her sayfaya çapraz metin filigranı ekleyin. İşiniz bittiğinde Android yazdırma penceresinden yazdırın veya yeniden PDF olarak kaydedin.
+
+JPG ve PNG görsellerini tek PDF'ye dönüştürün, fotoğraf çekip PDF olarak kaydedin ya da başlık ve yazdığınız metinden sade bir belge oluşturun. Her şey cihazınızda yerel olarak hazırlanır.
+
+GİZLİ PDF ÜST VERİLERİNİ TEMİZLEYİN
+
+PDF dosyalarında sayfada görünmeyen başlık, yazar, konu, anahtar kelimeler, üretici, tarihler ve XMP üst verileri bulunabilir. Üst veri temizleme aracı, paylaşmadan önce bu alanları yeni bir kopyadan kaldırır.
+
+YEREL KÜTÜPHANE VE DOSYA GİZLİLİĞİ
+
+Açtığınız PDF'leri cihazdaki kütüphanede tutun, favorilere ekleyin ve dosya adına göre arayın. Ayarlar'dan yerel kopyaları, okuma geçmişini ve araç sayaçlarını silebilirsiniz.
+
+Okuma, birleştirme, bölme, sıkıştırma, sayfa düzenleme ve üst veri temizleme işlemleri telefonunuzda yapılır. PDF içerikleri geliştiricinin sunucusuna yüklenmez. Bu nedenle temel okuyucu ve araçlar uçakta, metroda veya bağlantının olmadığı yerlerde de çalışır. Arayüz 24 dili destekler.
+
+AÇIK SINIRLAR
+
+Uygulamada OCR, mevcut PDF içindeki metni düzenleme, elektronik imza veya PDF'den Word'e dönüştürme yoktur. Kamera şu anda belge başına tek fotoğraf oluşturur; çok sayfalı tarama yapmaz.
+
+Uygulama reklam desteklidir ve abonelik içermez. İsteğe bağlı ödüllü video, 10 dakika reklamsız kullanım sağlar. Hiçbir PDF aracı ödeme veya zorunlu video arkasında kilitli değildir.

@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Czytnik PDF Offline',
+  'app.name':'Czytnik PDF offline: narzędzia',
   'tabs.home':'Start',
   'tabs.library':'Biblioteka',
   'tabs.tools':'Narzędzia',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Stan zgody na reklamy Google został ponownie sprawdzony.',
   'settings.consentErrorTitle':'Opcje prywatności',
   'settings.consentErrorMessage':'Opcji prywatności reklam nie można teraz otworzyć. Spróbuj ponownie później.',
-  'settings.about':'Czytnik PDF • Expo SDK 57 • Obsługa PDF na urządzeniu',
+  'settings.about':'Czytnik PDF offline: narzędzia • Expo SDK 57 • Obsługa PDF na urządzeniu',
   'reader.notFound':'Nie znaleziono dokumentu',
   'reader.goBack':'Wróć',
   'reader.pageOf':'strona {page} z {total}',

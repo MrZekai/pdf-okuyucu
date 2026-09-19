@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Pembaca PDF Offline',
+  'app.name':'Pembaca PDF Offline & Alat',
   'tabs.home':'Beranda',
   'tabs.library':'Pustaka',
   'tabs.tools':'Alat',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Status persetujuan iklan Google telah diperiksa ulang.',
   'settings.consentErrorTitle':'Opsi privasi',
   'settings.consentErrorMessage':'Opsi privasi iklan tidak dapat dibuka saat ini. Coba lagi nanti.',
-  'settings.about':'Pembaca PDF • Expo SDK 57 • Pemrosesan di perangkat',
+  'settings.about':'Pembaca PDF Offline & Alat • Expo SDK 57 • Pemrosesan di perangkat',
   'reader.notFound':'Dokumen tidak ditemukan',
   'reader.goBack':'Kembali',
   'reader.pageOf':'halaman {page} dari {total}',

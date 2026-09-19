@@ -10,12 +10,12 @@
     <rect x="94" y="192" width="892" height="1285" rx="8" fill="#F9FAFC"/>
     <text x="180" y="305" fill="#1E293B" font-size="43" font-weight="800">Personaliza Tu</text><text x="180" y="358" fill="#E5252A" font-size="43" font-weight="800">Experiencia de Lectura</text>
     <rect x="180" y="405" width="620" height="7" rx="3.5" fill="#E5252A"/>
-    <text x="180" y="475" fill="#334155" font-size="24">Lector PDF muestra tus documentos de forma</text><text x="180" y="515" fill="#334155" font-size="24">rápida y segura. Todos los archivos se quedan</text><text x="180" y="555" fill="#334155" font-size="24">en tu dispositivo.</text>
+    <text x="180" y="475" fill="#334155" font-size="24">Lector PDF muestra tus documentos de forma</text><text x="180" y="515" fill="#334155" font-size="24">rápida y segura. El procesamiento de PDF se</text><text x="180" y="555" fill="#334155" font-size="24">realiza en tu dispositivo.</text>
     <rect x="180" y="620" width="720" height="270" rx="28" fill="#EEF0FF"/>
     <circle cx="285" cy="755" r="72" fill="#E5252A"/><path d="M254 717h43l28 28v53h-71zM297 717v28h28" fill="none" stroke="#fff" stroke-width="6"/>
-    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Local y privado</text><text x="395" y="754" fill="#526078" font-size="22">Tus documentos nunca se</text><text x="395" y="790" fill="#526078" font-size="22">suben a un servidor.</text>
+    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Local y privado</text><text x="395" y="754" fill="#526078" font-size="22">Tus PDF no se suben a un</text><text x="395" y="790" fill="#526078" font-size="22">servidor del desarrollador.</text>
     <text x="180" y="980" fill="#1E293B" font-size="30" font-weight="800">Herramientas de lectura</text>
-    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Toca dos veces para ampliar</text><text x="215" y="1095">•  Elige lectura horizontal o vertical</text><text x="215" y="1145">•  Protege tus ojos con el modo nocturno</text><text x="215" y="1195">•  El progreso se guarda automáticamente</text></g>
+    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Toca dos veces para ampliar</text><text x="215" y="1095">•  Elige lectura horizontal o vertical</text><text x="215" y="1145">•  Lee con comodidad en modo nocturno</text><text x="215" y="1195">•  El progreso se guarda automáticamente</text></g>
     <rect x="180" y="1270" width="720" height="2" fill="#CBD5E1"/>
     <text x="540" y="1352" fill="#94A3B8" font-size="20" text-anchor="middle">12</text>
 

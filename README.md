@@ -1,6 +1,6 @@
-# PDF Reader — global, local-first PDF workspace
+# Offline PDF Viewer & Tools — global, local-first PDF workspace
 
-A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / React Native**. PDFs are processed inside the app's private device storage; the project has no account, backend, document upload, analytics or cloud storage.
+A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / React Native**. PDFs are processed inside the app's private device storage; the project has no account, backend, developer-side document upload, first-party analytics or cloud storage. Google Mobile Ads/UMP data handling is disclosed separately in the privacy policy and Data Safety notes.
 
 ## Included
 - Rich dashboard home screen
@@ -28,7 +28,7 @@ A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / 
 - Policy-conscious app-open ad flow (test IDs in development, first eligible from the third launch, four-hour frequency cap)
 - Google UMP consent bootstrap before ads
 - Development/test ad fallback
-- 14 complete interface languages with English fallback
+- 24 complete interface languages with English fallback
 - Automatic system/app-language detection with English fallback and Arabic RTL-aware layout
 - EAS development / APK preview / production profiles
 
@@ -66,12 +66,12 @@ EXPO_PUBLIC_ADMOB_APP_OPEN_IOS=ca-app-pub-.../...
 
 Also configure **Privacy & messaging** in AdMob for the consent messages you need. The app asks UMP for current consent state before Mobile Ads initialization.
 
-## Important product note
-The current renderer reports page changes and page count, so the app stores reading progress. Its documented API does not expose a programmatic `jumpToPage` method, so **the project does not falsely claim automatic resume-to-page yet**. A future agent can add this only if the renderer exposes a supported navigation API or if the renderer is deliberately changed after evaluation.
+## Reading progress
+The reader stores the last viewed page and passes that saved zero-based page to the PDF renderer when the document is reopened, so a reopened document resumes where the user stopped. The release validator guards this behavior because the Play listing explicitly promises it.
 
 ## Languages and fallback
 
-The app supports English, Turkish, Spanish, Portuguese, German, French, Italian, Russian, Hindi, Indonesian, Arabic, Japanese, Korean and Simplified Chinese. Unsupported device languages always fall back to English, including the launcher name.
+The app supports 24 interface languages: English, Turkish, Spanish, Portuguese, German, French, Italian, Russian, Hindi, Indonesian, Arabic, Japanese, Korean, Simplified Chinese, Vietnamese, Thai, Filipino, Malay, Bengali, Urdu, Polish, Ukrainian, Dutch and Romanian. Unsupported device languages always fall back to English, including the launcher name.
 
 The language contract lives in `constants/i18n.ts`; the additional dictionaries live in `constants/translations/`.
 
@@ -80,12 +80,12 @@ The language contract lives in `constants/i18n.ts`; the additional dictionaries 
 - React dışı modüllerde (`lib/pdfFiles.ts`): `import { t } from '@/constants/i18n'`
 - Aktif dil `settings.language` içinde yalnız çalışma zamanı durumu olarak tutulur; uygulama içinde manuel dil seçici yoktur
 - Dil `expo-localization` ile cihazın/Android uygulama dilinden algılanır; desteklenmeyen diller İngilizceye düşer
-- Android 13+ uygulama-bazlı dil menüsü 14 dili sunar ve launcher adı her dil için `locales/` altında yerelleştirilir
+- Android 13+ uygulama-bazlı dil menüsü 24 dili sunar ve launcher adı her dil için `locales/` altında yerelleştirilir
 - Her sözlük `Record<keyof typeof tr, string>` olarak tiplenmiştir; eksik veya fazla anahtar TypeScript derlemesini durdurur
 - `scripts/check-i18n.mjs`, dil listesini otomatik okur; yeni bir dil sessizce doğrulama dışında kalamaz
 - Arapça uygulama içinde RTL yönü kullanır; yönlü ikonlar yansıtılır ve kayıtlı dil ayarı korunur
 
-Yeni metin eklerken anahtarı 14 sözlüğe de ekleyin, ekranda düz string yazmayın, sonra:
+Yeni metin eklerken anahtarı 24 sözlüğe de ekleyin, ekranda düz string yazmayın, sonra:
 
 ```bash
 npm run i18n:check   # anahtar + yer tutucu eşitliği, kalan sabit metin taraması
@@ -116,7 +116,7 @@ kurulum için `PLAY_RELEASE_GUIDE.md` dosyasını izleyin. Hat şu kontrolleri y
 ## Play Store paketi
 
 `play-store/` altında 512×512 ikon, 1024×500 feature graphic, Türkçe/İngilizce/İspanyolca için ayrı ayrı dört adet 1080×1920 mağaza ekranı,
-14 dil için listeleme metinleri ve Data Safety yanıt taslağı bulunur. Yeni 11 mağaza çevirisi yayınlanmadan önce ana dili konuşan biri tarafından incelenmelidir; durum `play-store/LISTING_REVIEW_STATUS.md` içinde izlenir. Gizlilik politikası `docs/` altındaki
+26 Google Play locale’i için kesinleştirilmiş listeleme metinleri ve Data Safety yanıt taslağı bulunur. Uygulama arayüzü 24 dil destekler; `es-419`/`es-ES` ve `pt-BR`/`pt-PT` ayrı mağaza locale’leri olduğu için Play listing sayısı 26’dır. Kanonik ASO metni `play-store/FINAL_26_LOCALES_ASO.txt` dosyasındadır. Gizlilik politikası `docs/` altındaki
 kaynak dosyadan ayrı public `MrZekai.github.io` deposuna eşitlenir; bu depodaki Pages workflow’u yalnızca
 kaynak doğrulaması yapar. Uygulamadaki Ayarlar ekranı canlı politikaya bağlantı verir.
 

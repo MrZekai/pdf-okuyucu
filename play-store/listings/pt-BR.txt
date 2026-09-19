@@ -1,17 +1,46 @@
-TÍTULO
-Leitor de PDF: Privado
+TITLE
+Leitor de PDF Offline
 
-DESCRIÇÃO CURTA
-Leia e edite PDFs no dispositivo, sem conta e sem enviar seus documentos.
+SHORT DESCRIPTION
+Leia PDFs sem internet. Junte, divida e comprima arquivos no seu celular.
 
-DESCRIÇÃO COMPLETA
-Abra, organize e edite PDFs com privacidade. Os documentos ficam no seu dispositivo e não são enviados a um servidor do desenvolvedor.
+FULL DESCRIPTION
+Abra, leia e organize arquivos PDF sem enviar seus documentos para a nuvem. O Leitor de PDF Offline funciona diretamente no seu celular Android. Não é preciso criar conta nem fazer login. Leia PDFs salvos, junte arquivos, divida páginas e comprima documentos mesmo sem conexão com a internet.
 
-Recursos principais:
-• Abrir PDFs do dispositivo ou de links HTTPS
-• Biblioteca local, favoritos e memorização da última página visualizada
-• Leitura vertical ou horizontal, zoom e modo noturno
-• Unir PDFs, extrair ou remover páginas, girar páginas e limpar metadados
-• Compatibilidade com PDFs protegidos por senha
+LEIA PDF OFFLINE
 
-O aplicativo contém anúncios. As opções de privacidade dos anúncios podem ser gerenciadas nas Configurações.
+Use o aplicativo como leitor e visualizador de PDF offline. Role continuamente, deslize uma página por vez, fixe a visualização em uma única página ou vá direto para o número desejado. O modo escuro inverte as cores da própria página do PDF para deixar a leitura noturna mais confortável. O aplicativo memoriza a última página lida.
+
+Abra PDF protegido por senha digitando a senha. Também é possível abrir arquivos recebidos por chat, e-mail ou gerenciador de arquivos. Quando houver internet, um link de PDF pode ser aberto diretamente no aplicativo.
+
+COMPRIMA PDF E REDUZA O TAMANHO DO ARQUIVO
+
+Diminua o tamanho de um PDF no celular antes de enviá-lo por e-mail, cumprir um limite de upload ou economizar armazenamento. Primeiro, o aplicativo tenta reempacotar o arquivo sem perda de qualidade. Se ainda for possível reduzir, ele oferece a recodificação das imagens internas e só continua depois da sua autorização.
+
+A compressão de PDF funciona melhor em documentos digitalizados e arquivos com muitas imagens. Em um exemplo medido, um PDF escaneado de 3,9 MB virou 248 KB, uma redução de 94%. O resultado varia conforme o documento. PDFs apenas com texto podem já estar otimizados; o aplicativo informa com clareza quando não é possível reduzir mais. Os tamanhos antes e depois são exibidos.
+
+JUNTE, DIVIDA E EXTRAIA PÁGINAS DE PDF
+
+Junte vários PDFs em um único documento. Divida um PDF em dois arquivos na página que você escolher, extraia páginas selecionadas para um novo PDF ou exclua páginas indesejadas de uma cópia. O arquivo original nunca é substituído; cada ferramenta cria um novo arquivo de saída.
+
+ORGANIZE PÁGINAS E CRIE PDF
+
+Reordene páginas como quiser, gire as páginas selecionadas em 90 graus e adicione uma marca-d'água de texto diagonal em todas elas. Quando terminar, imprima pelo diálogo de impressão do Android ou salve novamente como PDF.
+
+Converta imagens JPG e PNG em um só PDF, tire uma foto e salve como PDF ou crie um documento simples com título e texto digitado. Tudo é criado localmente no celular.
+
+REMOVA METADADOS OCULTOS DO PDF
+
+Um PDF pode carregar informações que não aparecem na página, como título, autor, assunto, palavras-chave, programa produtor, datas e metadados XMP. A limpeza de metadados remove esses campos de uma nova cópia antes do compartilhamento.
+
+BIBLIOTECA LOCAL E PRIVACIDADE DOS ARQUIVOS
+
+Guarde PDFs abertos em uma biblioteca no aparelho, marque favoritos e pesquise pelo nome do arquivo. Em Configurações, apague cópias locais, histórico de leitura e contadores das ferramentas.
+
+Leitura, junção, divisão, compressão, organização de páginas e limpeza de metadados são executadas no celular. O conteúdo dos PDFs não é enviado para um servidor do desenvolvedor. Por isso, o leitor e as ferramentas principais funcionam no avião, no metrô ou onde não houver sinal. A interface está disponível em 24 idiomas.
+
+LIMITES EXPLICADOS COM CLAREZA
+
+O aplicativo não oferece OCR, edição do texto dentro de um PDF existente, assinatura eletrônica nem conversão de PDF para Word. A câmera cria atualmente uma foto por documento, e não uma digitalização de várias páginas.
+
+O aplicativo é mantido por anúncios e não tem assinatura. Um vídeo premiado opcional libera 10 minutos sem anúncios. Nenhuma ferramenta de PDF fica bloqueada por pagamento ou vídeo obrigatório.

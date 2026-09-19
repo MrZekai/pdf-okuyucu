@@ -1,5 +1,5 @@
 export default {
-  'app.name':'อ่าน PDF ออฟไลน์',
+  'app.name':'โปรแกรมอ่าน PDF ออฟไลน์',
   'tabs.home':'หน้าแรก',
   'tabs.library':'คลัง',
   'tabs.tools':'เครื่องมือ',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'ตรวจสอบสถานะการยินยอมโฆษณาของ Google อีกครั้งแล้ว',
   'settings.consentErrorTitle':'ตัวเลือกความเป็นส่วนตัว',
   'settings.consentErrorMessage':'ขณะนี้เปิดตัวเลือกความเป็นส่วนตัวของโฆษณาไม่ได้ กรุณาลองใหม่ภายหลัง',
-  'settings.about':'อ่าน PDF • Expo SDK 57 • ประมวลผล PDF บนเครื่อง',
+  'settings.about':'โปรแกรมอ่าน PDF ออฟไลน์ • Expo SDK 57 • ประมวลผล PDF บนเครื่อง',
   'reader.notFound':'ไม่พบเอกสาร',
   'reader.goBack':'ย้อนกลับ',
   'reader.pageOf':'หน้า {page} จาก {total}',

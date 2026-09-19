@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Offline PDF Reader & Tools',
+  'app.name':'Offline PDF Reader at Tools',
   'tabs.home':'Home',
   'tabs.library':'Aklatan',
   'tabs.tools':'Mga Tool',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Nasuri muli ang katayuan ng pahintulot sa ad ng Google.',
   'settings.consentErrorTitle':'Mga opsyon sa privacy',
   'settings.consentErrorMessage':'Hindi mabuksan ngayon ang mga opsyon sa privacy ng ad. Subukan muli mamaya.',
-  'settings.about':'PDF Reader • Expo SDK 57 • Paghawak ng PDF sa device',
+  'settings.about':'Offline PDF Reader at Tools • Expo SDK 57 • Paghawak ng PDF sa device',
   'reader.notFound':'Hindi nahanap ang dokumento',
   'reader.goBack':'Bumalik',
   'reader.pageOf':'pahina {page} ng {total}',

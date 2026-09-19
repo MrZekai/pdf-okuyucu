@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Offline PDF Lezer',
+  'app.name':'Offline PDF-lezer & tools',
   'tabs.home':'Start',
   'tabs.library':'Bibliotheek',
   'tabs.tools':'Gereedschap',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'De Google-advertentietoestemming is opnieuw gecontroleerd.',
   'settings.consentErrorTitle':'Privacyopties',
   'settings.consentErrorMessage':'De privacyopties voor advertenties kunnen nu niet worden geopend. Probeer het later opnieuw.',
-  'settings.about':'PDF Reader • Expo SDK 57 • PDF-verwerking op het apparaat',
+  'settings.about':'Offline PDF-lezer & tools • Expo SDK 57 • PDF-verwerking op het apparaat',
   'reader.notFound':'Document niet gevonden',
   'reader.goBack':'Terug',
   'reader.pageOf':'pagina {page} van {total}',

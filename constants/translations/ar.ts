@@ -1,5 +1,5 @@
 export default {
-  'app.name':'قارئ PDF بدون إنترنت',
+  'app.name':'قارئ PDF دون إنترنت وأدوات',
   'tabs.home':'الرئيسية',
   'tabs.library':'المكتبة',
   'tabs.tools':'الأدوات',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'أُعيد التحقق من حالة موافقة إعلانات Google.',
   'settings.consentErrorTitle':'خيارات الخصوصية',
   'settings.consentErrorMessage':'تعذر فتح خيارات خصوصية الإعلانات الآن. يرجى المحاولة لاحقا.',
-  'settings.about':'قارئ PDF • Expo SDK 57 • معالجة PDF على الجهاز',
+  'settings.about':'قارئ PDF دون إنترنت وأدوات • Expo SDK 57 • معالجة PDF على الجهاز',
   'reader.notFound':'المستند غير موجود',
   'reader.goBack':'رجوع',
   'reader.pageOf':'الصفحة {page} من {total}',

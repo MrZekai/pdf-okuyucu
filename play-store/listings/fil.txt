@@ -1,0 +1,46 @@
+TITLE
+Offline PDF Reader at Tools
+
+SHORT DESCRIPTION
+Magbasa ng PDF offline. Pagsamahin, hatiin at i-compress sa iyong device.
+
+FULL DESCRIPTION
+Magbukas, magbasa at mamahala ng mga PDF nang hindi ina-upload ang iyong mga dokumento sa cloud. Direktang gumagana sa Android device mo ang Offline PDF Reader at Tools. Walang account o pag-sign in na kailangan. Magbasa ng naka-save na PDF, magsama ng files, maghati ng pages at mag-compress ng dokumento kahit walang internet connection.
+
+MAGBASA NG PDF OFFLINE
+
+Gamitin ang app bilang offline PDF reader at PDF viewer. Mag-scroll nang tuloy-tuloy, mag-swipe nang paisang page, i-lock ang view sa isang page, o dumiretso sa anumang page number. Binabaligtad ng dark mode ang mga kulay ng mismong PDF page para mas komportable itong basahin sa gabi. Naaalala ng app ang huling page na binasa mo.
+
+Magbukas ng password-protected PDF gamit ang password nito. Maaari ring buksan ang mga PDF na galing sa chat, email o file manager. Kapag online, maaari kang magbukas ng PDF link nang direkta sa app.
+
+MAG-COMPRESS NG PDF AT MAGPALIIT NG FILE SIZE
+
+Bawasan ang laki ng PDF sa phone bago ito i-email, ipasok sa upload limit o magtipid ng storage. Susubukan muna ng app ang lossless repack. Kung maaari pang lumiit ang file, mag-aalok itong i-re-encode ang mga larawan sa loob ng PDF at hihingi muna ng pahintulot mo.
+
+Pinakamabisa ang PDF compression sa scanned at image-heavy na dokumento. Sa isang sinukat na halimbawa, ang 3.9 MB na scan ay naging 248 KB—94% na mas maliit. Nag-iiba ang resulta sa bawat dokumento. Maaaring optimized na ang text-only PDF; malinaw na sasabihin ng app kung hindi na ito mapapaliit. Makikita ang file size bago at pagkatapos.
+
+PAGSAMAHIN, HATIIN AT I-EXTRACT ANG PDF PAGES
+
+Pagsamahin ang maraming PDF sa isang dokumento. Hatiin ang PDF sa dalawang file sa page na pipiliin mo, i-extract ang napiling pages sa bagong PDF, o alisin ang hindi kailangang pages mula sa isang kopya. Hindi ino-overwrite ang original; gumagawa ang bawat tool ng bagong output file.
+
+AYUSIN ANG PAGES AT GUMAWA NG PDF
+
+I-reorder ang pages sa gusto mong pagkakasunod-sunod, i-rotate nang 90 degrees ang napiling pages at maglagay ng diagonal text watermark sa bawat page. Kapag tapos na, mag-print gamit ang Android print dialog o mag-save ulit bilang PDF.
+
+Gawing isang PDF ang JPG at PNG images, kumuha ng litrato at i-save bilang PDF, o gumawa ng simpleng dokumento mula sa title at text na tina-type mo. Lokal sa device ginagawa ang lahat.
+
+ALISIN ANG NAKATAGONG PDF METADATA
+
+Maaaring may impormasyong hindi nakikita sa page ang isang PDF, gaya ng title, author, subject, keywords, producer, dates at XMP metadata. Inaalis ng metadata cleaner ang mga field na ito sa isang bagong kopya bago mo ito i-share.
+
+LOCAL LIBRARY AT PRIVACY
+
+Itago ang mga binuksang PDF sa on-device library, markahan bilang favorite at maghanap ayon sa filename. Sa Settings, maaari mong burahin ang local copies, reading history at tool counters.
+
+Sa phone ginagawa ang pagbabasa, pagsasama, paghahati, pag-compress, pag-aayos ng pages at paglilinis ng metadata. Hindi ina-upload ang nilalaman ng PDF sa server ng developer. Kaya nagagamit ang pangunahing reader at tools sa eroplano, tren o lugar na walang signal. Sinusuportahan ng interface ang 24 na wika.
+
+MALINAW NA LIMITASYON
+
+Walang OCR, pag-edit ng text sa loob ng existing PDF, electronic signature o PDF-to-Word conversion ang app. Isang litrato lang bawat dokumento ang ginagawa ng camera sa ngayon, hindi multi-page scan.
+
+May ads ang app at walang subscription. Ang optional rewarded video ay nagbibigay ng 10 minutong walang ads. Walang PDF tool na naka-lock sa bayad o sapilitang video.

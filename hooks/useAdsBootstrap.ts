@@ -48,10 +48,10 @@ export function useAdsBootstrap() {
 
   useEffect(() => {
     mounted.current = true;
-    // Use any valid consent from the previous session immediately, then refresh UMP state.
-    void startIfAllowed();
+    // Refresh UMP consent on every launch before the first ad request.
+    // If consent refresh fails, keep ads unavailable rather than relying on
+    // potentially stale cached consent from a previous session.
     AdsConsent.gatherConsent()
-      .catch(() => undefined)
       .then(startIfAllowed)
       .catch(() => { if (mounted.current) setStatus('unavailable'); });
 

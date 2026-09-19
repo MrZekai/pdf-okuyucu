@@ -1,0 +1,46 @@
+TITLE
+Leitor de PDF Offline
+
+SHORT DESCRIPTION
+Leia PDF sem Internet. Una, divida e comprima ficheiros no seu telemóvel.
+
+FULL DESCRIPTION
+Abra, leia e organize ficheiros PDF sem enviar os seus documentos para a nuvem. O Leitor de PDF Offline funciona diretamente no seu telemóvel Android. Não é necessário criar uma conta nem iniciar sessão. Leia PDF guardados, una ficheiros, divida páginas e comprima documentos, mesmo sem ligação à Internet.
+
+LER PDF OFFLINE
+
+Utilize a aplicação como leitor e visualizador de PDF offline. Desloque continuamente, passe uma página de cada vez, fixe a vista numa única página ou avance diretamente para o número pretendido. O modo escuro inverte as cores da própria página do PDF para tornar a leitura noturna mais confortável. A aplicação memoriza a última página lida.
+
+Abra um PDF protegido por palavra-passe introduzindo a respetiva palavra-passe. Também pode abrir ficheiros recebidos por conversa, e-mail ou gestor de ficheiros. Quando tiver Internet, pode abrir uma ligação para PDF diretamente na aplicação.
+
+COMPRIMIR PDF E REDUZIR O TAMANHO DO FICHEIRO
+
+Reduza o tamanho de um PDF no telemóvel antes de o enviar por e-mail, cumprir um limite de carregamento ou poupar armazenamento. Primeiro, a aplicação tenta reempacotar o ficheiro sem perda de qualidade. Se for possível reduzir mais, propõe recodificar as imagens existentes no documento e só o faz depois da sua autorização.
+
+A compressão de PDF é mais eficaz em documentos digitalizados e ficheiros com muitas imagens. Num exemplo medido, um PDF digitalizado de 3,9 MB passou para 248 KB, uma redução de 94%. O resultado varia consoante o documento. Um PDF apenas com texto pode já estar otimizado; a aplicação indica claramente quando não é possível reduzir mais. São apresentados os tamanhos antes e depois.
+
+UNIR, DIVIDIR E EXTRAIR PÁGINAS DE PDF
+
+Una vários PDF num único documento. Divida um PDF em dois ficheiros na página que escolher, extraia páginas selecionadas para um novo PDF ou elimine páginas desnecessárias de uma cópia. O ficheiro original nunca é substituído; cada ferramenta cria um novo ficheiro de saída.
+
+ORGANIZAR PÁGINAS E CRIAR PDF
+
+Reordene páginas como quiser, rode as páginas selecionadas 90 graus e adicione uma marca de água de texto diagonal a todas as páginas. Quando terminar, imprima através da caixa de diálogo do Android ou guarde novamente como PDF.
+
+Converta imagens JPG e PNG num só PDF, tire uma fotografia e guarde-a como PDF ou crie um documento simples a partir de um título e texto introduzido. Tudo é criado localmente no telemóvel.
+
+REMOVER METADADOS OCULTOS DO PDF
+
+Um PDF pode conter informações que não aparecem na página, como título, autor, assunto, palavras-chave, programa produtor, datas e metadados XMP. A ferramenta de limpeza remove estes campos de uma nova cópia antes da partilha.
+
+BIBLIOTECA LOCAL E PRIVACIDADE DOS FICHEIROS
+
+Guarde PDF abertos numa biblioteca no dispositivo, marque favoritos e pesquise pelo nome do ficheiro. Nas Definições, elimine cópias locais, histórico de leitura e contadores das ferramentas.
+
+A leitura, união, divisão, compressão, organização de páginas e limpeza de metadados são executadas no telemóvel. O conteúdo dos PDF não é enviado para um servidor do programador. Assim, o leitor e as ferramentas principais funcionam no avião, no metro ou sem rede. A interface está disponível em 24 idiomas.
+
+LIMITAÇÕES INDICADAS COM CLAREZA
+
+A aplicação não inclui OCR, edição do texto dentro de um PDF existente, assinatura eletrónica nem conversão de PDF para Word. Atualmente, a câmara cria uma fotografia por documento, não uma digitalização de várias páginas.
+
+A aplicação é suportada por publicidade e não tem subscrição. Um vídeo com recompensa opcional oferece 10 minutos sem anúncios. Nenhuma ferramenta PDF está bloqueada por pagamento ou vídeo obrigatório.

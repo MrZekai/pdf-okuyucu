@@ -1,5 +1,5 @@
 export default {
-  'app.name':'অফলাইন PDF রিডার',
+  'app.name':'অফলাইন PDF রিডার ও টুলস',
   'tabs.home':'হোম',
   'tabs.library':'লাইব্রেরি',
   'tabs.tools':'টুলস',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Google বিজ্ঞাপন সম্মতির অবস্থা আবার যাচাই করা হয়েছে।',
   'settings.consentErrorTitle':'গোপনীয়তার বিকল্প',
   'settings.consentErrorMessage':'এখন বিজ্ঞাপনের গোপনীয়তা বিকল্প খোলা যাচ্ছে না। পরে আবার চেষ্টা করুন।',
-  'settings.about':'PDF রিডার • Expo SDK 57 • ডিভাইসেই PDF প্রক্রিয়াকরণ',
+  'settings.about':'অফলাইন PDF রিডার ও টুলস • Expo SDK 57 • ডিভাইসেই PDF প্রক্রিয়াকরণ',
   'reader.notFound':'নথি পাওয়া যায়নি',
   'reader.goBack':'ফিরে যান',
   'reader.pageOf':'পৃষ্ঠা {page} / {total}',

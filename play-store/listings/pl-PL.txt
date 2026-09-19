@@ -1,0 +1,46 @@
+TITLE
+Czytnik PDF offline: narzędzia
+
+SHORT DESCRIPTION
+Czytaj PDF bez internetu. Łącz, dziel i kompresuj pliki na urządzeniu.
+
+FULL DESCRIPTION
+Otwieraj, czytaj i zarządzaj plikami PDF bez przesyłania dokumentów do chmury. Czytnik PDF offline i narzędzia działa bezpośrednio na urządzeniu z Androidem. Konto ani logowanie nie są potrzebne. Czytaj zapisane PDF-y, łącz pliki, dziel strony i kompresuj dokumenty nawet bez połączenia z internetem.
+
+CZYTANIE PDF OFFLINE
+
+Korzystaj z aplikacji jako czytnika i przeglądarki PDF offline. Przewijaj dokument w sposób ciągły, przesuwaj po jednej stronie, zablokuj widok pojedynczej strony albo przejdź bezpośrednio do wybranego numeru. Tryb ciemny odwraca kolory samej strony PDF, dzięki czemu nocne czytanie jest wygodniejsze. Aplikacja pamięta ostatnio czytaną stronę.
+
+Otwieraj pliki PDF chronione hasłem po jego wpisaniu. Możesz też otwierać dokumenty otrzymane na czacie, e-mailem lub z menedżera plików. Gdy masz internet, link do PDF można otworzyć bezpośrednio w aplikacji.
+
+KOMPRESJA PDF I ZMNIEJSZANIE ROZMIARU PLIKU
+
+Zmniejsz rozmiar PDF na telefonie przed wysłaniem go e-mailem, dopasowaniem do limitu przesyłania lub zwolnieniem miejsca. Aplikacja najpierw próbuje bezstratnie przepakować plik. Jeśli możliwa jest większa kompresja, proponuje ponowne zakodowanie obrazów wewnątrz PDF i robi to dopiero po uzyskaniu Twojej zgody.
+
+Kompresowanie PDF działa najlepiej w przypadku skanów i dokumentów z wieloma obrazami. W jednym zmierzonym przykładzie skan o rozmiarze 3,9 MB został zmniejszony do 248 KB, czyli o 94%. Wynik zależy od dokumentu. Pliki zawierające wyłącznie tekst mogą być już zoptymalizowane; aplikacja jasno informuje, gdy nie da się ich bardziej zmniejszyć. Pokazuje też rozmiar przed i po kompresji.
+
+ŁĄCZENIE, DZIELENIE I WYODRĘBNIANIE STRON PDF
+
+Połącz wiele PDF-ów w jeden dokument. Podziel PDF na dwa pliki przy wybranej stronie, wyodrębnij wskazane strony do nowego PDF-u albo usuń niepotrzebne strony z kopii. Oryginał nie jest nadpisywany; każde narzędzie tworzy nowy plik wynikowy.
+
+PORZĄDKOWANIE STRON I TWORZENIE PDF
+
+Ustaw strony w dowolnej kolejności, obróć wybrane strony o 90 stopni i dodaj ukośny tekstowy znak wodny na każdej stronie. Gotowy dokument wydrukuj przez okno drukowania Androida lub zapisz jako PDF.
+
+Zamień obrazy JPG i PNG w jeden PDF, zrób zdjęcie i zapisz je jako PDF albo utwórz prosty dokument z tytułu i wpisanego tekstu. Wszystko powstaje lokalnie na urządzeniu.
+
+USUWANIE UKRYTYCH METADANYCH PDF
+
+PDF może zawierać niewidoczne informacje, takie jak tytuł, autor, temat, słowa kluczowe, program tworzący, daty i metadane XMP. Narzędzie czyszczenia usuwa te pola z nowej kopii przed udostępnieniem.
+
+LOKALNA BIBLIOTEKA I PRYWATNOŚĆ
+
+Przechowuj otwarte PDF-y w bibliotece na urządzeniu, dodawaj je do ulubionych i wyszukuj według nazwy pliku. W Ustawieniach możesz usunąć lokalne kopie, historię czytania i liczniki narzędzi.
+
+Czytanie, łączenie, dzielenie, kompresowanie, porządkowanie stron i czyszczenie metadanych odbywa się na telefonie. Zawartość PDF-ów nie jest przesyłana na serwer dewelopera. Główne funkcje działają więc w samolocie, metrze i bez zasięgu. Interfejs obsługuje 24 języki.
+
+JASNO OKREŚLONE OGRANICZENIA
+
+Aplikacja nie oferuje OCR, edycji tekstu wewnątrz istniejącego PDF-u, podpisu elektronicznego ani konwersji PDF do Worda. Aparat tworzy obecnie jedno zdjęcie na dokument, a nie skan wielostronicowy.
+
+Aplikacja jest finansowana z reklam i nie wymaga subskrypcji. Opcjonalny film z nagrodą zapewnia 10 minut bez reklam. Żadne narzędzie PDF nie jest zablokowane za opłatą ani obowiązkowym filmem.

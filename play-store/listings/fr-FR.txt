@@ -1,17 +1,46 @@
-TITRE
-Lecteur PDF : Privé
+TITLE
+Lecteur PDF hors ligne
 
-DESCRIPTION COURTE
-Lisez et modifiez vos PDF sur l’appareil, sans compte ni envoi de fichiers.
+SHORT DESCRIPTION
+Lisez vos PDF sans Internet. Fusionnez, divisez et compressez sur l'appareil.
 
-DESCRIPTION COMPLÈTE
-Ouvrez, classez et modifiez des PDF en toute confidentialité. Les documents restent sur votre appareil et ne sont pas envoyés vers un serveur du développeur.
+FULL DESCRIPTION
+Ouvrez, lisez et gérez vos fichiers PDF sans envoyer vos documents dans le cloud. Lecteur PDF hors ligne fonctionne directement sur votre appareil Android. Aucun compte ni aucune connexion ne sont requis. Lisez vos PDF enregistrés, fusionnez des fichiers, divisez des pages et compressez des documents, même sans connexion Internet.
 
-Fonctions principales :
-• Ouvrir des PDF depuis l’appareil ou un lien HTTPS
-• Bibliothèque locale, favoris et mémorisation de la dernière page consultée
-• Lecture verticale ou horizontale, zoom et mode nuit
-• Fusionner des PDF, extraire ou supprimer des pages, les faire pivoter et nettoyer les métadonnées
-• Prise en charge des PDF protégés par mot de passe
+LIRE DES PDF HORS LIGNE
 
-L’application contient des publicités. Les choix de confidentialité publicitaire sont disponibles dans les réglages.
+Utilisez l'application comme lecteur et visionneuse PDF hors ligne. Faites défiler le document en continu, passez d'une page à l'autre, verrouillez l'affichage sur une seule page ou accédez directement au numéro de page voulu. Le mode sombre inverse les couleurs de la page PDF elle-même pour une lecture nocturne plus confortable. L'application mémorise la dernière page consultée.
+
+Ouvrez un PDF protégé par mot de passe en saisissant celui-ci. Vous pouvez aussi ouvrir les fichiers reçus par messagerie, e-mail ou gestionnaire de fichiers. Lorsqu'une connexion Internet est disponible, un lien PDF peut être ouvert directement dans l'application.
+
+COMPRESSER UN PDF ET RÉDUIRE SA TAILLE
+
+Réduisez la taille d'un PDF sur votre téléphone avant de l'envoyer par e-mail, de respecter une limite d'envoi ou de libérer de l'espace. L'application tente d'abord un reconditionnement sans perte. Si une compression supplémentaire est possible, elle propose de réencoder les images du document et demande votre autorisation avant de le faire.
+
+La compression PDF est surtout efficace sur les documents numérisés ou riches en images. Dans un exemple mesuré, un scan de 3,9 Mo est passé à 248 Ko, soit une réduction de 94 %. Le résultat varie selon le document. Un PDF composé uniquement de texte peut déjà être optimisé ; l'application indique clairement lorsqu'il ne peut pas être réduit davantage. Les tailles avant et après sont affichées.
+
+FUSIONNER, DIVISER ET EXTRAIRE DES PAGES PDF
+
+Fusionnez plusieurs PDF en un seul document. Divisez un PDF en deux à la page choisie, extrayez certaines pages vers un nouveau PDF ou supprimez les pages inutiles d'une copie. Le fichier d'origine n'est jamais remplacé : chaque outil crée un nouveau fichier.
+
+ORGANISER LES PAGES ET CRÉER UN PDF
+
+Réorganisez les pages dans l'ordre souhaité, faites pivoter les pages sélectionnées de 90 degrés et ajoutez un filigrane textuel en diagonale sur chaque page. Imprimez ensuite le document via la boîte de dialogue Android ou enregistrez-le au format PDF.
+
+Convertissez des images JPG et PNG en un seul PDF, prenez une photo et enregistrez-la en PDF, ou créez un document simple à partir d'un titre et d'un texte saisi. Tout est créé localement sur l'appareil.
+
+SUPPRIMER LES MÉTADONNÉES PDF CACHÉES
+
+Un PDF peut contenir des informations invisibles : titre, auteur, objet, mots-clés, logiciel producteur, dates et métadonnées XMP. L'outil de nettoyage supprime ces champs d'une nouvelle copie avant le partage.
+
+BIBLIOTHÈQUE LOCALE ET CONFIDENTIALITÉ
+
+Conservez les PDF ouverts dans une bibliothèque sur l'appareil, ajoutez-les aux favoris et recherchez-les par nom de fichier. Dans les paramètres, effacez les copies locales, l'historique de lecture et les compteurs d'utilisation.
+
+La lecture, la fusion, la division, la compression, l'organisation des pages et le nettoyage des métadonnées s'effectuent sur votre téléphone. Le contenu des PDF n'est pas envoyé vers un serveur du développeur. Le lecteur et ses principaux outils restent donc utilisables dans l'avion, le métro ou sans réseau. L'interface prend en charge 24 langues.
+
+LIMITES CLAIREMENT INDIQUÉES
+
+L'application ne propose ni OCR, ni modification du texte d'un PDF existant, ni signature électronique, ni conversion PDF vers Word. L'appareil photo crée actuellement une seule photo par document, et non un scan multipage.
+
+L'application est financée par la publicité et ne comporte aucun abonnement. Une vidéo récompensée facultative offre 10 minutes sans publicité. Aucun outil PDF n'est bloqué par un paiement ou une vidéo obligatoire.

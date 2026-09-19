@@ -1,0 +1,46 @@
+TITLE
+Cititor PDF Offline & Unelte
+
+SHORT DESCRIPTION
+Citește PDF fără internet. Unește, separă și comprimă fișiere pe dispozitiv.
+
+FULL DESCRIPTION
+Deschide, citește și gestionează fișiere PDF fără să încarci documentele în cloud. Cititor PDF Offline & Unelte funcționează direct pe dispozitivul tău Android. Nu ai nevoie de cont sau autentificare. Citește PDF-uri salvate, unește fișiere, separă pagini și comprimă documente chiar și fără conexiune la internet.
+
+CITEȘTE PDF OFFLINE
+
+Folosește aplicația ca cititor PDF offline și vizualizator PDF. Derulează continuu, glisează pagină cu pagină, fixează afișarea pe o singură pagină sau mergi direct la numărul dorit. Modul întunecat inversează culorile paginii PDF pentru o lectură mai confortabilă noaptea. Aplicația reține ultima pagină citită.
+
+Deschide un PDF protejat prin parolă introducând parola. Poți deschide și fișiere primite prin chat, e-mail sau managerul de fișiere. Când ai internet, un link PDF poate fi deschis direct în aplicație.
+
+COMPRIMĂ PDF ȘI REDU DIMENSIUNEA FIȘIERULUI
+
+Micșorează un PDF pe telefon înainte de a-l trimite prin e-mail, de a respecta o limită de încărcare sau de a economisi spațiu. Aplicația încearcă mai întâi o reîmpachetare fără pierderi. Dacă este posibilă o comprimare mai mare, propune recodarea imaginilor din document și o face numai după acordul tău.
+
+Comprimarea PDF funcționează cel mai bine pentru documente scanate și fișiere cu multe imagini. Într-un exemplu măsurat, un PDF scanat de 3,9 MB a ajuns la 248 KB, cu 94% mai mic. Rezultatul diferă în funcție de document. PDF-urile doar cu text pot fi deja optimizate; aplicația spune clar când nu se mai poate reduce dimensiunea. Sunt afișate valorile de dinainte și de după.
+
+UNEȘTE, SEPARĂ ȘI EXTRAGE PAGINI PDF
+
+Unește mai multe fișiere PDF într-un singur document. Separă un PDF în două fișiere la pagina aleasă, extrage paginile selectate într-un PDF nou sau șterge paginile nedorite dintr-o copie. Originalul nu este suprascris; fiecare unealtă creează un fișier rezultat nou.
+
+ORGANIZEAZĂ PAGINI ȘI CREEAZĂ PDF
+
+Rearanjează paginile în orice ordine, rotește paginile selectate cu 90 de grade și adaugă un filigran text diagonal pe fiecare pagină. La final, tipărește prin dialogul Android sau salvează din nou ca PDF.
+
+Transformă imagini JPG și PNG într-un singur PDF, fă o fotografie și salveaz-o ca PDF sau creează un document simplu dintr-un titlu și text introdus. Totul este creat local pe dispozitiv.
+
+ȘTERGE METADATELE PDF ASCUNSE
+
+Un PDF poate păstra informații invizibile pe pagină, precum titlul, autorul, subiectul, cuvintele-cheie, programul producător, datele și metadatele XMP. Instrumentul de curățare elimină aceste câmpuri dintr-o copie nouă înainte de partajare.
+
+BIBLIOTECĂ LOCALĂ ȘI CONFIDENȚIALITATE
+
+Păstrează PDF-urile deschise într-o bibliotecă pe dispozitiv, adaugă favorite și caută după numele fișierului. Din Setări poți șterge copiile locale, istoricul de lectură și contoarele uneltelor.
+
+Citirea, unirea, separarea, comprimarea, organizarea paginilor și curățarea metadatelor au loc pe telefon. Conținutul PDF nu este încărcat pe un server al dezvoltatorului. Astfel, cititorul și uneltele principale funcționează în avion, la metrou sau fără semnal. Interfața acceptă 24 de limbi.
+
+LIMITĂRI CLARE
+
+Aplicația nu oferă OCR, editarea textului dintr-un PDF existent, semnătură electronică sau conversie PDF în Word. Camera creează în prezent o singură fotografie per document, nu o scanare cu mai multe pagini.
+
+Aplicația este susținută prin reclame și nu are abonament. Un videoclip recompensat opțional oferă 10 minute fără reclame. Nicio unealtă PDF nu este blocată de plată sau de un videoclip obligatoriu.

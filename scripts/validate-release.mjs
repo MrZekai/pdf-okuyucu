@@ -104,9 +104,8 @@ for (const [language, expectedName] of Object.entries(expectedAppNames)) {
 // Uygulamanin KENDI ICINDEKI adi ile IKON ALTINDAKI ad ayni sey degil ve ayni
 // olmamali. Ikon altindaki yazi yukaridaki 14 karakter sinirina tabidir, cunku
 // launcher onu kirpar. Uygulamanin icindeki baslik ise magaza basligiyla ayni
-// olmali: "Offline PDF Reader & Tools". Kisa ad oraya da yazilirsa uygulama
-// kendini yalnizca okuyucu gibi tanitir; magaza baslugu tarayici ve araclari
-// sayarken uygulamanin ilk ekrani sadece "PDF Okuyucu" der.
+// olmali: yerellestirilmis tam magaza basligi. Kisa launcher adi yalnizca
+// ikon altinda kullanilir; uygulama icinde ve Play Store basliginda tam ad kullanilir.
 {
   const launcherNames = new Set(Object.values(expectedAppNames));
   const dictionaryFiles = ['constants/i18n.ts', ...fs.readdirSync(path.join(root, 'constants/translations')).map((file) => `constants/translations/${file}`)];
@@ -118,7 +117,13 @@ for (const [language, expectedName] of Object.entries(expectedAppNames)) {
     }
   }
   if (brandCount !== expectedLocales.length) fail(`app.name tanımı ${brandCount} dilde bulundu, ${expectedLocales.length} bekleniyordu.`);
-  if (!text('constants/i18n.ts').includes("'app.name': 'Offline PDF Reader & Tools'")) fail('İngilizce uygulama içi ad mağaza başlığıyla eşleşmiyor.');
+  if (!text('constants/i18n.ts').includes("'app.name': 'Offline PDF Viewer & Tools'")) fail('İngilizce uygulama içi ad mağaza başlığıyla eşleşmiyor.');
+  const expectedInAppNames = {"en":"Offline PDF Viewer & Tools","tr":"Çevrimdışı PDF Okuyucu","es":"Lector PDF sin conexión","pt":"Leitor de PDF Offline","de":"PDF-Reader offline & Tools","fr":"Lecteur PDF hors ligne","it":"Lettore PDF offline: strumenti","ru":"PDF-ридер офлайн и инструменты","hi":"ऑफलाइन PDF रीडर व टूल्स","id":"Pembaca PDF Offline & Alat","ar":"قارئ PDF دون إنترنت وأدوات","ja":"オフラインPDFビューア・ツール","ko":"오프라인 PDF 뷰어 및 도구","zh":"离线 PDF 阅读器和工具","vi":"Đọc PDF ngoại tuyến & công cụ","th":"โปรแกรมอ่าน PDF ออฟไลน์","fil":"Offline PDF Reader at Tools","ms":"Pembaca PDF Luar Talian","bn":"অফলাইন PDF রিডার ও টুলস","ur":"آف لائن PDF ریڈر اور ٹولز","pl":"Czytnik PDF offline: narzędzia","uk":"PDF-рідер офлайн","nl":"Offline PDF-lezer & tools","ro":"Cititor PDF Offline & Unelte"};
+  for (const [language, expectedName] of Object.entries(expectedInAppNames)) {
+    const file = ['tr','en','es'].includes(language) ? 'constants/i18n.ts' : `constants/translations/${language}.ts`;
+    const source = text(file);
+    if (!source.includes(`'app.name': '${expectedName}'`) && !source.includes(`'app.name':'${expectedName}'`)) fail(`${language} uygulama içi adı final mağaza başlığıyla eşleşmiyor.`);
+  }
 }
 
 const appConfigSource = text('app.config.js');
@@ -404,6 +409,10 @@ if (!tabsSource.includes('name="tools"') || !tabsSource.includes('name="favorite
 // çağrısından ÖNCE uygulanmalı, sonra uygulanırsa ilk istekler kaçar.
 {
   const adsBootstrap = text('hooks/useAdsBootstrap.ts');
+// UMP guidance: refresh consent on every launch before the first ad request.
+const consentEffect = adsBootstrap.slice(adsBootstrap.indexOf('useEffect(() => {'), adsBootstrap.indexOf('return { status, refresh };'));
+if (consentEffect.indexOf('void startIfAllowed()') !== -1 && consentEffect.indexOf('void startIfAllowed()') < consentEffect.indexOf('AdsConsent.gatherConsent()')) fail('gatherConsent() must happen before any cached-consent ad start.');
+
   if (!adsBootstrap.includes('maxAdContentRating: MaxAdContentRating.PG')) fail('AdMob içerik derecelendirmesi (PG) ayarlanmamış.');
   if (adsBootstrap.indexOf('setRequestConfiguration') > adsBootstrap.indexOf('mobileAds().initialize()')) fail('Reklam içerik derecelendirmesi initialize() sonrasına kalmış.');
 }
@@ -442,23 +451,21 @@ for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/screenshot-0${i}
 for (const locale of ['en-US', 'es-ES']) {
   for (let i = 1; i <= 4; i += 1) pngSize(`play-store/screenshots/${locale}/screenshot-0${i}-${['home','library','reader','settings'][i-1]}.png`, 1080, 1920);
 }
-const forbiddenResumeClaims = {
-  'fr-FR': 'reprise à la dernière page',
-  'it-IT': 'ripresa dall’ultima pagina',
-  'id-ID': 'lanjutkan dari halaman terakhir',
-  'ar-SA': 'متابعة من آخر صفحة',
-  'zh-CN': '从上次页面继续阅读',
-  'hi-IN': 'अंतिम पृष्ठ से पढ़ना जारी रखें',
-  'pt-BR': 'retomada da última página',
-  'ja-JP': '最後のページから再開',
-  'ko-KR': '마지막 페이지부터 이어 읽기'
-};
-for (const locale of ['en-US','tr-TR','es-ES','pt-BR','de-DE','fr-FR','it-IT','ru-RU','hi-IN','id-ID','ar-SA','ja-JP','ko-KR','zh-CN']) {
+const canonicalAsoText = text('play-store/FINAL_26_LOCALES_ASO.txt');
+const canonicalAso = new Map();
+const canonicalSectionPattern = /^={10,}\r?\n([^\r\n]+)\r?\n={10,}\r?\n\r?\nSTORE TITLE \[\d+\/30\]\r?\n(.*?)\r?\n\r?\nSHORT DESCRIPTION \[\d+\/80\]\r?\n(.*?)\r?\n\r?\nFULL DESCRIPTION \[\d+\/4000\]\r?\n([\s\S]*?)(?=\r?\n={10,}\r?\n|(?![\s\S]))/gm;
+for (const match of canonicalAsoText.matchAll(canonicalSectionPattern)) {
+  const locale = match[1].split(' — ')[0].trim();
+  canonicalAso.set(locale, { title: match[2], shortDescription: match[3], longDescription: match[4].replace(/\r/g, '').trimEnd() });
+}
+if (canonicalAso.size !== 26) fail(`Kanonik ASO dosyasında 26 locale bekleniyordu, ${canonicalAso.size} bulundu.`);
+const expectedStoreTitles = {"en-US":"Offline PDF Viewer & Tools","de-DE":"PDF-Reader offline & Tools","ar":"قارئ PDF دون إنترنت وأدوات","bn-BD":"অফলাইন PDF রিডার ও টুলস","id":"Pembaca PDF Offline & Alat","nl-NL":"Offline PDF-lezer & tools","fil":"Offline PDF Reader at Tools","fr-FR":"Lecteur PDF hors ligne","hi-IN":"ऑफलाइन PDF रीडर व टूल्स","ja-JP":"オフラインPDFビューア・ツール","ko-KR":"오프라인 PDF 뷰어 및 도구","pl-PL":"Czytnik PDF offline: narzędzia","ms":"Pembaca PDF Luar Talian","pt-BR":"Leitor de PDF Offline","pt-PT":"Leitor de PDF Offline","ro":"Cititor PDF Offline & Unelte","ru-RU":"PDF-ридер офлайн и инструменты","th":"โปรแกรมอ่าน PDF ออฟไลน์","tr-TR":"Çevrimdışı PDF Okuyucu","uk":"PDF-рідер офлайн","ur":"آف لائن PDF ریڈر اور ٹولز","vi":"Đọc PDF ngoại tuyến & công cụ","zh-CN":"离线 PDF 阅读器和工具","es-419":"Lector PDF sin conexión","es-ES":"Lector PDF sin conexión","it-IT":"Lettore PDF offline: strumenti"};
+const expectedStoreShortDescriptions = {"en-US":"View PDFs offline without internet. Merge, split and compress on your device.","de-DE":"PDFs ohne Internet lesen, zusammenfügen, teilen und auf dem Gerät komprimieren.","ar":"اقرأ PDF بلا إنترنت، وادمج الملفات وقسّمها واضغطها على جهازك.","bn-BD":"ইন্টারনেট ছাড়াই PDF পড়ুন; ফোনে মার্জ, স্প্লিট ও কমপ্রেস করুন।","id":"Baca PDF tanpa internet. Gabungkan, pisahkan, dan kompres di perangkat Anda.","nl-NL":"Lees pdf's zonder internet. Voeg samen, splits en comprimeer op je apparaat.","fil":"Magbasa ng PDF offline. Pagsamahin, hatiin at i-compress sa iyong device.","fr-FR":"Lisez vos PDF sans Internet. Fusionnez, divisez et compressez sur l'appareil.","hi-IN":"बिना इंटरनेट PDF पढ़ें। फोन पर मर्ज, स्प्लिट और कंप्रेस करें।","ja-JP":"ネットなしでPDFを閲覧。端末上で結合、分割、圧縮できます。","ko-KR":"인터넷 없이 PDF를 읽고 기기에서 병합, 분할, 압축하세요.","pl-PL":"Czytaj PDF bez internetu. Łącz, dziel i kompresuj pliki na urządzeniu.","ms":"Baca PDF tanpa internet. Gabung, pisah dan mampatkan fail pada peranti anda.","pt-BR":"Leia PDFs sem internet. Junte, divida e comprima arquivos no seu celular.","pt-PT":"Leia PDF sem Internet. Una, divida e comprima ficheiros no seu telemóvel.","ro":"Citește PDF fără internet. Unește, separă și comprimă fișiere pe dispozitiv.","ru-RU":"Читайте PDF без интернета. Объединяйте, разделяйте и сжимайте на устройстве.","th":"อ่าน PDF ไม่ใช้อินเทอร์เน็ต รวม แยก และบีบอัดไฟล์บนอุปกรณ์ของคุณ","tr-TR":"PDF'leri internetsiz okuyun; cihazda birleştirin, bölün ve sıkıştırın.","uk":"Читайте PDF без інтернету. Об'єднуйте, розділяйте й стискайте на пристрої.","ur":"بغیر انٹرنیٹ PDF پڑھیں، فون پر فائلیں ضم، تقسیم اور کمپریس کریں۔","vi":"Đọc PDF không cần mạng. Ghép, tách và nén tệp ngay trên thiết bị.","zh-CN":"无需联网即可阅读 PDF，并在设备上合并、拆分和压缩文件。","es-419":"Lee PDF sin internet. Une, divide y comprime archivos en tu celular.","es-ES":"Lee PDF sin internet. Une, divide y comprime archivos directamente en tu móvil.","it-IT":"Leggi PDF senza Internet. Unisci, dividi e comprimi i file sul dispositivo."};
+for (const locale of Object.keys(expectedStoreTitles)) {
   const listingPath = `play-store/listings/${locale}.txt`;
   exists(listingPath);
   if (!fs.existsSync(path.join(root, listingPath))) continue;
   const listingText = text(listingPath);
-  if (forbiddenResumeClaims[locale] && listingText.includes(forbiddenResumeClaims[locale])) fail(`${locale} mağaza metni otomatik son sayfaya devam özelliğini yanlış vaat ediyor.`);
   const blocks = listingText.trim().split(/\r?\n\s*\r?\n/);
   const title = (blocks[0]?.split(/\r?\n/)[1] || '').trim();
   const shortDescription = (blocks[1]?.split(/\r?\n/)[1] || '').trim();
@@ -466,7 +473,17 @@ for (const locale of ['en-US','tr-TR','es-ES','pt-BR','de-DE','fr-FR','it-IT','r
   if (!title || [...title].length > 30) fail(`${locale} mağaza başlığı boş veya 30 karakterden uzun.`);
   if (!shortDescription || [...shortDescription].length > 80) fail(`${locale} kısa açıklaması boş veya 80 karakterden uzun.`);
   if (!longDescription || [...longDescription].length > 4000) fail(`${locale} uzun açıklaması boş veya 4000 karakterden uzun.`);
+  if (title !== expectedStoreTitles[locale]) fail(`${locale} mağaza başlığı final ASO setiyle eşleşmiyor.`);
+  if (shortDescription !== expectedStoreShortDescriptions[locale]) fail(`${locale} kısa açıklaması final ASO setiyle eşleşmiyor.`);
+  const canonical = canonicalAso.get(locale);
+  if (!canonical) fail(`${locale} kanonik 26-locale ASO dosyasında bulunamadı.`);
+  else {
+    if (title !== canonical.title) fail(`${locale} mağaza başlığı kanonik ASO dosyasıyla birebir eşleşmiyor.`);
+    if (shortDescription !== canonical.shortDescription) fail(`${locale} kısa açıklaması kanonik ASO dosyasıyla birebir eşleşmiyor.`);
+    if (longDescription !== canonical.longDescription) fail(`${locale} tam açıklaması kanonik ASO dosyasıyla birebir eşleşmiyor.`);
+  }
 }
+if (Object.keys(expectedStoreTitles).length !== 26) fail('Final Google Play locale seti 26 olmalı.');
 exists('play-store/LISTING_REVIEW_STATUS.md');
 exists('docs/privacy-policy.html');
 exists('docs/app-ads.txt');

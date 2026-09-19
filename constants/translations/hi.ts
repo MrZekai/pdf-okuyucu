@@ -1,5 +1,5 @@
 export default {
-  'app.name':'ऑफ़लाइन PDF रीडर',
+  'app.name':'ऑफलाइन PDF रीडर व टूल्स',
   'tabs.home':'होम',
   'tabs.library':'लाइब्रेरी',
   'tabs.tools':'टूल्स',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Google विज्ञापन सहमति स्थिति फिर जाँची गई।',
   'settings.consentErrorTitle':'गोपनीयता विकल्प',
   'settings.consentErrorMessage':'विज्ञापन गोपनीयता विकल्प अभी नहीं खोले जा सकते। कृपया बाद में पुनः प्रयास करें।',
-  'settings.about':'PDF रीडर • Expo SDK 57 • डिवाइस पर PDF संसाधन',
+  'settings.about':'ऑफलाइन PDF रीडर व टूल्स • Expo SDK 57 • डिवाइस पर PDF संसाधन',
   'reader.notFound':'दस्तावेज़ नहीं मिला',
   'reader.goBack':'वापस जाएँ',
   'reader.pageOf':'{total} में से पृष्ठ {page}',

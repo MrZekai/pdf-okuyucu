@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Cititor PDF Offline',
+  'app.name':'Cititor PDF Offline & Unelte',
   'tabs.home':'Acasă',
   'tabs.library':'Bibliotecă',
   'tabs.tools':'Instrumente',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Starea consimțământului pentru reclame Google a fost verificată din nou.',
   'settings.consentErrorTitle':'Opțiuni de confidențialitate',
   'settings.consentErrorMessage':'Opțiunile de confidențialitate pentru reclame nu pot fi deschise acum. Încearcă mai târziu.',
-  'settings.about':'Cititor PDF • Expo SDK 57 • Procesare PDF pe dispozitiv',
+  'settings.about':'Cititor PDF Offline & Unelte • Expo SDK 57 • Procesare PDF pe dispozitiv',
   'reader.notFound':'Documentul nu a fost găsit',
   'reader.goBack':'Înapoi',
   'reader.pageOf':'pagina {page} din {total}',

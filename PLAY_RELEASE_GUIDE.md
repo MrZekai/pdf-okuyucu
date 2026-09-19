@@ -1,4 +1,4 @@
-# PDF Reader — Play Store release kılavuzu
+# Offline PDF Viewer & Tools — Play Store release kılavuzu
 
 ## 1. Tek seferlik upload key ve GitHub Secrets
 
@@ -61,10 +61,11 @@ AdMob tarayıcısı dosyayı Play’deki geliştirici web sitesinin **alan adı 
 - Türkçe için 4 adet 1080×1920 ekran: `play-store/screenshots/`
 - İngilizce için 4 adet 1080×1920 ekran: `play-store/screenshots/en-US/`
 - İspanyolca için 4 adet 1080×1920 ekran: `play-store/screenshots/es-ES/`
-- 14 dil için mağaza metinleri: `play-store/listings/`
-- Yeni 11 dilin yayın öncesi dil uzmanı kontrol durumu: `play-store/LISTING_REVIEW_STATUS.md`
+- 26 Google Play locale’i için mağaza metinleri: `play-store/listings/`
+- Kanonik 26-locale ASO seti: `play-store/FINAL_26_LOCALES_ASO.txt`
+- 24 uygulama dili / 26 mağaza locale’i eşlemesi: `play-store/LISTING_REVIEW_STATUS.md`
 
-Play Console varsayılan mağaza dili **İngilizce (ABD)** olmalıdır. Ekran görüntülerinin TR/en-US/es-ES sürümleri hazırdır; diğer diller varsayılan İngilizce görsellere düşebilir. Mağaza metinlerini yerel dil uzmanı incelemeden canlıya almayın.
+Play Console varsayılan mağaza dili **İngilizce (ABD)** olmalıdır. Ekran görüntülerinin TR/en-US/es-ES sürümleri hazırdır; diğer diller varsayılan İngilizce görsellere düşebilir. Play Console’a kopyalarken `play-store/listings/` dosyalarındaki başlık, kısa açıklama ve tam açıklamayı aynen kullanın; sayaç veya QA başlığı kopyalamayın.
 
 ## 6. Son kontrol
 

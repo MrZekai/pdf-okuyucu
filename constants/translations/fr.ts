@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Lecteur PDF Hors Ligne',
+  'app.name':'Lecteur PDF hors ligne',
   'tabs.home':'Accueil',
   'tabs.library':'Bibliothèque',
   'tabs.tools':'Outils',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'L’état du consentement publicitaire Google a été revérifié.',
   'settings.consentErrorTitle':'Options de confidentialité',
   'settings.consentErrorMessage':'Les options de confidentialité publicitaire ne peuvent pas être ouvertes pour le moment. Réessayez plus tard.',
-  'settings.about':'Lecteur PDF • Expo SDK 57 • Traitement sur l’appareil',
+  'settings.about':'Lecteur PDF hors ligne • Expo SDK 57 • Traitement sur l’appareil',
   'reader.notFound':'Document introuvable',
   'reader.goBack':'Retour',
   'reader.pageOf':'page {page} sur {total}',

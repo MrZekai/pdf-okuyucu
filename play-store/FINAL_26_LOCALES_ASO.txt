@@ -1,0 +1,1339 @@
+OFFLINE PDF VIEWER & TOOLS — GOOGLE PLAY LOCALIZATIONS
+26 locales | UTF-8 plain text | Copy-ready fields
+Limits shown for QA only; do not copy the bracketed counters into Play Console.
+
+==============================================================================
+en-US — English (United States) — DEFAULT
+==============================================================================
+
+STORE TITLE [26/30]
+Offline PDF Viewer & Tools
+
+SHORT DESCRIPTION [77/80]
+View PDFs offline without internet. Merge, split and compress on your device.
+
+FULL DESCRIPTION [3666/4000]
+Open, read and manage PDF files without uploading your documents to the cloud. Offline PDF Viewer & Tools works directly on your Android device. No account or sign-in is required. Read saved PDFs, merge files, split pages and compress documents even without an internet connection.
+
+READ PDFS OFFLINE
+
+Use the app as an offline PDF viewer and reader. Scroll continuously, swipe one page at a time, lock the view to a single page and jump directly to any page number. Dark mode inverts the PDF page itself for more comfortable night reading. The app remembers your last page and returns you to where you stopped.
+
+Open password-protected PDFs with their password. Open PDF files received through chat, email or a file manager. You can also open a PDF link directly in the app when you are online.
+
+COMPRESS PDF FILE SIZE
+
+Reduce PDF file size on your phone before sending a document by email, meeting an upload limit or saving storage space. The app first attempts a lossless repack. If more compression is possible, it offers to re-encode the images inside the PDF and asks for your permission before doing so.
+
+Compression works best on scanned and image-heavy documents. In one measured example, a 3.9 MB scanned PDF became 248 KB—94% smaller. Results vary by document. Text-only PDFs may already be optimized, and the app tells you honestly when a file cannot be reduced further. The original and compressed sizes are displayed for comparison.
+
+MERGE, SPLIT AND EXTRACT PAGES
+
+Merge multiple PDF files into one document. Split a PDF into two files at a page you choose, extract selected pages into a new PDF or delete unwanted pages from a copy. Your original document is not overwritten; each tool creates a new output file.
+
+ORGANIZE PDF PAGES
+
+Reorder pages in any sequence, rotate selected PDF pages by 90 degrees and add a diagonal text watermark to every page. When your document is ready, print it through the Android print dialog or save it as a PDF.
+
+CREATE PDF FILES ON YOUR DEVICE
+
+Turn JPG and PNG images into one PDF, take a photo and save it as a PDF, or create a simple document from a title and typed text. Creation happens locally on your device.
+
+REMOVE HIDDEN PDF METADATA
+
+PDF files may contain information that is not visible on the page, including title, author, subject, keywords, producer, creation dates and XMP metadata. The metadata cleaning tool removes these fields from a new copy before you share the document.
+
+ON-DEVICE PDF LIBRARY
+
+PDFs you open can be kept in an on-device library. Mark favorites and search documents by filename. Clear the library from Settings whenever you want to remove local copies, reading history and tool counters.
+
+FILES STAY ON YOUR DEVICE
+
+Reading, merging, splitting, compressing, page organization and metadata cleaning run on your phone. Your PDF contents are not uploaded to a developer server. This makes the core reader and tools useful on a plane, on the metro or anywhere without a reliable connection.
+
+INTERFACE IN 24 LANGUAGES
+
+The interface follows your device language across 24 supported languages, including English, Turkish, German, Spanish, French, Portuguese, Italian, Dutch, Polish, Russian, Arabic, Hindi, Indonesian, Vietnamese, Japanese, Korean and Chinese.
+
+CLEAR LIMITATIONS
+
+The app does not provide OCR, text editing inside an existing PDF, electronic signatures or PDF-to-Word conversion. The camera currently creates one photo per document rather than a multi-page scan.
+
+Offline PDF Viewer & Tools is supported by ads and has no subscription. Watching an optional rewarded video gives you 10 minutes without ads. No PDF tool is locked behind a payment or mandatory video.
+
+==============================================================================
+de-DE — Deutsch
+==============================================================================
+
+STORE TITLE [26/30]
+PDF-Reader offline & Tools
+
+SHORT DESCRIPTION [79/80]
+PDFs ohne Internet lesen, zusammenfügen, teilen und auf dem Gerät komprimieren.
+
+FULL DESCRIPTION [3686/4000]
+Öffne, lies und verwalte PDF-Dateien, ohne deine Dokumente in eine Cloud hochzuladen. PDF-Reader offline & Tools arbeitet direkt auf deinem Android-Gerät. Es sind weder Konto noch Anmeldung erforderlich. Gespeicherte PDFs lassen sich auch ohne Internetverbindung lesen, zusammenfügen, aufteilen und komprimieren.
+
+PDF OFFLINE LESEN
+
+Nutze die App als Offline-PDF-Reader und PDF-Viewer. Scrolle fortlaufend, blättere Seite für Seite, fixiere die Ansicht auf eine einzelne Seite oder springe direkt zu einer Seitenzahl. Der Dunkelmodus invertiert die PDF-Seite selbst und erleichtert das Lesen bei Nacht. Die App merkt sich deine zuletzt gelesene Seite.
+
+Öffne passwortgeschützte PDFs mit dem zugehörigen Passwort. Auch PDF-Dateien aus Chats, E-Mails oder einem Dateimanager lassen sich direkt öffnen. Einen PDF-Link kannst du bei bestehender Internetverbindung an die App übergeben.
+
+PDF-DATEIGRÖSSE KOMPRIMIEREN
+
+Verkleinere eine PDF auf deinem Smartphone, bevor du sie per E-Mail versendest, ein Upload-Limit einhalten musst oder Speicherplatz sparen möchtest. Zuerst versucht die App eine verlustfreie Neuverpackung. Reicht das nicht aus, kann sie die Bilder im Dokument neu codieren – aber nur, nachdem du ausdrücklich zugestimmt hast.
+
+Die PDF-Komprimierung eignet sich besonders für Scans und bildreiche Dokumente. In einem gemessenen Beispiel wurde eine gescannte PDF von 3,9 MB auf 248 KB verkleinert, also um 94 %. Das Ergebnis hängt vom Dokument ab. Reine Text-PDFs sind oft bereits optimiert; dann sagt die App klar, dass keine weitere Verkleinerung möglich ist. Vorher- und Nachher-Größe werden angezeigt.
+
+PDF ZUSAMMENFÜGEN, AUFTEILEN UND SEITEN EXTRAHIEREN
+
+Führe mehrere PDFs zu einer Datei zusammen. Teile ein Dokument an einer gewählten Seite in zwei Dateien, extrahiere ausgewählte Seiten in eine neue PDF oder lösche unerwünschte Seiten aus einer Kopie. Das Original wird nie überschrieben; jedes Werkzeug erstellt eine neue Ausgabedatei.
+
+SEITEN ORDNEN UND PDF ERSTELLEN
+
+Sortiere Seiten beliebig neu, drehe ausgewählte Seiten um 90 Grad und füge auf jeder Seite ein diagonales Text-Wasserzeichen ein. Anschließend kannst du das Dokument über den Android-Druckdialog drucken oder wieder als PDF speichern.
+
+Wandle JPG- und PNG-Bilder gemeinsam in eine PDF um, nimm ein Foto auf und speichere es als PDF oder erstelle ein schlichtes Dokument aus Titel und eingegebenem Text. Alles entsteht lokal auf deinem Gerät.
+
+VERSTECKTE PDF-METADATEN ENTFERNEN
+
+PDFs können unsichtbare Angaben wie Titel, Autor, Betreff, Stichwörter, Ersteller, Datumsfelder und XMP-Metadaten enthalten. Die Metadaten-Bereinigung entfernt diese Angaben aus einer neu erzeugten Kopie.
+
+LOKALE BIBLIOTHEK UND DATENSCHUTZ
+
+Bewahre geöffnete PDFs in einer lokalen Bibliothek auf, markiere Favoriten und suche nach Dateinamen. In den Einstellungen kannst du lokale Kopien, Leseverlauf und Werkzeugzähler löschen.
+
+Lesen, Zusammenfügen, Aufteilen, Komprimieren, Seitenorganisation und Metadaten-Bereinigung erfolgen auf deinem Smartphone. PDF-Inhalte werden nicht auf einen Server des Entwicklers hochgeladen. Die Kernfunktionen funktionieren daher auch im Flugzeug, in der Bahn oder ohne Netz.
+
+Die Oberfläche unterstützt 24 Sprachen.
+
+KLARE GRENZEN
+
+Die App bietet keine OCR-Texterkennung, keine Bearbeitung des Textes in vorhandenen PDFs, keine elektronische Signatur und keine Umwandlung von PDF in Word. Die Kamera erstellt derzeit ein Foto pro Dokument und keinen mehrseitigen Scan.
+
+Die App ist werbefinanziert und hat kein Abonnement. Ein freiwilliges Belohnungsvideo schaltet die Werbung für 10 Minuten aus. Kein PDF-Werkzeug ist hinter einer Zahlung oder einem verpflichtenden Video gesperrt.
+
+==============================================================================
+ar — العربية
+==============================================================================
+
+STORE TITLE [26/30]
+قارئ PDF دون إنترنت وأدوات
+
+SHORT DESCRIPTION [61/80]
+اقرأ PDF بلا إنترنت، وادمج الملفات وقسّمها واضغطها على جهازك.
+
+FULL DESCRIPTION [2876/4000]
+افتح ملفات PDF واقرأها ونظّمها من دون رفع مستنداتك إلى السحابة. يعمل قارئ PDF دون إنترنت وأدواته مباشرة على جهاز Android. لا تحتاج إلى حساب أو تسجيل دخول. يمكنك قراءة الملفات المحفوظة ودمج PDF وتقسيم الصفحات وضغط المستندات حتى عند عدم وجود اتصال بالإنترنت.
+
+قراءة PDF دون إنترنت
+
+استخدم التطبيق كقارئ PDF وعارض PDF أوفلاين. مرّر الصفحات بشكل متواصل، أو انتقل صفحة بعد صفحة، أو ثبّت العرض على صفحة واحدة، أو انتقل مباشرة إلى رقم صفحة محدد. يعكس الوضع الداكن ألوان صفحة PDF نفسها لقراءة أريح ليلاً، ويتذكر التطبيق آخر صفحة وصلت إليها.
+
+افتح ملف PDF محمياً بكلمة مرور بعد إدخالها. ويمكنك فتح الملفات الواردة عبر الدردشة أو البريد الإلكتروني أو مدير الملفات. كما يمكن فتح رابط PDF في التطبيق عندما يكون جهازك متصلاً بالإنترنت.
+
+ضغط PDF وتقليل حجم الملف
+
+قلّل حجم ملف PDF على هاتفك قبل إرساله بالبريد الإلكتروني أو لتجاوز حد الرفع أو لتوفير مساحة التخزين. يحاول التطبيق أولاً إعادة حزم الملف من دون فقدان الجودة. وإذا أمكن ضغطه أكثر، يعرض إعادة ترميز الصور الموجودة داخله ولا يبدأ إلا بعد موافقتك.
+
+يعمل ضغط PDF بأفضل صورة مع المستندات الممسوحة ضوئياً والغنية بالصور. في مثال جرى قياسه، انخفض حجم ملف ممسوح من 3.9 ميجابايت إلى 248 كيلوبايت، أي بنسبة 94٪. تختلف النتيجة حسب المستند. وقد تكون ملفات النصوص محسّنة مسبقاً، وعندها يوضح التطبيق أن تقليل الحجم أكثر غير ممكن. ويعرض الحجم قبل الضغط وبعده.
+
+دمج PDF وتقسيمه واستخراج الصفحات
+
+ادمج عدة ملفات PDF في مستند واحد. قسّم ملفاً إلى جزأين عند الصفحة التي تختارها، أو استخرج صفحات محددة في ملف PDF جديد، أو احذف الصفحات غير المطلوبة من نسخة. لا يتم استبدال الملف الأصلي؛ فكل أداة تنشئ ملفاً جديداً.
+
+تنظيم الصفحات وإنشاء PDF
+
+أعد ترتيب الصفحات بأي تسلسل، ودوّر الصفحات المحددة 90 درجة، وأضف علامة مائية نصية مائلة إلى كل صفحة. وبعد الانتهاء، اطبع المستند من نافذة الطباعة في Android أو احفظه كملف PDF.
+
+حوّل صور JPG وPNG إلى ملف PDF واحد، أو التقط صورة واحفظها بصيغة PDF، أو أنشئ مستنداً بسيطاً من عنوان ونص تكتبه. تتم عملية الإنشاء محلياً على جهازك.
+
+إزالة بيانات PDF الوصفية المخفية
+
+قد يحمل ملف PDF معلومات غير ظاهرة مثل العنوان واسم المؤلف والموضوع والكلمات المفتاحية والبرنامج المنتج والتواريخ وبيانات XMP. تزيل أداة تنظيف البيانات الوصفية هذه الحقول من نسخة جديدة قبل مشاركتها.
+
+مكتبة محلية وخصوصية الملفات
+
+احتفظ بالملفات المفتوحة في مكتبة على الجهاز، وأضفها إلى المفضلة وابحث باسم الملف. ويمكنك من الإعدادات حذف النسخ المحلية وسجل القراءة وعدادات الأدوات.
+
+تجري القراءة والدمج والتقسيم والضغط وتنظيم الصفحات وتنظيف البيانات الوصفية على هاتفك. لا يُرفع محتوى ملفات PDF إلى خادم تابع للمطور. لذلك تعمل الوظائف الأساسية في الطائرة أو المترو أو أي مكان بلا اتصال ثابت. تدعم الواجهة 24 لغة.
+
+حدود واضحة
+
+لا يوفر التطبيق OCR، ولا تعديل النص داخل ملف PDF موجود، ولا توقيعاً إلكترونياً، ولا تحويل PDF إلى Word. وتلتقط الكاميرا حالياً صورة واحدة لكل مستند وليست ماسحاً متعدد الصفحات.
+
+التطبيق مدعوم بالإعلانات ولا يتطلب اشتراكاً. يمنحك مشاهدة فيديو مكافأة اختياري 10 دقائق بلا إعلانات. ولا توجد أداة PDF مقفلة خلف دفع أو فيديو إلزامي.
+
+==============================================================================
+bn-BD — বাংলা (বাংলাদেশ)
+==============================================================================
+
+STORE TITLE [23/30]
+অফলাইন PDF রিডার ও টুলস
+
+SHORT DESCRIPTION [63/80]
+ইন্টারনেট ছাড়াই PDF পড়ুন; ফোনে মার্জ, স্প্লিট ও কমপ্রেস করুন।
+
+FULL DESCRIPTION [2992/4000]
+ক্লাউডে ডকুমেন্ট আপলোড না করেই PDF ফাইল খুলুন, পড়ুন ও গুছিয়ে নিন। অফলাইন PDF রিডার ও টুলস সরাসরি আপনার Android ডিভাইসে কাজ করে। কোনো অ্যাকাউন্ট বা সাইন-ইন লাগে না। ইন্টারনেট না থাকলেও সেভ করা PDF পড়া, ফাইল মার্জ করা, পৃষ্ঠা স্প্লিট করা এবং ডকুমেন্ট কমপ্রেস করা যায়।
+
+অফলাইনে PDF পড়ুন
+
+অ্যাপটি অফলাইন PDF রিডার ও PDF ভিউয়ার হিসেবে ব্যবহার করুন। একটানা স্ক্রল করুন, এক পৃষ্ঠা করে সোয়াইপ করুন, একটি পৃষ্ঠায় ভিউ লক করুন অথবা সরাসরি নির্দিষ্ট পৃষ্ঠা নম্বরে যান। ডার্ক মোড PDF পৃষ্ঠার রং উল্টে দেয়, তাই রাতে পড়া আরামদায়ক হয়। অ্যাপটি আপনার শেষ পড়া পৃষ্ঠা মনে রাখে।
+
+পাসওয়ার্ড দিয়ে পাসওয়ার্ড-সুরক্ষিত PDF খুলুন। চ্যাট, ইমেইল বা ফাইল ম্যানেজার থেকে পাওয়া PDF-ও সরাসরি খুলতে পারবেন। ইন্টারনেট সংযোগ থাকলে PDF লিংক অ্যাপে খোলা যায়।
+
+PDF কমপ্রেস ও ফাইল সাইজ কমান
+
+ইমেইলে পাঠানো, আপলোড সীমার মধ্যে রাখা বা স্টোরেজ বাঁচানোর আগে ফোনেই PDF ফাইলের আকার কমান। অ্যাপ প্রথমে গুণমান না কমিয়ে ফাইল পুনরায় প্যাক করার চেষ্টা করে। আরও কমানো সম্ভব হলে PDF-এর ছবিগুলো নতুন করে এনকোড করার প্রস্তাব দেয় এবং আপনার অনুমতি ছাড়া তা করে না।
+
+স্ক্যান করা ও বেশি ছবিযুক্ত ডকুমেন্টে PDF কমপ্রেশন সবচেয়ে ভালো কাজ করে। একটি মাপা উদাহরণে 3.9 MB-এর স্ক্যান 248 KB হয়েছে—94% ছোট। ফলাফল ফাইলভেদে বদলায়। শুধু লেখা থাকা PDF আগে থেকেই অপ্টিমাইজড হতে পারে; আরও ছোট করা না গেলে অ্যাপ তা পরিষ্কারভাবে জানায়। আগের ও পরের সাইজ দুটোই দেখানো হয়।
+
+PDF মার্জ, স্প্লিট ও পৃষ্ঠা এক্সট্র্যাক্ট
+
+একাধিক PDF এক ফাইলে মার্জ করুন। আপনার বেছে নেওয়া পৃষ্ঠায় একটি PDF দুই ভাগে স্প্লিট করুন, নির্বাচিত পৃষ্ঠা নতুন PDF-এ বের করুন অথবা কপি থেকে অপ্রয়োজনীয় পৃষ্ঠা মুছুন। মূল ফাইল কখনো ওভাররাইট হয় না; প্রতিটি টুল নতুন আউটপুট ফাইল তৈরি করে।
+
+পৃষ্ঠা সাজান ও নতুন PDF বানান
+
+পৃষ্ঠা ইচ্ছামতো পুনর্বিন্যাস করুন, নির্বাচিত পৃষ্ঠা 90 ডিগ্রি ঘোরান এবং প্রতিটি পৃষ্ঠায় তির্যক টেক্সট ওয়াটারমার্ক দিন। কাজ শেষ হলে Android প্রিন্ট ডায়ালগ দিয়ে প্রিন্ট করুন বা আবার PDF হিসেবে সেভ করুন।
+
+JPG ও PNG ছবি এক PDF-এ রূপান্তর করুন, ছবি তুলে PDF হিসেবে সেভ করুন, অথবা শিরোনাম ও টাইপ করা লেখা থেকে সাধারণ PDF বানান। সবকিছু ডিভাইসেই তৈরি হয়।
+
+লুকানো PDF মেটাডেটা মুছুন
+
+PDF-এ শিরোনাম, লেখক, বিষয়, কীওয়ার্ড, প্রডিউসার, তারিখ ও XMP মেটাডেটার মতো অদৃশ্য তথ্য থাকতে পারে। মেটাডেটা ক্লিনার শেয়ার করার আগে নতুন কপি থেকে এসব তথ্য সরিয়ে দেয়।
+
+লোকাল লাইব্রেরি ও গোপনীয়তা
+
+খোলা PDF ডিভাইসের লাইব্রেরিতে রাখুন, ফেভারিট করুন এবং ফাইলের নাম দিয়ে খুঁজুন। Settings থেকে লোকাল কপি, পড়ার ইতিহাস ও টুল কাউন্টার মুছে দিতে পারবেন।
+
+পড়া, মার্জ, স্প্লিট, কমপ্রেস, পৃষ্ঠা সাজানো ও মেটাডেটা পরিষ্কার—সবই ফোনে চলে। PDF-এর কনটেন্ট ডেভেলপারের সার্ভারে আপলোড হয় না। তাই মূল রিডার ও টুলগুলো বিমান, মেট্রো বা নেটওয়ার্কহীন জায়গাতেও ব্যবহার করা যায়। ইন্টারফেস 24টি ভাষা সমর্থন করে।
+
+পরিষ্কার সীমাবদ্ধতা
+
+অ্যাপটিতে OCR, বিদ্যমান PDF-এর লেখা সম্পাদনা, ইলেকট্রনিক স্বাক্ষর বা PDF থেকে Word রূপান্তর নেই। ক্যামেরা এখন প্রতি ডকুমেন্টে একটি ছবি নেয়; এটি মাল্টি-পেজ স্ক্যান নয়।
+
+অ্যাপটি বিজ্ঞাপন-সমর্থিত এবং কোনো সাবস্ক্রিপশন নেই। ইচ্ছা করলে একটি রিওয়ার্ডেড ভিডিও দেখে 10 মিনিট বিজ্ঞাপন ছাড়া ব্যবহার করা যায়। কোনো PDF টুল পেমেন্ট বা বাধ্যতামূলক ভিডিওর আড়ালে বন্ধ নয়।
+
+==============================================================================
+id — Bahasa Indonesia
+==============================================================================
+
+STORE TITLE [26/30]
+Pembaca PDF Offline & Alat
+
+SHORT DESCRIPTION [76/80]
+Baca PDF tanpa internet. Gabungkan, pisahkan, dan kompres di perangkat Anda.
+
+FULL DESCRIPTION [3593/4000]
+Buka, baca, dan kelola file PDF tanpa mengunggah dokumen ke cloud. Pembaca PDF Offline & Alat bekerja langsung di perangkat Android Anda. Tidak perlu akun atau login. Baca PDF tersimpan, gabungkan file, pisahkan halaman, dan kompres dokumen meski tanpa koneksi internet.
+
+BACA PDF SECARA OFFLINE
+
+Gunakan aplikasi sebagai pembaca PDF offline dan penampil PDF. Gulir terus-menerus, geser halaman satu per satu, kunci tampilan ke satu halaman, atau langsung lompat ke nomor halaman tertentu. Mode gelap membalik warna halaman PDF agar lebih nyaman dibaca pada malam hari. Aplikasi mengingat halaman terakhir dan membukanya kembali saat Anda melanjutkan.
+
+Buka PDF yang dilindungi kata sandi dengan memasukkan kata sandinya. File dari chat, email, atau pengelola file juga dapat dibuka langsung. Tautan PDF dapat dibuka di aplikasi saat perangkat terhubung ke internet.
+
+KOMPRES PDF DAN KURANGI UKURAN FILE
+
+Kurangi ukuran PDF di ponsel sebelum mengirimkannya melalui email, memenuhi batas unggahan, atau menghemat penyimpanan. Aplikasi terlebih dahulu mencoba mengemas ulang file tanpa kehilangan kualitas. Jika masih bisa diperkecil, aplikasi menawarkan pengodean ulang gambar di dalam PDF dan hanya melakukannya setelah Anda memberi izin.
+
+Kompresi PDF paling efektif untuk dokumen hasil pindai dan file yang banyak berisi gambar. Dalam satu contoh terukur, PDF pindai berukuran 3,9 MB menjadi 248 KB—94% lebih kecil. Hasil berbeda untuk setiap dokumen. PDF yang hanya berisi teks mungkin sudah optimal; aplikasi akan memberi tahu dengan jelas jika ukurannya tidak dapat dikurangi lagi. Ukuran sebelum dan sesudah ditampilkan.
+
+GABUNGKAN PDF, PISAHKAN PDF, DAN EKSTRAK HALAMAN
+
+Gabungkan beberapa file PDF menjadi satu dokumen. Pisahkan PDF menjadi dua file pada halaman pilihan Anda, ekstrak halaman tertentu ke PDF baru, atau hapus halaman yang tidak diperlukan dari salinan. File asli tidak pernah ditimpa; setiap alat membuat file keluaran baru.
+
+ATUR HALAMAN DAN BUAT PDF
+
+Susun ulang halaman sesuka Anda, putar halaman terpilih 90 derajat, dan tambahkan tanda air teks diagonal ke setiap halaman. Setelah selesai, cetak melalui dialog cetak Android atau simpan kembali sebagai PDF.
+
+Ubah gambar JPG dan PNG menjadi satu PDF, ambil foto lalu simpan sebagai PDF, atau buat dokumen sederhana dari judul dan teks yang Anda ketik. Semua dibuat secara lokal di perangkat.
+
+HAPUS METADATA PDF TERSEMBUNYI
+
+PDF dapat menyimpan informasi yang tidak tampak di halaman, seperti judul, penulis, subjek, kata kunci, aplikasi pembuat, tanggal, dan metadata XMP. Alat pembersih metadata menghapus bidang tersebut dari salinan baru sebelum Anda membagikannya.
+
+PERPUSTAKAAN LOKAL DAN PRIVASI FILE
+
+Simpan PDF yang dibuka di perpustakaan pada perangkat, tandai sebagai favorit, dan cari berdasarkan nama file. Dari Setelan, Anda dapat menghapus salinan lokal, riwayat membaca, dan penghitung penggunaan alat.
+
+Membaca, menggabungkan, memisahkan, mengompres, mengatur halaman, dan membersihkan metadata dilakukan di ponsel. Isi PDF tidak diunggah ke server pengembang. Karena itu, pembaca dan alat utama tetap berguna di pesawat, kereta, atau tempat tanpa sinyal. Antarmuka mendukung 24 bahasa.
+
+BATASAN YANG JELAS
+
+Aplikasi tidak menyediakan OCR, pengeditan teks di dalam PDF yang sudah ada, tanda tangan elektronik, atau konversi PDF ke Word. Kamera saat ini membuat satu foto per dokumen, bukan pemindaian multi-halaman.
+
+Aplikasi didukung iklan dan tidak memiliki langganan. Video reward opsional memberi Anda 10 menit tanpa iklan. Tidak ada alat PDF yang dikunci di balik pembayaran atau video wajib.
+
+==============================================================================
+nl-NL — Nederlands
+==============================================================================
+
+STORE TITLE [25/30]
+Offline PDF-lezer & tools
+
+SHORT DESCRIPTION [76/80]
+Lees pdf's zonder internet. Voeg samen, splits en comprimeer op je apparaat.
+
+FULL DESCRIPTION [3764/4000]
+Open, lees en beheer pdf-bestanden zonder je documenten naar de cloud te uploaden. Offline PDF-lezer & tools werkt rechtstreeks op je Android-apparaat. Je hebt geen account nodig en hoeft niet in te loggen. Lees opgeslagen pdf's, voeg bestanden samen, splits pagina's en comprimeer documenten, ook zonder internetverbinding.
+
+PDF OFFLINE LEZEN
+
+Gebruik de app als offline pdf-lezer en pdf-viewer. Scrol doorlopend, veeg pagina voor pagina, zet de weergave vast op één pagina of spring meteen naar een bepaald paginanummer. De donkere modus keert de kleuren van de pdf-pagina zelf om, zodat lezen 's avonds prettiger is. De app onthoudt waar je bent gestopt.
+
+Open een met een wachtwoord beveiligde pdf door het wachtwoord in te voeren. Je kunt ook pdf-bestanden uit een chat, e-mail of bestandsbeheerder openen. Een pdf-link kan rechtstreeks naar de app worden gestuurd wanneer je online bent.
+
+PDF COMPRIMEREN EN BESTANDSGROOTTE VERKLEINEN
+
+Verklein een pdf op je telefoon voordat je hem per e-mail verstuurt, aan een uploadlimiet moet voldoen of opslagruimte wilt besparen. De app probeert het bestand eerst zonder kwaliteitsverlies opnieuw te verpakken. Als verdere compressie mogelijk is, stelt de app voor de afbeeldingen in de pdf opnieuw te coderen. Dat gebeurt alleen na jouw toestemming.
+
+Pdf-compressie werkt het best bij scans en documenten met veel afbeeldingen. In één gemeten voorbeeld werd een gescande pdf van 3,9 MB teruggebracht tot 248 KB, 94% kleiner. Het resultaat verschilt per document. Pdf's met alleen tekst zijn soms al geoptimaliseerd; de app meldt duidelijk wanneer een bestand niet verder kan worden verkleind. De grootte vóór en na de compressie wordt getoond.
+
+PDF SAMENVOEGEN, SPLITSEN EN PAGINA'S EXTRAHEREN
+
+Voeg meerdere pdf-bestanden samen tot één document. Splits een pdf op een gekozen pagina in twee bestanden, extraheer geselecteerde pagina's naar een nieuwe pdf of verwijder ongewenste pagina's uit een kopie. Het origineel wordt nooit overschreven; elk hulpmiddel maakt een nieuw uitvoerbestand.
+
+PAGINA'S ORDENEN EN PDF MAKEN
+
+Zet pagina's in elke gewenste volgorde, draai geselecteerde pagina's 90 graden en plaats een diagonaal tekstwatermerk op elke pagina. Druk het resultaat af via het Android-afdrukvenster of sla het opnieuw op als pdf.
+
+Zet JPG- en PNG-afbeeldingen in één keer om naar een pdf, maak een foto en bewaar die als pdf, of maak een eenvoudig document met een titel en getypte tekst. Alles wordt lokaal op je apparaat gemaakt.
+
+VERBORGEN PDF-METAGEGEVENS VERWIJDEREN
+
+Een pdf kan onzichtbare informatie bevatten, zoals titel, auteur, onderwerp, trefwoorden, producent, datums en XMP-metagegevens. De opschoning verwijdert deze velden uit een nieuwe kopie voordat je het document deelt.
+
+LOKALE BIBLIOTHEEK EN PRIVACY
+
+Bewaar geopende pdf's in een bibliotheek op je apparaat, markeer favorieten en zoek op bestandsnaam. Via Instellingen kun je lokale kopieën, leesgeschiedenis en gebruikstellers wissen.
+
+Lezen, samenvoegen, splitsen, comprimeren, pagina's ordenen en metagegevens opschonen gebeurt op je telefoon. De inhoud van je pdf's wordt niet geüpload naar een server van de ontwikkelaar. De belangrijkste lezer en hulpmiddelen werken daardoor in het vliegtuig, in de trein of zonder bereik. De interface ondersteunt 24 talen.
+
+DUIDELIJKE BEPERKINGEN
+
+De app heeft geen OCR, bewerkt geen tekst in een bestaande pdf en biedt geen elektronische handtekening of conversie van pdf naar Word. De camera maakt momenteel één foto per document en geen scan met meerdere pagina's.
+
+De app wordt ondersteund door advertenties en heeft geen abonnement. Met een optionele beloningsvideo krijg je 10 minuten zonder advertenties. Geen enkel pdf-hulpmiddel is vergrendeld achter een betaling of verplichte video.
+
+==============================================================================
+fil — Filipino
+==============================================================================
+
+STORE TITLE [27/30]
+Offline PDF Reader at Tools
+
+SHORT DESCRIPTION [73/80]
+Magbasa ng PDF offline. Pagsamahin, hatiin at i-compress sa iyong device.
+
+FULL DESCRIPTION [3540/4000]
+Magbukas, magbasa at mamahala ng mga PDF nang hindi ina-upload ang iyong mga dokumento sa cloud. Direktang gumagana sa Android device mo ang Offline PDF Reader at Tools. Walang account o pag-sign in na kailangan. Magbasa ng naka-save na PDF, magsama ng files, maghati ng pages at mag-compress ng dokumento kahit walang internet connection.
+
+MAGBASA NG PDF OFFLINE
+
+Gamitin ang app bilang offline PDF reader at PDF viewer. Mag-scroll nang tuloy-tuloy, mag-swipe nang paisang page, i-lock ang view sa isang page, o dumiretso sa anumang page number. Binabaligtad ng dark mode ang mga kulay ng mismong PDF page para mas komportable itong basahin sa gabi. Naaalala ng app ang huling page na binasa mo.
+
+Magbukas ng password-protected PDF gamit ang password nito. Maaari ring buksan ang mga PDF na galing sa chat, email o file manager. Kapag online, maaari kang magbukas ng PDF link nang direkta sa app.
+
+MAG-COMPRESS NG PDF AT MAGPALIIT NG FILE SIZE
+
+Bawasan ang laki ng PDF sa phone bago ito i-email, ipasok sa upload limit o magtipid ng storage. Susubukan muna ng app ang lossless repack. Kung maaari pang lumiit ang file, mag-aalok itong i-re-encode ang mga larawan sa loob ng PDF at hihingi muna ng pahintulot mo.
+
+Pinakamabisa ang PDF compression sa scanned at image-heavy na dokumento. Sa isang sinukat na halimbawa, ang 3.9 MB na scan ay naging 248 KB—94% na mas maliit. Nag-iiba ang resulta sa bawat dokumento. Maaaring optimized na ang text-only PDF; malinaw na sasabihin ng app kung hindi na ito mapapaliit. Makikita ang file size bago at pagkatapos.
+
+PAGSAMAHIN, HATIIN AT I-EXTRACT ANG PDF PAGES
+
+Pagsamahin ang maraming PDF sa isang dokumento. Hatiin ang PDF sa dalawang file sa page na pipiliin mo, i-extract ang napiling pages sa bagong PDF, o alisin ang hindi kailangang pages mula sa isang kopya. Hindi ino-overwrite ang original; gumagawa ang bawat tool ng bagong output file.
+
+AYUSIN ANG PAGES AT GUMAWA NG PDF
+
+I-reorder ang pages sa gusto mong pagkakasunod-sunod, i-rotate nang 90 degrees ang napiling pages at maglagay ng diagonal text watermark sa bawat page. Kapag tapos na, mag-print gamit ang Android print dialog o mag-save ulit bilang PDF.
+
+Gawing isang PDF ang JPG at PNG images, kumuha ng litrato at i-save bilang PDF, o gumawa ng simpleng dokumento mula sa title at text na tina-type mo. Lokal sa device ginagawa ang lahat.
+
+ALISIN ANG NAKATAGONG PDF METADATA
+
+Maaaring may impormasyong hindi nakikita sa page ang isang PDF, gaya ng title, author, subject, keywords, producer, dates at XMP metadata. Inaalis ng metadata cleaner ang mga field na ito sa isang bagong kopya bago mo ito i-share.
+
+LOCAL LIBRARY AT PRIVACY
+
+Itago ang mga binuksang PDF sa on-device library, markahan bilang favorite at maghanap ayon sa filename. Sa Settings, maaari mong burahin ang local copies, reading history at tool counters.
+
+Sa phone ginagawa ang pagbabasa, pagsasama, paghahati, pag-compress, pag-aayos ng pages at paglilinis ng metadata. Hindi ina-upload ang nilalaman ng PDF sa server ng developer. Kaya nagagamit ang pangunahing reader at tools sa eroplano, tren o lugar na walang signal. Sinusuportahan ng interface ang 24 na wika.
+
+MALINAW NA LIMITASYON
+
+Walang OCR, pag-edit ng text sa loob ng existing PDF, electronic signature o PDF-to-Word conversion ang app. Isang litrato lang bawat dokumento ang ginagawa ng camera sa ngayon, hindi multi-page scan.
+
+May ads ang app at walang subscription. Ang optional rewarded video ay nagbibigay ng 10 minutong walang ads. Walang PDF tool na naka-lock sa bayad o sapilitang video.
+
+==============================================================================
+fr-FR — Français (France)
+==============================================================================
+
+STORE TITLE [22/30]
+Lecteur PDF hors ligne
+
+SHORT DESCRIPTION [77/80]
+Lisez vos PDF sans Internet. Fusionnez, divisez et compressez sur l'appareil.
+
+FULL DESCRIPTION [3943/4000]
+Ouvrez, lisez et gérez vos fichiers PDF sans envoyer vos documents dans le cloud. Lecteur PDF hors ligne fonctionne directement sur votre appareil Android. Aucun compte ni aucune connexion ne sont requis. Lisez vos PDF enregistrés, fusionnez des fichiers, divisez des pages et compressez des documents, même sans connexion Internet.
+
+LIRE DES PDF HORS LIGNE
+
+Utilisez l'application comme lecteur et visionneuse PDF hors ligne. Faites défiler le document en continu, passez d'une page à l'autre, verrouillez l'affichage sur une seule page ou accédez directement au numéro de page voulu. Le mode sombre inverse les couleurs de la page PDF elle-même pour une lecture nocturne plus confortable. L'application mémorise la dernière page consultée.
+
+Ouvrez un PDF protégé par mot de passe en saisissant celui-ci. Vous pouvez aussi ouvrir les fichiers reçus par messagerie, e-mail ou gestionnaire de fichiers. Lorsqu'une connexion Internet est disponible, un lien PDF peut être ouvert directement dans l'application.
+
+COMPRESSER UN PDF ET RÉDUIRE SA TAILLE
+
+Réduisez la taille d'un PDF sur votre téléphone avant de l'envoyer par e-mail, de respecter une limite d'envoi ou de libérer de l'espace. L'application tente d'abord un reconditionnement sans perte. Si une compression supplémentaire est possible, elle propose de réencoder les images du document et demande votre autorisation avant de le faire.
+
+La compression PDF est surtout efficace sur les documents numérisés ou riches en images. Dans un exemple mesuré, un scan de 3,9 Mo est passé à 248 Ko, soit une réduction de 94 %. Le résultat varie selon le document. Un PDF composé uniquement de texte peut déjà être optimisé ; l'application indique clairement lorsqu'il ne peut pas être réduit davantage. Les tailles avant et après sont affichées.
+
+FUSIONNER, DIVISER ET EXTRAIRE DES PAGES PDF
+
+Fusionnez plusieurs PDF en un seul document. Divisez un PDF en deux à la page choisie, extrayez certaines pages vers un nouveau PDF ou supprimez les pages inutiles d'une copie. Le fichier d'origine n'est jamais remplacé : chaque outil crée un nouveau fichier.
+
+ORGANISER LES PAGES ET CRÉER UN PDF
+
+Réorganisez les pages dans l'ordre souhaité, faites pivoter les pages sélectionnées de 90 degrés et ajoutez un filigrane textuel en diagonale sur chaque page. Imprimez ensuite le document via la boîte de dialogue Android ou enregistrez-le au format PDF.
+
+Convertissez des images JPG et PNG en un seul PDF, prenez une photo et enregistrez-la en PDF, ou créez un document simple à partir d'un titre et d'un texte saisi. Tout est créé localement sur l'appareil.
+
+SUPPRIMER LES MÉTADONNÉES PDF CACHÉES
+
+Un PDF peut contenir des informations invisibles : titre, auteur, objet, mots-clés, logiciel producteur, dates et métadonnées XMP. L'outil de nettoyage supprime ces champs d'une nouvelle copie avant le partage.
+
+BIBLIOTHÈQUE LOCALE ET CONFIDENTIALITÉ
+
+Conservez les PDF ouverts dans une bibliothèque sur l'appareil, ajoutez-les aux favoris et recherchez-les par nom de fichier. Dans les paramètres, effacez les copies locales, l'historique de lecture et les compteurs d'utilisation.
+
+La lecture, la fusion, la division, la compression, l'organisation des pages et le nettoyage des métadonnées s'effectuent sur votre téléphone. Le contenu des PDF n'est pas envoyé vers un serveur du développeur. Le lecteur et ses principaux outils restent donc utilisables dans l'avion, le métro ou sans réseau. L'interface prend en charge 24 langues.
+
+LIMITES CLAIREMENT INDIQUÉES
+
+L'application ne propose ni OCR, ni modification du texte d'un PDF existant, ni signature électronique, ni conversion PDF vers Word. L'appareil photo crée actuellement une seule photo par document, et non un scan multipage.
+
+L'application est financée par la publicité et ne comporte aucun abonnement. Une vidéo récompensée facultative offre 10 minutes sans publicité. Aucun outil PDF n'est bloqué par un paiement ou une vidéo obligatoire.
+
+==============================================================================
+hi-IN — हिन्दी (भारत)
+==============================================================================
+
+STORE TITLE [23/30]
+ऑफलाइन PDF रीडर व टूल्स
+
+SHORT DESCRIPTION [61/80]
+बिना इंटरनेट PDF पढ़ें। फोन पर मर्ज, स्प्लिट और कंप्रेस करें।
+
+FULL DESCRIPTION [3127/4000]
+अपने दस्तावेज़ क्लाउड पर अपलोड किए बिना PDF फ़ाइलें खोलें, पढ़ें और व्यवस्थित करें। ऑफलाइन PDF रीडर व टूल्स सीधे आपके Android डिवाइस पर काम करता है। अकाउंट या साइन-इन की ज़रूरत नहीं है। इंटरनेट कनेक्शन न होने पर भी सेव की गई PDF पढ़ें, फ़ाइलें मर्ज करें, पेज स्प्लिट करें और दस्तावेज़ कंप्रेस करें।
+
+ऑफलाइन PDF पढ़ें
+
+ऐप को ऑफलाइन PDF रीडर और PDF व्यूअर की तरह इस्तेमाल करें। लगातार स्क्रॉल करें, एक-एक पेज स्वाइप करें, व्यू को एक पेज पर लॉक करें या सीधे किसी पेज नंबर पर जाएँ। डार्क मोड PDF पेज के रंग उलट देता है, जिससे रात में पढ़ना अधिक आरामदायक होता है। ऐप आपके आखिरी पढ़े गए पेज को याद रखता है।
+
+पासवर्ड डालकर पासवर्ड-प्रोटेक्टेड PDF खोलें। चैट, ईमेल या फ़ाइल मैनेजर से मिली PDF भी सीधे खोली जा सकती है। इंटरनेट उपलब्ध होने पर PDF लिंक को ऐप में खोल सकते हैं।
+
+PDF कंप्रेस करें और फ़ाइल साइज़ घटाएँ
+
+ईमेल भेजने, अपलोड सीमा पूरी करने या स्टोरेज बचाने से पहले फोन पर ही PDF का साइज़ कम करें। ऐप पहले बिना गुणवत्ता घटाए फ़ाइल को दोबारा पैक करने की कोशिश करता है। अगर अधिक कंप्रेशन संभव हो, तो PDF में मौजूद तस्वीरों को फिर से एन्कोड करने का विकल्प देता है और आपकी अनुमति के बाद ही ऐसा करता है।
+
+स्कैन और ज़्यादा तस्वीरों वाले दस्तावेज़ों पर PDF कंप्रेशन सबसे अच्छा काम करता है। एक मापे गए उदाहरण में 3.9 MB की स्कैन PDF 248 KB रह गई—94% छोटी। नतीजा हर दस्तावेज़ में अलग हो सकता है। केवल टेक्स्ट वाली PDF पहले से ऑप्टिमाइज़ हो सकती है; फ़ाइल और छोटी न हो सके तो ऐप साफ़ बताता है। पहले और बाद का साइज़ दिखाया जाता है।
+
+PDF मर्ज, स्प्लिट और पेज एक्सट्रैक्ट करें
+
+कई PDF फ़ाइलों को एक दस्तावेज़ में मर्ज करें। चुने हुए पेज पर PDF को दो फ़ाइलों में बाँटें, चुने हुए पेज नई PDF में निकालें या किसी कॉपी से गैरज़रूरी पेज हटाएँ। मूल फ़ाइल ओवरराइट नहीं होती; हर टूल नई आउटपुट फ़ाइल बनाता है।
+
+पेज व्यवस्थित करें और PDF बनाएँ
+
+पेज किसी भी क्रम में लगाएँ, चुने हुए पेज 90 डिग्री घुमाएँ और हर पेज पर तिरछा टेक्स्ट वॉटरमार्क जोड़ें। काम पूरा होने पर Android प्रिंट डायलॉग से प्रिंट करें या PDF के रूप में सेव करें।
+
+JPG और PNG तस्वीरों को एक PDF में बदलें, फोटो लेकर PDF के रूप में सेव करें या शीर्षक और टाइप किए गए टेक्स्ट से साधारण PDF बनाएँ। सब कुछ डिवाइस पर स्थानीय रूप से बनता है।
+
+छिपा हुआ PDF मेटाडेटा हटाएँ
+
+PDF में शीर्षक, लेखक, विषय, कीवर्ड, प्रोड्यूसर, तारीख और XMP मेटाडेटा जैसी जानकारी छिपी हो सकती है। मेटाडेटा क्लीनर शेयर करने से पहले नई कॉपी से ये फ़ील्ड हटा देता है।
+
+लोकल लाइब्रेरी और फ़ाइल गोपनीयता
+
+खोली गई PDF को डिवाइस की लाइब्रेरी में रखें, पसंदीदा बनाएँ और फ़ाइल नाम से खोजें। Settings में लोकल कॉपी, पढ़ने का इतिहास और टूल काउंटर मिटाए जा सकते हैं।
+
+पढ़ना, मर्ज करना, स्प्लिट करना, कंप्रेस करना, पेज व्यवस्थित करना और मेटाडेटा साफ़ करना आपके फोन पर होता है। PDF की सामग्री डेवलपर के सर्वर पर अपलोड नहीं की जाती। इसलिए मुख्य रीडर और टूल विमान, मेट्रो या बिना नेटवर्क वाली जगहों पर भी काम आते हैं। इंटरफ़ेस 24 भाषाओं का समर्थन करता है।
+
+स्पष्ट सीमाएँ
+
+ऐप में OCR, मौजूदा PDF के अंदर टेक्स्ट एडिटिंग, इलेक्ट्रॉनिक सिग्नेचर या PDF से Word कन्वर्ज़न नहीं है। कैमरा अभी हर दस्तावेज़ के लिए एक फोटो बनाता है, मल्टी-पेज स्कैन नहीं।
+
+ऐप विज्ञापनों से समर्थित है और इसमें कोई सब्सक्रिप्शन नहीं है। वैकल्पिक रिवॉर्ड वीडियो देखने पर 10 मिनट बिना विज्ञापन मिलते हैं। कोई PDF टूल भुगतान या अनिवार्य वीडियो के पीछे लॉक नहीं है।
+
+==============================================================================
+ja-JP — 日本語
+==============================================================================
+
+STORE TITLE [16/30]
+オフラインPDFビューア・ツール
+
+SHORT DESCRIPTION [30/80]
+ネットなしでPDFを閲覧。端末上で結合、分割、圧縮できます。
+
+FULL DESCRIPTION [1551/4000]
+文書をクラウドへアップロードせずに、PDFファイルを開いて閲覧・整理できます。オフラインPDFビューア・ツールはAndroid端末上で直接動作し、アカウント登録やログインは不要です。保存済みPDFの閲覧、PDF結合、ページ分割、PDF圧縮をインターネット接続なしで行えます。
+
+PDFをオフラインで閲覧
+
+オフラインPDFリーダー／PDFビューアとして使えます。連続スクロール、1ページずつのスワイプ、1ページ表示の固定、ページ番号への直接移動に対応。ダークモードはPDFページ自体の色を反転し、夜間の読書を見やすくします。最後に読んだページも記憶されます。
+
+パスワード保護されたPDFは、パスワードを入力して開けます。チャット、メール、ファイルマネージャーから受け取ったPDFにも対応しています。オンライン時はPDFリンクをアプリで直接開くこともできます。
+
+PDFを圧縮してファイルサイズを削減
+
+メール送信、アップロード上限への対応、保存容量の節約が必要なとき、スマートフォン上でPDFサイズを小さくできます。まず画質を落とさない再パッケージを試し、さらに圧縮できる場合はPDF内の画像の再エンコードを提案します。実行前に必ず許可を求めます。
+
+PDF圧縮はスキャン文書や画像の多いファイルで特に効果的です。実測例では、3.9 MBのスキャンPDFが248 KBになり、94％小さくなりました。結果は文書によって異なります。テキストのみのPDFはすでに最適化されている場合があり、これ以上縮小できないときはその旨を明確に表示します。圧縮前後のサイズも確認できます。
+
+PDF結合・PDF分割・ページ抽出
+
+複数のPDFを1つの文書に結合できます。指定したページでPDFを2つに分割したり、選択したページを新しいPDFへ抽出したり、コピーから不要なページを削除したりできます。元の文書は上書きされず、各ツールが新しい出力ファイルを作成します。
+
+ページ整理とPDF作成
+
+ページを好きな順序に並べ替え、選択したページを90度回転し、すべてのページに斜めの文字透かしを追加できます。完成後はAndroidの印刷画面から印刷するか、PDFとして保存できます。
+
+JPG／PNG画像をまとめてPDFに変換、写真を撮ってPDFとして保存、またはタイトルと入力した文章からシンプルなPDFを作成できます。処理は端末内で行われます。
+
+隠れたPDFメタデータを削除
+
+PDFには、タイトル、作成者、件名、キーワード、作成ソフト、日付、XMPメタデータなど、ページに見えない情報が含まれることがあります。メタデータ消去ツールは、共有前にこれらの項目を新しいコピーから削除します。
+
+端末内ライブラリとプライバシー
+
+開いたPDFを端末内ライブラリに保存し、お気に入り登録やファイル名検索ができます。設定からローカルコピー、閲覧履歴、ツール利用カウンターを消去できます。
+
+閲覧、結合、分割、圧縮、ページ整理、メタデータ消去は端末上で実行されます。PDFの内容が開発者のサーバーへアップロードされることはありません。そのため、機内や地下鉄など通信が不安定な場所でも主要機能を利用できます。画面表示は24言語に対応しています。
+
+対応していない機能
+
+OCR、既存PDF内の文字編集、電子署名、PDFからWordへの変換には対応していません。カメラ機能は現在、1文書につき1枚の写真を作成するもので、複数ページのスキャンではありません。
+
+本アプリは広告で運営され、サブスクリプションはありません。任意のリワード動画を視聴すると10分間広告が非表示になります。支払いや動画視聴を必須とするPDFツールはありません。
+
+==============================================================================
+ko-KR — 한국어
+==============================================================================
+
+STORE TITLE [16/30]
+오프라인 PDF 뷰어 및 도구
+
+SHORT DESCRIPTION [34/80]
+인터넷 없이 PDF를 읽고 기기에서 병합, 분할, 압축하세요.
+
+FULL DESCRIPTION [1835/4000]
+문서를 클라우드에 업로드하지 않고 PDF 파일을 열고 읽고 관리하세요. 오프라인 PDF 뷰어 및 도구는 Android 기기에서 직접 작동합니다. 계정이나 로그인은 필요하지 않습니다. 인터넷 연결이 없어도 저장된 PDF 읽기, PDF 병합, 페이지 분할, PDF 압축을 사용할 수 있습니다.
+
+오프라인 PDF 읽기
+
+오프라인 PDF 리더 및 PDF 뷰어로 사용할 수 있습니다. 연속으로 스크롤하거나 한 페이지씩 넘기고, 한 페이지 보기를 고정하거나 원하는 페이지 번호로 바로 이동하세요. 다크 모드는 PDF 페이지 자체의 색상을 반전해 야간 독서를 편안하게 합니다. 앱은 마지막으로 읽은 페이지를 기억합니다.
+
+암호로 보호된 PDF는 암호를 입력해 열 수 있습니다. 채팅, 이메일 또는 파일 관리자에서 받은 PDF도 바로 열 수 있습니다. 인터넷에 연결된 상태에서는 PDF 링크를 앱으로 직접 열 수 있습니다.
+
+PDF 압축 및 파일 크기 줄이기
+
+이메일 전송, 업로드 용량 제한 충족 또는 저장 공간 절약이 필요할 때 휴대전화에서 PDF 파일 크기를 줄이세요. 앱은 먼저 품질 손실 없는 재패키징을 시도합니다. 더 압축할 수 있으면 PDF 안의 이미지를 다시 인코딩하도록 제안하며, 사용자의 허락을 받은 뒤에만 실행합니다.
+
+PDF 압축은 스캔 문서와 이미지가 많은 파일에서 가장 효과적입니다. 실제 측정 예시에서 3.9MB 스캔 PDF가 248KB로 줄어 94% 작아졌습니다. 결과는 문서마다 다릅니다. 텍스트만 있는 PDF는 이미 최적화되어 있을 수 있으며, 더 줄일 수 없을 때 앱이 이를 명확히 알려 줍니다. 압축 전후 크기도 표시됩니다.
+
+PDF 병합, PDF 분할 및 페이지 추출
+
+여러 PDF를 하나의 문서로 병합하세요. 선택한 페이지에서 PDF를 두 파일로 나누고, 원하는 페이지만 새 PDF로 추출하거나 복사본에서 불필요한 페이지를 삭제할 수 있습니다. 원본 파일은 덮어쓰지 않으며 각 도구가 새 결과 파일을 만듭니다.
+
+페이지 정리 및 PDF 만들기
+
+페이지 순서를 원하는 대로 바꾸고, 선택한 페이지를 90도 회전하고, 모든 페이지에 대각선 텍스트 워터마크를 추가하세요. 완료한 문서는 Android 인쇄 창에서 인쇄하거나 PDF로 저장할 수 있습니다.
+
+JPG 및 PNG 이미지를 하나의 PDF로 변환하고, 사진을 찍어 PDF로 저장하거나, 제목과 입력한 텍스트로 간단한 PDF를 만들 수 있습니다. 모든 생성 작업은 기기에서 로컬로 처리됩니다.
+
+숨겨진 PDF 메타데이터 삭제
+
+PDF에는 제목, 작성자, 주제, 키워드, 제작 프로그램, 날짜 및 XMP 메타데이터처럼 페이지에 보이지 않는 정보가 포함될 수 있습니다. 메타데이터 정리 도구는 공유 전 새 복사본에서 이 항목을 삭제합니다.
+
+기기 내 라이브러리와 파일 개인정보 보호
+
+열어 본 PDF를 기기 내 라이브러리에 보관하고 즐겨찾기에 추가하거나 파일 이름으로 검색하세요. 설정에서 로컬 복사본, 읽기 기록 및 도구 사용 카운터를 지울 수 있습니다.
+
+읽기, 병합, 분할, 압축, 페이지 정리 및 메타데이터 삭제는 휴대전화에서 실행됩니다. PDF 내용은 개발자 서버에 업로드되지 않습니다. 따라서 비행기, 지하철 또는 신호가 없는 곳에서도 핵심 리더와 도구를 사용할 수 있습니다. 인터페이스는 24개 언어를 지원합니다.
+
+명확한 제한 사항
+
+OCR, 기존 PDF 내부 텍스트 편집, 전자 서명, PDF를 Word로 변환하는 기능은 제공하지 않습니다. 현재 카메라는 문서당 사진 한 장을 만들며 다중 페이지 스캔은 지원하지 않습니다.
+
+앱은 광고로 운영되며 구독은 없습니다. 선택형 보상 동영상을 보면 10분 동안 광고 없이 사용할 수 있습니다. 결제나 필수 동영상 뒤에 잠긴 PDF 도구는 없습니다.
+
+==============================================================================
+pl-PL — Polski
+==============================================================================
+
+STORE TITLE [30/30]
+Czytnik PDF offline: narzędzia
+
+SHORT DESCRIPTION [70/80]
+Czytaj PDF bez internetu. Łącz, dziel i kompresuj pliki na urządzeniu.
+
+FULL DESCRIPTION [3483/4000]
+Otwieraj, czytaj i zarządzaj plikami PDF bez przesyłania dokumentów do chmury. Czytnik PDF offline i narzędzia działa bezpośrednio na urządzeniu z Androidem. Konto ani logowanie nie są potrzebne. Czytaj zapisane PDF-y, łącz pliki, dziel strony i kompresuj dokumenty nawet bez połączenia z internetem.
+
+CZYTANIE PDF OFFLINE
+
+Korzystaj z aplikacji jako czytnika i przeglądarki PDF offline. Przewijaj dokument w sposób ciągły, przesuwaj po jednej stronie, zablokuj widok pojedynczej strony albo przejdź bezpośrednio do wybranego numeru. Tryb ciemny odwraca kolory samej strony PDF, dzięki czemu nocne czytanie jest wygodniejsze. Aplikacja pamięta ostatnio czytaną stronę.
+
+Otwieraj pliki PDF chronione hasłem po jego wpisaniu. Możesz też otwierać dokumenty otrzymane na czacie, e-mailem lub z menedżera plików. Gdy masz internet, link do PDF można otworzyć bezpośrednio w aplikacji.
+
+KOMPRESJA PDF I ZMNIEJSZANIE ROZMIARU PLIKU
+
+Zmniejsz rozmiar PDF na telefonie przed wysłaniem go e-mailem, dopasowaniem do limitu przesyłania lub zwolnieniem miejsca. Aplikacja najpierw próbuje bezstratnie przepakować plik. Jeśli możliwa jest większa kompresja, proponuje ponowne zakodowanie obrazów wewnątrz PDF i robi to dopiero po uzyskaniu Twojej zgody.
+
+Kompresowanie PDF działa najlepiej w przypadku skanów i dokumentów z wieloma obrazami. W jednym zmierzonym przykładzie skan o rozmiarze 3,9 MB został zmniejszony do 248 KB, czyli o 94%. Wynik zależy od dokumentu. Pliki zawierające wyłącznie tekst mogą być już zoptymalizowane; aplikacja jasno informuje, gdy nie da się ich bardziej zmniejszyć. Pokazuje też rozmiar przed i po kompresji.
+
+ŁĄCZENIE, DZIELENIE I WYODRĘBNIANIE STRON PDF
+
+Połącz wiele PDF-ów w jeden dokument. Podziel PDF na dwa pliki przy wybranej stronie, wyodrębnij wskazane strony do nowego PDF-u albo usuń niepotrzebne strony z kopii. Oryginał nie jest nadpisywany; każde narzędzie tworzy nowy plik wynikowy.
+
+PORZĄDKOWANIE STRON I TWORZENIE PDF
+
+Ustaw strony w dowolnej kolejności, obróć wybrane strony o 90 stopni i dodaj ukośny tekstowy znak wodny na każdej stronie. Gotowy dokument wydrukuj przez okno drukowania Androida lub zapisz jako PDF.
+
+Zamień obrazy JPG i PNG w jeden PDF, zrób zdjęcie i zapisz je jako PDF albo utwórz prosty dokument z tytułu i wpisanego tekstu. Wszystko powstaje lokalnie na urządzeniu.
+
+USUWANIE UKRYTYCH METADANYCH PDF
+
+PDF może zawierać niewidoczne informacje, takie jak tytuł, autor, temat, słowa kluczowe, program tworzący, daty i metadane XMP. Narzędzie czyszczenia usuwa te pola z nowej kopii przed udostępnieniem.
+
+LOKALNA BIBLIOTEKA I PRYWATNOŚĆ
+
+Przechowuj otwarte PDF-y w bibliotece na urządzeniu, dodawaj je do ulubionych i wyszukuj według nazwy pliku. W Ustawieniach możesz usunąć lokalne kopie, historię czytania i liczniki narzędzi.
+
+Czytanie, łączenie, dzielenie, kompresowanie, porządkowanie stron i czyszczenie metadanych odbywa się na telefonie. Zawartość PDF-ów nie jest przesyłana na serwer dewelopera. Główne funkcje działają więc w samolocie, metrze i bez zasięgu. Interfejs obsługuje 24 języki.
+
+JASNO OKREŚLONE OGRANICZENIA
+
+Aplikacja nie oferuje OCR, edycji tekstu wewnątrz istniejącego PDF-u, podpisu elektronicznego ani konwersji PDF do Worda. Aparat tworzy obecnie jedno zdjęcie na dokument, a nie skan wielostronicowy.
+
+Aplikacja jest finansowana z reklam i nie wymaga subskrypcji. Opcjonalny film z nagrodą zapewnia 10 minut bez reklam. Żadne narzędzie PDF nie jest zablokowane za opłatą ani obowiązkowym filmem.
+
+==============================================================================
+ms — Bahasa Melayu
+==============================================================================
+
+STORE TITLE [23/30]
+Pembaca PDF Luar Talian
+
+SHORT DESCRIPTION [76/80]
+Baca PDF tanpa internet. Gabung, pisah dan mampatkan fail pada peranti anda.
+
+FULL DESCRIPTION [3679/4000]
+Buka, baca dan urus fail PDF tanpa memuat naik dokumen anda ke awan. Pembaca PDF Luar Talian berfungsi terus pada peranti Android anda. Tiada akaun atau log masuk diperlukan. Baca PDF yang disimpan, gabungkan fail, pisahkan halaman dan mampatkan dokumen walaupun tanpa sambungan internet.
+
+BACA PDF SECARA LUAR TALIAN
+
+Gunakan aplikasi sebagai pembaca PDF luar talian dan pemapar PDF. Tatal secara berterusan, leret satu halaman pada satu masa, kunci paparan kepada satu halaman atau lompat terus ke nombor halaman tertentu. Mod gelap menyongsangkan warna halaman PDF itu sendiri supaya lebih selesa dibaca pada waktu malam. Aplikasi mengingati halaman terakhir anda.
+
+Buka PDF yang dilindungi kata laluan dengan memasukkan kata laluannya. Fail daripada sembang, e-mel atau pengurus fail juga boleh dibuka terus. Pautan PDF boleh dibuka dalam aplikasi apabila peranti disambungkan ke internet.
+
+MAMPATKAN PDF DAN KURANGKAN SAIZ FAIL
+
+Kurangkan saiz PDF pada telefon sebelum menghantarnya melalui e-mel, memenuhi had muat naik atau menjimatkan ruang storan. Aplikasi mula-mula cuba membungkus semula fail tanpa kehilangan kualiti. Jika pemampatan tambahan boleh dilakukan, aplikasi menawarkan untuk mengekod semula imej di dalam PDF dan hanya meneruskannya selepas mendapat kebenaran anda.
+
+Pemampatan PDF paling berkesan untuk dokumen imbasan dan fail yang mempunyai banyak imej. Dalam satu contoh yang diukur, PDF imbasan 3.9 MB menjadi 248 KB—94% lebih kecil. Hasil berbeza mengikut dokumen. PDF yang hanya mengandungi teks mungkin sudah dioptimumkan; aplikasi memberitahu dengan jelas apabila fail tidak boleh dikecilkan lagi. Saiz sebelum dan selepas turut dipaparkan.
+
+GABUNG PDF, PISAH PDF DAN EKSTRAK HALAMAN
+
+Gabungkan beberapa fail PDF menjadi satu dokumen. Pisahkan PDF kepada dua fail pada halaman pilihan anda, ekstrak halaman tertentu ke PDF baharu atau buang halaman yang tidak diperlukan daripada salinan. Fail asal tidak ditulis ganti; setiap alat menghasilkan fail output baharu.
+
+SUSUN HALAMAN DAN CIPTA PDF
+
+Susun semula halaman dalam sebarang turutan, putar halaman terpilih 90 darjah dan tambah tera air teks pepenjuru pada setiap halaman. Apabila selesai, cetak melalui dialog cetak Android atau simpan semula sebagai PDF.
+
+Tukar imej JPG dan PNG kepada satu PDF, ambil foto dan simpan sebagai PDF, atau cipta dokumen ringkas daripada tajuk dan teks yang ditaip. Semua proses penciptaan berlaku secara setempat pada peranti.
+
+BUANG METADATA PDF TERSEMBUNYI
+
+PDF boleh menyimpan maklumat yang tidak kelihatan pada halaman, termasuk tajuk, pengarang, subjek, kata kunci, aplikasi pengeluar, tarikh dan metadata XMP. Alat pembersihan metadata membuang medan ini daripada salinan baharu sebelum anda berkongsi dokumen.
+
+PUSTAKA SETEMPAT DAN PRIVASI FAIL
+
+Simpan PDF yang dibuka dalam pustaka pada peranti, tandakan kegemaran dan cari mengikut nama fail. Dalam Tetapan, anda boleh memadam salinan setempat, sejarah bacaan dan kaunter penggunaan alat.
+
+Membaca, menggabung, memisah, memampat, menyusun halaman dan membersihkan metadata dilakukan pada telefon. Kandungan PDF tidak dimuat naik ke pelayan pembangun. Oleh itu, pembaca dan alat utama berguna di dalam kapal terbang, kereta api atau tempat tanpa isyarat. Antara muka menyokong 24 bahasa.
+
+BATASAN YANG JELAS
+
+Aplikasi tidak menyediakan OCR, penyuntingan teks dalam PDF sedia ada, tandatangan elektronik atau penukaran PDF kepada Word. Kamera pada masa ini menghasilkan satu foto bagi setiap dokumen, bukan imbasan berbilang halaman.
+
+Aplikasi disokong iklan dan tiada langganan. Video ganjaran pilihan memberi anda 10 minit tanpa iklan. Tiada alat PDF yang dikunci di sebalik bayaran atau video wajib.
+
+==============================================================================
+pt-BR — Português (Brasil)
+==============================================================================
+
+STORE TITLE [21/30]
+Leitor de PDF Offline
+
+SHORT DESCRIPTION [73/80]
+Leia PDFs sem internet. Junte, divida e comprima arquivos no seu celular.
+
+FULL DESCRIPTION [3630/4000]
+Abra, leia e organize arquivos PDF sem enviar seus documentos para a nuvem. O Leitor de PDF Offline funciona diretamente no seu celular Android. Não é preciso criar conta nem fazer login. Leia PDFs salvos, junte arquivos, divida páginas e comprima documentos mesmo sem conexão com a internet.
+
+LEIA PDF OFFLINE
+
+Use o aplicativo como leitor e visualizador de PDF offline. Role continuamente, deslize uma página por vez, fixe a visualização em uma única página ou vá direto para o número desejado. O modo escuro inverte as cores da própria página do PDF para deixar a leitura noturna mais confortável. O aplicativo memoriza a última página lida.
+
+Abra PDF protegido por senha digitando a senha. Também é possível abrir arquivos recebidos por chat, e-mail ou gerenciador de arquivos. Quando houver internet, um link de PDF pode ser aberto diretamente no aplicativo.
+
+COMPRIMA PDF E REDUZA O TAMANHO DO ARQUIVO
+
+Diminua o tamanho de um PDF no celular antes de enviá-lo por e-mail, cumprir um limite de upload ou economizar armazenamento. Primeiro, o aplicativo tenta reempacotar o arquivo sem perda de qualidade. Se ainda for possível reduzir, ele oferece a recodificação das imagens internas e só continua depois da sua autorização.
+
+A compressão de PDF funciona melhor em documentos digitalizados e arquivos com muitas imagens. Em um exemplo medido, um PDF escaneado de 3,9 MB virou 248 KB, uma redução de 94%. O resultado varia conforme o documento. PDFs apenas com texto podem já estar otimizados; o aplicativo informa com clareza quando não é possível reduzir mais. Os tamanhos antes e depois são exibidos.
+
+JUNTE, DIVIDA E EXTRAIA PÁGINAS DE PDF
+
+Junte vários PDFs em um único documento. Divida um PDF em dois arquivos na página que você escolher, extraia páginas selecionadas para um novo PDF ou exclua páginas indesejadas de uma cópia. O arquivo original nunca é substituído; cada ferramenta cria um novo arquivo de saída.
+
+ORGANIZE PÁGINAS E CRIE PDF
+
+Reordene páginas como quiser, gire as páginas selecionadas em 90 graus e adicione uma marca-d'água de texto diagonal em todas elas. Quando terminar, imprima pelo diálogo de impressão do Android ou salve novamente como PDF.
+
+Converta imagens JPG e PNG em um só PDF, tire uma foto e salve como PDF ou crie um documento simples com título e texto digitado. Tudo é criado localmente no celular.
+
+REMOVA METADADOS OCULTOS DO PDF
+
+Um PDF pode carregar informações que não aparecem na página, como título, autor, assunto, palavras-chave, programa produtor, datas e metadados XMP. A limpeza de metadados remove esses campos de uma nova cópia antes do compartilhamento.
+
+BIBLIOTECA LOCAL E PRIVACIDADE DOS ARQUIVOS
+
+Guarde PDFs abertos em uma biblioteca no aparelho, marque favoritos e pesquise pelo nome do arquivo. Em Configurações, apague cópias locais, histórico de leitura e contadores das ferramentas.
+
+Leitura, junção, divisão, compressão, organização de páginas e limpeza de metadados são executadas no celular. O conteúdo dos PDFs não é enviado para um servidor do desenvolvedor. Por isso, o leitor e as ferramentas principais funcionam no avião, no metrô ou onde não houver sinal. A interface está disponível em 24 idiomas.
+
+LIMITES EXPLICADOS COM CLAREZA
+
+O aplicativo não oferece OCR, edição do texto dentro de um PDF existente, assinatura eletrônica nem conversão de PDF para Word. A câmera cria atualmente uma foto por documento, e não uma digitalização de várias páginas.
+
+O aplicativo é mantido por anúncios e não tem assinatura. Um vídeo premiado opcional libera 10 minutos sem anúncios. Nenhuma ferramenta de PDF fica bloqueada por pagamento ou vídeo obrigatório.
+
+==============================================================================
+pt-PT — Português (Portugal)
+==============================================================================
+
+STORE TITLE [21/30]
+Leitor de PDF Offline
+
+SHORT DESCRIPTION [73/80]
+Leia PDF sem Internet. Una, divida e comprima ficheiros no seu telemóvel.
+
+FULL DESCRIPTION [3712/4000]
+Abra, leia e organize ficheiros PDF sem enviar os seus documentos para a nuvem. O Leitor de PDF Offline funciona diretamente no seu telemóvel Android. Não é necessário criar uma conta nem iniciar sessão. Leia PDF guardados, una ficheiros, divida páginas e comprima documentos, mesmo sem ligação à Internet.
+
+LER PDF OFFLINE
+
+Utilize a aplicação como leitor e visualizador de PDF offline. Desloque continuamente, passe uma página de cada vez, fixe a vista numa única página ou avance diretamente para o número pretendido. O modo escuro inverte as cores da própria página do PDF para tornar a leitura noturna mais confortável. A aplicação memoriza a última página lida.
+
+Abra um PDF protegido por palavra-passe introduzindo a respetiva palavra-passe. Também pode abrir ficheiros recebidos por conversa, e-mail ou gestor de ficheiros. Quando tiver Internet, pode abrir uma ligação para PDF diretamente na aplicação.
+
+COMPRIMIR PDF E REDUZIR O TAMANHO DO FICHEIRO
+
+Reduza o tamanho de um PDF no telemóvel antes de o enviar por e-mail, cumprir um limite de carregamento ou poupar armazenamento. Primeiro, a aplicação tenta reempacotar o ficheiro sem perda de qualidade. Se for possível reduzir mais, propõe recodificar as imagens existentes no documento e só o faz depois da sua autorização.
+
+A compressão de PDF é mais eficaz em documentos digitalizados e ficheiros com muitas imagens. Num exemplo medido, um PDF digitalizado de 3,9 MB passou para 248 KB, uma redução de 94%. O resultado varia consoante o documento. Um PDF apenas com texto pode já estar otimizado; a aplicação indica claramente quando não é possível reduzir mais. São apresentados os tamanhos antes e depois.
+
+UNIR, DIVIDIR E EXTRAIR PÁGINAS DE PDF
+
+Una vários PDF num único documento. Divida um PDF em dois ficheiros na página que escolher, extraia páginas selecionadas para um novo PDF ou elimine páginas desnecessárias de uma cópia. O ficheiro original nunca é substituído; cada ferramenta cria um novo ficheiro de saída.
+
+ORGANIZAR PÁGINAS E CRIAR PDF
+
+Reordene páginas como quiser, rode as páginas selecionadas 90 graus e adicione uma marca de água de texto diagonal a todas as páginas. Quando terminar, imprima através da caixa de diálogo do Android ou guarde novamente como PDF.
+
+Converta imagens JPG e PNG num só PDF, tire uma fotografia e guarde-a como PDF ou crie um documento simples a partir de um título e texto introduzido. Tudo é criado localmente no telemóvel.
+
+REMOVER METADADOS OCULTOS DO PDF
+
+Um PDF pode conter informações que não aparecem na página, como título, autor, assunto, palavras-chave, programa produtor, datas e metadados XMP. A ferramenta de limpeza remove estes campos de uma nova cópia antes da partilha.
+
+BIBLIOTECA LOCAL E PRIVACIDADE DOS FICHEIROS
+
+Guarde PDF abertos numa biblioteca no dispositivo, marque favoritos e pesquise pelo nome do ficheiro. Nas Definições, elimine cópias locais, histórico de leitura e contadores das ferramentas.
+
+A leitura, união, divisão, compressão, organização de páginas e limpeza de metadados são executadas no telemóvel. O conteúdo dos PDF não é enviado para um servidor do programador. Assim, o leitor e as ferramentas principais funcionam no avião, no metro ou sem rede. A interface está disponível em 24 idiomas.
+
+LIMITAÇÕES INDICADAS COM CLAREZA
+
+A aplicação não inclui OCR, edição do texto dentro de um PDF existente, assinatura eletrónica nem conversão de PDF para Word. Atualmente, a câmara cria uma fotografia por documento, não uma digitalização de várias páginas.
+
+A aplicação é suportada por publicidade e não tem subscrição. Um vídeo com recompensa opcional oferece 10 minutos sem anúncios. Nenhuma ferramenta PDF está bloqueada por pagamento ou vídeo obrigatório.
+
+==============================================================================
+ro — Română
+==============================================================================
+
+STORE TITLE [28/30]
+Cititor PDF Offline & Unelte
+
+SHORT DESCRIPTION [76/80]
+Citește PDF fără internet. Unește, separă și comprimă fișiere pe dispozitiv.
+
+FULL DESCRIPTION [3552/4000]
+Deschide, citește și gestionează fișiere PDF fără să încarci documentele în cloud. Cititor PDF Offline & Unelte funcționează direct pe dispozitivul tău Android. Nu ai nevoie de cont sau autentificare. Citește PDF-uri salvate, unește fișiere, separă pagini și comprimă documente chiar și fără conexiune la internet.
+
+CITEȘTE PDF OFFLINE
+
+Folosește aplicația ca cititor PDF offline și vizualizator PDF. Derulează continuu, glisează pagină cu pagină, fixează afișarea pe o singură pagină sau mergi direct la numărul dorit. Modul întunecat inversează culorile paginii PDF pentru o lectură mai confortabilă noaptea. Aplicația reține ultima pagină citită.
+
+Deschide un PDF protejat prin parolă introducând parola. Poți deschide și fișiere primite prin chat, e-mail sau managerul de fișiere. Când ai internet, un link PDF poate fi deschis direct în aplicație.
+
+COMPRIMĂ PDF ȘI REDU DIMENSIUNEA FIȘIERULUI
+
+Micșorează un PDF pe telefon înainte de a-l trimite prin e-mail, de a respecta o limită de încărcare sau de a economisi spațiu. Aplicația încearcă mai întâi o reîmpachetare fără pierderi. Dacă este posibilă o comprimare mai mare, propune recodarea imaginilor din document și o face numai după acordul tău.
+
+Comprimarea PDF funcționează cel mai bine pentru documente scanate și fișiere cu multe imagini. Într-un exemplu măsurat, un PDF scanat de 3,9 MB a ajuns la 248 KB, cu 94% mai mic. Rezultatul diferă în funcție de document. PDF-urile doar cu text pot fi deja optimizate; aplicația spune clar când nu se mai poate reduce dimensiunea. Sunt afișate valorile de dinainte și de după.
+
+UNEȘTE, SEPARĂ ȘI EXTRAGE PAGINI PDF
+
+Unește mai multe fișiere PDF într-un singur document. Separă un PDF în două fișiere la pagina aleasă, extrage paginile selectate într-un PDF nou sau șterge paginile nedorite dintr-o copie. Originalul nu este suprascris; fiecare unealtă creează un fișier rezultat nou.
+
+ORGANIZEAZĂ PAGINI ȘI CREEAZĂ PDF
+
+Rearanjează paginile în orice ordine, rotește paginile selectate cu 90 de grade și adaugă un filigran text diagonal pe fiecare pagină. La final, tipărește prin dialogul Android sau salvează din nou ca PDF.
+
+Transformă imagini JPG și PNG într-un singur PDF, fă o fotografie și salveaz-o ca PDF sau creează un document simplu dintr-un titlu și text introdus. Totul este creat local pe dispozitiv.
+
+ȘTERGE METADATELE PDF ASCUNSE
+
+Un PDF poate păstra informații invizibile pe pagină, precum titlul, autorul, subiectul, cuvintele-cheie, programul producător, datele și metadatele XMP. Instrumentul de curățare elimină aceste câmpuri dintr-o copie nouă înainte de partajare.
+
+BIBLIOTECĂ LOCALĂ ȘI CONFIDENȚIALITATE
+
+Păstrează PDF-urile deschise într-o bibliotecă pe dispozitiv, adaugă favorite și caută după numele fișierului. Din Setări poți șterge copiile locale, istoricul de lectură și contoarele uneltelor.
+
+Citirea, unirea, separarea, comprimarea, organizarea paginilor și curățarea metadatelor au loc pe telefon. Conținutul PDF nu este încărcat pe un server al dezvoltatorului. Astfel, cititorul și uneltele principale funcționează în avion, la metrou sau fără semnal. Interfața acceptă 24 de limbi.
+
+LIMITĂRI CLARE
+
+Aplicația nu oferă OCR, editarea textului dintr-un PDF existent, semnătură electronică sau conversie PDF în Word. Camera creează în prezent o singură fotografie per document, nu o scanare cu mai multe pagini.
+
+Aplicația este susținută prin reclame și nu are abonament. Un videoclip recompensat opțional oferă 10 minute fără reclame. Nicio unealtă PDF nu este blocată de plată sau de un videoclip obligatoriu.
+
+==============================================================================
+ru-RU — Русский
+==============================================================================
+
+STORE TITLE [30/30]
+PDF-ридер офлайн и инструменты
+
+SHORT DESCRIPTION [76/80]
+Читайте PDF без интернета. Объединяйте, разделяйте и сжимайте на устройстве.
+
+FULL DESCRIPTION [3480/4000]
+Открывайте, читайте и упорядочивайте PDF-файлы, не загружая документы в облако. PDF-ридер офлайн и инструменты работают прямо на устройстве Android. Аккаунт и вход не требуются. Читайте сохранённые PDF, объединяйте файлы, разделяйте страницы и сжимайте документы даже без подключения к интернету.
+
+ЧТЕНИЕ PDF ОФЛАЙН
+
+Используйте приложение как офлайн-ридер и просмотрщик PDF. Доступны непрерывная прокрутка, перелистывание по одной странице, фиксация одностраничного режима и быстрый переход к нужному номеру. Тёмная тема инвертирует цвета самой PDF-страницы, чтобы ночью было удобнее читать. Приложение запоминает последнюю открытую страницу.
+
+PDF, защищённый паролем, можно открыть после ввода пароля. Также поддерживаются файлы из чатов, электронной почты и файлового менеджера. При наличии интернета PDF-ссылку можно сразу открыть в приложении.
+
+СЖАТИЕ PDF И УМЕНЬШЕНИЕ РАЗМЕРА ФАЙЛА
+
+Уменьшайте PDF на телефоне перед отправкой по электронной почте, чтобы уложиться в лимит загрузки или освободить память. Сначала приложение пробует перепаковать файл без потери качества. Если доступно более сильное сжатие, оно предлагает перекодировать изображения внутри PDF и выполняет это только с вашего разрешения.
+
+Сжатие PDF особенно эффективно для сканов и документов с большим количеством изображений. В одном измеренном примере отсканированный файл размером 3,9 МБ уменьшился до 248 КБ — на 94%. Результат зависит от документа. PDF только с текстом может быть уже оптимизирован; приложение честно сообщает, если сильнее уменьшить файл нельзя. Размер до и после показан на экране.
+
+ОБЪЕДИНЕНИЕ И РАЗДЕЛЕНИЕ PDF, ИЗВЛЕЧЕНИЕ СТРАНИЦ
+
+Объединяйте несколько PDF в один документ. Разделяйте PDF на два файла на выбранной странице, извлекайте нужные страницы в новый PDF или удаляйте лишние страницы из копии. Исходный документ не перезаписывается: каждый инструмент создаёт новый файл.
+
+ПОРЯДОК СТРАНИЦ И СОЗДАНИЕ PDF
+
+Меняйте порядок страниц, поворачивайте выбранные страницы на 90 градусов и добавляйте диагональный текстовый водяной знак на каждую страницу. Готовый документ можно распечатать через системное окно Android или сохранить как PDF.
+
+Преобразуйте изображения JPG и PNG в один PDF, сделайте фото и сохраните его как PDF либо создайте простой документ из заголовка и введённого текста. Всё создаётся локально на устройстве.
+
+УДАЛЕНИЕ СКРЫТЫХ МЕТАДАННЫХ PDF
+
+PDF может содержать невидимые сведения: название, автора, тему, ключевые слова, программу-создателя, даты и метаданные XMP. Инструмент очистки удаляет эти поля из новой копии перед отправкой.
+
+ЛОКАЛЬНАЯ БИБЛИОТЕКА И КОНФИДЕНЦИАЛЬНОСТЬ
+
+Храните открытые PDF в библиотеке на устройстве, добавляйте их в избранное и ищите по имени файла. В настройках можно удалить локальные копии, историю чтения и счётчики инструментов.
+
+Чтение, объединение, разделение, сжатие, организация страниц и очистка метаданных выполняются на телефоне. Содержимое PDF не отправляется на сервер разработчика. Поэтому основные функции доступны в самолёте, метро и там, где нет связи. Интерфейс поддерживает 24 языка.
+
+ЧЕСТНЫЕ ОГРАНИЧЕНИЯ
+
+В приложении нет OCR, редактирования текста внутри существующего PDF, электронной подписи и преобразования PDF в Word. Камера сейчас создаёт одну фотографию на документ, а не многостраничный скан.
+
+Приложение поддерживается рекламой и не требует подписки. Необязательный просмотр видео с вознаграждением отключает рекламу на 10 минут. Ни один PDF-инструмент не заблокирован обязательной оплатой или видео.
+
+==============================================================================
+th — ไทย
+==============================================================================
+
+STORE TITLE [23/30]
+โปรแกรมอ่าน PDF ออฟไลน์
+
+SHORT DESCRIPTION [64/80]
+อ่าน PDF ไม่ใช้อินเทอร์เน็ต รวม แยก และบีบอัดไฟล์บนอุปกรณ์ของคุณ
+
+FULL DESCRIPTION [2767/4000]
+เปิด อ่าน และจัดการไฟล์ PDF โดยไม่ต้องอัปโหลดเอกสารไปยังคลาวด์ โปรแกรมอ่าน PDF ออฟไลน์ทำงานโดยตรงบนอุปกรณ์ Android ของคุณ ไม่ต้องสร้างบัญชีหรือเข้าสู่ระบบ อ่าน PDF ที่บันทึกไว้ รวมไฟล์ แยกหน้า และบีบอัดเอกสารได้แม้ไม่มีการเชื่อมต่ออินเทอร์เน็ต
+
+อ่าน PDF แบบออฟไลน์
+
+ใช้แอปเป็นโปรแกรมอ่าน PDF และตัวดู PDF ออฟไลน์ เลื่อนแบบต่อเนื่อง ปัดทีละหน้า ล็อกมุมมองไว้ที่หน้าเดียว หรือข้ามไปยังหมายเลขหน้าที่ต้องการได้ทันที โหมดมืดจะกลับสีของหน้า PDF เพื่อให้อ่านตอนกลางคืนสบายขึ้น แอปจะจดจำหน้าล่าสุดที่คุณอ่าน
+
+เปิด PDF ที่ป้องกันด้วยรหัสผ่านโดยใส่รหัสผ่านของไฟล์ นอกจากนี้ยังเปิดไฟล์ที่ได้รับจากแชต อีเมล หรือตัวจัดการไฟล์ได้ เมื่อเชื่อมต่ออินเทอร์เน็ต คุณสามารถเปิดลิงก์ PDF ในแอปได้โดยตรง
+
+บีบอัด PDF และลดขนาดไฟล์
+
+ลดขนาด PDF บนโทรศัพท์ก่อนส่งทางอีเมล ให้ผ่านข้อจำกัดการอัปโหลด หรือประหยัดพื้นที่จัดเก็บ แอปจะลองจัดแพ็กไฟล์ใหม่แบบไม่สูญเสียคุณภาพก่อน หากยังลดขนาดได้อีก แอปจะเสนอให้เข้ารหัสรูปภาพใน PDF ใหม่ และจะทำต่อเมื่อคุณอนุญาตเท่านั้น
+
+การบีบอัด PDF เหมาะที่สุดกับเอกสารสแกนและไฟล์ที่มีรูปภาพจำนวนมาก ในตัวอย่างที่วัดจริง PDF สแกนขนาด 3.9 MB ลดเหลือ 248 KB หรือเล็กลง 94% ผลลัพธ์แตกต่างกันไปตามเอกสาร PDF ที่มีแต่ข้อความอาจได้รับการปรับให้เหมาะสมแล้ว แอปจะแจ้งอย่างชัดเจนหากลดขนาดไม่ได้อีก พร้อมแสดงขนาดก่อนและหลัง
+
+รวม PDF แยก PDF และดึงหน้าออก
+
+รวม PDF หลายไฟล์เป็นเอกสารเดียว แยก PDF เป็นสองไฟล์ตรงหน้าที่คุณเลือก ดึงเฉพาะหน้าที่ต้องการไปเป็น PDF ใหม่ หรือลบหน้าที่ไม่ต้องการออกจากสำเนา ไฟล์ต้นฉบับจะไม่ถูกเขียนทับ เพราะทุกเครื่องมือสร้างไฟล์ผลลัพธ์ใหม่
+
+จัดเรียงหน้าและสร้าง PDF
+
+จัดลำดับหน้าใหม่ได้ตามต้องการ หมุนหน้าที่เลือก 90 องศา และเพิ่มลายน้ำข้อความแนวทแยงในทุกหน้า เมื่อเสร็จแล้วให้พิมพ์ผ่านหน้าต่างพิมพ์ของ Android หรือบันทึกเป็น PDF
+
+แปลงรูป JPG และ PNG เป็น PDF เดียว ถ่ายรูปแล้วบันทึกเป็น PDF หรือสร้างเอกสารอย่างง่ายจากชื่อเรื่องและข้อความที่พิมพ์ ทุกอย่างสร้างในอุปกรณ์ของคุณ
+
+ลบข้อมูลเมตา PDF ที่ซ่อนอยู่
+
+PDF อาจเก็บข้อมูลที่มองไม่เห็นบนหน้า เช่น ชื่อเรื่อง ผู้เขียน หัวข้อ คีย์เวิร์ด โปรแกรมที่สร้าง วันที่ และข้อมูลเมตา XMP เครื่องมือล้างข้อมูลเมตาจะลบช่องเหล่านี้ออกจากสำเนาใหม่ก่อนแชร์
+
+คลังในอุปกรณ์และความเป็นส่วนตัว
+
+เก็บ PDF ที่เปิดไว้ในคลังบนอุปกรณ์ ทำเครื่องหมายรายการโปรด และค้นหาตามชื่อไฟล์ จากการตั้งค่า คุณสามารถลบสำเนาในเครื่อง ประวัติการอ่าน และตัวนับการใช้เครื่องมือได้
+
+การอ่าน รวม แยก บีบอัด จัดหน้า และล้างข้อมูลเมตาทำบนโทรศัพท์ เนื้อหา PDF จะไม่ถูกอัปโหลดไปยังเซิร์ฟเวอร์ของผู้พัฒนา เครื่องมือหลักจึงใช้ได้บนเครื่องบิน รถไฟใต้ดิน หรือพื้นที่ไม่มีสัญญาณ อินเทอร์เฟซรองรับ 24 ภาษา
+
+ข้อจำกัดที่ระบุชัดเจน
+
+แอปไม่มี OCR การแก้ไขข้อความภายใน PDF เดิม ลายเซ็นอิเล็กทรอนิกส์ หรือการแปลง PDF เป็น Word ขณะนี้กล้องสร้างรูปหนึ่งภาพต่อเอกสาร ไม่ใช่การสแกนหลายหน้า
+
+แอปรองรับด้วยโฆษณาและไม่มีการสมัครสมาชิก วิดีโอรับรางวัลแบบเลือกดูได้จะให้เวลา 10 นาทีโดยไม่มีโฆษณา ไม่มีเครื่องมือ PDF ใดถูกล็อกไว้หลังการชำระเงินหรือวิดีโอที่บังคับให้ดู
+
+==============================================================================
+tr-TR — Türkçe
+==============================================================================
+
+STORE TITLE [22/30]
+Çevrimdışı PDF Okuyucu
+
+SHORT DESCRIPTION [70/80]
+PDF'leri internetsiz okuyun; cihazda birleştirin, bölün ve sıkıştırın.
+
+FULL DESCRIPTION [3488/4000]
+Belgelerinizi buluta yüklemeden PDF dosyalarını açın, okuyun ve yönetin. Çevrimdışı PDF Okuyucu doğrudan Android cihazınızda çalışır. Hesap açmanız veya oturum açmanız gerekmez. İnternet bağlantısı olmadan kayıtlı PDF'leri okuyabilir, dosyaları birleştirebilir, sayfaları bölebilir ve belgeleri sıkıştırabilirsiniz.
+
+PDF'LERİ ÇEVRİMDIŞI OKUYUN
+
+Uygulamayı çevrimdışı PDF okuyucu ve PDF görüntüleyici olarak kullanın. Sürekli kaydırın, sayfaları tek tek geçin, görünümü tek sayfaya sabitleyin veya doğrudan istediğiniz sayfa numarasına gidin. Karanlık mod PDF sayfasının kendi renklerini ters çevirerek gece okumayı kolaylaştırır. Uygulama kaldığınız sayfayı hatırlar.
+
+Parola korumalı PDF'leri parolalarını girerek açın. Sohbetten, e-postadan veya dosya yöneticisinden gelen PDF dosyalarını da doğrudan açabilirsiniz. İnternet bağlantısı varken bir PDF bağlantısını uygulamada açabilirsiniz.
+
+PDF SIKIŞTIRIN VE DOSYA BOYUTUNU KÜÇÜLTÜN
+
+Bir belgeyi e-postayla göndermeden, yükleme sınırına uydurmadan veya depolama alanı açmadan önce PDF boyutunu telefonunuzda azaltın. Uygulama önce kalite kaybı olmadan yeniden paketlemeyi dener. Daha fazla sıkıştırma mümkünse PDF içindeki görselleri yeniden kodlamayı teklif eder ve yalnızca izninizden sonra uygular.
+
+PDF sıkıştırma en iyi sonucu taranmış ve bol görselli belgelerde verir. Ölçülen bir örnekte 3,9 MB boyutundaki taranmış PDF 248 KB'ye indi; dosya %94 küçüldü. Sonuç belgeye göre değişir. Yalnızca metin içeren PDF'ler zaten optimize edilmiş olabilir; dosya daha fazla küçültülemiyorsa uygulama bunu açıkça söyler. Önceki ve sonraki boyutlar gösterilir.
+
+PDF BİRLEŞTİRİN, BÖLÜN VE SAYFA ÇIKARIN
+
+Birden fazla PDF dosyasını tek belgede birleştirin. PDF'yi seçtiğiniz sayfadan iki dosyaya bölün, belirli sayfaları yeni bir PDF'ye çıkarın veya istenmeyen sayfaları bir kopyadan silin. Özgün dosyanın üzerine yazılmaz; her araç yeni bir çıktı dosyası oluşturur.
+
+SAYFALARI DÜZENLEYİN VE PDF OLUŞTURUN
+
+Sayfaları istediğiniz sıraya koyun, seçilen sayfaları 90 derece döndürün ve her sayfaya çapraz metin filigranı ekleyin. İşiniz bittiğinde Android yazdırma penceresinden yazdırın veya yeniden PDF olarak kaydedin.
+
+JPG ve PNG görsellerini tek PDF'ye dönüştürün, fotoğraf çekip PDF olarak kaydedin ya da başlık ve yazdığınız metinden sade bir belge oluşturun. Her şey cihazınızda yerel olarak hazırlanır.
+
+GİZLİ PDF ÜST VERİLERİNİ TEMİZLEYİN
+
+PDF dosyalarında sayfada görünmeyen başlık, yazar, konu, anahtar kelimeler, üretici, tarihler ve XMP üst verileri bulunabilir. Üst veri temizleme aracı, paylaşmadan önce bu alanları yeni bir kopyadan kaldırır.
+
+YEREL KÜTÜPHANE VE DOSYA GİZLİLİĞİ
+
+Açtığınız PDF'leri cihazdaki kütüphanede tutun, favorilere ekleyin ve dosya adına göre arayın. Ayarlar'dan yerel kopyaları, okuma geçmişini ve araç sayaçlarını silebilirsiniz.
+
+Okuma, birleştirme, bölme, sıkıştırma, sayfa düzenleme ve üst veri temizleme işlemleri telefonunuzda yapılır. PDF içerikleri geliştiricinin sunucusuna yüklenmez. Bu nedenle temel okuyucu ve araçlar uçakta, metroda veya bağlantının olmadığı yerlerde de çalışır. Arayüz 24 dili destekler.
+
+AÇIK SINIRLAR
+
+Uygulamada OCR, mevcut PDF içindeki metni düzenleme, elektronik imza veya PDF'den Word'e dönüştürme yoktur. Kamera şu anda belge başına tek fotoğraf oluşturur; çok sayfalı tarama yapmaz.
+
+Uygulama reklam desteklidir ve abonelik içermez. İsteğe bağlı ödüllü video, 10 dakika reklamsız kullanım sağlar. Hiçbir PDF aracı ödeme veya zorunlu video arkasında kilitli değildir.
+
+==============================================================================
+uk — Українська
+==============================================================================
+
+STORE TITLE [16/30]
+PDF-рідер офлайн
+
+SHORT DESCRIPTION [74/80]
+Читайте PDF без інтернету. Об'єднуйте, розділяйте й стискайте на пристрої.
+
+FULL DESCRIPTION [3433/4000]
+Відкривайте, читайте й упорядковуйте PDF-файли, не завантажуючи документи в хмару. PDF-рідер офлайн працює безпосередньо на пристрої Android. Обліковий запис і вхід не потрібні. Читайте збережені PDF, об'єднуйте файли, розділяйте сторінки та стискайте документи навіть без підключення до інтернету.
+
+ЧИТАННЯ PDF ОФЛАЙН
+
+Використовуйте застосунок як офлайн-рідер і переглядач PDF. Прокручуйте документ безперервно, гортайте по одній сторінці, зафіксуйте односторінковий режим або одразу перейдіть до потрібного номера. Темний режим інвертує кольори самої PDF-сторінки, щоб уночі було зручніше читати. Застосунок пам'ятає останню прочитану сторінку.
+
+Відкривайте PDF, захищені паролем, після введення пароля. Також можна відкривати файли з чатів, електронної пошти або файлового менеджера. За наявності інтернету PDF-посилання можна відкрити безпосередньо в застосунку.
+
+СТИСНЕННЯ PDF І ЗМЕНШЕННЯ РОЗМІРУ ФАЙЛУ
+
+Зменшуйте PDF на телефоні перед надсиланням електронною поштою, щоб вкластися в ліміт завантаження або звільнити пам'ять. Спочатку застосунок намагається перепакувати файл без втрати якості. Якщо можливе сильніше стиснення, він пропонує перекодувати зображення всередині PDF і робить це лише з вашого дозволу.
+
+Стиснення PDF найкраще працює зі сканами й документами з великою кількістю зображень. В одному виміряному прикладі сканований PDF розміром 3,9 МБ зменшився до 248 КБ — на 94%. Результат залежить від документа. PDF лише з текстом може бути вже оптимізований; застосунок чесно повідомляє, якщо зменшити файл ще більше не можна. Розміри до й після показуються для порівняння.
+
+ОБ'ЄДНАННЯ ТА РОЗДІЛЕННЯ PDF, ВИЛУЧЕННЯ СТОРІНОК
+
+Об'єднуйте кілька PDF в один документ. Розділяйте PDF на два файли на вибраній сторінці, вилучайте потрібні сторінки в новий PDF або видаляйте зайві сторінки з копії. Оригінал не перезаписується: кожен інструмент створює новий файл.
+
+УПОРЯДКУВАННЯ СТОРІНОК І СТВОРЕННЯ PDF
+
+Змінюйте порядок сторінок, повертайте вибрані сторінки на 90 градусів і додавайте діагональний текстовий водяний знак на кожну сторінку. Готовий документ можна надрукувати через системне вікно Android або зберегти як PDF.
+
+Перетворюйте зображення JPG і PNG на один PDF, зробіть фото й збережіть його як PDF або створіть простий документ із заголовка та введеного тексту. Усе створюється локально на пристрої.
+
+ВИДАЛЕННЯ ПРИХОВАНИХ МЕТАДАНИХ PDF
+
+PDF може містити невидимі відомості: назву, автора, тему, ключові слова, програму-створювач, дати та метадані XMP. Інструмент очищення видаляє ці поля з нової копії перед поширенням.
+
+ЛОКАЛЬНА БІБЛІОТЕКА Й КОНФІДЕНЦІЙНІСТЬ
+
+Зберігайте відкриті PDF у бібліотеці на пристрої, додавайте їх в обране та шукайте за назвою файлу. У налаштуваннях можна видалити локальні копії, історію читання й лічильники інструментів.
+
+Читання, об'єднання, розділення, стиснення, упорядкування сторінок і очищення метаданих виконуються на телефоні. Вміст PDF не завантажується на сервер розробника. Тому основні функції доступні в літаку, метро та без зв'язку. Інтерфейс підтримує 24 мови.
+
+ЧІТКІ ОБМЕЖЕННЯ
+
+У застосунку немає OCR, редагування тексту всередині наявного PDF, електронного підпису та перетворення PDF на Word. Камера зараз створює одну фотографію на документ, а не багатосторінковий скан.
+
+Застосунок підтримується рекламою і не має підписки. Необов'язкове відео з винагородою вимикає рекламу на 10 хвилин. Жоден PDF-інструмент не заблоковано обов'язковою оплатою або відео.
+
+==============================================================================
+ur — اردو
+==============================================================================
+
+STORE TITLE [25/30]
+آف لائن PDF ریڈر اور ٹولز
+
+SHORT DESCRIPTION [64/80]
+بغیر انٹرنیٹ PDF پڑھیں، فون پر فائلیں ضم، تقسیم اور کمپریس کریں۔
+
+FULL DESCRIPTION [3141/4000]
+اپنی دستاویزات کلاؤڈ پر اپ لوڈ کیے بغیر PDF فائلیں کھولیں، پڑھیں اور منظم کریں۔ آف لائن PDF ریڈر اور ٹولز براہِ راست آپ کے Android ڈیوائس پر کام کرتا ہے۔ اکاؤنٹ یا سائن اِن کی ضرورت نہیں۔ انٹرنیٹ کنکشن کے بغیر بھی محفوظ PDF پڑھیں، فائلیں ضم کریں، صفحات تقسیم کریں اور دستاویزات کمپریس کریں۔
+
+PDF آف لائن پڑھیں
+
+ایپ کو آف لائن PDF ریڈر اور PDF ویور کے طور پر استعمال کریں۔ مسلسل اسکرول کریں، ایک ایک صفحہ سوائپ کریں، ویو کو ایک صفحے پر لاک کریں یا سیدھا مطلوبہ صفحہ نمبر پر جائیں۔ ڈارک موڈ PDF صفحے کے رنگ الٹ دیتا ہے تاکہ رات میں پڑھنا زیادہ آرام دہ ہو۔ ایپ آپ کا آخری پڑھا ہوا صفحہ یاد رکھتی ہے۔
+
+پاس ورڈ درج کر کے محفوظ PDF کھولیں۔ چیٹ، ای میل یا فائل مینیجر سے موصول ہونے والی PDF فائلیں بھی براہِ راست کھولی جا سکتی ہیں۔ انٹرنیٹ دستیاب ہو تو PDF لنک ایپ میں کھولا جا سکتا ہے۔
+
+PDF کمپریس کریں اور فائل سائز کم کریں
+
+ای میل سے بھیجنے، اپ لوڈ حد پوری کرنے یا اسٹوریج بچانے سے پہلے فون پر PDF کا سائز کم کریں۔ ایپ پہلے معیار کم کیے بغیر فائل دوبارہ پیک کرنے کی کوشش کرتی ہے۔ اگر مزید کمپریشن ممکن ہو تو PDF کے اندر تصاویر کو دوبارہ انکوڈ کرنے کی پیشکش کرتی ہے اور آپ کی اجازت کے بعد ہی ایسا کرتی ہے۔
+
+PDF کمپریشن اسکین شدہ اور زیادہ تصاویر والی دستاویزات پر بہترین کام کرتی ہے۔ ایک ناپی گئی مثال میں 3.9 MB کی اسکین PDF کم ہو کر 248 KB رہ گئی—94% چھوٹی۔ نتیجہ ہر دستاویز میں مختلف ہو سکتا ہے۔ صرف متن والی PDF پہلے ہی بہتر بنائی گئی ہو سکتی ہے؛ مزید کمی ممکن نہ ہو تو ایپ واضح طور پر بتاتی ہے۔ پہلے اور بعد کا سائز دکھایا جاتا ہے۔
+
+PDF ضم، تقسیم اور صفحات نکالیں
+
+متعدد PDF فائلوں کو ایک دستاویز میں ضم کریں۔ اپنی منتخب کردہ جگہ پر PDF کو دو فائلوں میں تقسیم کریں، منتخب صفحات نئی PDF میں نکالیں یا کسی نقل سے غیر ضروری صفحات حذف کریں۔ اصل فائل پر کبھی دوبارہ نہیں لکھا جاتا؛ ہر ٹول نئی آؤٹ پٹ فائل بناتا ہے۔
+
+صفحات ترتیب دیں اور PDF بنائیں
+
+صفحات کو کسی بھی ترتیب میں لگائیں، منتخب صفحات 90 درجے گھمائیں اور ہر صفحے پر ترچھا متنی واٹرمارک شامل کریں۔ مکمل ہونے پر Android پرنٹ ڈائیلاگ سے پرنٹ کریں یا PDF کے طور پر محفوظ کریں۔
+
+JPG اور PNG تصاویر کو ایک PDF میں تبدیل کریں، تصویر لے کر PDF کے طور پر محفوظ کریں یا عنوان اور ٹائپ کیے گئے متن سے سادہ دستاویز بنائیں۔ سب کچھ ڈیوائس پر مقامی طور پر بنتا ہے۔
+
+چھپا ہوا PDF میٹا ڈیٹا ہٹائیں
+
+PDF میں عنوان، مصنف، موضوع، کلیدی الفاظ، بنانے والا پروگرام، تاریخیں اور XMP میٹا ڈیٹا جیسی غیر مرئی معلومات ہو سکتی ہیں۔ میٹا ڈیٹا کلینر شیئر کرنے سے پہلے نئی نقل سے یہ خانے ہٹا دیتا ہے۔
+
+مقامی لائبریری اور فائل کی رازداری
+
+کھولی گئی PDF کو ڈیوائس کی لائبریری میں رکھیں، پسندیدہ بنائیں اور فائل کے نام سے تلاش کریں۔ Settings سے مقامی نقول، پڑھنے کی تاریخ اور ٹول کاؤنٹر حذف کیے جا سکتے ہیں۔
+
+پڑھنا، ضم کرنا، تقسیم کرنا، کمپریس کرنا، صفحات منظم کرنا اور میٹا ڈیٹا صاف کرنا فون پر ہوتا ہے۔ PDF کا مواد ڈویلپر کے سرور پر اپ لوڈ نہیں ہوتا۔ اس لیے بنیادی ریڈر اور ٹولز ہوائی جہاز، میٹرو یا بغیر سگنل کی جگہوں پر بھی کارآمد ہیں۔ انٹرفیس 24 زبانوں کو سپورٹ کرتا ہے۔
+
+واضح حدود
+
+ایپ میں OCR، موجودہ PDF کے اندر متن کی ایڈیٹنگ، الیکٹرانک دستخط یا PDF سے Word تبدیلی موجود نہیں۔ کیمرا فی الحال ہر دستاویز کے لیے ایک تصویر بناتا ہے، ملٹی پیج اسکین نہیں۔
+
+ایپ اشتہارات سے چلتی ہے اور کوئی سبسکرپشن نہیں۔ اختیاری ریوارڈ ویڈیو 10 منٹ تک اشتہارات بند کر دیتی ہے۔ کوئی PDF ٹول ادائیگی یا لازمی ویڈیو کے پیچھے مقفل نہیں۔
+
+==============================================================================
+vi — Tiếng Việt
+==============================================================================
+
+STORE TITLE [29/30]
+Đọc PDF ngoại tuyến & công cụ
+
+SHORT DESCRIPTION [65/80]
+Đọc PDF không cần mạng. Ghép, tách và nén tệp ngay trên thiết bị.
+
+FULL DESCRIPTION [3187/4000]
+Mở, đọc và quản lý tệp PDF mà không tải tài liệu lên đám mây. Đọc PDF ngoại tuyến & công cụ hoạt động trực tiếp trên thiết bị Android. Không cần tài khoản hay đăng nhập. Bạn có thể đọc PDF đã lưu, ghép tệp, tách trang và nén tài liệu ngay cả khi không có kết nối Internet.
+
+ĐỌC PDF NGOẠI TUYẾN
+
+Dùng ứng dụng như trình đọc PDF và trình xem PDF ngoại tuyến. Cuộn liên tục, vuốt từng trang, khóa chế độ xem một trang hoặc chuyển thẳng đến số trang bất kỳ. Chế độ tối đảo màu chính trang PDF để đọc ban đêm dễ chịu hơn. Ứng dụng ghi nhớ trang bạn đã dừng lại.
+
+Mở PDF được bảo vệ bằng mật khẩu bằng cách nhập mật khẩu. Bạn cũng có thể mở tệp nhận từ ứng dụng trò chuyện, email hoặc trình quản lý tệp. Khi có mạng, liên kết PDF có thể được mở trực tiếp trong ứng dụng.
+
+NÉN PDF VÀ GIẢM DUNG LƯỢNG TỆP
+
+Giảm dung lượng PDF trên điện thoại trước khi gửi email, đáp ứng giới hạn tải lên hoặc tiết kiệm bộ nhớ. Trước tiên, ứng dụng thử đóng gói lại tệp mà không làm giảm chất lượng. Nếu có thể nén thêm, ứng dụng sẽ đề nghị mã hóa lại hình ảnh trong PDF và chỉ thực hiện sau khi bạn cho phép.
+
+Nén PDF hiệu quả nhất với tài liệu quét và tệp có nhiều hình ảnh. Trong một ví dụ được đo, tệp PDF quét 3,9 MB giảm còn 248 KB, nhỏ hơn 94%. Kết quả thay đổi tùy tài liệu. PDF chỉ có văn bản có thể đã được tối ưu; ứng dụng sẽ nói rõ khi không thể giảm thêm. Dung lượng trước và sau được hiển thị để so sánh.
+
+GHÉP PDF, TÁCH PDF VÀ TRÍCH XUẤT TRANG
+
+Ghép nhiều tệp PDF thành một tài liệu. Tách PDF thành hai tệp tại trang bạn chọn, trích xuất các trang đã chọn thành PDF mới hoặc xóa trang không cần thiết khỏi một bản sao. Tệp gốc không bị ghi đè; mỗi công cụ tạo một tệp đầu ra mới.
+
+SẮP XẾP TRANG VÀ TẠO PDF
+
+Sắp xếp lại trang theo bất kỳ thứ tự nào, xoay trang đã chọn 90 độ và thêm hình mờ văn bản chéo lên mọi trang. Khi hoàn tất, in qua hộp thoại in của Android hoặc lưu lại dưới dạng PDF.
+
+Chuyển ảnh JPG và PNG thành một PDF, chụp ảnh rồi lưu thành PDF hoặc tạo tài liệu đơn giản từ tiêu đề và văn bản đã nhập. Mọi nội dung được tạo cục bộ trên thiết bị.
+
+XÓA SIÊU DỮ LIỆU PDF ẨN
+
+PDF có thể chứa thông tin không hiển thị trên trang, gồm tiêu đề, tác giả, chủ đề, từ khóa, phần mềm tạo, ngày tháng và siêu dữ liệu XMP. Công cụ làm sạch sẽ xóa các trường này khỏi một bản sao mới trước khi bạn chia sẻ.
+
+THƯ VIỆN TRÊN THIẾT BỊ VÀ QUYỀN RIÊNG TƯ
+
+Giữ các PDF đã mở trong thư viện trên thiết bị, đánh dấu yêu thích và tìm theo tên tệp. Trong Cài đặt, bạn có thể xóa bản sao cục bộ, lịch sử đọc và bộ đếm sử dụng công cụ.
+
+Việc đọc, ghép, tách, nén, sắp xếp trang và làm sạch siêu dữ liệu diễn ra trên điện thoại. Nội dung PDF không được tải lên máy chủ của nhà phát triển. Vì vậy, trình đọc và các công cụ chính vẫn hữu ích trên máy bay, tàu điện hoặc nơi không có sóng. Giao diện hỗ trợ 24 ngôn ngữ.
+
+GIỚI HẠN RÕ RÀNG
+
+Ứng dụng không có OCR, chỉnh sửa văn bản bên trong PDF hiện có, chữ ký điện tử hoặc chuyển PDF sang Word. Máy ảnh hiện tạo một ảnh cho mỗi tài liệu, không phải bản quét nhiều trang.
+
+Ứng dụng được hỗ trợ bằng quảng cáo và không có gói thuê bao. Video nhận thưởng tùy chọn cho bạn 10 phút không quảng cáo. Không công cụ PDF nào bị khóa sau khoản thanh toán hoặc video bắt buộc.
+
+==============================================================================
+zh-CN — 简体中文
+==============================================================================
+
+STORE TITLE [13/30]
+离线 PDF 阅读器和工具
+
+SHORT DESCRIPTION [29/80]
+无需联网即可阅读 PDF，并在设备上合并、拆分和压缩文件。
+
+FULL DESCRIPTION [1208/4000]
+无需将文档上传到云端，即可打开、阅读和管理 PDF 文件。离线 PDF 阅读器和工具直接在 Android 设备上运行，无需注册账号或登录。即使没有网络，也能阅读已保存的 PDF、合并文件、拆分页面和压缩文档。
+
+离线阅读 PDF
+
+将应用用作离线 PDF 阅读器和 PDF 查看器。支持连续滚动、逐页滑动、锁定单页视图，以及直接跳转到指定页码。深色模式会反转 PDF 页面本身的颜色，让夜间阅读更舒适。应用还会记住上次阅读的位置。
+
+输入密码即可打开受密码保护的 PDF。也可以直接打开来自聊天、电子邮件或文件管理器的 PDF 文件。有网络连接时，还能使用应用直接打开 PDF 链接。
+
+压缩 PDF，减小文件大小
+
+在通过电子邮件发送、满足上传大小限制或节省存储空间之前，直接在手机上减小 PDF 文件。应用会先尝试无损重新打包。如果还能进一步压缩，应用会建议重新编码 PDF 内的图片，并在获得你的许可后才会执行。
+
+PDF 压缩最适合扫描文档和图片较多的文件。在一个实测示例中，3.9 MB 的扫描 PDF 压缩至 248 KB，减小了 94%。实际结果因文档而异。纯文本 PDF 可能已经过优化；如果无法继续缩小，应用会明确说明，并显示压缩前后的大小。
+
+合并 PDF、拆分 PDF 和提取页面
+
+将多个 PDF 合并为一个文档。在你选择的页面处将 PDF 拆分为两个文件，把选定页面提取为新 PDF，或从副本中删除不需要的页面。原文件不会被覆盖；每项工具都会创建新的输出文件。
+
+整理页面并创建 PDF
+
+按任意顺序重新排列页面，将选定页面旋转 90 度，并为每一页添加斜向文字水印。完成后，可通过 Android 打印对话框打印，或再次保存为 PDF。
+
+将 JPG 和 PNG 图片转换为一个 PDF，拍照并保存为 PDF，或使用标题和输入的文字创建简单文档。所有创建操作均在设备本地完成。
+
+清除隐藏的 PDF 元数据
+
+PDF 可能包含页面上看不到的信息，例如标题、作者、主题、关键词、生成程序、日期和 XMP 元数据。元数据清理工具会在分享前，从新副本中删除这些字段。
+
+本地文档库与文件隐私
+
+把打开过的 PDF 保存在设备内文档库中，添加收藏，并按文件名搜索。你可以在“设置”中清除本地副本、阅读历史和工具使用计数。
+
+阅读、合并、拆分、压缩、页面整理和元数据清理均在手机上完成。PDF 内容不会上传到开发者服务器。因此，在飞机、地铁或没有稳定网络的地方也能使用核心阅读器和工具。界面支持 24 种语言。
+
+明确说明功能限制
+
+应用不提供 OCR、现有 PDF 内的文字编辑、电子签名或 PDF 转 Word。相机目前每份文档只创建一张照片，并非多页扫描。
+
+应用依靠广告支持，不设订阅。你可以选择观看奖励视频，获得 10 分钟无广告使用时间。任何 PDF 工具都不会被付费或强制视频锁定。
+
+==============================================================================
+es-419 — Español (Latinoamérica)
+==============================================================================
+
+STORE TITLE [23/30]
+Lector PDF sin conexión
+
+SHORT DESCRIPTION [68/80]
+Lee PDF sin internet. Une, divide y comprime archivos en tu celular.
+
+FULL DESCRIPTION [3638/4000]
+Abre, lee y organiza archivos PDF sin subir tus documentos a la nube. Lector PDF sin conexión funciona directamente en tu celular Android. No necesitas una cuenta ni iniciar sesión. Lee PDF guardados, une archivos, divide páginas y comprime documentos incluso sin conexión a internet.
+
+LEE PDF SIN CONEXIÓN
+
+Usa la aplicación como lector y visor PDF offline. Desplázate de forma continua, desliza una página a la vez, fija la vista en una sola página o ve directamente al número que quieras. El modo oscuro invierte los colores de la propia página PDF para que leer de noche sea más cómodo. La aplicación recuerda la última página que leíste.
+
+Abre un PDF protegido con contraseña al ingresarla. También puedes abrir archivos recibidos por chat, correo electrónico o administrador de archivos. Cuando tengas internet, podrás abrir un enlace PDF directamente en la aplicación.
+
+COMPRIME PDF Y REDUCE EL TAMAÑO DEL ARCHIVO
+
+Reduce el tamaño de un PDF en tu celular antes de enviarlo por correo, cumplir un límite de carga o ahorrar espacio. Primero, la aplicación intenta volver a empaquetar el archivo sin perder calidad. Si puede reducirlo más, te ofrece recodificar las imágenes del documento y solo lo hace con tu autorización.
+
+La compresión de PDF funciona mejor con documentos escaneados y archivos con muchas imágenes. En un ejemplo medido, un PDF escaneado de 3.9 MB quedó en 248 KB, 94% más pequeño. El resultado varía según el documento. Los PDF que solo contienen texto pueden estar ya optimizados; la aplicación te avisa claramente cuando no se pueden reducir más. También muestra el tamaño antes y después.
+
+UNE, DIVIDE Y EXTRAE PÁGINAS DE PDF
+
+Une varios PDF en un solo documento. Divide un PDF en dos archivos en la página que elijas, extrae páginas seleccionadas a un PDF nuevo o elimina páginas innecesarias de una copia. El archivo original nunca se sobrescribe; cada herramienta crea un archivo de salida nuevo.
+
+ORGANIZA PÁGINAS Y CREA PDF
+
+Reordena las páginas como quieras, gira las seleccionadas 90 grados y agrega una marca de agua de texto diagonal en cada página. Al terminar, imprime desde el cuadro de Android o vuelve a guardar el documento como PDF.
+
+Convierte imágenes JPG y PNG en un solo PDF, toma una foto y guárdala como PDF o crea un documento sencillo con un título y texto escrito. Todo se genera localmente en el dispositivo.
+
+ELIMINA METADATOS OCULTOS DEL PDF
+
+Un PDF puede guardar información que no se ve en la página, como título, autor, asunto, palabras clave, programa creador, fechas y metadatos XMP. La herramienta de limpieza elimina esos campos de una copia nueva antes de compartirla.
+
+BIBLIOTECA LOCAL Y PRIVACIDAD DE ARCHIVOS
+
+Guarda los PDF abiertos en una biblioteca del dispositivo, marca favoritos y busca por nombre de archivo. En Configuración puedes borrar copias locales, historial de lectura y contadores de herramientas.
+
+La lectura, unión, división, compresión, organización de páginas y limpieza de metadatos se realizan en tu celular. El contenido de tus PDF no se sube a un servidor del desarrollador. Por eso, el lector y las herramientas principales funcionan en un avión, en el metro o sin señal. La interfaz admite 24 idiomas.
+
+LÍMITES EXPLICADOS CON CLARIDAD
+
+La aplicación no incluye OCR, edición del texto dentro de un PDF existente, firma electrónica ni conversión de PDF a Word. Actualmente, la cámara crea una foto por documento, no un escaneo de varias páginas.
+
+La aplicación se mantiene con anuncios y no tiene suscripción. Un video recompensado opcional te da 10 minutos sin anuncios. Ninguna herramienta PDF está bloqueada por un pago o un video obligatorio.
+
+==============================================================================
+es-ES — Español (España)
+==============================================================================
+
+STORE TITLE [23/30]
+Lector PDF sin conexión
+
+SHORT DESCRIPTION [79/80]
+Lee PDF sin internet. Une, divide y comprime archivos directamente en tu móvil.
+
+FULL DESCRIPTION [3640/4000]
+Abre, lee y organiza archivos PDF sin subir tus documentos a la nube. Lector PDF sin conexión funciona directamente en tu móvil Android. No necesitas una cuenta ni iniciar sesión. Lee PDF guardados, une archivos, divide páginas y comprime documentos incluso sin conexión a Internet.
+
+LEE PDF SIN CONEXIÓN
+
+Utiliza la aplicación como lector y visor PDF offline. Desplázate de forma continua, pasa una página cada vez, fija la vista en una sola página o ve directamente al número que quieras. El modo oscuro invierte los colores de la propia página PDF para que leer por la noche resulte más cómodo. La aplicación recuerda la última página que leíste.
+
+Abre un PDF protegido con contraseña introduciéndola. También puedes abrir archivos recibidos por chat, correo electrónico o gestor de archivos. Cuando tengas Internet, podrás abrir un enlace PDF directamente en la aplicación.
+
+COMPRIME PDF Y REDUCE EL TAMAÑO DEL ARCHIVO
+
+Reduce el tamaño de un PDF en tu móvil antes de enviarlo por correo, cumplir un límite de carga o ahorrar espacio. Primero, la aplicación intenta volver a empaquetar el archivo sin perder calidad. Si puede reducirlo más, te propone recodificar las imágenes del documento y solo lo hace con tu autorización.
+
+La compresión de PDF funciona mejor con documentos escaneados y archivos con muchas imágenes. En un ejemplo medido, un PDF escaneado de 3,9 MB quedó en 248 KB, un 94 % más pequeño. El resultado varía según el documento. Los PDF que solo contienen texto pueden estar ya optimizados; la aplicación te avisa claramente cuando no se pueden reducir más. También muestra el tamaño antes y después.
+
+UNE, DIVIDE Y EXTRAE PÁGINAS DE PDF
+
+Une varios PDF en un único documento. Divide un PDF en dos archivos en la página que elijas, extrae páginas seleccionadas a un PDF nuevo o elimina páginas innecesarias de una copia. El archivo original nunca se sobrescribe; cada herramienta crea un archivo de salida nuevo.
+
+ORGANIZA PÁGINAS Y CREA PDF
+
+Reordena las páginas como quieras, gira las seleccionadas 90 grados y añade una marca de agua de texto diagonal en cada página. Al terminar, imprime desde el cuadro de Android o vuelve a guardar el documento como PDF.
+
+Convierte imágenes JPG y PNG en un solo PDF, haz una foto y guárdala como PDF o crea un documento sencillo con un título y texto escrito. Todo se genera localmente en el dispositivo.
+
+ELIMINA METADATOS OCULTOS DEL PDF
+
+Un PDF puede guardar información que no se ve en la página, como título, autor, asunto, palabras clave, programa creador, fechas y metadatos XMP. La herramienta de limpieza elimina esos campos de una copia nueva antes de compartirla.
+
+BIBLIOTECA LOCAL Y PRIVACIDAD DE ARCHIVOS
+
+Guarda los PDF abiertos en una biblioteca del dispositivo, marca favoritos y busca por nombre de archivo. En Ajustes puedes borrar copias locales, historial de lectura y contadores de herramientas.
+
+La lectura, unión, división, compresión, organización de páginas y limpieza de metadatos se realizan en tu móvil. El contenido de tus PDF no se sube a un servidor del desarrollador. Por eso, el lector y las herramientas principales funcionan en un avión, en el metro o sin cobertura. La interfaz admite 24 idiomas.
+
+LÍMITES EXPLICADOS CON CLARIDAD
+
+La aplicación no incluye OCR, edición del texto dentro de un PDF existente, firma electrónica ni conversión de PDF a Word. Actualmente, la cámara crea una foto por documento, no un escaneo de varias páginas.
+
+La aplicación se financia con anuncios y no tiene suscripción. Un vídeo con recompensa opcional te da 10 minutos sin anuncios. Ninguna herramienta PDF está bloqueada por un pago o un vídeo obligatorio.
+
+==============================================================================
+it-IT — Italiano
+==============================================================================
+
+STORE TITLE [30/30]
+Lettore PDF offline: strumenti
+
+SHORT DESCRIPTION [75/80]
+Leggi PDF senza Internet. Unisci, dividi e comprimi i file sul dispositivo.
+
+FULL DESCRIPTION [3647/4000]
+Apri, leggi e gestisci file PDF senza caricare i documenti sul cloud. Lettore PDF offline: strumenti funziona direttamente sul tuo dispositivo Android. Non servono account o accesso. Leggi i PDF salvati, unisci file, dividi pagine e comprimi documenti anche senza connessione Internet.
+
+LEGGI PDF OFFLINE
+
+Usa l'app come lettore e visualizzatore PDF offline. Scorri in modo continuo, passa una pagina alla volta, blocca la visualizzazione su una sola pagina o vai direttamente al numero desiderato. La modalità scura inverte i colori della pagina PDF stessa per rendere più confortevole la lettura notturna. L'app ricorda l'ultima pagina letta.
+
+Apri un PDF protetto da password inserendo la password. Puoi anche aprire file ricevuti tramite chat, e-mail o file manager. Quando sei online, puoi aprire un link PDF direttamente nell'app.
+
+COMPRIMI PDF E RIDUCI LE DIMENSIONI DEL FILE
+
+Riduci un PDF sul telefono prima di inviarlo via e-mail, rispettare un limite di caricamento o liberare spazio. L'app prova prima a riconfezionare il file senza perdita di qualità. Se è possibile comprimerlo ulteriormente, propone di ricodificare le immagini al suo interno e procede solo dopo la tua autorizzazione.
+
+La compressione PDF è più efficace sui documenti scansionati e sui file ricchi di immagini. In un esempio misurato, un PDF scansionato da 3,9 MB è diventato di 248 KB, il 94% più piccolo. Il risultato varia in base al documento. I PDF composti solo da testo potrebbero essere già ottimizzati; l'app indica chiaramente quando non è possibile ridurli ancora. Sono mostrate le dimensioni prima e dopo.
+
+UNISCI, DIVIDI ED ESTRAI PAGINE PDF
+
+Unisci più PDF in un unico documento. Dividi un PDF in due file alla pagina scelta, estrai le pagine selezionate in un nuovo PDF oppure elimina le pagine indesiderate da una copia. Il file originale non viene mai sovrascritto; ogni strumento crea un nuovo file di output.
+
+ORGANIZZA PAGINE E CREA PDF
+
+Riordina le pagine come preferisci, ruota quelle selezionate di 90 gradi e aggiungi una filigrana di testo diagonale a ogni pagina. Al termine, stampa tramite la finestra di Android oppure salva di nuovo come PDF.
+
+Converti immagini JPG e PNG in un solo PDF, scatta una foto e salvala come PDF oppure crea un documento semplice da un titolo e dal testo digitato. Tutto viene creato localmente sul dispositivo.
+
+RIMUOVI I METADATI PDF NASCOSTI
+
+Un PDF può contenere informazioni non visibili sulla pagina, come titolo, autore, oggetto, parole chiave, software produttore, date e metadati XMP. Lo strumento di pulizia elimina questi campi da una nuova copia prima della condivisione.
+
+LIBRERIA LOCALE E PRIVACY DEI FILE
+
+Conserva i PDF aperti in una libreria sul dispositivo, aggiungili ai preferiti e cercali per nome del file. Dalle Impostazioni puoi cancellare copie locali, cronologia di lettura e contatori degli strumenti.
+
+Lettura, unione, divisione, compressione, organizzazione delle pagine e pulizia dei metadati vengono eseguite sul telefono. Il contenuto dei PDF non viene caricato su un server dello sviluppatore. Per questo il lettore e gli strumenti principali funzionano in aereo, in metropolitana o senza segnale. L'interfaccia supporta 24 lingue.
+
+LIMITI DICHIARATI CON CHIAREZZA
+
+L'app non offre OCR, modifica del testo all'interno di un PDF esistente, firma elettronica o conversione da PDF a Word. Attualmente la fotocamera crea una foto per documento, non una scansione multipagina.
+
+L'app è supportata dalla pubblicità e non prevede abbonamenti. Un video con premio facoltativo offre 10 minuti senza annunci. Nessuno strumento PDF è bloccato da un pagamento o da un video obbligatorio.

@@ -1,29 +1,46 @@
-TÍTULO
-Lector PDF: Rápido y Privado
+TITLE
+Lector PDF sin conexión
 
-DESCRIPCIÓN BREVE
-Lee y edita PDF en tu dispositivo, sin cuenta y sin subir tus documentos.
+SHORT DESCRIPTION
+Lee PDF sin internet. Une, divide y comprime archivos directamente en tu móvil.
 
-DESCRIPCIÓN COMPLETA
-Lector PDF es una aplicación centrada en el almacenamiento local, diseñada para ver documentos de forma rápida, sencilla y segura.
+FULL DESCRIPTION
+Abre, lee y organiza archivos PDF sin subir tus documentos a la nube. Lector PDF sin conexión funciona directamente en tu móvil Android. No necesitas una cuenta ni iniciar sesión. Lee PDF guardados, une archivos, divide páginas y comprime documentos incluso sin conexión a Internet.
 
-Elige archivos PDF del dispositivo o descárgalos directamente desde un enlace web. Los documentos permanecen en la carpeta privada de la aplicación en tu dispositivo; no necesitas una cuenta ni subirlos a un servidor del desarrollador para leerlos.
+LEE PDF SIN CONEXIÓN
 
-Funciones principales:
+Utiliza la aplicación como lector y visor PDF offline. Desplázate de forma continua, pasa una página cada vez, fija la vista en una sola página o ve directamente al número que quieras. El modo oscuro invierte los colores de la propia página PDF para que leer por la noche resulte más cómodo. La aplicación recuerda la última página que leíste.
 
-• Seleccionar y abrir PDF del dispositivo
-• Descargar PDF desde una URL
-• Lectura vertical y horizontal
-• Modo de ajuste a una sola página
-• Zoom con gesto y doble toque
-• Modo nocturno para las páginas PDF
-• Favoritos y biblioteca local con búsqueda
-• Metadatos de última página y progreso de lectura
-• Compatibilidad con PDF protegidos por contraseña
-• Compartir documentos
-• Unir PDF, extraer o eliminar páginas, girarlas y limpiar metadatos
-• Interfaz en 14 idiomas
+Abre un PDF protegido con contraseña introduciéndola. También puedes abrir archivos recibidos por chat, correo electrónico o gestor de archivos. Cuando tengas Internet, podrás abrir un enlace PDF directamente en la aplicación.
 
-Lector PDF organiza tus documentos, guarda la información de lectura en el dispositivo y ofrece acceso rápido a las herramientas esenciales mediante una interfaz limpia.
+COMPRIME PDF Y REDUCE EL TAMAÑO DEL ARCHIVO
 
-La aplicación contiene anuncios. Las opciones de privacidad publicitaria se pueden gestionar desde Ajustes.
+Reduce el tamaño de un PDF en tu móvil antes de enviarlo por correo, cumplir un límite de carga o ahorrar espacio. Primero, la aplicación intenta volver a empaquetar el archivo sin perder calidad. Si puede reducirlo más, te propone recodificar las imágenes del documento y solo lo hace con tu autorización.
+
+La compresión de PDF funciona mejor con documentos escaneados y archivos con muchas imágenes. En un ejemplo medido, un PDF escaneado de 3,9 MB quedó en 248 KB, un 94 % más pequeño. El resultado varía según el documento. Los PDF que solo contienen texto pueden estar ya optimizados; la aplicación te avisa claramente cuando no se pueden reducir más. También muestra el tamaño antes y después.
+
+UNE, DIVIDE Y EXTRAE PÁGINAS DE PDF
+
+Une varios PDF en un único documento. Divide un PDF en dos archivos en la página que elijas, extrae páginas seleccionadas a un PDF nuevo o elimina páginas innecesarias de una copia. El archivo original nunca se sobrescribe; cada herramienta crea un archivo de salida nuevo.
+
+ORGANIZA PÁGINAS Y CREA PDF
+
+Reordena las páginas como quieras, gira las seleccionadas 90 grados y añade una marca de agua de texto diagonal en cada página. Al terminar, imprime desde el cuadro de Android o vuelve a guardar el documento como PDF.
+
+Convierte imágenes JPG y PNG en un solo PDF, haz una foto y guárdala como PDF o crea un documento sencillo con un título y texto escrito. Todo se genera localmente en el dispositivo.
+
+ELIMINA METADATOS OCULTOS DEL PDF
+
+Un PDF puede guardar información que no se ve en la página, como título, autor, asunto, palabras clave, programa creador, fechas y metadatos XMP. La herramienta de limpieza elimina esos campos de una copia nueva antes de compartirla.
+
+BIBLIOTECA LOCAL Y PRIVACIDAD DE ARCHIVOS
+
+Guarda los PDF abiertos en una biblioteca del dispositivo, marca favoritos y busca por nombre de archivo. En Ajustes puedes borrar copias locales, historial de lectura y contadores de herramientas.
+
+La lectura, unión, división, compresión, organización de páginas y limpieza de metadatos se realizan en tu móvil. El contenido de tus PDF no se sube a un servidor del desarrollador. Por eso, el lector y las herramientas principales funcionan en un avión, en el metro o sin cobertura. La interfaz admite 24 idiomas.
+
+LÍMITES EXPLICADOS CON CLARIDAD
+
+La aplicación no incluye OCR, edición del texto dentro de un PDF existente, firma electrónica ni conversión de PDF a Word. Actualmente, la cámara crea una foto por documento, no un escaneo de varias páginas.
+
+La aplicación se financia con anuncios y no tiene suscripción. Un vídeo con recompensa opcional te da 10 minutos sin anuncios. Ninguna herramienta PDF está bloqueada por un pago o un vídeo obligatorio.

@@ -1,5 +1,5 @@
 export default {
-  'app.name':'オフラインPDFリーダー',
+  'app.name':'オフラインPDFビューア・ツール',
   'tabs.home':'ホーム',
   'tabs.library':'ライブラリ',
   'tabs.tools':'ツール',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Googleの広告同意状態を再確認しました。',
   'settings.consentErrorTitle':'プライバシー設定',
   'settings.consentErrorMessage':'広告のプライバシー設定を今は開けません。しばらくしてからもう一度お試しください。',
-  'settings.about':'PDFリーダー • Expo SDK 57 • 端末内PDF処理',
+  'settings.about':'オフラインPDFビューア・ツール • Expo SDK 57 • 端末内PDF処理',
   'reader.notFound':'文書が見つかりません',
   'reader.goBack':'戻る',
   'reader.pageOf':'{total}ページ中{page}ページ',

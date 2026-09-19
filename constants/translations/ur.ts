@@ -1,5 +1,5 @@
 export default {
-  'app.name':'آف لائن PDF ریڈر',
+  'app.name':'آف لائن PDF ریڈر اور ٹولز',
   'tabs.home':'ہوم',
   'tabs.library':'لائبریری',
   'tabs.tools':'ٹولز',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Google اشتہاری رضامندی کی حالت دوبارہ جانچ لی گئی ہے۔',
   'settings.consentErrorTitle':'رازداری کے اختیارات',
   'settings.consentErrorMessage':'اس وقت اشتہارات کے رازداری اختیارات نہیں کھولے جا سکتے۔ بعد میں کوشش کریں۔',
-  'settings.about':'PDF ریڈر • Expo SDK 57 • آلے پر PDF پروسیسنگ',
+  'settings.about':'آف لائن PDF ریڈر اور ٹولز • Expo SDK 57 • آلے پر PDF پروسیسنگ',
   'reader.notFound':'دستاویز نہیں ملی',
   'reader.goBack':'واپس',
   'reader.pageOf':'صفحہ {page} از {total}',

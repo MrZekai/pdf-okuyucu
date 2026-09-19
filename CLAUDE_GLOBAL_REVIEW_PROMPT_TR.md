@@ -1,10 +1,10 @@
 # Claude kaynak inceleme istemi
 
-Bu depo Expo SDK 57 / React Native 0.86.2 tabanlı, yalnız cihazda çalışan bir PDF Reader uygulamasıdır. Bu turda APK/AAB üretmeden global dil ve PDF araçları eklendi.
+Bu depo Expo SDK 57 / React Native tabanlı `Offline PDF Viewer & Tools` uygulamasıdır; PDF araçlarının ana işlemleri cihazda çalışır. Bu turda APK/AAB üretmeden global dil ve PDF araçları eklendi.
 
 Lütfen yalnız kaynak kodu incele; dosya değiştirme ve derleme başlatma. Özellikle şunları kanıtla veya somut dosya/satırla hata bildir:
 
-1. 14 dilde 198 anahtarın ve yer tutucuların eşitliği; desteklenmeyen dilde İngilizce fallback. Ayarlar'da manuel dil seçici bulunmamalı, arayüz cihaz/Android uygulama dilini izlemeli.
+1. 24 dilde 219 anahtarın ve yer tutucuların eşitliği; desteklenmeyen dilde İngilizce fallback. Ayarlar'da manuel dil seçici bulunmamalı, arayüz cihaz/Android uygulama dilini izlemeli.
 2. Arapça RTL yönü, chevron/back aynalama ve uzun Almanca/Rusça metin taşmaları.
 3. `lib/pdfTools.ts` içindeki kamera/görsel/metin PDF oluşturma, merge/split/extract/remove/reorder/rotate/watermark/optimize/clean/print işlemlerinin doğruluğu, bellek sınırı ve kaynak dosyayı silmeme garantisi.
 4. Araç çıktılarının `saveGeneratedPdf` ve `addGeneratedDocument` yoluyla yalnız uygulama özel alanına kaydedilmesi; hiçbir PDF/veri yükleme veya analitik yolu bulunmaması.

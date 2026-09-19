@@ -31,8 +31,8 @@ export default function ReaderScreen(){
  const [password,setPassword]=useState(''); const [passwordDraft,setPasswordDraft]=useState(''); const [passwordOpen,setPasswordOpen]=useState(false); const [error,setError]=useState('');
  const [locked,setLocked]=useState(false); const [passwordError,setPasswordError]=useState('');
  const [goToOpen,setGoToOpen]=useState(false); const [goToDraft,setGoToDraft]=useState(''); const [goToError,setGoToError]=useState('');
- const [jumpTarget,setJumpTarget]=useState<number|undefined>(undefined);
- const savedPage=useState(()=>doc?.lastPage??1)[0]; const [hintVisible,setHintVisible]=useState((doc?.lastPage??1)>1);
+ const savedPage=useState(()=>doc?.lastPage??1)[0];
+ const [jumpTarget,setJumpTarget]=useState<number|undefined>(()=>savedPage>1?savedPage-1:undefined); const [hintVisible,setHintVisible]=useState((doc?.lastPage??1)>1);
  const pendingProgress=useRef<{page:number;pageCount?:number}|null>(null); const progressTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
  const flushProgress=useCallback(()=>{if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=null;const pending=pendingProgress.current;pendingProgress.current=null;if(id&&pending)updateProgress(id,pending.page,pending.pageCount)},[id,updateProgress]);
  const queueProgress=useCallback((nextPage:number,nextPageCount?:number)=>{pendingProgress.current={page:nextPage,pageCount:nextPageCount};if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=setTimeout(flushProgress,750)},[flushProgress]);

@@ -10,12 +10,12 @@
     <rect x="94" y="192" width="892" height="1285" rx="8" fill="#F9FAFC"/>
     <text x="180" y="305" fill="#1E293B" font-size="43" font-weight="800">Okuma Deneyiminizi</text><text x="180" y="358" fill="#E5252A" font-size="43" font-weight="800">Kişiselleştirin</text>
     <rect x="180" y="405" width="620" height="7" rx="3.5" fill="#E5252A"/>
-    <text x="180" y="475" fill="#334155" font-size="24">PDF Okuyucu, belgelerinizi hızlı ve güvenli</text><text x="180" y="515" fill="#334155" font-size="24">biçimde görüntülemenizi sağlar. Tüm dosyalar</text><text x="180" y="555" fill="#334155" font-size="24">cihazınızda kalır.</text>
+    <text x="180" y="475" fill="#334155" font-size="24">Çevrimdışı PDF Okuyucu belgelerinizi hızlı ve güvenli</text><text x="180" y="515" fill="#334155" font-size="24">biçimde görüntüler. PDF işlemleri doğrudan</text><text x="180" y="555" fill="#334155" font-size="24">cihazınızda yapılır.</text>
     <rect x="180" y="620" width="720" height="270" rx="28" fill="#EEF0FF"/>
     <circle cx="285" cy="755" r="72" fill="#E5252A"/><path d="M254 717h43l28 28v53h-71zM297 717v28h28" fill="none" stroke="#fff" stroke-width="6"/>
-    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Yerel ve özel</text><text x="395" y="754" fill="#526078" font-size="22">Belgeleriniz sunucuya</text><text x="395" y="790" fill="#526078" font-size="22">yüklenmez.</text>
+    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Yerel ve özel</text><text x="395" y="754" fill="#526078" font-size="22">PDF içerikleri geliştirici</text><text x="395" y="790" fill="#526078" font-size="22">sunucusuna yüklenmez.</text>
     <text x="180" y="980" fill="#1E293B" font-size="30" font-weight="800">Okuma araçları</text>
-    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Yakınlaştırmak için çift dokunun</text><text x="215" y="1095">•  Yatay veya dikey okuma seçin</text><text x="215" y="1145">•  Gece moduyla gözlerinizi koruyun</text><text x="215" y="1195">•  Okuma ilerlemeniz otomatik kaydedilir</text></g>
+    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Yakınlaştırmak için çift dokunun</text><text x="215" y="1095">•  Yatay veya dikey okuma seçin</text><text x="215" y="1145">•  Gece modunda daha rahat okuyun</text><text x="215" y="1195">•  Okuma ilerlemeniz otomatik kaydedilir</text></g>
     <rect x="180" y="1270" width="720" height="2" fill="#CBD5E1"/>
     <text x="540" y="1352" fill="#94A3B8" font-size="20" text-anchor="middle">12</text>
 

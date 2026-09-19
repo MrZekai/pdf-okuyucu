@@ -10,12 +10,12 @@
     <rect x="94" y="192" width="892" height="1285" rx="8" fill="#F9FAFC"/>
     <text x="180" y="305" fill="#1E293B" font-size="43" font-weight="800">Personalize Your</text><text x="180" y="358" fill="#E5252A" font-size="43" font-weight="800">Reading Experience</text>
     <rect x="180" y="405" width="620" height="7" rx="3.5" fill="#E5252A"/>
-    <text x="180" y="475" fill="#334155" font-size="24">PDF Reader displays your documents quickly</text><text x="180" y="515" fill="#334155" font-size="24">and securely. Every file remains on</text><text x="180" y="555" fill="#334155" font-size="24">your device.</text>
+    <text x="180" y="475" fill="#334155" font-size="24">Offline PDF Viewer displays documents quickly</text><text x="180" y="515" fill="#334155" font-size="24">and securely. PDF processing happens</text><text x="180" y="555" fill="#334155" font-size="24">on your device.</text>
     <rect x="180" y="620" width="720" height="270" rx="28" fill="#EEF0FF"/>
     <circle cx="285" cy="755" r="72" fill="#E5252A"/><path d="M254 717h43l28 28v53h-71zM297 717v28h28" fill="none" stroke="#fff" stroke-width="6"/>
-    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Local and private</text><text x="395" y="754" fill="#526078" font-size="22">Your documents are never</text><text x="395" y="790" fill="#526078" font-size="22">uploaded to a server.</text>
+    <text x="395" y="705" fill="#1E293B" font-size="29" font-weight="800">Local and private</text><text x="395" y="754" fill="#526078" font-size="22">PDF contents are not uploaded</text><text x="395" y="790" fill="#526078" font-size="22">to a developer server.</text>
     <text x="180" y="980" fill="#1E293B" font-size="30" font-weight="800">Reading tools</text>
-    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Double-tap to zoom</text><text x="215" y="1095">•  Choose horizontal or vertical reading</text><text x="215" y="1145">•  Protect your eyes with night mode</text><text x="215" y="1195">•  Reading progress is saved automatically</text></g>
+    <g fill="#334155" font-size="23"><text x="215" y="1045">•  Double-tap to zoom</text><text x="215" y="1095">•  Choose horizontal or vertical reading</text><text x="215" y="1145">•  Use night mode for comfortable reading</text><text x="215" y="1195">•  Reading progress is saved automatically</text></g>
     <rect x="180" y="1270" width="720" height="2" fill="#CBD5E1"/>
     <text x="540" y="1352" fill="#94A3B8" font-size="20" text-anchor="middle">12</text>
 

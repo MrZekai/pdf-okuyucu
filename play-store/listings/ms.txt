@@ -1,0 +1,46 @@
+TITLE
+Pembaca PDF Luar Talian
+
+SHORT DESCRIPTION
+Baca PDF tanpa internet. Gabung, pisah dan mampatkan fail pada peranti anda.
+
+FULL DESCRIPTION
+Buka, baca dan urus fail PDF tanpa memuat naik dokumen anda ke awan. Pembaca PDF Luar Talian berfungsi terus pada peranti Android anda. Tiada akaun atau log masuk diperlukan. Baca PDF yang disimpan, gabungkan fail, pisahkan halaman dan mampatkan dokumen walaupun tanpa sambungan internet.
+
+BACA PDF SECARA LUAR TALIAN
+
+Gunakan aplikasi sebagai pembaca PDF luar talian dan pemapar PDF. Tatal secara berterusan, leret satu halaman pada satu masa, kunci paparan kepada satu halaman atau lompat terus ke nombor halaman tertentu. Mod gelap menyongsangkan warna halaman PDF itu sendiri supaya lebih selesa dibaca pada waktu malam. Aplikasi mengingati halaman terakhir anda.
+
+Buka PDF yang dilindungi kata laluan dengan memasukkan kata laluannya. Fail daripada sembang, e-mel atau pengurus fail juga boleh dibuka terus. Pautan PDF boleh dibuka dalam aplikasi apabila peranti disambungkan ke internet.
+
+MAMPATKAN PDF DAN KURANGKAN SAIZ FAIL
+
+Kurangkan saiz PDF pada telefon sebelum menghantarnya melalui e-mel, memenuhi had muat naik atau menjimatkan ruang storan. Aplikasi mula-mula cuba membungkus semula fail tanpa kehilangan kualiti. Jika pemampatan tambahan boleh dilakukan, aplikasi menawarkan untuk mengekod semula imej di dalam PDF dan hanya meneruskannya selepas mendapat kebenaran anda.
+
+Pemampatan PDF paling berkesan untuk dokumen imbasan dan fail yang mempunyai banyak imej. Dalam satu contoh yang diukur, PDF imbasan 3.9 MB menjadi 248 KB—94% lebih kecil. Hasil berbeza mengikut dokumen. PDF yang hanya mengandungi teks mungkin sudah dioptimumkan; aplikasi memberitahu dengan jelas apabila fail tidak boleh dikecilkan lagi. Saiz sebelum dan selepas turut dipaparkan.
+
+GABUNG PDF, PISAH PDF DAN EKSTRAK HALAMAN
+
+Gabungkan beberapa fail PDF menjadi satu dokumen. Pisahkan PDF kepada dua fail pada halaman pilihan anda, ekstrak halaman tertentu ke PDF baharu atau buang halaman yang tidak diperlukan daripada salinan. Fail asal tidak ditulis ganti; setiap alat menghasilkan fail output baharu.
+
+SUSUN HALAMAN DAN CIPTA PDF
+
+Susun semula halaman dalam sebarang turutan, putar halaman terpilih 90 darjah dan tambah tera air teks pepenjuru pada setiap halaman. Apabila selesai, cetak melalui dialog cetak Android atau simpan semula sebagai PDF.
+
+Tukar imej JPG dan PNG kepada satu PDF, ambil foto dan simpan sebagai PDF, atau cipta dokumen ringkas daripada tajuk dan teks yang ditaip. Semua proses penciptaan berlaku secara setempat pada peranti.
+
+BUANG METADATA PDF TERSEMBUNYI
+
+PDF boleh menyimpan maklumat yang tidak kelihatan pada halaman, termasuk tajuk, pengarang, subjek, kata kunci, aplikasi pengeluar, tarikh dan metadata XMP. Alat pembersihan metadata membuang medan ini daripada salinan baharu sebelum anda berkongsi dokumen.
+
+PUSTAKA SETEMPAT DAN PRIVASI FAIL
+
+Simpan PDF yang dibuka dalam pustaka pada peranti, tandakan kegemaran dan cari mengikut nama fail. Dalam Tetapan, anda boleh memadam salinan setempat, sejarah bacaan dan kaunter penggunaan alat.
+
+Membaca, menggabung, memisah, memampat, menyusun halaman dan membersihkan metadata dilakukan pada telefon. Kandungan PDF tidak dimuat naik ke pelayan pembangun. Oleh itu, pembaca dan alat utama berguna di dalam kapal terbang, kereta api atau tempat tanpa isyarat. Antara muka menyokong 24 bahasa.
+
+BATASAN YANG JELAS
+
+Aplikasi tidak menyediakan OCR, penyuntingan teks dalam PDF sedia ada, tandatangan elektronik atau penukaran PDF kepada Word. Kamera pada masa ini menghasilkan satu foto bagi setiap dokumen, bukan imbasan berbilang halaman.
+
+Aplikasi disokong iklan dan tiada langganan. Video ganjaran pilihan memberi anda 10 minit tanpa iklan. Tiada alat PDF yang dikunci di sebalik bayaran atau video wajib.

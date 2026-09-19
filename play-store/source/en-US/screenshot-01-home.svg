@@ -3,7 +3,7 @@
   <rect width="1080" height="1920" fill="#08090B"/>
   <g font-family="DejaVu Sans, sans-serif">
     <g transform="translate(100 92) scale(.079) translate(-498 -512)"><g><path d="M280 130h332l152 152v568a48 48 0 0 1-48 48H280a48 48 0 0 1-48-48V178a48 48 0 0 1 48-48z" fill="url(#r)"/></g><path d="M612 130l152 152h-116a36 36 0 0 1-36-36z" fill="#FFC3BE"/><text x="498" y="612" font-family="DejaVu Sans, sans-serif" font-size="210" font-weight="bold" fill="#FFFFFF" text-anchor="middle">PDF</text><rect x="330" y="690" width="336" height="22" rx="11" fill="#FFFFFF" opacity=".6"/><rect x="330" y="742" width="240" height="22" rx="11" fill="#FFFFFF" opacity=".38"/></g>
-    <text x="162" y="105" fill="#FF6B60" font-size="24" font-weight="800" letter-spacing="5">PDF READER</text>
+    <text x="162" y="105" fill="#FF6B60" font-size="20" font-weight="800" letter-spacing="1">OFFLINE PDF VIEWER &amp; TOOLS</text>
 
     <rect x="54" y="210" width="972" height="650" rx="28" fill="url(#hero)" stroke="#FF918A" stroke-opacity=".55" stroke-width="2"/>
     <circle cx="920" cy="230" r="230" fill="#FF564C" opacity=".16"/>

@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Офлайн PDF Ридер',
+  'app.name':'PDF-ридер офлайн и инструменты',
   'tabs.home':'Главная',
   'tabs.library':'Библиотека',
   'tabs.tools':'Инструменты',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Статус согласия Google на рекламу проверен повторно.',
   'settings.consentErrorTitle':'Параметры конфиденциальности',
   'settings.consentErrorMessage':'Сейчас не удается открыть настройки конфиденциальности рекламы. Повторите попытку позже.',
-  'settings.about':'PDF-ридер • Expo SDK 57 • Обработка на устройстве',
+  'settings.about':'PDF-ридер офлайн и инструменты • Expo SDK 57 • Обработка на устройстве',
   'reader.notFound':'Документ не найден',
   'reader.goBack':'Назад',
   'reader.pageOf':'страница {page} из {total}',

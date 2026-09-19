@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Lettore PDF Offline',
+  'app.name':'Lettore PDF offline: strumenti',
   'tabs.home':'Home',
   'tabs.library':'Libreria',
   'tabs.tools':'Strumenti',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Lo stato del consenso annunci Google è stato ricontrollato.',
   'settings.consentErrorTitle':'Opzioni privacy',
   'settings.consentErrorMessage':'Non è possibile aprire ora le opzioni sulla privacy degli annunci. Riprova più tardi.',
-  'settings.about':'Lettore PDF • Expo SDK 57 • Elaborazione sul dispositivo',
+  'settings.about':'Lettore PDF offline: strumenti • Expo SDK 57 • Elaborazione sul dispositivo',
   'reader.notFound':'Documento non trovato',
   'reader.goBack':'Indietro',
   'reader.pageOf':'pagina {page} di {total}',

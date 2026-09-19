@@ -1,17 +1,46 @@
-TITOLO
-Lettore PDF: Privato
+TITLE
+Lettore PDF offline: strumenti
 
-DESCRIZIONE BREVE
-Leggi e modifica PDF sul dispositivo, senza account e senza caricare i file.
+SHORT DESCRIPTION
+Leggi PDF senza Internet. Unisci, dividi e comprimi i file sul dispositivo.
 
-DESCRIZIONE COMPLETA
-Apri, organizza e modifica i PDF rispettando la tua privacy. I documenti restano sul dispositivo e non vengono caricati su un server dello sviluppatore.
+FULL DESCRIPTION
+Apri, leggi e gestisci file PDF senza caricare i documenti sul cloud. Lettore PDF offline: strumenti funziona direttamente sul tuo dispositivo Android. Non servono account o accesso. Leggi i PDF salvati, unisci file, dividi pagine e comprimi documenti anche senza connessione Internet.
 
-Funzioni principali:
-• Aprire PDF dal dispositivo o da link HTTPS
-• Libreria locale, preferiti e memorizzazione dell’ultima pagina visualizzata
-• Lettura verticale o orizzontale, zoom e modalità notte
-• Unire PDF, estrarre o rimuovere pagine, ruotarle e pulire i metadati
-• Supporto per PDF protetti da password
+LEGGI PDF OFFLINE
 
-L’app contiene annunci. Le preferenze sulla privacy pubblicitaria sono disponibili nelle Impostazioni.
+Usa l'app come lettore e visualizzatore PDF offline. Scorri in modo continuo, passa una pagina alla volta, blocca la visualizzazione su una sola pagina o vai direttamente al numero desiderato. La modalità scura inverte i colori della pagina PDF stessa per rendere più confortevole la lettura notturna. L'app ricorda l'ultima pagina letta.
+
+Apri un PDF protetto da password inserendo la password. Puoi anche aprire file ricevuti tramite chat, e-mail o file manager. Quando sei online, puoi aprire un link PDF direttamente nell'app.
+
+COMPRIMI PDF E RIDUCI LE DIMENSIONI DEL FILE
+
+Riduci un PDF sul telefono prima di inviarlo via e-mail, rispettare un limite di caricamento o liberare spazio. L'app prova prima a riconfezionare il file senza perdita di qualità. Se è possibile comprimerlo ulteriormente, propone di ricodificare le immagini al suo interno e procede solo dopo la tua autorizzazione.
+
+La compressione PDF è più efficace sui documenti scansionati e sui file ricchi di immagini. In un esempio misurato, un PDF scansionato da 3,9 MB è diventato di 248 KB, il 94% più piccolo. Il risultato varia in base al documento. I PDF composti solo da testo potrebbero essere già ottimizzati; l'app indica chiaramente quando non è possibile ridurli ancora. Sono mostrate le dimensioni prima e dopo.
+
+UNISCI, DIVIDI ED ESTRAI PAGINE PDF
+
+Unisci più PDF in un unico documento. Dividi un PDF in due file alla pagina scelta, estrai le pagine selezionate in un nuovo PDF oppure elimina le pagine indesiderate da una copia. Il file originale non viene mai sovrascritto; ogni strumento crea un nuovo file di output.
+
+ORGANIZZA PAGINE E CREA PDF
+
+Riordina le pagine come preferisci, ruota quelle selezionate di 90 gradi e aggiungi una filigrana di testo diagonale a ogni pagina. Al termine, stampa tramite la finestra di Android oppure salva di nuovo come PDF.
+
+Converti immagini JPG e PNG in un solo PDF, scatta una foto e salvala come PDF oppure crea un documento semplice da un titolo e dal testo digitato. Tutto viene creato localmente sul dispositivo.
+
+RIMUOVI I METADATI PDF NASCOSTI
+
+Un PDF può contenere informazioni non visibili sulla pagina, come titolo, autore, oggetto, parole chiave, software produttore, date e metadati XMP. Lo strumento di pulizia elimina questi campi da una nuova copia prima della condivisione.
+
+LIBRERIA LOCALE E PRIVACY DEI FILE
+
+Conserva i PDF aperti in una libreria sul dispositivo, aggiungili ai preferiti e cercali per nome del file. Dalle Impostazioni puoi cancellare copie locali, cronologia di lettura e contatori degli strumenti.
+
+Lettura, unione, divisione, compressione, organizzazione delle pagine e pulizia dei metadati vengono eseguite sul telefono. Il contenuto dei PDF non viene caricato su un server dello sviluppatore. Per questo il lettore e gli strumenti principali funzionano in aereo, in metropolitana o senza segnale. L'interfaccia supporta 24 lingue.
+
+LIMITI DICHIARATI CON CHIAREZZA
+
+L'app non offre OCR, modifica del testo all'interno di un PDF esistente, firma elettronica o conversione da PDF a Word. Attualmente la fotocamera crea una foto per documento, non una scansione multipagina.
+
+L'app è supportata dalla pubblicità e non prevede abbonamenti. Un video con premio facoltativo offre 10 minuti senza annunci. Nessuno strumento PDF è bloccato da un pagamento o da un video obbligatorio.

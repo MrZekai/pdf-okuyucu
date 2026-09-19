@@ -1,0 +1,46 @@
+TITLE
+Offline PDF-lezer & tools
+
+SHORT DESCRIPTION
+Lees pdf's zonder internet. Voeg samen, splits en comprimeer op je apparaat.
+
+FULL DESCRIPTION
+Open, lees en beheer pdf-bestanden zonder je documenten naar de cloud te uploaden. Offline PDF-lezer & tools werkt rechtstreeks op je Android-apparaat. Je hebt geen account nodig en hoeft niet in te loggen. Lees opgeslagen pdf's, voeg bestanden samen, splits pagina's en comprimeer documenten, ook zonder internetverbinding.
+
+PDF OFFLINE LEZEN
+
+Gebruik de app als offline pdf-lezer en pdf-viewer. Scrol doorlopend, veeg pagina voor pagina, zet de weergave vast op één pagina of spring meteen naar een bepaald paginanummer. De donkere modus keert de kleuren van de pdf-pagina zelf om, zodat lezen 's avonds prettiger is. De app onthoudt waar je bent gestopt.
+
+Open een met een wachtwoord beveiligde pdf door het wachtwoord in te voeren. Je kunt ook pdf-bestanden uit een chat, e-mail of bestandsbeheerder openen. Een pdf-link kan rechtstreeks naar de app worden gestuurd wanneer je online bent.
+
+PDF COMPRIMEREN EN BESTANDSGROOTTE VERKLEINEN
+
+Verklein een pdf op je telefoon voordat je hem per e-mail verstuurt, aan een uploadlimiet moet voldoen of opslagruimte wilt besparen. De app probeert het bestand eerst zonder kwaliteitsverlies opnieuw te verpakken. Als verdere compressie mogelijk is, stelt de app voor de afbeeldingen in de pdf opnieuw te coderen. Dat gebeurt alleen na jouw toestemming.
+
+Pdf-compressie werkt het best bij scans en documenten met veel afbeeldingen. In één gemeten voorbeeld werd een gescande pdf van 3,9 MB teruggebracht tot 248 KB, 94% kleiner. Het resultaat verschilt per document. Pdf's met alleen tekst zijn soms al geoptimaliseerd; de app meldt duidelijk wanneer een bestand niet verder kan worden verkleind. De grootte vóór en na de compressie wordt getoond.
+
+PDF SAMENVOEGEN, SPLITSEN EN PAGINA'S EXTRAHEREN
+
+Voeg meerdere pdf-bestanden samen tot één document. Splits een pdf op een gekozen pagina in twee bestanden, extraheer geselecteerde pagina's naar een nieuwe pdf of verwijder ongewenste pagina's uit een kopie. Het origineel wordt nooit overschreven; elk hulpmiddel maakt een nieuw uitvoerbestand.
+
+PAGINA'S ORDENEN EN PDF MAKEN
+
+Zet pagina's in elke gewenste volgorde, draai geselecteerde pagina's 90 graden en plaats een diagonaal tekstwatermerk op elke pagina. Druk het resultaat af via het Android-afdrukvenster of sla het opnieuw op als pdf.
+
+Zet JPG- en PNG-afbeeldingen in één keer om naar een pdf, maak een foto en bewaar die als pdf, of maak een eenvoudig document met een titel en getypte tekst. Alles wordt lokaal op je apparaat gemaakt.
+
+VERBORGEN PDF-METAGEGEVENS VERWIJDEREN
+
+Een pdf kan onzichtbare informatie bevatten, zoals titel, auteur, onderwerp, trefwoorden, producent, datums en XMP-metagegevens. De opschoning verwijdert deze velden uit een nieuwe kopie voordat je het document deelt.
+
+LOKALE BIBLIOTHEEK EN PRIVACY
+
+Bewaar geopende pdf's in een bibliotheek op je apparaat, markeer favorieten en zoek op bestandsnaam. Via Instellingen kun je lokale kopieën, leesgeschiedenis en gebruikstellers wissen.
+
+Lezen, samenvoegen, splitsen, comprimeren, pagina's ordenen en metagegevens opschonen gebeurt op je telefoon. De inhoud van je pdf's wordt niet geüpload naar een server van de ontwikkelaar. De belangrijkste lezer en hulpmiddelen werken daardoor in het vliegtuig, in de trein of zonder bereik. De interface ondersteunt 24 talen.
+
+DUIDELIJKE BEPERKINGEN
+
+De app heeft geen OCR, bewerkt geen tekst in een bestaande pdf en biedt geen elektronische handtekening of conversie van pdf naar Word. De camera maakt momenteel één foto per document en geen scan met meerdere pagina's.
+
+De app wordt ondersteund door advertenties en heeft geen abonnement. Met een optionele beloningsvideo krijg je 10 minuten zonder advertenties. Geen enkel pdf-hulpmiddel is vergrendeld achter een betaling of verplichte video.

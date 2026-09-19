@@ -1,5 +1,5 @@
 export default {
-  'app.name':'离线PDF阅读器',
+  'app.name':'离线 PDF 阅读器和工具',
   'tabs.home':'首页',
   'tabs.library':'文档库',
   'tabs.tools':'工具',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'已重新检查 Google 广告同意状态。',
   'settings.consentErrorTitle':'隐私选项',
   'settings.consentErrorMessage':'暂时无法打开广告隐私选项，请稍后再试。',
-  'settings.about':'PDF 阅读器 • Expo SDK 57 • 设备端 PDF 处理',
+  'settings.about':'离线 PDF 阅读器和工具 • Expo SDK 57 • 设备端 PDF 处理',
   'reader.notFound':'找不到文档',
   'reader.goBack':'返回',
   'reader.pageOf':'第 {page} 页，共 {total} 页',

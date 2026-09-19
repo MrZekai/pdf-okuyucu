@@ -1,0 +1,46 @@
+TITLE
+Đọc PDF ngoại tuyến & công cụ
+
+SHORT DESCRIPTION
+Đọc PDF không cần mạng. Ghép, tách và nén tệp ngay trên thiết bị.
+
+FULL DESCRIPTION
+Mở, đọc và quản lý tệp PDF mà không tải tài liệu lên đám mây. Đọc PDF ngoại tuyến & công cụ hoạt động trực tiếp trên thiết bị Android. Không cần tài khoản hay đăng nhập. Bạn có thể đọc PDF đã lưu, ghép tệp, tách trang và nén tài liệu ngay cả khi không có kết nối Internet.
+
+ĐỌC PDF NGOẠI TUYẾN
+
+Dùng ứng dụng như trình đọc PDF và trình xem PDF ngoại tuyến. Cuộn liên tục, vuốt từng trang, khóa chế độ xem một trang hoặc chuyển thẳng đến số trang bất kỳ. Chế độ tối đảo màu chính trang PDF để đọc ban đêm dễ chịu hơn. Ứng dụng ghi nhớ trang bạn đã dừng lại.
+
+Mở PDF được bảo vệ bằng mật khẩu bằng cách nhập mật khẩu. Bạn cũng có thể mở tệp nhận từ ứng dụng trò chuyện, email hoặc trình quản lý tệp. Khi có mạng, liên kết PDF có thể được mở trực tiếp trong ứng dụng.
+
+NÉN PDF VÀ GIẢM DUNG LƯỢNG TỆP
+
+Giảm dung lượng PDF trên điện thoại trước khi gửi email, đáp ứng giới hạn tải lên hoặc tiết kiệm bộ nhớ. Trước tiên, ứng dụng thử đóng gói lại tệp mà không làm giảm chất lượng. Nếu có thể nén thêm, ứng dụng sẽ đề nghị mã hóa lại hình ảnh trong PDF và chỉ thực hiện sau khi bạn cho phép.
+
+Nén PDF hiệu quả nhất với tài liệu quét và tệp có nhiều hình ảnh. Trong một ví dụ được đo, tệp PDF quét 3,9 MB giảm còn 248 KB, nhỏ hơn 94%. Kết quả thay đổi tùy tài liệu. PDF chỉ có văn bản có thể đã được tối ưu; ứng dụng sẽ nói rõ khi không thể giảm thêm. Dung lượng trước và sau được hiển thị để so sánh.
+
+GHÉP PDF, TÁCH PDF VÀ TRÍCH XUẤT TRANG
+
+Ghép nhiều tệp PDF thành một tài liệu. Tách PDF thành hai tệp tại trang bạn chọn, trích xuất các trang đã chọn thành PDF mới hoặc xóa trang không cần thiết khỏi một bản sao. Tệp gốc không bị ghi đè; mỗi công cụ tạo một tệp đầu ra mới.
+
+SẮP XẾP TRANG VÀ TẠO PDF
+
+Sắp xếp lại trang theo bất kỳ thứ tự nào, xoay trang đã chọn 90 độ và thêm hình mờ văn bản chéo lên mọi trang. Khi hoàn tất, in qua hộp thoại in của Android hoặc lưu lại dưới dạng PDF.
+
+Chuyển ảnh JPG và PNG thành một PDF, chụp ảnh rồi lưu thành PDF hoặc tạo tài liệu đơn giản từ tiêu đề và văn bản đã nhập. Mọi nội dung được tạo cục bộ trên thiết bị.
+
+XÓA SIÊU DỮ LIỆU PDF ẨN
+
+PDF có thể chứa thông tin không hiển thị trên trang, gồm tiêu đề, tác giả, chủ đề, từ khóa, phần mềm tạo, ngày tháng và siêu dữ liệu XMP. Công cụ làm sạch sẽ xóa các trường này khỏi một bản sao mới trước khi bạn chia sẻ.
+
+THƯ VIỆN TRÊN THIẾT BỊ VÀ QUYỀN RIÊNG TƯ
+
+Giữ các PDF đã mở trong thư viện trên thiết bị, đánh dấu yêu thích và tìm theo tên tệp. Trong Cài đặt, bạn có thể xóa bản sao cục bộ, lịch sử đọc và bộ đếm sử dụng công cụ.
+
+Việc đọc, ghép, tách, nén, sắp xếp trang và làm sạch siêu dữ liệu diễn ra trên điện thoại. Nội dung PDF không được tải lên máy chủ của nhà phát triển. Vì vậy, trình đọc và các công cụ chính vẫn hữu ích trên máy bay, tàu điện hoặc nơi không có sóng. Giao diện hỗ trợ 24 ngôn ngữ.
+
+GIỚI HẠN RÕ RÀNG
+
+Ứng dụng không có OCR, chỉnh sửa văn bản bên trong PDF hiện có, chữ ký điện tử hoặc chuyển PDF sang Word. Máy ảnh hiện tạo một ảnh cho mỗi tài liệu, không phải bản quét nhiều trang.
+
+Ứng dụng được hỗ trợ bằng quảng cáo và không có gói thuê bao. Video nhận thưởng tùy chọn cho bạn 10 phút không quảng cáo. Không công cụ PDF nào bị khóa sau khoản thanh toán hoặc video bắt buộc.

@@ -18,7 +18,7 @@ type Props = {
  * Uygulamanin marka rozeti: launcher ikonuyla birebir ayni gorsel dil.
  * Kirmizi belge + beyaz "PDF" -> kullanici anasayfada da ayni sinyali gorur.
  */
-export function PdfBrandMark({ size = 44, withWordmark = false, wordmark = 'PDF Reader', tagline }: Props) {
+export function PdfBrandMark({ size = 44, withWordmark = false, wordmark = 'Offline PDF Viewer & Tools', tagline }: Props) {
   const mark = (
     <Svg width={size} height={size} viewBox="0 0 1024 1024">
       <Defs>

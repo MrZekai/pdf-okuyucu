@@ -6,8 +6,9 @@ Bu taslak, projedeki `react-native-google-mobile-ads` / Google Mobile Ads SDK ve
 
 - Uygulama kullanıcı verisi topluyor veya paylaşıyor mu? **Evet**
 - Tüm kullanıcı verileri aktarım sırasında şifreleniyor mu? **Evet**
-- Kullanıcılar verilerinin silinmesini talep edebilir mi? **Hayır / uygulanamaz** — uygulama hesabı veya geliştirici sunucusunda tutulan kullanıcı profili yoktur. Yerel veriler uygulama içinden silinebilir.
-- Uygulama hesap oluşturmayı destekliyor mu? **Hayır**
+- Uygulama hesap oluşturmayı destekliyor mu? **Hayır**. Bu nedenle Google Play’in uygulama hesabı silme zorunluluğu bu ürün için uygulanmaz.
+- Yerel uygulama verileri silinebilir mi? **Evet** — Ayarlar → Kütüphaneyi temizle ile yerel PDF kopyaları, okuma geçmişi ve araç sayaçları silinir; uygulamanın kaldırılması da uygulama verilerini cihazdan kaldırır.
+- Reklam kimliği kullanıcı tarafından Android ayarlarından sıfırlanabilir veya silinebilir. Play Console’daki “Data deletion” sorularını gönderim günündeki tam metne göre yanıtlayın; uygulama geliştirici sunucusunda kullanıcı hesabı veya PDF içeriği tutmaz.
 
 ## Bildirilecek veri türleri
 
@@ -15,7 +16,7 @@ Bu taslak, projedeki `react-native-google-mobile-ads` / Google Mobile Ads SDK ve
 |---|---:|---:|---|---|
 | Yaklaşık konum | Evet | Evet | Reklam/pazarlama, analiz, sahtekârlığı önleme ve güvenlik | SDK reklam sunarken zorunlu; IP’den tahmin edilir |
 | Uygulama etkileşimleri | Evet | Evet | Reklam/pazarlama, analiz, sahtekârlığı önleme ve güvenlik | Zorunlu |
-| Kilitlenme günlükleri / tanılama | Evet | Evet | Analiz, sahtekârlığı önleme ve güvenlik | Zorunlu |
+| Tanılama / uygulama performans bilgileri | Evet | Evet | Analiz, sahtekârlığı önleme ve güvenlik | Zorunlu |
 | Cihaz veya diğer kimlikler | Evet | Evet | Reklam/pazarlama, analiz, sahtekârlığı önleme ve güvenlik | Reklam kimliği kullanıcı tarafından sıfırlanabilir/silinebilir |
 
 ## Uygulamanın kendi yerel verileri
@@ -30,3 +31,10 @@ PDF dosyaları, araçlarla üretilen PDF'ler, belge adları, favoriler, son sayf
 - Google UMP için AdMob → Privacy & messaging bölümünde Avrupa düzenlemeleri mesajını yayımlayın.
 
 Kaynak: Google Mobile Ads SDK’nin güncel veri açıklamasında IP adresi, ürün etkileşimleri, tanılama bilgileri ve cihaz/hesap tanımlayıcılarının otomatik toplandığı ve paylaşıldığı belirtilmektedir.
+
+
+## Resmî kontrol bağlantıları
+
+- Google Mobile Ads SDK Data Safety açıklaması: https://developers.google.com/admob/android/privacy/play-data-disclosure
+- Google UMP Android kurulumu: https://developers.google.com/admob/android/privacy
+- Google Play hesap/veri silme açıklaması: https://support.google.com/googleplay/android-developer/answer/13327111

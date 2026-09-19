@@ -1,5 +1,5 @@
 export default {
-  'app.name':'Đọc PDF Ngoại Tuyến',
+  'app.name':'Đọc PDF ngoại tuyến & công cụ',
   'tabs.home':'Trang chính',
   'tabs.library':'Thư viện',
   'tabs.tools':'Công cụ',
@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Trạng thái đồng ý quảng cáo của Google đã được kiểm tra lại.',
   'settings.consentErrorTitle':'Tùy chọn riêng tư',
   'settings.consentErrorMessage':'Hiện chưa mở được tùy chọn riêng tư về quảng cáo. Vui lòng thử lại sau.',
-  'settings.about':'Đọc PDF • Expo SDK 57 • Xử lý PDF ngay trên máy',
+  'settings.about':'Đọc PDF ngoại tuyến & công cụ • Expo SDK 57 • Xử lý PDF ngay trên máy',
   'reader.notFound':'Không tìm thấy tài liệu',
   'reader.goBack':'Quay lại',
   'reader.pageOf':'trang {page} trên {total}',

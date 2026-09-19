@@ -1,28 +1,15 @@
 # Mağaza metni inceleme durumu
 
-Bu klasördeki 14 mağaza listeleme dosyası teknik sınır kontrollerinden geçer:
+Bu klasördeki **26 Google Play locale** dosyası, 19 Eylül 2026 tarihinde kesinleştirilen `Offline PDF Viewer & Tools` ASO setinden üretilmiştir.
+
+Teknik sınırlar:
 
 - başlık: en fazla 30 karakter
 - kısa açıklama: en fazla 80 karakter
 - uzun açıklama: en fazla 4000 karakter
 
-`tr-TR`, `en-US` ve `es-ES` metinleri mevcut ürün metinlerinden güncellendi. Yeni eklenen
-`pt-BR`, `de-DE`, `fr-FR`, `it-IT`, `ru-RU`, `hi-IN`, `id-ID`, `ar-SA`, `ja-JP`,
-`ko-KR` ve `zh-CN` metinleri yayın taslağıdır. Play Console'a kopyalanmadan önce o dili
-ana dili olarak konuşan bir kişi tarafından anlam, ton ve yerel arama terimleri bakımından
-incelenmelidir.
+Kanonik kaynak: `play-store/FINAL_26_LOCALES_ASO.txt`
 
-Bu dosyanın varlığı çevirilerin insan incelemesinden geçtiği anlamına gelmez. İnceleme
-tamamlandıkça aşağıdaki kutular işaretlenmelidir:
+Locale seti: en-US, de-DE, ar, bn-BD, id, nl-NL, fil, fr-FR, hi-IN, ja-JP, ko-KR, pl-PL, ms, pt-BR, pt-PT, ro, ru-RU, th, tr-TR, uk, ur, vi, zh-CN, es-419, es-ES, it-IT
 
-- [ ] pt-BR
-- [ ] de-DE
-- [ ] fr-FR
-- [ ] it-IT
-- [ ] ru-RU
-- [ ] hi-IN
-- [ ] id-ID
-- [ ] ar-SA
-- [ ] ja-JP
-- [ ] ko-KR
-- [ ] zh-CN
+Uygulama arayüzü 24 dil destekler. Play Store'da `es-419` / `es-ES` ve `pt-BR` / `pt-PT` ayrı mağaza yerelleştirmeleri olduğu için mağaza locale sayısı 26'dır.

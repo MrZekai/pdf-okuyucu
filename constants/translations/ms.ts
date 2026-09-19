@@ -143,7 +143,7 @@ export default {
   'settings.consentUpdatedMessage':'Keadaan keizinan iklan Google telah disemak semula.',
   'settings.consentErrorTitle':'Pilihan privasi',
   'settings.consentErrorMessage':'Pilihan privasi iklan tidak dapat dibuka buat masa ini. Sila cuba lagi nanti.',
-  'settings.about':'Pembaca PDF • Expo SDK 57 • Pengendalian PDF dalam peranti',
+  'settings.about':'Pembaca PDF Luar Talian • Expo SDK 57 • Pengendalian PDF dalam peranti',
   'reader.notFound':'Dokumen tidak dijumpai',
   'reader.goBack':'Kembali',
   'reader.pageOf':'halaman {page} daripada {total}',
