@@ -3,6 +3,11 @@ name: Expo Android Build
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - '*.txt'
+      - 'play-store/**'
   workflow_dispatch:
     inputs:
       build_release:
