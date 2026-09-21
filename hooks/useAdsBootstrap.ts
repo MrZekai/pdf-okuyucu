@@ -12,9 +12,8 @@ const CONSENT_REGIONS = new Set([
   'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
   'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH'
 ]);
-// İlk deneme uygulama açılır açılmaz yapılır; Android Activity henüz hazır
-// değilse UMP "null-activity" ile reddeder. Kısa gecikmeli iki deneme daha.
-const RETRY_DELAYS_MS = [0, 2_000, 6_000];
+// UMP artık arka planda çalışır; bu gecikmeler reklamın görünmesini BEKLETMEZ.
+const RETRY_DELAYS_MS = [0, 1_000, 3_000];
 const FOREGROUND_RETRY_GAP_MS = 60_000;
 
 function errorText(error: unknown) {
@@ -36,85 +35,115 @@ function deviceInConsentRegion() {
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-type Decision = { allowed: boolean; npaOnly: boolean };
+type ConsentInfo = Awaited<ReturnType<typeof AdsConsent.getConsentInfo>>;
 
-/**
- * Google'ın UMP akışı: onay bilgisini güncelle, gerekiyorsa formu göster,
- * sonra canRequestAds'e bak. UMP hiç cevap veremezse (ağ, Activity, geçici
- * hata) bölge onay gerektirmiyorsa yalnızca kişiselleştirilmemiş reklamla
- * devam edilir; onay gereken bölgede reklam istenmez.
- */
-async function decide(): Promise<Decision> {
+async function gatherWithRetry(): Promise<{ info: ConsentInfo | null; error: unknown }> {
   let lastError: unknown = null;
   for (const delay of RETRY_DELAYS_MS) {
     if (delay) await wait(delay);
     try {
-      const info = await AdsConsent.gatherConsent();
-      noteConsentEvent(`UMP OK status=${info.status} canRequestAds=${info.canRequestAds}`);
-      return { allowed: info.canRequestAds, npaOnly: false };
+      return { info: await AdsConsent.gatherConsent(), error: null };
     } catch (error) {
       lastError = error;
     }
   }
-
-  let cached: Awaited<ReturnType<typeof AdsConsent.getConsentInfo>> | null = null;
-  try {
-    cached = await AdsConsent.getConsentInfo();
-  } catch {
-    cached = null;
-  }
-  if (cached?.canRequestAds) {
-    noteConsentEvent(`UMP HATA (${errorText(lastError)}) -> onbellekteki onay kullanildi`);
-    return { allowed: true, npaOnly: false };
-  }
-  if (cached && cached.status === AdsConsentStatus.REQUIRED) {
-    noteConsentEvent(`UMP HATA (${errorText(lastError)}) -> onay gerekli, reklam yok`);
-    return { allowed: false, npaOnly: false };
-  }
-  const inRegion = deviceInConsentRegion();
-  noteConsentEvent(`UMP HATA (${errorText(lastError)}) -> ${inRegion ? 'onay bolgesi, reklam yok' : 'onay bolgesi degil, kisisellestirilmemis reklam'}`);
-  return { allowed: !inRegion, npaOnly: true };
+  return { info: null, error: lastError };
 }
 
+/**
+ * Hızlı başlangıç (Google UMP örneğindeki paralel başlatma):
+ *  1. Önbellekteki onay reklama izin veriyorsa reklamlar HEMEN açılır.
+ *  2. İlk açılışta önbellek boşsa ve cihaz onay bölgesinde değilse
+ *     kişiselleştirilmemiş reklamla HEMEN açılır.
+ *  3. UMP onay güncellemesi her açılışta arka planda yine yapılır; sonucu
+ *     kararı düzeltir (kişiselleştirilmiş reklama geçer ya da reklamı kapatır).
+ * Önceki sürümde reklamlar UMP'nin ağ turunu ve yeniden denemeleri bekliyordu;
+ * banner ve "Reklamsız süre" şeridi bu yüzden 5-10 sn geç geliyordu.
+ */
 export function useAdsBootstrap() {
   const initialization = useRef<Promise<void> | null>(null);
   const startInFlight = useRef<Promise<boolean> | null>(null);
   const mounted = useRef(false);
   const [status, setStatus] = useState<AdsStatus>('loading');
 
+  const enable = useCallback(async (npaOnly: boolean) => {
+    if (!initialization.current) {
+      // İçerik derecesi ilk istekten ÖNCE uygulanmalı (yerel, anlık bir çağrı).
+      await mobileAds()
+        .setRequestConfiguration({ maxAdContentRating: MaxAdContentRating.PG })
+        .catch(() => undefined);
+      // initialize() beklenmez: SDK, başlatma sürerken gelen istekleri sıraya
+      // alır. Beklemek banner'ı saniyelerce geciktirir.
+      initialization.current = mobileAds().initialize().then(() => undefined);
+      initialization.current.catch((error) => {
+        initialization.current = null;
+        noteConsentEvent(`SDK initialize HATA: ${errorText(error)}`);
+      });
+    }
+    setAdsAllowed(true, npaOnly);
+    if (mounted.current) setStatus('ready');
+  }, []);
+
+  const disable = useCallback(() => {
+    setAdsAllowed(false, false);
+    if (mounted.current) setStatus('unavailable');
+  }, []);
+
   const start = useCallback(() => {
     if (startInFlight.current) return startInFlight.current;
     const task = (async () => {
+      let fastStarted = false;
       try {
-        const decision = await decide();
-        if (!decision.allowed) {
-          setAdsAllowed(false, false);
-          if (mounted.current) setStatus('unavailable');
+        let cached: ConsentInfo | null = null;
+        try {
+          cached = await AdsConsent.getConsentInfo();
+        } catch {
+          cached = null;
+        }
+        if (cached?.canRequestAds) {
+          await enable(false);
+          fastStarted = true;
+          noteConsentEvent('hizli baslangic: onbellekteki onay');
+        } else if (cached?.status !== AdsConsentStatus.REQUIRED && !deviceInConsentRegion()) {
+          await enable(true);
+          fastStarted = true;
+          noteConsentEvent('hizli baslangic: onay bolgesi degil (NPA)');
+        }
+
+        const { info, error } = await gatherWithRetry();
+        if (info) {
+          noteConsentEvent(`UMP OK status=${info.status} canRequestAds=${info.canRequestAds}${fastStarted ? ' (hizli baslangic sonrasi)' : ''}`);
+          if (info.canRequestAds) {
+            await enable(false);
+            return true;
+          }
+          disable();
           return false;
         }
-        // Genel kitle aracı: içerik derecesi initialize'dan ÖNCE uygulanmalı.
-        initialization.current ??= mobileAds()
-          .setRequestConfiguration({ maxAdContentRating: MaxAdContentRating.PG })
-          .catch(() => undefined)
-          .then(() => mobileAds().initialize())
-          .then(() => undefined);
-        await initialization.current;
-        setAdsAllowed(true, decision.npaOnly);
-        if (mounted.current) setStatus('ready');
+
+        if (fastStarted) {
+          noteConsentEvent(`UMP HATA (${errorText(error)}) -> hizli baslangic karari korundu`);
+          return true;
+        }
+        const inRegion = deviceInConsentRegion();
+        noteConsentEvent(`UMP HATA (${errorText(error)}) -> ${inRegion ? 'onay bolgesi, reklam yok' : 'onay bolgesi degil, NPA'}`);
+        if (inRegion) {
+          disable();
+          return false;
+        }
+        await enable(true);
         return true;
       } catch (error) {
-        initialization.current = null;
-        setAdsAllowed(false, false);
-        noteConsentEvent(`SDK initialize HATA: ${errorText(error)}`);
-        if (mounted.current) setStatus('unavailable');
-        return false;
+        noteConsentEvent(`reklam baslatma HATA: ${errorText(error)}`);
+        if (!fastStarted) disable();
+        return fastStarted;
       } finally {
         startInFlight.current = null;
       }
     })();
     startInFlight.current = task;
     return task;
-  }, []);
+  }, [enable, disable]);
 
   const refresh = useCallback(() => start(), [start]);
 
