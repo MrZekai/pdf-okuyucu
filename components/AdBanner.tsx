@@ -5,6 +5,8 @@ import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-goo
 import { useAdsStatus } from '@/context/AdsContext';
 import { useAdPause } from '@/hooks/useAdPause';
 import { chrome, layout, palette } from '@/constants/theme';
+import { adRequestOptions } from '@/lib/adConsent';
+import { noteBannerEvent } from '@/lib/adDiagnostics';
 
 type AdBannerProps = { separateFromNavigation?: boolean };
 const MAX_ATTEMPTS = 3;
@@ -46,7 +48,8 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
     if (retryTimer.current) clearTimeout(retryTimer.current);
   }, []);
 
-  function handleFailure() {
+  function handleFailure(error?: { code?: string; message?: string }) {
+    noteBannerEvent(`HATA ${error?.code ?? '?'} ${error?.message ?? ''}`.trim());
     attempts.current += 1;
     const exhausted = attempts.current >= MAX_ATTEMPTS;
     if (exhausted) {
@@ -86,7 +89,8 @@ export function AdBanner({ separateFromNavigation = false }: AdBannerProps) {
         ref={ref}
         unitId={unitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        onAdLoaded={() => { attempts.current = 0; }}
+        requestOptions={adRequestOptions()}
+        onAdLoaded={() => { attempts.current = 0; noteBannerEvent('YUKLENDI'); }}
         onAdFailedToLoad={handleFailure}
       />
       </View>

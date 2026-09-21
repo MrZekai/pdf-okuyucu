@@ -7,6 +7,7 @@ import { useAdsReady } from '@/context/AdsContext';
 import { useTranslation } from '@/hooks/useTranslation';
 import { adsArePaused, getLastFullScreenAt, MIN_FULL_SCREEN_GAP_MS, noteFullScreenShown } from '@/lib/adGate';
 import { normalizeIncomingPdfUri } from '@/lib/incomingPdfUri';
+import { adRequestOptions } from '@/lib/adConsent';
 import { palette } from '@/constants/theme';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
@@ -69,7 +70,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     const unitId = getUnitId();
     if (!adsReady || !unitId || !coldEligibleRef.current || !gateVisibleRef.current || loadingRef.current || adRef.current) return;
     loadingRef.current = true;
-    const ad = AppOpenAd.createForAdRequest(unitId);
+    const ad = AppOpenAd.createForAdRequest(unitId, adRequestOptions());
     adRef.current = ad;
     unsubscribeRef.current = ad.addAdEventsListener(({ type }) => {
       if (type === AdEventType.LOADED) {

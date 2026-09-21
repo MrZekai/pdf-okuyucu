@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import { AdEventType, InterstitialAd, RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
+import { adRequestOptions, adsAllowed } from '@/lib/adConsent';
 
 /**
  * Every full screen ad in the app goes through this module.
@@ -197,7 +198,8 @@ type FullScreenAd = {
 function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: number): Promise<FullScreenResult> {
   return new Promise<FullScreenResult>((resolve) => {
     const unitId = resolveUnitId(kind);
-    if (!unitId) {
+    // Onay kapısı: izin yoksa hiçbir tam ekran reklam istenmez.
+    if (!unitId || !adsAllowed()) {
       resolve('unavailable');
       return;
     }
@@ -235,7 +237,7 @@ function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: n
     };
 
     try {
-      const created = kind === 'interstitial' ? InterstitialAd.createForAdRequest(unitId) : RewardedAd.createForAdRequest(unitId);
+      const created = kind === 'interstitial' ? InterstitialAd.createForAdRequest(unitId, adRequestOptions()) : RewardedAd.createForAdRequest(unitId, adRequestOptions());
       ad = created as unknown as FullScreenAd;
       unsubscribe = ad.addAdEventsListener(({ type }) => {
         if (type === AdEventType.LOADED || type === RewardedAdEventType.LOADED) {
@@ -292,7 +294,7 @@ function discardPreparedInterstitial() {
 export function primeInterstitial() {
   if (preparedInterstitial || preparingInterstitial) return;
   const unitId = resolveUnitId('interstitial');
-  if (!unitId) return;
+  if (!unitId || !adsAllowed()) return;
   preparingInterstitial = true;
   let ad: FullScreenAd | null = null;
   let unsubscribe: (() => void) | null = null;
@@ -305,7 +307,7 @@ export function primeInterstitial() {
     unsubscribe = null;
   };
   try {
-    ad = InterstitialAd.createForAdRequest(unitId) as unknown as FullScreenAd;
+    ad = InterstitialAd.createForAdRequest(unitId, adRequestOptions()) as unknown as FullScreenAd;
     unsubscribe = ad.addAdEventsListener(({ type }) => {
       if (type === AdEventType.LOADED) {
         preparingInterstitial = false;
@@ -427,6 +429,7 @@ export async function maybeShowToolInterstitial() {
     // Rule one: the ad free window the viewer earned is honoured. This is a
     // promise, not pacing, so it stays in code.
     if (await adsArePaused()) return false;
+    if (!adsAllowed()) return false;
 
     // Rule two, and the only pacing rule left: never stack two full screen ads.
     const now = Date.now();

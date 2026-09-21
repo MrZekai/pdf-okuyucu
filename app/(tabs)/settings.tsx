@@ -9,6 +9,7 @@ import { AppIcon } from '@/components/AppIcon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAdPause } from '@/hooks/useAdPause';
 import { getAdDiagnostics, watchRewardedForAdPause } from '@/lib/adGate';
+import { getBannerDiagnostic, getConsentDiagnostic } from '@/lib/adDiagnostics';
 import { palette } from '@/constants/theme';
 
 export default function SettingsScreen(){
@@ -34,10 +35,10 @@ export default function SettingsScreen(){
   diagnosticTaps.current+=1;
   if(diagnosticTaps.current<7)return;
   diagnosticTaps.current=0;
-  try{Alert.alert('Ad diagnostics',await getAdDiagnostics());}catch{/* never blocks settings */}
+  try{const unit=String(Constants.expoConfig?.extra?.admob?.bannerAndroid??'-');Alert.alert('Ad diagnostics',`SDK: ${adsStatus}\nOnay: ${getConsentDiagnostic()}\nBanner: ${getBannerDiagnostic()}\nBanner birimi: ${unit.includes('3940256099942544')?'GOOGLE TEST':'GERCEK'} ...${unit.slice(-6)}\n\n${await getAdDiagnostics()}`);}catch{/* never blocks settings */}
  }
  function wipe(){const message=documents.length===1?t('settings.wipeAlertMessageOne'):t('settings.wipeAlertMessage',{count:documents.length});Alert.alert(t('settings.wipeAlertTitle'),message,[{text:t('common.cancel'),style:'cancel'},{text:t('common.clear'),style:'destructive',onPress:clearHistory}]);}
- async function privacy(){try{const info=await AdsConsent.getConsentInfo();if(info.privacyOptionsRequirementStatus===AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)await AdsConsent.showPrivacyOptionsForm();else await AdsConsent.gatherConsent();await refreshAds();Alert.alert(t('settings.consentUpdatedTitle'),t('settings.consentUpdatedMessage'));}catch{Alert.alert(t('settings.consentErrorTitle'),t('settings.consentErrorMessage'));}}
+ async function privacy(){try{const info=await AdsConsent.getConsentInfo();if(info.privacyOptionsRequirementStatus===AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)await AdsConsent.showPrivacyOptionsForm();await refreshAds();Alert.alert(t('settings.consentUpdatedTitle'),t('settings.consentUpdatedMessage'));}catch{Alert.alert(t('settings.consentErrorTitle'),t('settings.consentErrorMessage'));}}
  async function openPrivacyPolicy(){const url=Constants.expoConfig?.extra?.privacyPolicyUrl as string|undefined;if(!url){Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));return;}try{await Linking.openURL(url);}catch{Alert.alert(t('settings.policyErrorTitle'),t('settings.policyErrorMessage'));}}
  return <SafeAreaView style={styles.safe} edges={['top']}><ScrollView contentContainerStyle={styles.content}><View><Text style={styles.kicker}>{t('settings.kicker')}</Text><Text style={styles.title}>{t('settings.title')}</Text><Text style={styles.sub}>{t('settings.subtitle')}</Text></View>
   <Section title={t('settings.readingSection')}><SettingRow icon="rotate" title={t('settings.horizontalTitle')} desc={t('settings.horizontalDesc')} value={settings.horizontal} onValueChange={v=>patchSettings({horizontal:v})}/><SettingRow icon="snap" title={t('settings.snapTitle')} desc={t('settings.snapDesc')} value={settings.pagingEnabled} onValueChange={v=>patchSettings({pagingEnabled:v})}/><SettingRow icon="moon" title={t('settings.nightTitle')} desc={t('settings.nightDesc')} value={settings.invertPdfPages} onValueChange={v=>patchSettings({invertPdfPages:v})}/></Section>
