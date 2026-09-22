@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Gib einen gültigen Seitenbereich ein.',
   'tools.removeAll':'Es können nicht alle Seiten eines PDFs entfernt werden.',
   'tools.invalidOrder':'Die neue Reihenfolge muss jede PDF-Seite genau einmal enthalten.',
-  'tools.tooLarge':'Die Gesamtgröße für PDF-Werkzeuge darf 80 MB nicht überschreiten.',
+  'tools.tooLarge':'Die Gesamtgröße für PDF-Werkzeuge darf 40 MB nicht überschreiten.',
   'tools.splitPrompt':'Seite eingeben, auf der das erste PDF enden soll.',
   'tools.splitPlaceholder':'Beispiel: 5',
   'tools.watermarkPrompt':'Text des Wasserzeichens eingeben.',

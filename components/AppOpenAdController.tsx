@@ -11,11 +11,16 @@ import { adRequestOptions } from '@/lib/adConsent';
 import { palette } from '@/constants/theme';
 
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
-/** The very first launch of a new install stays clean. Nothing else gates it. */
+const FIRST_SEEN_KEY = '@pdf-reader/app-open-first-seen-v1';
+const LAST_APP_OPEN_KEY = '@pdf-reader/app-open-last-shown-v1';
+/** The very first launch of a new install stays clean. */
 const FIRST_AD_LAUNCH = 2;
-// Long enough for a warm ad request, short enough that a launch without a
-// filled ad does not feel like the app hung on the splash screen.
-const COLD_START_WAIT_MS = 1400;
+/** Yeni kullanıcı ilk 2 gün app-open reklamı görmez; önce uygulamayı tanısın. */
+const FIRST_AD_AFTER_MS = 2 * 24 * 60 * 60 * 1000;
+/** İki app-open reklamı arasında en az 4 saat. */
+const APP_OPEN_MIN_GAP_MS = 4 * 60 * 60 * 1000;
+// Reklam gelmeyen açılışlar uygulama donmuş gibi hissettirmesin.
+const COLD_START_WAIT_MS = 800;
 const AD_VALIDITY_MS = 4 * 60 * 60 * 1000;
 
 function getUnitId() {
@@ -82,6 +87,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
         showingRef.current = true;
         // Shared with the tool interstitial so the two can never stack.
         noteFullScreenShown(Date.now()).catch(() => undefined);
+        AsyncStorage.setItem(LAST_APP_OPEN_KEY, String(Date.now())).catch(() => undefined);
       } else if (type === AdEventType.CLOSED || type === AdEventType.ERROR) {
         clearAd();
         finishColdGate();
@@ -141,6 +147,15 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       const launches = Math.max(0, Number.parseInt(launchRaw || '0', 10) || 0) + 1;
       AsyncStorage.setItem(LAUNCH_COUNT_KEY, String(launches)).catch(() => undefined);
       const lastShownAt = await getLastFullScreenAt();
+      const now = Date.now();
+      let firstSeen = Number.parseInt((await AsyncStorage.getItem(FIRST_SEEN_KEY).catch(() => null)) || '0', 10) || 0;
+      if (!firstSeen) {
+        // Bu anahtar yeni; mevcut kullanıcılar (açılış sayısı > 1) için
+        // yeniden 2 gün bekletme, yeni kurulumlar için bugünden başlat.
+        firstSeen = launches > 1 ? now - FIRST_AD_AFTER_MS : now;
+        AsyncStorage.setItem(FIRST_SEEN_KEY, String(firstSeen)).catch(() => undefined);
+      }
+      const lastAppOpenAt = Number.parseInt((await AsyncStorage.getItem(LAST_APP_OPEN_KEY).catch(() => null)) || '0', 10) || 0;
       if (!mounted) return;
 
       // The gate may already have timed out while storage was being read.
@@ -151,7 +166,12 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       // in the AdMob console, not in this build. The previous release compared
       // against AD_VALIDITY_MS, which is a creative freshness window, and so
       // silently suppressed the app open ad for four hours after any other ad.
-      if (launches >= FIRST_AD_LAUNCH && Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS) {
+      if (
+        launches >= FIRST_AD_LAUNCH
+        && now - firstSeen >= FIRST_AD_AFTER_MS
+        && now - lastAppOpenAt >= APP_OPEN_MIN_GAP_MS
+        && Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS
+      ) {
         coldEligibleRef.current = true;
         setColdEligible(true);
       } else {

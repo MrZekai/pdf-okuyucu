@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'একটি বৈধ পৃষ্ঠার পরিসর দিন।',
   'tools.removeAll':'একটি PDF-এর সব পৃষ্ঠা মুছে ফেলা যায় না।',
   'tools.invalidOrder':'নতুন ক্রমে PDF-এর প্রতিটি পৃষ্ঠা ঠিক একবার থাকতে হবে।',
-  'tools.tooLarge':'PDF টুলের জন্য মোট ফাইলের আকার ৮০ MB-এর বেশি হতে পারবে না।',
+  'tools.tooLarge':'PDF টুলের জন্য মোট ফাইলের আকার ৪০ MB-এর বেশি হতে পারবে না।',
   'tools.splitPrompt':'প্রথম PDF কোন পৃষ্ঠায় শেষ হবে তা দিন।',
   'tools.splitPlaceholder':'উদাহরণ: 5',
   'tools.watermarkPrompt':'পৃষ্ঠায় দেখানোর জন্য ওয়াটারমার্ক লেখা দিন।',

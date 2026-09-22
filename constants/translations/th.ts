@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'กรอกช่วงหน้าที่ถูกต้อง',
   'tools.removeAll':'ไม่สามารถลบทุกหน้าของ PDF ได้',
   'tools.invalidOrder':'ลำดับใหม่ต้องมีทุกหน้าของ PDF หน้าละหนึ่งครั้งพอดี',
-  'tools.tooLarge':'ขนาดไฟล์รวมสำหรับเครื่องมือ PDF ต้องไม่เกิน 80 MB',
+  'tools.tooLarge':'ขนาดไฟล์รวมสำหรับเครื่องมือ PDF ต้องไม่เกิน 40 MB',
   'tools.splitPrompt':'กรอกหน้าที่ต้องการให้ PDF แรกสิ้นสุด',
   'tools.splitPlaceholder':'ตัวอย่าง: 5',
   'tools.watermarkPrompt':'กรอกข้อความลายน้ำที่จะแสดงบนหน้าเอกสาร',

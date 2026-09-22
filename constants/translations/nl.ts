@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Voer een geldig paginabereik in.',
   'tools.removeAll':'Uit een PDF kunnen niet alle paginas worden verwijderd.',
   'tools.invalidOrder':'De nieuwe volgorde moet elke pagina precies één keer bevatten.',
-  'tools.tooLarge':'De totale bestandsgrootte voor PDF-gereedschap mag niet groter zijn dan 80 MB.',
+  'tools.tooLarge':'De totale bestandsgrootte voor PDF-gereedschap mag niet groter zijn dan 40 MB.',
   'tools.splitPrompt':'Voer de pagina in waar de eerste PDF moet eindigen.',
   'tools.splitPlaceholder':'Voorbeeld: 5',
   'tools.watermarkPrompt':'Voer de watermerktekst in die op de paginas moet komen.',

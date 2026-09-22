@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'أدخل نطاق صفحات صالحًا.',
   'tools.removeAll':'لا يمكن حذف كل صفحات ملف PDF.',
   'tools.invalidOrder':'يجب أن يتضمن الترتيب الجديد كل صفحة في PDF مرة واحدة فقط.',
-  'tools.tooLarge':'يجب ألا يتجاوز الحجم الإجمالي لأدوات PDF مقدار 80 ميغابايت.',
+  'tools.tooLarge':'يجب ألا يتجاوز الحجم الإجمالي لأدوات PDF مقدار 40 ميغابايت.',
   'tools.splitPrompt':'أدخل الصفحة التي يجب أن ينتهي عندها ملف PDF الأول.',
   'tools.splitPlaceholder':'مثال: 5',
   'tools.watermarkPrompt':'أدخل نص العلامة المائية.',

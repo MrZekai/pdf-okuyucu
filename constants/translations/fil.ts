@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Maglagay ng wastong saklaw ng pahina.',
   'tools.removeAll':'Hindi maaaring alisin ang lahat ng pahina ng isang PDF.',
   'tools.invalidOrder':'Ang bagong pagkakasunod ay dapat maglaman ng bawat pahina nang eksaktong isang beses.',
-  'tools.tooLarge':'Ang kabuuang laki ng file para sa mga tool sa PDF ay hindi dapat lumagpas sa 80 MB.',
+  'tools.tooLarge':'Ang kabuuang laki ng file para sa mga tool sa PDF ay hindi dapat lumagpas sa 40 MB.',
   'tools.splitPrompt':'Ilagay ang pahina kung saan matatapos ang unang PDF.',
   'tools.splitPlaceholder':'Halimbawa: 5',
   'tools.watermarkPrompt':'Ilagay ang tekstong watermark na lalabas sa mga pahina.',

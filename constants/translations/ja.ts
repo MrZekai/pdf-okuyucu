@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'有効なページ範囲を入力してください。',
   'tools.removeAll':'PDFの全ページを削除することはできません。',
   'tools.invalidOrder':'新しい順序にはPDFの各ページを1回ずつ含めてください。',
-  'tools.tooLarge':'PDFツールで扱うファイルの合計は80 MB以下にしてください。',
+  'tools.tooLarge':'PDFツールで扱うファイルの合計は40 MB以下にしてください。',
   'tools.splitPrompt':'最初のPDFを終了するページを入力してください。',
   'tools.splitPlaceholder':'例：5',
   'tools.watermarkPrompt':'透かしに表示する文字を入力してください。',

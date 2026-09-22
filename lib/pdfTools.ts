@@ -28,7 +28,9 @@ export const CAMERA_PERMISSION_BLOCKED = 'camera_permission_blocked';
 export const COMPRESSION_NO_GAIN = 'compression_no_gain';
 export type ToolError = Error & { code?: string; source?: { name: string; uri: string; size: number } };
 
-const MAX_TOOL_INPUT_BYTES = 80 * 1024 * 1024;
+// pdf-lib dosyanın tamamını JS belleğinde işler; 2-3 GB RAM'li cihazlarda
+// 80 MB donma/çökme riski taşıyordu.
+const MAX_TOOL_INPUT_BYTES = 40 * 1024 * 1024;
 // Merge is the only tool that holds every source document in memory at once and
 // then serialises the combined result, so its peak is roughly two to three
 // times the input. The single file tools stay on the wider budget above.
@@ -139,6 +141,10 @@ async function loadPdf(file: PickedPdf, keepSource = false) {
   const source = new File(file.uri);
   try {
     return await PDFDocument.load(await source.bytes(), { updateMetadata: false });
+  } catch (error) {
+    // Şifreli PDF'de genel hata yerine ne olduğunu söyle.
+    if (error instanceof Error && error.name === 'EncryptedPDFError') throw new Error(t('reader.passwordTitle'));
+    throw error;
   } finally {
     if (!keepSource) cleanupCacheFile(source.uri);
   }

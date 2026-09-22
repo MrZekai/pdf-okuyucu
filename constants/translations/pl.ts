@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Podaj prawidłowy zakres stron.',
   'tools.removeAll':'Nie można usunąć wszystkich stron dokumentu PDF.',
   'tools.invalidOrder':'Nowa kolejność musi zawierać każdą stronę dokładnie raz.',
-  'tools.tooLarge':'Łączny rozmiar plików dla narzędzi PDF nie może przekroczyć 80 MB.',
+  'tools.tooLarge':'Łączny rozmiar plików dla narzędzi PDF nie może przekroczyć 40 MB.',
   'tools.splitPrompt':'Podaj stronę, na której ma się kończyć pierwszy PDF.',
   'tools.splitPlaceholder':'Przykład: 5',
   'tools.watermarkPrompt':'Podaj tekst znaku wodnego, który ma się pojawić na stronach.',

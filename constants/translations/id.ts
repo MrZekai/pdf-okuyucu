@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Masukkan rentang halaman yang valid.',
   'tools.removeAll':'Semua halaman PDF tidak dapat dihapus.',
   'tools.invalidOrder':'Urutan baru harus memuat setiap halaman PDF tepat satu kali.',
-  'tools.tooLarge':'Ukuran total file untuk alat PDF tidak boleh melebihi 80 MB.',
+  'tools.tooLarge':'Ukuran total file untuk alat PDF tidak boleh melebihi 40 MB.',
   'tools.splitPrompt':'Masukkan halaman tempat PDF pertama berakhir.',
   'tools.splitPlaceholder':'Contoh: 5',
   'tools.watermarkPrompt':'Masukkan teks tanda air.',

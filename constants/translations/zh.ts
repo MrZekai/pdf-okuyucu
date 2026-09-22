@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'请输入有效的页面范围。',
   'tools.removeAll':'不能删除 PDF 的所有页面。',
   'tools.invalidOrder':'新顺序必须且只能包含 PDF 的每一页一次。',
-  'tools.tooLarge':'PDF 工具处理的文件总大小不能超过 80 MB。',
+  'tools.tooLarge':'PDF 工具处理的文件总大小不能超过 40 MB。',
   'tools.splitPrompt':'输入第一个 PDF 应结束的页码。',
   'tools.splitPlaceholder':'例如：5',
   'tools.watermarkPrompt':'输入要显示的水印文字。',

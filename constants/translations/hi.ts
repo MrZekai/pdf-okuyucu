@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'मान्य पृष्ठ सीमा दर्ज करें।',
   'tools.removeAll':'PDF के सभी पृष्ठ हटाए नहीं जा सकते।',
   'tools.invalidOrder':'नए क्रम में PDF का हर पृष्ठ ठीक एक बार होना चाहिए।',
-  'tools.tooLarge':'PDF टूल्स के लिए कुल फ़ाइल आकार 80 MB से अधिक नहीं हो सकता।',
+  'tools.tooLarge':'PDF टूल्स के लिए कुल फ़ाइल आकार 40 MB से अधिक नहीं हो सकता।',
   'tools.splitPrompt':'वह पृष्ठ लिखें जहाँ पहला PDF समाप्त हो।',
   'tools.splitPlaceholder':'उदाहरण: 5',
   'tools.watermarkPrompt':'वॉटरमार्क का टेक्स्ट लिखें।',

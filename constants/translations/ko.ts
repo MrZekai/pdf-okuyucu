@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'올바른 페이지 범위를 입력하세요.',
   'tools.removeAll':'PDF의 모든 페이지를 삭제할 수는 없습니다.',
   'tools.invalidOrder':'새 순서에는 PDF의 각 페이지가 정확히 한 번씩 포함되어야 합니다.',
-  'tools.tooLarge':'PDF 도구에서 처리할 전체 파일 크기는 80 MB 이하여야 합니다.',
+  'tools.tooLarge':'PDF 도구에서 처리할 전체 파일 크기는 40 MB 이하여야 합니다.',
   'tools.splitPrompt':'첫 번째 PDF가 끝날 페이지를 입력하세요.',
   'tools.splitPlaceholder':'예: 5',
   'tools.watermarkPrompt':'워터마크 텍스트를 입력하세요.',

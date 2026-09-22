@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Inserisci un intervallo di pagine valido.',
   'tools.removeAll':'Non è possibile rimuovere tutte le pagine di un PDF.',
   'tools.invalidOrder':'Il nuovo ordine deve includere ogni pagina del PDF una sola volta.',
-  'tools.tooLarge':'La dimensione totale per gli strumenti PDF non può superare 80 MB.',
+  'tools.tooLarge':'La dimensione totale per gli strumenti PDF non può superare 40 MB.',
   'tools.splitPrompt':'Inserisci la pagina in cui deve terminare il primo PDF.',
   'tools.splitPlaceholder':'Esempio: 5',
   'tools.watermarkPrompt':'Inserisci il testo della filigrana.',

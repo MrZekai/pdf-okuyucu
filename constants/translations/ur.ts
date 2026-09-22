@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'درست صفحات کی حد درج کریں۔',
   'tools.removeAll':'کسی PDF کے تمام صفحات نہیں ہٹائے جا سکتے۔',
   'tools.invalidOrder':'نئی ترتیب میں ہر صفحہ بالکل ایک بار ہونا چاہیے۔',
-  'tools.tooLarge':'PDF ٹولز کے لیے فائلوں کا مجموعی حجم ۸۰ MB سے زیادہ نہیں ہو سکتا۔',
+  'tools.tooLarge':'PDF ٹولز کے لیے فائلوں کا مجموعی حجم ۴۰ MB سے زیادہ نہیں ہو سکتا۔',
   'tools.splitPrompt':'وہ صفحہ درج کریں جہاں پہلی PDF ختم ہو۔',
   'tools.splitPlaceholder':'مثال: 5',
   'tools.watermarkPrompt':'صفحات پر دکھانے کے لیے واٹر مارک متن درج کریں۔',

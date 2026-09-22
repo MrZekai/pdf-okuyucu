@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Nhập khoảng trang hợp lệ.',
   'tools.removeAll':'Không thể xóa toàn bộ trang của một PDF.',
   'tools.invalidOrder':'Thứ tự mới phải chứa mỗi trang của PDF đúng một lần.',
-  'tools.tooLarge':'Tổng dung lượng tệp cho công cụ PDF không được vượt quá 80 MB.',
+  'tools.tooLarge':'Tổng dung lượng tệp cho công cụ PDF không được vượt quá 40 MB.',
   'tools.splitPrompt':'Nhập trang mà PDF thứ nhất kết thúc.',
   'tools.splitPlaceholder':'Ví dụ: 5',
   'tools.watermarkPrompt':'Nhập chữ mờ sẽ hiện trên các trang.',

@@ -412,6 +412,11 @@ function presentPreparedAd(ad: FullScreenAd): Promise<FullScreenResult> {
  */
 let interstitialPending = false;
 
+// Okuyucudan her dönüşte değil, her 3 PDF'de bir geçiş reklamı. Yeni
+// kullanıcının "her dosyada reklam" hissiyle uygulamayı silmesini önler.
+const READER_EXITS_PER_INTERSTITIAL = 3;
+const READER_EXIT_COUNT_KEY = '@pdf-reader/ads/reader-exit-count-v1';
+
 export function markInterstitialPending() {
   interstitialPending = true;
 }
@@ -420,6 +425,15 @@ export function markInterstitialPending() {
 export async function maybeShowPendingInterstitial() {
   if (!interstitialPending) return false;
   interstitialPending = false;
+  let exits = 1;
+  try {
+    exits = (Number.parseInt((await AsyncStorage.getItem(READER_EXIT_COUNT_KEY)) || '0', 10) || 0) + 1;
+    await AsyncStorage.setItem(READER_EXIT_COUNT_KEY, String(exits));
+  } catch {
+    // Sayaç okunamazsa reklam göstermemeyi tercih et.
+    return false;
+  }
+  if (exits % READER_EXITS_PER_INTERSTITIAL !== 0) return false;
   return maybeShowToolInterstitial();
 }
 

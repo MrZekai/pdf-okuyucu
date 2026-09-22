@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Masukkan julat halaman yang sah.',
   'tools.removeAll':'Semua halaman dalam PDF tidak boleh dibuang.',
   'tools.invalidOrder':'Susunan baharu mesti mengandungi setiap halaman tepat sekali.',
-  'tools.tooLarge':'Jumlah saiz fail untuk alat PDF tidak boleh melebihi 80 MB.',
+  'tools.tooLarge':'Jumlah saiz fail untuk alat PDF tidak boleh melebihi 40 MB.',
   'tools.splitPrompt':'Masukkan halaman tempat PDF pertama berakhir.',
   'tools.splitPlaceholder':'Contoh: 5',
   'tools.watermarkPrompt':'Masukkan teks tera air untuk dipaparkan pada halaman.',

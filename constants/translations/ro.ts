@@ -92,7 +92,7 @@ export default {
   'tools.invalidRange':'Introdu un interval de pagini valid.',
   'tools.removeAll':'Nu se pot elimina toate paginile unui PDF.',
   'tools.invalidOrder':'Noua ordine trebuie să includă fiecare pagină exact o dată.',
-  'tools.tooLarge':'Dimensiunea totală a fișierelor pentru instrumentele PDF nu poate depăși 80 MB.',
+  'tools.tooLarge':'Dimensiunea totală a fișierelor pentru instrumentele PDF nu poate depăși 40 MB.',
   'tools.splitPrompt':'Introdu pagina la care trebuie să se termine primul PDF.',
   'tools.splitPlaceholder':'Exemplu: 5',
   'tools.watermarkPrompt':'Introdu textul filigran care va apărea pe pagini.',
