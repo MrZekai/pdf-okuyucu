@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import { AdEventType, InterstitialAd, RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { adRequestOptions, adsAllowed } from '@/lib/adConsent';
 
@@ -16,9 +16,20 @@ import { adRequestOptions, adsAllowed } from '@/lib/adConsent';
  * never break a document operation, so every path degrades to "no ad".
  */
 
-// Written by the previous release. Read once so an existing install does not
-// suddenly become eligible for an app open ad right after the update.
-const LEGACY_APP_OPEN_LAST_SHOWN_KEY = '@pdf-reader/app-open-last-shown-v1';
+/**
+ * Yalnızca GERÇEK bir app-open reklamı açıldığında yazılır ve bunu
+ * AppOpenAdController yapar (OPENED olayında). Burada sadece OKUNUR, çünkü
+ * ortak "iki tam ekran reklam üst üste gelmesin" kuralı app-open reklamını da
+ * kapsamak zorunda.
+ *
+ * Bu modül bir zamanlar bu anahtarı geçiş ve ödüllü reklamdan sonra da
+ * yazıyordu. AppOpenAdController aynı anahtarı app-open reklamının DÖRT SAATLİK
+ * aralığı için okuduğu için, tek bir geçiş reklamı app-open reklamını dört saat
+ * boyunca susturuyordu - hiç gösterilmemiş olsa bile. Ortak altmış saniye
+ * kuralı ile app-open dört saat kuralı iki ayrı şeydir ve iki ayrı zaman
+ * damgası ister.
+ */
+const APP_OPEN_LAST_SHOWN_KEY = '@pdf-reader/app-open-last-shown-v1';
 
 const LAST_FULL_SCREEN_KEY = '@pdf-reader/ads/last-full-screen-v1';
 const INTERSTITIAL_DAY_KEY = '@pdf-reader/ads/interstitial-day-v1';
@@ -146,22 +157,87 @@ export async function pauseAdsFor(durationMs: number, now = Date.now()) {
   return until;
 }
 
-/** The newest timestamp wins so an upgrade cannot reset the shared gap. */
-export async function getLastFullScreenAt() {
-  const [current, legacy] = await Promise.all([
-    readTimestamp(LAST_FULL_SCREEN_KEY),
-    readTimestamp(LEGACY_APP_OPEN_LAST_SHOWN_KEY)
-  ]);
-  return Math.max(current, legacy);
+/**
+ * Tüm formatlar için TEK tam ekran yuvası.
+ *
+ * Modülde bunu engelleyecek başka hiçbir şey yok. Sonuç diyaloğu Android'de aynı
+ * pencere için hem düğme basışı hem kapatma bildirebiliyor; ana sayfadaki ve
+ * Ayarlar'daki ödül düğmelerinin busy durumları birbirinden bağımsız; gecikmeli
+ * geçiş reklamı yüklenirken kullanıcı ödüllü reklam isteyebiliyor. Bu akışların
+ * hepsi uygunluk kontrolünü biri zaman damgasını yazmadan okuyor, hepsi geçiyor
+ * ve kullanıcı üst üste iki tam ekran reklam görüyor - modülün var olma sebebi
+ * tam olarak bunu engellemek.
+ */
+let fullScreenInFlight = false;
+
+/**
+ * LAST_FULL_SCREEN_KEY'in bellekteki kopyası. Gösterim anındaki kontrol LOADED
+ * olayının içinde, eşzamanlı olarak yapılmak zorunda: orada depolamayı beklemek
+ * yeni bir yarış açar.
+ */
+let lastFullScreenAtCache = 0;
+
+/**
+ * Yalnızca platform açıkça "önde değil" derse reklamı engeller. Android ilk
+ * AppState olayından önce null, bazen 'unknown' bildirir; bunları arka plan
+ * saymak soğuk açılışta reklamı tamamen kapatırdı.
+ */
+function appIsInForeground() {
+  const state = AppState.currentState as string | null | undefined;
+  return state !== 'background' && state !== 'inactive';
 }
 
-export async function noteFullScreenShown(now = Date.now()) {
-  // The legacy key is kept in sync so a rollback to the previous build still
-  // sees a recent app open ad and does not show a second one immediately.
-  await Promise.all([
-    writeTimestamp(LAST_FULL_SCREEN_KEY, now),
-    writeTimestamp(LEGACY_APP_OPEN_LAST_SHOWN_KEY, now)
+/**
+ * Kendiliğinden gösterilen (kullanıcının istemediği) bir tam ekran reklamın
+ * gösterim ANINDA sağlaması gereken koşullar.
+ */
+function adsMayBeShownNow(now = Date.now()) {
+  if (!appIsInForeground()) return false;
+  if (!adsAllowed()) return false;
+  if (cachedPauseUntil > now) return false;
+  if (lastFullScreenAtCache && now - lastFullScreenAtCache < MIN_FULL_SCREEN_GAP_MS) return false;
+  return true;
+}
+
+/**
+ * Kullanıcının kendi bastığı ödüllü reklam için. Ortak altmış saniye kuralı ve
+ * reklamsız süre burada geçerli değil: reklamı kullanıcı istedi ve ödüllü reklam
+ * reklamsız süreyi UZATAN şey. Yalnızca ekranda birinin olması şart.
+ */
+function userRequestedAdMayBeShownNow() {
+  return appIsInForeground() && adsAllowed();
+}
+
+/**
+ * Ortak altmış saniye kuralının zamanı: geçiş, ödüllü VE app-open reklamlarının
+ * en yenisi. App-open anahtarı burada okunuyor ki app-open reklamından hemen
+ * sonra geçiş reklamı çıkmasın.
+ *
+ * Bu okuma aynı zamanda güncelleme göçünü de karşılıyor: eski sürümde app-open
+ * anahtarına geçiş reklamları da yazıyordu, o değer hâlâ duruyorsa ortak kural
+ * onu dikkate alır, yani güncellemeden sonra peş peşe reklam çıkmaz.
+ */
+export async function getLastFullScreenAt() {
+  const [shared, appOpen] = await Promise.all([
+    readTimestamp(LAST_FULL_SCREEN_KEY),
+    readTimestamp(APP_OPEN_LAST_SHOWN_KEY)
   ]);
+  const newest = Math.max(shared, appOpen);
+  if (newest > lastFullScreenAtCache) lastFullScreenAtCache = newest;
+  return newest;
+}
+
+/**
+ * Her tam ekran reklamdan sonra çağrılır: geçiş, ödüllü ve app-open.
+ *
+ * SADECE ortak zamanı yazar. App-open reklamının kendi zaman damgasını yalnızca
+ * AppOpenAdController, gerçek OPENED olayında yazar - yoksa bir geçiş reklamı
+ * app-open reklamının dört saatlik aralığını sıfırlar ve o reklam hiç
+ * gösterilmediği hâlde dört saat susar.
+ */
+export async function noteFullScreenShown(now = Date.now()) {
+  if (now > lastFullScreenAtCache) lastFullScreenAtCache = now;
+  await writeTimestamp(LAST_FULL_SCREEN_KEY, now);
 }
 
 export async function noteToolRun() {
@@ -195,7 +271,11 @@ type FullScreenAd = {
   show: () => Promise<void> | void;
 };
 
-function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: number): Promise<FullScreenResult> {
+function presentFullScreenAd(
+  kind: 'interstitial' | 'rewarded',
+  loadTimeoutMs: number,
+  canShow: () => boolean = adsMayBeShownNow
+): Promise<FullScreenResult> {
   return new Promise<FullScreenResult>((resolve) => {
     const unitId = resolveUnitId(kind);
     // Onay kapısı: izin yoksa hiçbir tam ekran reklam istenmez.
@@ -206,6 +286,7 @@ function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: n
 
     let settled = false;
     let earned = false;
+    let opened = false;
     let ad: FullScreenAd | null = null;
     let unsubscribe: (() => void) | null = null;
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -242,9 +323,17 @@ function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: n
       unsubscribe = ad.addAdEventsListener(({ type }) => {
         if (type === AdEventType.LOADED || type === RewardedAdEventType.LOADED) {
           clearTimer();
+          // Yükleme dokuz saniye sürebilir. O sürede kullanıcı uygulamayı arka
+          // plana atmış, ödüllü reklamla reklamsız süre kazanmış, onayı geri
+          // çekmiş ya da başka bir tam ekran reklam görmüş olabilir. İsteği
+          // yapmadan önceki kontrol artık geçerli değil; yeniden bakıyoruz.
+          if (!canShow()) {
+            settle('unavailable');
+            return;
+          }
           // Some ad creatives never emit CLOSED. The guard keeps the caller,
           // which may be showing a spinner, from waiting forever.
-          timer = setTimeout(() => settle(earned ? 'earned' : 'shown'), OPEN_AD_HANG_GUARD_MS);
+          timer = setTimeout(() => settle(opened ? (earned ? 'earned' : 'shown') : 'unavailable'), OPEN_AD_HANG_GUARD_MS);
           try {
             const shown = ad?.show();
             if (shown && typeof (shown as Promise<void>).catch === 'function') {
@@ -255,10 +344,20 @@ function presentFullScreenAd(kind: 'interstitial' | 'rewarded', loadTimeoutMs: n
           }
           return;
         }
+        // Gerçek gösterimin tek kanıtı budur. Beş dakikalık guard OPENED
+        // görmediyse "gosterildi" saymaz, yoksa hiç açılmamış bir reklam ortak
+        // zaman damgasını yazar ve sıradaki gerçek reklamı engeller.
+        if (type === AdEventType.OPENED) {
+          opened = true;
+          return;
+        }
         if (type === RewardedAdEventType.EARNED_REWARD) {
           earned = true;
           return;
         }
+        // CLOSED reklamın bir yaşam döngüsü tamamladığının kanıtıdır, OPENED
+        // gelmemiş olsa bile. Bunu "gösterilmedi" saymak ortak zaman damgasını
+        // yazmamak demek olurdu ve arkasından ikinci bir reklam gelebilirdi.
         if (type === AdEventType.CLOSED) {
           settle(earned ? 'earned' : 'shown');
           return;
@@ -349,8 +448,19 @@ export async function prepareToolAd() {
 }
 
 /** Shows an already loaded ad. Never throws and always settles exactly once. */
-function presentPreparedAd(ad: FullScreenAd): Promise<FullScreenResult> {
+function presentPreparedAd(ad: FullScreenAd, canShow: () => boolean = adsMayBeShownNow): Promise<FullScreenResult> {
   return new Promise<FullScreenResult>((resolve) => {
+    // Hazır reklam dakikalar önce yüklenmiş olabilir; gösterim anındaki koşullar
+    // yükleme anındakiyle aynı değil.
+    if (!canShow()) {
+      try {
+        ad.removeAllListeners();
+      } catch {
+        // Örnek her hâlükârda bırakılıyor.
+      }
+      resolve('unavailable');
+      return;
+    }
     let settled = false;
     let earned = false;
     let unsubscribe: (() => void) | null = null;
@@ -424,6 +534,10 @@ export function markInterstitialPending() {
 /** Returns whether a full screen ad was actually presented. */
 export async function maybeShowPendingInterstitial() {
   if (!interstitialPending) return false;
+  // Yuva meşgulse bekleyen işaret HARCANMAZ ve sayaç da ilerletilmez: aksi
+  // hâlde başka bir reklam ekrandayken gelen bu çağrı, kullanıcının üç PDF'de
+  // bir hakkını sessizce yakardı.
+  if (fullScreenInFlight) return false;
   interstitialPending = false;
   let exits = 1;
   try {
@@ -439,6 +553,10 @@ export async function maybeShowPendingInterstitial() {
 
 /** Returns whether a full screen ad was actually presented. */
 export async function maybeShowToolInterstitial() {
+  // Sıfırıncı kural: aynı anda tek tam ekran reklam. Hiçbir await'ten ÖNCE
+  // bakılıyor, yoksa aynı tick'teki iki çağrı da içeri girer.
+  if (fullScreenInFlight) return false;
+  fullScreenInFlight = true;
   try {
     // Rule one: the ad free window the viewer earned is honoured. This is a
     // promise, not pacing, so it stays in code.
@@ -450,13 +568,17 @@ export async function maybeShowToolInterstitial() {
     const lastFullScreenAt = await getLastFullScreenAt();
     if (now - lastFullScreenAt < MIN_FULL_SCREEN_GAP_MS) return false;
 
+    // Üçüncü kural: ekranda biri olmalı. Arka plandaki uygulamaya gösterilen
+    // reklam hem kimsenin görmediği bir gösterim hem de geçersiz trafik sinyali.
+    if (!appIsInForeground()) return false;
+
     if (preparedInterstitial && now - preparedInterstitial.loadedAt >= PRIMED_AD_TTL_MS) discardPreparedInterstitial();
     const prepared = preparedInterstitial;
     preparedInterstitial = null;
 
     const result = prepared
-      ? await presentPreparedAd(prepared.ad)
-      : await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS);
+      ? await presentPreparedAd(prepared.ad, adsMayBeShownNow)
+      : await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS, adsMayBeShownNow);
     if (result === 'unavailable') return false;
 
     sessionInterstitials += 1;
@@ -471,6 +593,10 @@ export async function maybeShowToolInterstitial() {
   } catch {
     // A tool result must never fail because of advertising.
     return false;
+  } finally {
+    // Hata, zaman aşımı ve kapanış dâhil BÜTÜN yollarda bırakılır; yoksa kilit
+    // takılır ve oturumun kalanında hiç reklam çıkmaz.
+    fullScreenInFlight = false;
   }
 }
 
@@ -480,11 +606,13 @@ export async function maybeShowToolInterstitial() {
  */
 export async function getAdDiagnostics() {
   const now = Date.now();
-  const [runs, lastFullScreenAt, pausedUntil, day] = await Promise.all([
+  const [runs, lastFullScreenAt, lastAppOpenAt, pausedUntil, day, exits] = await Promise.all([
     readTimestamp(TOOL_RUN_KEY),
     getLastFullScreenAt(),
+    readTimestamp(APP_OPEN_LAST_SHOWN_KEY),
     readTimestamp(AD_PAUSE_UNTIL_KEY),
-    readDayCount(INTERSTITIAL_DAY_KEY)
+    readDayCount(INTERSTITIAL_DAY_KEY),
+    readTimestamp(READER_EXIT_COUNT_KEY)
   ]);
   const secondsSince = lastFullScreenAt ? Math.round((now - lastFullScreenAt) / 1000) : null;
   const gapOk = secondsSince === null || secondsSince >= MIN_FULL_SCREEN_GAP_MS / 1000;
@@ -498,8 +626,19 @@ export async function getAdDiagnostics() {
     `Reklamsiz sure: ${pauseOn ? `${Math.ceil((pausedUntil - now) / 60_000)} dk kaldi` : 'kapali'}`,
     `Reklam hazir mi: ${preparedInterstitial ? 'EVET' : preparingInterstitial ? 'yukleniyor' : 'hayir'}`,
     `Bekleyen reklam: ${interstitialPending ? 'var (okuyucudan cikinca)' : 'yok'}`,
+    `Okuyucudan cikis: ${exits} (her ${READER_EXITS_PER_INTERSTITIAL}. cikista reklam)`,
+    `Son app-open reklami: ${lastAppOpenAt ? `${Math.round((now - lastAppOpenAt) / 60_000)} dk once` : 'hic'}`,
+    `Reklam izni (UMP): ${adsAllowed() ? 'VAR' : 'yok'}`,
+    `Uygulama on planda: ${appIsInForeground() ? 'EVET' : `hayir (${AppState.currentState})`}`,
+    `Tam ekran yuvasi: ${fullScreenInFlight ? 'MESGUL' : 'bos'}`,
     '',
-    `SONUC: ${pauseOn ? 'Reklamsiz sure acik, gecis reklami cikmaz' : gapOk ? 'Gecis reklami cikabilir' : '60 sn dolmadi, biraz bekleyin'}`
+    `SONUC: ${
+      !adsAllowed() ? 'Reklam izni yok, hicbir format istenmez'
+      : pauseOn ? 'Reklamsiz sure acik, gecis reklami cikmaz'
+      : !appIsInForeground() ? 'Uygulama on planda degil, reklam cikmaz'
+      : gapOk ? 'Gecis reklami cikabilir'
+      : '60 sn dolmadi, biraz bekleyin'
+    }`
   ].join('\n');
 }
 
@@ -511,8 +650,14 @@ export type RewardedOutcome = 'earned' | 'dismissed' | 'unavailable';
  * thing to a "remove ads" option an app without in app purchases can offer.
  */
 export async function watchRewardedForAdPause(): Promise<RewardedOutcome> {
+  // Geçiş reklamıyla aynı yuvayı paylaşır. Ana sayfadaki ve Ayarlar'daki ödül
+  // düğmelerinin busy durumları birbirinden bağımsız olduğu için iki kez
+  // basılabiliyor; gecikmeli bir geçiş reklamı da tam bu sırada yüklenmiş
+  // olabilir. İkinci sunum kullanıcının ödülünü de götürür.
+  if (fullScreenInFlight) return 'unavailable';
+  fullScreenInFlight = true;
   try {
-    const result = await presentFullScreenAd('rewarded', REWARDED_LOAD_TIMEOUT_MS);
+    const result = await presentFullScreenAd('rewarded', REWARDED_LOAD_TIMEOUT_MS, userRequestedAdMayBeShownNow);
     if (result === 'unavailable') return 'unavailable';
     await noteFullScreenShown(Date.now());
     if (result === 'earned') {
@@ -522,5 +667,7 @@ export async function watchRewardedForAdPause(): Promise<RewardedOutcome> {
     return 'dismissed';
   } catch {
     return 'unavailable';
+  } finally {
+    fullScreenInFlight = false;
   }
 }

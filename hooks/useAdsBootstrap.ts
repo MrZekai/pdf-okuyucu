@@ -1,17 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
-import { getLocales } from 'expo-localization';
-import mobileAds, { AdsConsent, AdsConsentStatus, MaxAdContentRating } from 'react-native-google-mobile-ads';
+import mobileAds, { AdsConsent, MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { setAdsAllowed } from '@/lib/adConsent';
 import { noteConsentEvent } from '@/lib/adDiagnostics';
 
 export type AdsStatus = 'loading' | 'ready' | 'unavailable';
 
-// GDPR / UK GDPR / İsviçre FADP: onay mesajının gerçekten gerektiği bölgeler.
-const CONSENT_REGIONS = new Set([
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
-  'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH'
-]);
+/**
+ * Reklam izni SADECE UMP SDK'sının canRequestAds sonucundan gelir.
+ *
+ * Önceki sürüm, önbellekte onay yokken cihazın locale BÖLGE KODUNA bakıp
+ * "onay bölgesi değil" diye karar veriyor ve kişiselleştirilmemiş reklamı
+ * hemen açıyordu. Locale kullanıcının nerede olduğunu kanıtlamaz: Almanya'daki
+ * bir telefon tr-TR ayarlı olabilir, ya da tam tersi. Bu, GDPR/UK GDPR/FADP
+ * kapsamındaki bir kullanıcıya onay alınmadan reklam göstermek demekti ve
+ * kişiselleştirilmemiş reklam bunun karşılığı değildir - NPA bir onay türü
+ * değil, onay VERİLDİKTEN sonraki bir reklam seçeneğidir.
+ */
 // UMP artık arka planda çalışır; bu gecikmeler reklamın görünmesini BEKLETMEZ.
 const RETRY_DELAYS_MS = [0, 1_000, 3_000];
 const FOREGROUND_RETRY_GAP_MS = 60_000;
@@ -22,15 +27,6 @@ function errorText(error: unknown) {
     return `${code ?? ''} ${message ?? ''}`.trim() || 'bilinmeyen hata';
   }
   return String(error);
-}
-
-function deviceInConsentRegion() {
-  try {
-    return getLocales().some((locale) => CONSENT_REGIONS.has((locale.regionCode || '').toUpperCase()));
-  } catch {
-    // Bölge okunamıyorsa temkinli davran.
-    return true;
-  }
 }
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -52,13 +48,13 @@ async function gatherWithRetry(): Promise<{ info: ConsentInfo | null; error: unk
 
 /**
  * Hızlı başlangıç (Google UMP örneğindeki paralel başlatma):
- *  1. Önbellekteki onay reklama izin veriyorsa reklamlar HEMEN açılır.
- *  2. İlk açılışta önbellek boşsa ve cihaz onay bölgesinde değilse
- *     kişiselleştirilmemiş reklamla HEMEN açılır.
+ *  1. SDK'nın önbelleğindeki onay reklama izin veriyorsa reklamlar HEMEN açılır.
+ *     Bu karar SDK'dan gelir, tahminden değil, ve ikinci açılıştan sonra her
+ *     oturumda geçerlidir - yani banner gecikmesi sorunu çözülmüş kalır.
+ *  2. Önbellek boşsa (yalnızca ilk açılış) UMP'nin ilk turu beklenir. Onay
+ *     durumu bilinmeden hiçbir format istenmez.
  *  3. UMP onay güncellemesi her açılışta arka planda yine yapılır; sonucu
  *     kararı düzeltir (kişiselleştirilmiş reklama geçer ya da reklamı kapatır).
- * Önceki sürümde reklamlar UMP'nin ağ turunu ve yeniden denemeleri bekliyordu;
- * banner ve "Reklamsız süre" şeridi bu yüzden 5-10 sn geç geliyordu.
  */
 export function useAdsBootstrap() {
   const initialization = useRef<Promise<void> | null>(null);
@@ -103,11 +99,7 @@ export function useAdsBootstrap() {
         if (cached?.canRequestAds) {
           await enable(false);
           fastStarted = true;
-          noteConsentEvent('hizli baslangic: onbellekteki onay');
-        } else if (cached?.status !== AdsConsentStatus.REQUIRED && !deviceInConsentRegion()) {
-          await enable(true);
-          fastStarted = true;
-          noteConsentEvent('hizli baslangic: onay bolgesi degil (NPA)');
+          noteConsentEvent('hizli baslangic: SDK onbellegindeki onay');
         }
 
         const { info, error } = await gatherWithRetry();
@@ -122,17 +114,28 @@ export function useAdsBootstrap() {
         }
 
         if (fastStarted) {
-          noteConsentEvent(`UMP HATA (${errorText(error)}) -> hizli baslangic karari korundu`);
+          noteConsentEvent(`UMP HATA (${errorText(error)}) -> SDK onbellek karari korundu`);
           return true;
         }
-        const inRegion = deviceInConsentRegion();
-        noteConsentEvent(`UMP HATA (${errorText(error)}) -> ${inRegion ? 'onay bolgesi, reklam yok' : 'onay bolgesi degil, NPA'}`);
-        if (inRegion) {
-          disable();
-          return false;
+        // UMP turu başarısız oldu ve elimizde hızlı başlangıç kararı da yok.
+        // Son bir kez SDK'ya soruyoruz: önceki bir oturumda onay alınmışsa bu
+        // çağrı ağ olmadan da cevap verir. Vermezse reklam istenmez. Bölgeyi
+        // tahmin etmek yerine reklamdan vazgeçiyoruz; bir oturumun reklamını
+        // kaybetmek, onay alınmadan reklam göstermekten iyidir.
+        let fallback: ConsentInfo | null = null;
+        try {
+          fallback = await AdsConsent.getConsentInfo();
+        } catch {
+          fallback = null;
         }
-        await enable(true);
-        return true;
+        if (fallback?.canRequestAds) {
+          noteConsentEvent(`UMP HATA (${errorText(error)}) -> SDK yine de izin veriyor`);
+          await enable(false);
+          return true;
+        }
+        noteConsentEvent(`UMP HATA (${errorText(error)}) -> onay bilinmiyor, reklam yok`);
+        disable();
+        return false;
       } catch (error) {
         noteConsentEvent(`reklam baslatma HATA: ${errorText(error)}`);
         if (!fastStarted) disable();
