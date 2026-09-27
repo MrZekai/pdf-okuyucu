@@ -1,4 +1,4 @@
-# Offline PDF Viewer & Tools — global, local-first PDF workspace
+# Offline PDF Reader — global, local-first PDF workspace
 
 A local-first PDF reader and on-device PDF tools app built with **Expo SDK 57 / React Native**. PDFs are processed inside the app's private device storage; the project has no account, backend, developer-side document upload, first-party analytics or cloud storage. Google Mobile Ads/UMP data handling is disclosed separately in the privacy policy and Data Safety notes.
 

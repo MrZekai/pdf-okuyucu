@@ -6,14 +6,14 @@ Limits shown for QA only; do not copy the bracketed counters into Play Console.
 en-US — English (United States) — DEFAULT
 ==============================================================================
 
-STORE TITLE [26/30]
-Offline PDF Viewer & Tools
+STORE TITLE [18/30]
+Offline PDF Reader
 
 SHORT DESCRIPTION [77/80]
 View PDFs offline without internet. Merge, split and compress on your device.
 
 FULL DESCRIPTION [3666/4000]
-Open, read and manage PDF files without uploading your documents to the cloud. Offline PDF Viewer & Tools works directly on your Android device. No account or sign-in is required. Read saved PDFs, merge files, split pages and compress documents even without an internet connection.
+Open, read and manage PDF files without uploading your documents to the cloud. Offline PDF Reader works directly on your Android device. No account or sign-in is required. Read saved PDFs, merge files, split pages and compress documents even without an internet connection.
 
 READ PDFS OFFLINE
 
@@ -59,7 +59,7 @@ CLEAR LIMITATIONS
 
 The app does not provide OCR, text editing inside an existing PDF, electronic signatures or PDF-to-Word conversion. The camera currently creates one photo per document rather than a multi-page scan.
 
-Offline PDF Viewer & Tools is supported by ads and has no subscription. Watching an optional rewarded video gives you 10 minutes without ads. No PDF tool is locked behind a payment or mandatory video.
+Offline PDF Reader is supported by ads and has no subscription. Watching an optional rewarded video gives you 10 minutes without ads. No PDF tool is locked behind a payment or mandatory video.
 
 ==============================================================================
 de-DE — Deutsch

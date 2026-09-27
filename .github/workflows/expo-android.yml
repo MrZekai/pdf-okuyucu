@@ -85,7 +85,7 @@ jobs:
         run: |
           set -euo pipefail
           grep -Fq 'Çevrimdışı PDF Okuyucu' docs/privacy-policy.html
-          grep -Fq 'Offline PDF Viewer & Tools' docs/privacy-policy.html
+          grep -Fq 'Offline PDF Reader' docs/privacy-policy.html
           tr -d '\r' < docs/app-ads.txt | \
             grep -Fxq 'google.com, pub-1380972808968213, DIRECT, f08c47fec0942fa0'
           echo 'Closed-test yasal kaynakları doğrulandı; GitHub Pages deploy gecikmesi AAB buildini engellemeyecek.'
@@ -99,7 +99,7 @@ jobs:
           # gecikebildiği için binary build'i canlı site propagasyonuna bağlamıyoruz.
           # Repodaki policy/app-ads içeriği zorunlu kapıdır; canlı site yalnızca uyarıdır.
           grep -Fq 'Çevrimdışı PDF Okuyucu' docs/privacy-policy.html
-          grep -Fq 'Offline PDF Viewer & Tools' docs/privacy-policy.html
+          grep -Fq 'Offline PDF Reader' docs/privacy-policy.html
           grep -Fq 'ödüllü' docs/privacy-policy.html
           grep -Fq 'geçiş' docs/privacy-policy.html
           grep -Fq '10 dakikalık reklamsız kullanım' docs/privacy-policy.html
@@ -120,7 +120,7 @@ jobs:
           if [ "$live_ok" -eq 1 ]; then
             grep -Fq 'Çevrimdışı PDF Okuyucu' live-privacy-policy.html || \
               echo '::warning::Canlı Privacy Policy henüz yeni Türkçe başlığa güncellenmemiş.'
-            grep -Fq 'Offline PDF Viewer & Tools' live-privacy-policy.html || \
+            grep -Fq 'Offline PDF Reader' live-privacy-policy.html || \
               echo '::warning::Canlı Privacy Policy henüz yeni İngilizce başlığa güncellenmemiş.'
             grep -Fq '10 dakikalık reklamsız kullanım' live-privacy-policy.html || \
               echo '::warning::Canlı Privacy Policy henüz 10 dakikalık reklamsız kullanım metnine güncellenmemiş.'

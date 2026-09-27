@@ -1,4 +1,4 @@
-# Offline PDF Viewer & Tools — Play Store release kılavuzu
+# Offline PDF Reader — Play Store release kılavuzu
 
 ## 1. Tek seferlik upload key ve GitHub Secrets
 

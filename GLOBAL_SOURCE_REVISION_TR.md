@@ -1,11 +1,11 @@
 # Global kaynak revizyonu — güncel teslim özeti
 
-Bu kaynak seti `Offline PDF Viewer & Tools` marka/ASO kararıyla eşlenmiştir. Android paket kimliği değişmemiştir: `com.aitolian.pdfokuyucu`.
+Bu kaynak seti `Offline PDF Reader` marka/ASO kararıyla eşlenmiştir. Android paket kimliği değişmemiştir: `com.aitolian.pdfokuyucu`.
 
 ## Güncel sözleşme
 
-- Google Play varsayılan başlık: `Offline PDF Viewer & Tools`.
-- Uygulama içi İngilizce başlık: `Offline PDF Viewer & Tools`.
+- Google Play varsayılan başlık: `Offline PDF Reader`.
+- Uygulama içi İngilizce başlık: `Offline PDF Reader`.
 - İngilizce launcher/ikon altı adı: `Offline PDF`.
 - Türkçe mağaza ve uygulama içi başlık: `Çevrimdışı PDF Okuyucu`.
 - Türkçe launcher/ikon altı adı: `Çevrimdışı PDF`.

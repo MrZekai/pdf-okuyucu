@@ -1,6 +1,6 @@
 # Mağaza metni inceleme durumu
 
-Bu klasördeki **26 Google Play locale** dosyası, 19 Eylül 2026 tarihinde kesinleştirilen `Offline PDF Viewer & Tools` ASO setinden üretilmiştir.
+Bu klasördeki **26 Google Play locale** dosyası, 19 Eylül 2026 tarihinde kesinleştirilen `Offline PDF Reader` ASO setinden üretilmiştir.
 
 Teknik sınırlar:
 

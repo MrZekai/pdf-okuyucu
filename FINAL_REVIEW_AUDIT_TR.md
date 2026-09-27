@@ -1,11 +1,11 @@
-# Offline PDF Viewer & Tools — final yayın öncesi kaynak denetimi
+# Offline PDF Reader — final yayın öncesi kaynak denetimi
 
 Tarih: 20 Eylül 2026
 
 ## Kesin marka sözleşmesi
 
-- Google Play varsayılan mağaza adı: `Offline PDF Viewer & Tools` — 26/30
-- İngilizce uygulama içi başlık: `Offline PDF Viewer & Tools`
+- Google Play varsayılan mağaza adı: `Offline PDF Reader` — 26/30
+- İngilizce uygulama içi başlık: `Offline PDF Reader`
 - İngilizce launcher / ikon altı: `Offline PDF`
 - Türkçe mağaza ve uygulama içi başlık: `Çevrimdışı PDF Okuyucu`
 - Türkçe launcher / ikon altı: `Çevrimdışı PDF`
@@ -17,7 +17,7 @@ Kanonik kaynak `play-store/FINAL_26_LOCALES_ASO.txt` dosyasıdır. `play-store/l
 
 Varsayılan en-US metni:
 
-- Başlık: `Offline PDF Viewer & Tools`
+- Başlık: `Offline PDF Reader`
 - Kısa açıklama: `View PDFs offline without internet. Merge, split and compress on your device.`
 - Tam açıklama: 3666 karakter
 

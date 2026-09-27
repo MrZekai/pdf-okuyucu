@@ -317,7 +317,7 @@ const tr = {
 };
 
 const en: Record<keyof typeof tr, string> = {
-  'app.name': 'Offline PDF Viewer & Tools',
+  'app.name': 'Offline PDF Reader',
   'tabs.home': 'Home',
   'tabs.library': 'Library',
   'tabs.tools': 'Tools',
@@ -466,7 +466,7 @@ const en: Record<keyof typeof tr, string> = {
   'settings.consentUpdatedMessage': 'The Google ad consent state has been re-checked.',
   'settings.consentErrorTitle': 'Privacy options',
   'settings.consentErrorMessage': 'Ad privacy options cannot be opened right now. Please try again later.',
-  'settings.about': 'Offline PDF Viewer & Tools • Expo SDK 57 • On-device PDF handling',
+  'settings.about': 'Offline PDF Reader • Expo SDK 57 • On-device PDF handling',
 
   'reader.notFound': 'Document not found',
   'reader.goBack': 'Go back',
