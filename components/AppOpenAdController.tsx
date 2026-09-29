@@ -24,8 +24,17 @@ const FIRST_AD_LAUNCH = 2;
  * temiz tutmak kullanıcıya uygulamayı tanıma fırsatını zaten veriyor.
  */
 const FIRST_AD_AFTER_MS = 0;
-/** İki app-open reklamı arasında en az 4 saat. */
-const APP_OPEN_MIN_GAP_MS = 4 * 60 * 60 * 1000;
+/**
+ * Kod içinde ayrıca app-open aralığı yok: her SOĞUK açılış (uygulama süreci
+ * yeniden başladığında) reklama uygundur. Android süreci ancak uygulama bir
+ * süre arka planda kaldıktan sonra öldürür, yani bu doğal olarak seyrektir;
+ * uygulamaya arka plandan dönüşte (sıcak açılış) reklam hiç gösterilmez.
+ *
+ * Günlük/saatlik üst sınır AdMob panelinde app-open biriminin sıklık sınırıyla
+ * ayarlanır - yeni sürüm çıkarmadan değiştirilebilir. Önceki değer 4 saatti ve
+ * kullanıcıların çoğu reklamı hiç görmüyordu.
+ */
+const APP_OPEN_MIN_GAP_MS = 0;
 /**
  * Uygun bir açılışta reklamın yüklenmesi için tanınan en uzun süre.
  *
