@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Dokumen pertama Anda akan muncul otomatis di sini.',
   'home.privacyTitle':'Hanya di perangkat Anda',
   'home.privacyText':'PDF Anda tidak diunggah ke server pengembang.',
+  'app.adDisclosure':'Ini mungkin berisi iklan',
   'library.kicker':'PUSTAKA',
   'library.title':'Semua PDF Anda',
   'library.searchPlaceholder':'Cari berdasarkan nama file',

@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Tài liệu đầu tiên của bạn sẽ tự động hiện ở đây.',
   'home.privacyTitle':'Chỉ trên máy của bạn',
   'home.privacyText':'PDF của bạn không được tải lên máy chủ của nhà phát triển.',
+  'app.adDisclosure':'Quá trình này có thể có quảng cáo',
   'library.kicker':'THƯ VIỆN',
   'library.title':'Tất cả PDF của bạn',
   'library.searchPlaceholder':'Tìm theo tên tệp',

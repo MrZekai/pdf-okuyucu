@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Первый документ автоматически появится здесь.',
   'home.privacyTitle':'Только на вашем устройстве',
   'home.privacyText':'Ваши PDF не загружаются на сервер разработчика.',
+  'app.adDisclosure':'Здесь может быть реклама',
   'library.kicker':'БИБЛИОТЕКА',
   'library.title':'Все ваши PDF',
   'library.searchPlaceholder':'Поиск по имени файла',

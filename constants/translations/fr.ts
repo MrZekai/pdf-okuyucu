@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Votre premier document apparaîtra automatiquement ici.',
   'home.privacyTitle':'Uniquement sur votre appareil',
   'home.privacyText':'Vos PDF ne sont pas envoyés vers un serveur du développeur.',
+  'app.adDisclosure':'Cela peut inclure des publicités',
   'library.kicker':'BIBLIOTHÈQUE',
   'library.title':'Tous vos PDF',
   'library.searchPlaceholder':'Rechercher par nom de fichier',

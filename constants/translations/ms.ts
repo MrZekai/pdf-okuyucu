@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Dokumen pertama anda akan muncul di sini secara automatik.',
   'home.privacyTitle':'Dalam peranti anda sahaja',
   'home.privacyText':'Fail PDF anda tidak dimuat naik ke pelayan pembangun.',
+  'app.adDisclosure':'Ini mungkin mengandungi iklan',
   'library.kicker':'PERPUSTAKAAN',
   'library.title':'Semua PDF anda',
   'library.searchPlaceholder':'Cari mengikut nama fail',

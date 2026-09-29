@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Primul tău document va apărea aici automat.',
   'home.privacyTitle':'Doar pe dispozitivul tău',
   'home.privacyText':'Fișierele tale PDF nu sunt încărcate pe serverul dezvoltatorului.',
+  'app.adDisclosure':'Aceasta poate include reclame',
   'library.kicker':'BIBLIOTECĂ',
   'library.title':'Toate fișierele tale PDF',
   'library.searchPlaceholder':'Caută după numele fișierului',

@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'最初の文書を開くと自動的にここに表示されます。',
   'home.privacyTitle':'端末内だけで処理',
   'home.privacyText':'PDFは開発者のサーバーへアップロードされません。',
+  'app.adDisclosure':'広告が表示される場合があります',
   'library.kicker':'ライブラリ',
   'library.title':'すべてのPDF',
   'library.searchPlaceholder':'ファイル名で検索',

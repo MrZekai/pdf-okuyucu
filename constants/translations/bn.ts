@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'আপনার প্রথম নথি এখানে আপনাআপনি দেখা যাবে।',
   'home.privacyTitle':'শুধু আপনার ডিভাইসে',
   'home.privacyText':'আপনার PDF ডেভেলপারের সার্ভারে আপলোড করা হয় না।',
+  'app.adDisclosure':'এতে বিজ্ঞাপন থাকতে পারে',
   'library.kicker':'লাইব্রেরি',
   'library.title':'আপনার সব PDF',
   'library.searchPlaceholder':'ফাইলের নাম দিয়ে খুঁজুন',

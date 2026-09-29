@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Awtomatikong lalabas dito ang una mong dokumento.',
   'home.privacyTitle':'Nasa device mo lang',
   'home.privacyText':'Hindi ina-upload ang mga PDF mo sa server ng developer.',
+  'app.adDisclosure':'Maaaring may kasamang mga ad',
   'library.kicker':'AKLATAN',
   'library.title':'Lahat ng PDF mo',
   'library.searchPlaceholder':'Maghanap ayon sa pangalan ng file',

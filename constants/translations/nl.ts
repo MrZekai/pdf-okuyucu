@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'Je eerste document verschijnt hier automatisch.',
   'home.privacyTitle':'Alleen op je apparaat',
   'home.privacyText':'Je PDF-bestanden worden niet naar de server van de ontwikkelaar gestuurd.',
+  'app.adDisclosure':'Dit kan advertenties bevatten',
   'library.kicker':'BIBLIOTHEEK',
   'library.title':'Al je PDF-bestanden',
   'library.searchPlaceholder':'Zoeken op bestandsnaam',

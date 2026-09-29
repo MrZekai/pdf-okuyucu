@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'आपका पहला दस्तावेज़ अपने आप यहाँ दिखाई देगा।',
   'home.privacyTitle':'केवल आपके डिवाइस पर',
   'home.privacyText':'आपके PDF डेवलपर के सर्वर पर अपलोड नहीं किए जाते।',
+  'app.adDisclosure':'इसमें विज्ञापन हो सकते हैं',
   'library.kicker':'लाइब्रेरी',
   'library.title':'आपके सभी PDF',
   'library.searchPlaceholder':'फ़ाइल नाम से खोजें',

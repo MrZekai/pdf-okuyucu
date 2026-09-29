@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'เอกสารแรกของคุณจะปรากฏที่นี่โดยอัตโนมัติ',
   'home.privacyTitle':'อยู่บนเครื่องของคุณเท่านั้น',
   'home.privacyText':'ไฟล์ PDF ของคุณไม่ถูกอัปโหลดไปยังเซิร์ฟเวอร์ของผู้พัฒนา',
+  'app.adDisclosure':'อาจมีโฆษณาแสดง',
   'library.kicker':'คลัง',
   'library.title':'PDF ทั้งหมดของคุณ',
   'library.searchPlaceholder':'ค้นหาตามชื่อไฟล์',

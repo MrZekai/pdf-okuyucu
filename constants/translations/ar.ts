@@ -22,6 +22,7 @@ export default {
   'home.emptyText':'سيظهر مستندك الأول هنا تلقائيًا.',
   'home.privacyTitle':'على جهازك فقط',
   'home.privacyText':'لا تُرفع ملفات PDF إلى خادم تابع للمطور.',
+  'app.adDisclosure':'قد يتضمن هذا إعلانات',
   'library.kicker':'المكتبة',
   'library.title':'كل ملفات PDF',
   'library.searchPlaceholder':'البحث باسم الملف',
