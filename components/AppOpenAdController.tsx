@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Easing, Image, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { useAdsReady } from '@/context/AdsContext';
@@ -62,8 +62,11 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
   const loadedAtRef = useRef(0);
   const gateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const showRef = useRef<() => void>(() => undefined);
-  const gateStartedAtRef = useRef(Date.now());
-  const progress = useRef(new Animated.Value(0)).current;
+  // Kapının başladığı an; render sırasında değil, açılış effect'inde yazılır.
+  const gateStartedAtRef = useRef(0);
+  // Animated.Value tek sefer yaratılır. Ref yerine state tutuluyor çünkü render
+  // sırasında ref.current okumak React derleyici kurallarına aykırı.
+  const [progress] = useState(() => new Animated.Value(0));
 
   const cancelGateTimeout = useCallback(() => {
     if (gateTimeoutRef.current) clearTimeout(gateTimeoutRef.current);
@@ -135,6 +138,7 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
     if (launchInitializedRef.current) return;
     launchInitializedRef.current = true;
     let mounted = true;
+    gateStartedAtRef.current = Date.now();
     gateTimeoutRef.current = setTimeout(() => { clearAd(); finishColdGate(); }, COLD_START_WAIT_MS);
 
     (async () => {
@@ -226,7 +230,10 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
 
   useEffect(() => () => clearAd(), [clearAd]);
 
-  const progressWidth = progress.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
+  const progressWidth = useMemo(
+    () => progress.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }),
+    [progress]
+  );
 
   return (
     <View style={styles.root}>
