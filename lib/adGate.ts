@@ -3,6 +3,7 @@ import Constants from 'expo-constants';
 import { AppState, Platform } from 'react-native';
 import { AdEventType, InterstitialAd, RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { adRequestOptions, adsAllowed } from '@/lib/adConsent';
+import { beginDocumentOpen, documentOpenInFlight } from '@/lib/adOpenGuard';
 
 /**
  * Every full screen ad in the app goes through this module.
@@ -169,6 +170,11 @@ export async function pauseAdsFor(durationMs: number, now = Date.now()) {
  * tam olarak bunu engellemek.
  */
 let fullScreenInFlight = false;
+
+// Belge açma koruması bilerek bağımlılıksız bir modülde duruyor, böylece cihaz
+// olmadan test edilebiliyor. Gerekçesi ve davranışı orada belgelenmiş. Ekranlar
+// bu modülden içe aktardığı için buradan yeniden dışa veriliyor.
+export { beginDocumentOpen, documentOpenInFlight };
 
 /**
  * LAST_FULL_SCREEN_KEY'in bellekteki kopyası. Gösterim anındaki kontrol LOADED
@@ -538,6 +544,10 @@ export async function maybeShowPendingInterstitial() {
   // hâlde başka bir reklam ekrandayken gelen bu çağrı, kullanıcının üç PDF'de
   // bir hakkını sessizce yakardı.
   if (fullScreenInFlight) return false;
+  // Kullanıcı şu anda bir belge açıyor (ya da seçiciyi yeni kapattı). Bu odak
+  // olayı reklamın anı değil: reklam okuyucudan ÇIKIŞTA sunulur. İşaret burada
+  // da harcanmaz, bir sonraki gerçek çıkışta kullanılır.
+  if (documentOpenInFlight()) return false;
   interstitialPending = false;
   let exits = 1;
   try {

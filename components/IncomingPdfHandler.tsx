@@ -3,7 +3,7 @@ import { Alert, Linking } from 'react-native';
 import { router, useGlobalSearchParams, useRootNavigationState } from 'expo-router';
 import { useApp } from '@/context/AppContext';
 import { useTranslation } from '@/hooks/useTranslation';
-import { markInterstitialPending, prepareToolAd } from '@/lib/adGate';
+import { beginDocumentOpen, markInterstitialPending, prepareToolAd } from '@/lib/adGate';
 import { normalizeIncomingPdfUri } from '@/lib/incomingPdfUri';
 
 const DEDUPE_WINDOW_MS = 2_000;
@@ -38,6 +38,11 @@ export function IncomingPdfHandler() {
       }
     }
 
+    // WhatsApp, e-posta veya dosya yöneticisinden gelen PDF içeri alınırken ana
+    // ekran odak kazanabiliyor. O odak olayının önceki bir okumanın ertelenmiş
+    // reklamını açması, kullanıcının dosyası ile arasına reklam koymak demekti.
+    const endOpen = beginDocumentOpen();
+
     // Ask for the ad now, while the document is still being imported, so it is
     // ready by the time the reader is closed.
     void prepareToolAd();
@@ -58,6 +63,8 @@ export function IncomingPdfHandler() {
       recentlyHandled.current.delete(uri);
       router.replace('/');
       Alert.alert(t('files.openErrorTitle'), error instanceof Error ? error.message : t('files.openErrorMessage'));
+    } finally {
+      endOpen();
     }
   }, [addFromExternalUri, t]);
 

@@ -9,7 +9,7 @@ import { AdPauseOffer } from '@/components/AdPauseOffer';
 import { PdfBrandMark } from '@/components/PdfBrandMark';
 import { UrlModal } from '@/components/UrlModal';
 import { useTranslation } from '@/hooks/useTranslation';
-import { markInterstitialPending, maybeShowPendingInterstitial, prepareToolAd } from '@/lib/adGate';
+import { beginDocumentOpen, markInterstitialPending, maybeShowPendingInterstitial, prepareToolAd } from '@/lib/adGate';
 import { palette } from '@/constants/theme';
 import { PdfToolId } from '@/lib/pdfTools';
 
@@ -51,6 +51,11 @@ export default function HomeScreen() {
 
   async function choosePdf() {
     setBusy(true);
+    // Sistem seçicisi ayrı bir etkinlik: ana ekran odağı kaybedip geri
+    // kazanıyor ve o odak olayı ertelenmiş reklamı tetikleyebiliyordu -
+    // kullanıcı seçimi iptal etmiş olsa bile. Bu koruma, reklamı okuyucudan
+    // çıkış anına bırakır ve iptal eden kullanıcıya reklam göstermez.
+    const endOpen = beginDocumentOpen();
     // The picker takes the viewer a few seconds; request the ad now so it is in
     // memory by the time they come back out of the reader.
     void prepareToolAd();
@@ -63,14 +68,20 @@ export default function HomeScreen() {
     } catch (error) {
       Alert.alert(t('files.openErrorTitle'), error instanceof Error ? error.message : t('files.openErrorMessage'));
     } finally {
+      endOpen();
       setBusy(false);
     }
   }
 
   async function fromUrl(url: string) {
-    const doc = await addFromUrl(url);
-    markInterstitialPending();
-    goReader(doc.id);
+    const endOpen = beginDocumentOpen();
+    try {
+      const doc = await addFromUrl(url);
+      markInterstitialPending();
+      goReader(doc.id);
+    } finally {
+      endOpen();
+    }
   }
 
   if (!ready) {

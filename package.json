@@ -12,10 +12,11 @@
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "i18n:check": "node scripts/check-i18n.mjs",
-    "check": "npm run i18n:check && npm run typecheck && npm run incoming:check && npm run expo-pdf:check",
+    "check": "npm run i18n:check && npm run typecheck && npm run incoming:check && npm run expo-pdf:check && npm run test:adguard",
     "release:check": "node scripts/validate-release.mjs",
     "incoming:check": "node scripts/check-incoming-pdf-routing.mjs",
-    "expo-pdf:check": "node scripts/check-expo-pdf-patch.mjs"
+    "expo-pdf:check": "node scripts/check-expo-pdf-patch.mjs",
+    "test:adguard": "node scripts/test-ad-open-guard.mjs"
   },
   "dependencies": {
     "@kishannareshpal/expo-pdf": "0.3.2",
