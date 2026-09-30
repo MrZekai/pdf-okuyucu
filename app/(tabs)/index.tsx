@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect } from 'expo-router';
@@ -31,7 +31,16 @@ type ActionPanelProps = {
 };
 
 export default function HomeScreen() {
-  const { ready, openPicker, addFromUrl } = useApp();
+  const { ready, openPicker, addFromUrl, documents } = useApp();
+  // Geri dönen kullanıcının en sık işi son belgesine dönmek. Bunun için artık
+  // Kütüphane sekmesine gitmesi gerekmiyor; yeni kullanıcıda bu alan hiç
+  // görünmez. Açılış okuyucudan geçtiği için reklam akışı aynen korunur.
+  const recentDocuments = useMemo(
+    () => [...documents].sort((a, b) => b.lastOpenedAt - a.lastOpenedAt).slice(0, 4),
+    [documents]
+  );
+  const latestDocument = recentDocuments[0];
+  const olderDocuments = recentDocuments.slice(1);
   const { t } = useTranslation();
   const [urlOpen, setUrlOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -94,11 +103,25 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.brandBar}>
           <View style={styles.brandFlag}>
-            <PdfBrandMark size={42} />
+            <PdfBrandMark size={34} />
           </View>
           <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.brandTitle}>{t('app.name')}</Text>
           <View style={styles.brandRule} />
         </View>
+
+        {latestDocument ? (
+          <Pressable onPress={() => goReader(latestDocument.id)} accessibilityRole="button" style={({ pressed }) => [styles.continueCard, pressed && styles.pressed]}>
+            <View style={styles.docBadge}><Text style={styles.docBadgeText}>PDF</Text></View>
+            <View style={styles.continueCopy}>
+              <Text style={styles.continueEyebrow}>{t('home.continueEyebrow')}</Text>
+              <Text numberOfLines={1} style={styles.continueName}>{latestDocument.name}</Text>
+              <Text numberOfLines={1} style={styles.continueMeta}>
+                {latestDocument.lastPage > 1 ? t('home.continueResume', { page: latestDocument.lastPage }) : t('home.continueTap')}
+              </Text>
+            </View>
+            <View style={styles.continueGo}><AppIcon name="chevronRight" size={20} color="#FF514D" /></View>
+          </Pressable>
+        ) : null}
 
         <AdPauseOffer />
 
@@ -160,6 +183,24 @@ export default function HomeScreen() {
             </View>
           </View>
         </View>
+
+        {olderDocuments.length ? (
+          <View style={styles.recentBlock}>
+            <View style={styles.recentHeader}>
+              <Text style={styles.recentTitle}>{t('home.recentEyebrow')}</Text>
+              <Pressable onPress={() => router.push('/library')} hitSlop={10}>
+                <Text style={styles.seeAll}>{t('home.seeAll')}</Text>
+              </Pressable>
+            </View>
+            {olderDocuments.map((doc) => (
+              <Pressable key={doc.id} onPress={() => goReader(doc.id)} style={({ pressed }) => [styles.recentRow, pressed && styles.pressed]}>
+                <AppIcon name="file" size={20} color="#C7CBD0" />
+                <Text numberOfLines={1} style={styles.recentName}>{doc.name}</Text>
+                <AppIcon name="chevronRight" size={15} color="#8F949C" />
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
 
         <Pressable onPress={() => router.push('/tools')} style={({ pressed }) => [styles.allToolsStrip, pressed && styles.pressed]}>
           <View style={styles.allToolsIcon}><AppIcon name="tools" size={22} color="#FF4B47" /></View>
@@ -254,9 +295,23 @@ const styles = StyleSheet.create({
   content: { paddingHorizontal: 9, paddingTop: 6, paddingBottom: 24, gap: 10 },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
 
-  brandBar: { minHeight: 82, flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 13, paddingVertical: 10, backgroundColor: '#15171A', borderWidth: 1, borderColor: '#34383E', overflow: 'hidden' },
-  brandFlag: { width: 56, height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#421013', borderStartWidth: 6, borderStartColor: '#9D1419', borderWidth: 1, borderColor: '#2A2D31' },
-  brandTitle: { flex: 1, color: '#E7E8EA', fontSize: 24, fontWeight: '900', letterSpacing: 0.2 },
+  brandBar: { minHeight: 64, flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#15171A', borderWidth: 1, borderColor: '#34383E', overflow: 'hidden' },
+  brandFlag: { width: 46, height: 48, alignItems: 'center', justifyContent: 'center', backgroundColor: '#421013', borderStartWidth: 6, borderStartColor: '#9D1419', borderWidth: 1, borderColor: '#2A2D31' },
+  brandTitle: { flex: 1, color: '#E7E8EA', fontSize: 21, fontWeight: '900', letterSpacing: 0.2 },
+  continueCard: { minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: '#1A0D0E', borderWidth: 1, borderColor: '#5A1A1D', borderStartWidth: 4, borderStartColor: '#C8171D' },
+  docBadge: { width: 42, height: 52, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B3151B', borderWidth: 1, borderColor: '#E0383E' },
+  docBadgeText: { color: '#FFFFFF', fontSize: 12, fontWeight: '900', letterSpacing: 0.4 },
+  continueCopy: { flex: 1, minWidth: 0, gap: 2 },
+  continueEyebrow: { color: '#FF7A76', fontSize: 11, fontWeight: '900', letterSpacing: 1.1 },
+  continueName: { color: '#F1F2F4', fontSize: 16, fontWeight: '800' },
+  continueMeta: { color: '#AEB3BA', fontSize: 13 },
+  continueGo: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#4A2023' },
+  recentBlock: { borderWidth: 1, borderColor: '#34383E', backgroundColor: '#121416' },
+  recentHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingTop: 11, paddingBottom: 6 },
+  recentTitle: { color: '#9EA3AA', fontSize: 11, fontWeight: '900', letterSpacing: 1.1 },
+  seeAll: { color: '#FF6B67', fontSize: 13, fontWeight: '800' },
+  recentRow: { minHeight: 50, flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#2A2D31' },
+  recentName: { flex: 1, minWidth: 0, color: '#DDE0E3', fontSize: 15, fontWeight: '700' },
   brandRule: { position: 'absolute', end: 0, top: 0, width: '34%', height: 3, backgroundColor: '#3A3D42' },
 
   dashboard: { flexDirection: 'row', gap: 8, alignItems: 'stretch' },

@@ -105,7 +105,7 @@ const tr = {
   'home.emptyText': 'İlk belgeni açtığında burada otomatik görünecek.',
   'home.privacyTitle': 'Yalnızca cihazında',
   'home.privacyText': 'PDF dosyalarınız geliştirici sunucusuna yüklenmez.',
-  'app.adDisclosure': 'Bu işlem reklam içerebilir',
+  'app.adDisclosure': 'Bu süreç reklamlar içerebilir',
 
   'library.kicker': 'KÜTÜPHANE',
   'library.title': 'Tüm PDF’lerin',
@@ -342,7 +342,7 @@ const en: Record<keyof typeof tr, string> = {
   'home.emptyText': 'Your first document will show up here automatically.',
   'home.privacyTitle': 'On your device only',
   'home.privacyText': 'Your PDFs are not uploaded to the developer server.',
-  'app.adDisclosure': 'This may include ads',
+  'app.adDisclosure': 'This process may contain ads',
 
   'library.kicker': 'LIBRARY',
   'library.title': 'All your PDFs',

@@ -49,6 +49,13 @@ const APP_OPEN_MIN_GAP_MS = 0;
 // gelirse ya da yüklenemezse (ERROR) kapı hemen kapanır, yani bu süre yalnızca
 // yavaş bir ağda ve yalnızca reklama uygun açılışlarda beklenir.
 const COLD_START_WAIT_MS = 5000;
+/**
+ * Açılış ekranının reklamdan önce en az görünme süresi. Reklam daha erken
+ * yüklense bile kullanıcı önce "Bu süreç reklamlar içerebilir" yazısını ve
+ * dolan çubuğu görür; çubuk sona varınca reklam açılır. Reklamın habersiz
+ * fırlaması yerine beklenen bir adım olur.
+ */
+const MIN_SPLASH_MS = 1800;
 const AD_VALIDITY_MS = 4 * 60 * 60 * 1000;
 
 function getUnitId() {
@@ -74,6 +81,10 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
   const showingRef = useRef(false);
   const loadedAtRef = useRef(0);
   const gateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const barAnimationRef = useRef<Animated.CompositeAnimation | null>(null);
+  const barCompletingRef = useRef(false);
+  const barCompleteRef = useRef(false);
   const showRef = useRef<() => void>(() => undefined);
   // Kapının başladığı an; render sırasında değil, açılış effect'inde yazılır.
   const gateStartedAtRef = useRef(0);
@@ -88,6 +99,8 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
 
   const finishColdGate = useCallback(() => {
     cancelGateTimeout();
+    if (showTimerRef.current) clearTimeout(showTimerRef.current);
+    showTimerRef.current = null;
     coldEligibleRef.current = false;
     setColdEligible(false);
     gateVisibleRef.current = false;
@@ -137,13 +150,39 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
       finishColdGate();
       return;
     }
+    // Süreç önce tamamlanır: açılış ekranı en az MIN_SPLASH_MS görünmeden
+    // reklam açılmaz. Erken gelen reklam bekletilir (yüklenmiş reklam 4 saat
+    // geçerli, birkaç yüz milisaniye beklemek bir şey kaybettirmez).
+    const elapsed = Date.now() - gateStartedAtRef.current;
+    if (elapsed < MIN_SPLASH_MS) {
+      if (!showTimerRef.current) {
+        showTimerRef.current = setTimeout(() => {
+          showTimerRef.current = null;
+          showRef.current();
+        }, MIN_SPLASH_MS - elapsed);
+      }
+      return;
+    }
+    // Önce çubuk sona varır; animasyon bitince bu işlev yeniden çağrılır ve
+    // reklam aşağıda açılır. Kapı zaman aşımına uğrarsa ikinci çağrı yukarıdaki
+    // denetimde durur ve uygulama reklamsız açılır.
+    if (!barCompleteRef.current) {
+      if (barCompletingRef.current) return;
+      barCompletingRef.current = true;
+      barAnimationRef.current?.stop();
+      Animated.timing(progress, { toValue: 1, duration: 220, easing: Easing.out(Easing.quad), useNativeDriver: false }).start(() => {
+        barCompleteRef.current = true;
+        showRef.current();
+      });
+      return;
+    }
     showingRef.current = true;
     cancelGateTimeout();
     ad.show().catch(() => {
       clearAd();
       finishColdGate();
     });
-  }, [cancelGateTimeout, clearAd, finishColdGate]);
+  }, [cancelGateTimeout, clearAd, finishColdGate, progress]);
 
   useEffect(() => { showRef.current = showAd; }, [showAd]);
 
@@ -228,15 +267,16 @@ export function AppOpenAdController({ children }: { children: React.ReactNode })
   // zaman aşımıyla aynı anda dolar. Reklam daha erken gelirse zaten kapanır.
   useEffect(() => {
     if (!coldEligible) return;
+    // İki aşama: en az görünme süresi boyunca %85'e kadar dolar, reklam hâlâ
+    // yükleniyorsa zaman aşımına kadar yavaşça ilerler; hiç "takılı" durmaz.
+    // Reklam hazır olunca showAd çubuğu %100'e tamamlayıp reklamı açar.
     const elapsed = Date.now() - gateStartedAtRef.current;
-    const total = COLD_START_WAIT_MS;
-    progress.setValue(Math.min(1, Math.max(0, elapsed / total)));
-    const animation = Animated.timing(progress, {
-      toValue: 1,
-      duration: Math.max(0, total - elapsed),
-      easing: Easing.linear,
-      useNativeDriver: false
-    });
+    progress.setValue(Math.min(0.85, Math.max(0, (elapsed / MIN_SPLASH_MS) * 0.85)));
+    const animation = Animated.sequence([
+      Animated.timing(progress, { toValue: 0.85, duration: Math.max(0, MIN_SPLASH_MS - elapsed), easing: Easing.out(Easing.quad), useNativeDriver: false }),
+      Animated.timing(progress, { toValue: 0.97, duration: Math.max(0, COLD_START_WAIT_MS - Math.max(elapsed, MIN_SPLASH_MS)), easing: Easing.linear, useNativeDriver: false })
+    ]);
+    barAnimationRef.current = animation;
     animation.start();
     return () => animation.stop();
   }, [coldEligible, progress]);
