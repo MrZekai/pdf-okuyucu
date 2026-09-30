@@ -44,7 +44,11 @@ const APP_OPEN_MIN_GAP_MS = 0;
  * çubuğu görünür. İlk açılış, reklamsız süre ve başka uygulamadan PDF ile açılış
  * bu beklemeye hiç girmez; onlar anında geçer.
  */
-const COLD_START_WAIT_MS = 3000;
+// 3 sn bazı cihaz ve ağlarda yetmiyordu: ilk açılışta reklam yetişemeyip
+// kapı kapanıyor, ikinci açılışta çıkıyordu. Üst sınır 5 sn; reklam daha önce
+// gelirse ya da yüklenemezse (ERROR) kapı hemen kapanır, yani bu süre yalnızca
+// yavaş bir ağda ve yalnızca reklama uygun açılışlarda beklenir.
+const COLD_START_WAIT_MS = 5000;
 const AD_VALIDITY_MS = 4 * 60 * 60 * 1000;
 
 function getUnitId() {

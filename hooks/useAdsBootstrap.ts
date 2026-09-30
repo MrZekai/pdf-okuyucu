@@ -41,6 +41,10 @@ async function gatherWithRetry(): Promise<{ info: ConsentInfo | null; error: unk
       return { info: await AdsConsent.gatherConsent(), error: null };
     } catch (error) {
       lastError = error;
+      // AdMob panelindeki eksik yapılandırma ("Publisher misconfiguration")
+      // tekrar denemekle düzelmez. Her soğuk açılışta ~4 sn boşa bekleyip ağ
+      // isteği harcamak yerine hemen vazgeç; karar SDK önbelleğine kalır.
+      if (/misconfiguration/i.test(errorText(error))) break;
     }
   }
   return { info: null, error: lastError };

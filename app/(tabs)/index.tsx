@@ -26,6 +26,7 @@ type ActionPanelProps = {
   icon: IconName;
   accent?: boolean;
   tall?: boolean;
+  graphic?: React.ReactNode;
   onPress: () => void;
 };
 
@@ -123,7 +124,7 @@ export default function HomeScreen() {
               </LinearGradient>
             </Pressable>
 
-            <ActionPanel title={t('tools.imagesTitle')} icon="image" onPress={() => goTool('images')} />
+            <ActionPanel title={t('tools.imagesTitle')} icon="image" graphic={<ImageToPdfGraphic />} onPress={() => goTool('images')} />
 
             <View style={styles.doubleRow}>
               <ActionPanel title={t('tools.mergeTitle')} icon="pages" onPress={() => goTool('merge')} />
@@ -192,14 +193,15 @@ export default function HomeScreen() {
   }
 }
 
-function ActionPanel({ title, icon, accent = false, onPress }: ActionPanelProps) {
+function ActionPanel({ title, icon, accent = false, graphic, onPress }: ActionPanelProps) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.actionPressable, pressed && styles.pressed]}>
       <LinearGradient colors={accent ? ['#351011', '#1B0B0C', '#0E0E10'] : ['#25282D', '#15171A', '#0B0C0E']} style={styles.actionPanel}>
         <PanelCorners />
         <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.62} style={styles.actionTitle}>{title}</Text>
+        {graphic ? <View pointerEvents="none" style={styles.actionGraphic}>{graphic}</View> : null}
         <View style={styles.actionBody}>
-          <View style={styles.actionIconPlate}><AppIcon name={icon} size={31} color={accent ? '#FF4B47' : '#C7CBD0'} /></View>
+          {graphic ? <View /> : <View style={styles.actionIconPlate}><AppIcon name={icon} size={31} color={accent ? '#FF4B47' : '#C7CBD0'} /></View>}
           <View style={styles.smallRoundAction}><AppIcon name="chevronRight" size={17} color="#FF4B47" /></View>
         </View>
       </LinearGradient>
@@ -215,6 +217,22 @@ function PdfStackGraphic() {
       <View style={[styles.paper, styles.paperFront]}><View style={styles.paperLine} /><View style={styles.paperLineShort} /></View>
       <View style={styles.redFolderBack} />
       <View style={styles.redFolderFront}><Text style={styles.pdfLetters}>PDF</Text></View>
+    </View>
+  );
+}
+
+// Fotoğraf -> PDF: PDF Aç kartındaki belge yığınının kardeşi. Yalnızca View ile
+// çizilir; yeni görsel dosyası yok, RTL'de start/end ile doğru tarafa yaslanır.
+function ImageToPdfGraphic() {
+  return (
+    <View style={styles.imgGraphic}>
+      <View style={styles.photo}>
+        <View style={styles.photoSun} />
+        <View style={styles.photoMountainBack} />
+        <View style={styles.photoMountainFront} />
+      </View>
+      <AppIcon name="chevronRight" size={20} color="#FF4B47" />
+      <View style={styles.pdfBadge}><Text style={styles.pdfBadgeText}>PDF</Text></View>
     </View>
   );
 }
@@ -271,6 +289,14 @@ const styles = StyleSheet.create({
   actionPanel: { flex: 1, minHeight: 124, padding: 11, borderWidth: 1, borderColor: '#4A4F55', overflow: 'hidden' },
   actionTitle: { color: '#D9DBDE', fontSize: 14, fontWeight: '900', letterSpacing: 0.3 },
   actionBody: { flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: 6 },
+  actionGraphic: { flex: 1, minHeight: 90, alignItems: 'center', justifyContent: 'center', paddingVertical: 8 },
+  imgGraphic: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  photo: { width: 86, height: 66, backgroundColor: '#2B3A4A', borderWidth: 3, borderColor: '#D8D9DB', overflow: 'hidden', transform: [{ rotate: '-5deg' }], shadowColor: '#000', shadowOpacity: 0.45, shadowRadius: 4, elevation: 4 },
+  photoSun: { position: 'absolute', top: 8, end: 11, width: 14, height: 14, borderRadius: 7, backgroundColor: '#FFB23F' },
+  photoMountainBack: { position: 'absolute', bottom: 0, start: 23, width: 0, height: 0, borderLeftWidth: 28, borderRightWidth: 28, borderBottomWidth: 35, borderLeftColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: '#5E6B78' },
+  photoMountainFront: { position: 'absolute', bottom: 0, start: -7, width: 0, height: 0, borderLeftWidth: 24, borderRightWidth: 24, borderBottomWidth: 26, borderLeftColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: '#8B98A5' },
+  pdfBadge: { width: 52, height: 66, backgroundColor: '#B3151B', borderWidth: 1, borderColor: '#E0383E', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.45, shadowRadius: 4, elevation: 4 },
+  pdfBadgeText: { color: '#FFFFFF', fontSize: 16, fontWeight: '900', letterSpacing: 0.5 },
   actionIconPlate: { width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#4A4E54', backgroundColor: '#15171A' },
   smallRoundAction: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#4B4F55', backgroundColor: '#0D0E10' },
   doubleRow: { flexDirection: 'row', gap: 8 },
