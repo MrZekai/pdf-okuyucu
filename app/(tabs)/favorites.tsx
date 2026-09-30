@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '@/context/AppContext';
 import { DocumentCard } from '@/components/DocumentCard';
 import { AppIcon } from '@/components/AppIcon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { palette } from '@/constants/theme';
+import { maybeShowPendingInterstitial } from '@/lib/adGate';
 
 export default function FavoritesScreen(){
+  // Okuyucudan buraya dönüş, bir PDF'yi bitirip yeni bir işe başlamadan önceki doğal ara.
+  useFocusEffect(useCallback(() => { void maybeShowPendingInterstitial(); }, []));
  const {documents,toggleFavorite}=useApp(); const {t,locale}=useTranslation(); const docs=documents.filter(d=>d.isFavorite).sort((a,b)=>b.lastOpenedAt-a.lastOpenedAt);
  const open=(id:string)=>router.push({pathname:'/reader/[id]',params:{id}});
  return <SafeAreaView style={styles.safe} edges={['top']}><View style={styles.header}><Text style={styles.kicker}>{t('favorites.kicker')}</Text><Text style={styles.title}>{t('favorites.title')}</Text><Text style={styles.sub}>{t('favorites.subtitle')}</Text></View><ScrollView contentContainerStyle={styles.content}>{docs.length?<View style={{gap:10}}>{docs.map(doc=><DocumentCard key={doc.id} doc={doc} t={t} locale={locale} onPress={()=>open(doc.id)} onFavorite={()=>toggleFavorite(doc.id)}/>)}</View>:<View style={styles.empty}><View style={styles.heart}><AppIcon name="heart" size={35} color="#FB7185"/></View><Text style={styles.emptyTitle}>{t('favorites.emptyTitle')}</Text><Text style={styles.emptyText}>{t('favorites.emptyText')}</Text></View>}</ScrollView></SafeAreaView>;

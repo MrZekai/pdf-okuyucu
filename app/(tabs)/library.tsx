@@ -1,14 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '@/context/AppContext';
 import { DocumentCard } from '@/components/DocumentCard';
 import { AppIcon } from '@/components/AppIcon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { palette } from '@/constants/theme';
+import { maybeShowPendingInterstitial } from '@/lib/adGate';
 
 export default function LibraryScreen() {
+  // Okuyucudan buraya dönüş, bir PDF'yi bitirip yeni bir işe başlamadan önceki doğal ara.
+  useFocusEffect(useCallback(() => { void maybeShowPendingInterstitial(); }, []));
   const { documents, toggleFavorite, removeDocument, openPicker } = useApp();
   const { t, locale } = useTranslation();
   const [query, setQuery] = useState('');

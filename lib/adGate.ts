@@ -54,10 +54,6 @@ export const MIN_FULL_SCREEN_GAP_MS = 60 * 1000;
 /** Reward for watching one rewarded video: a completely ad free window. */
 export const AD_PAUSE_DURATION_MS = 10 * 60 * 1000;
 
-// A slow connection needs more than five seconds to fill. The user is looking
-// at their finished document here, not waiting on a spinner, so a longer wait
-// costs nothing and recovers the impressions the old timeout was discarding.
-const INTERSTITIAL_LOAD_TIMEOUT_MS = 9_000;
 // The viewer is watching a spinner here and asked for this ad, so waiting a
 // little longer is better than telling them nothing was available.
 const REWARDED_LOAD_TIMEOUT_MS = 12_000;
@@ -528,9 +524,11 @@ function presentPreparedAd(ad: FullScreenAd, canShow: () => boolean = adsMayBeSh
  */
 let interstitialPending = false;
 
-// Okuyucudan her dönüşte değil, her 3 PDF'de bir geçiş reklamı. Yeni
-// kullanıcının "her dosyada reklam" hissiyle uygulamayı silmesini önler.
-const READER_EXITS_PER_INTERSTITIAL = 3;
+// Okuyucudan her dönüş bir doğal ara: kullanıcı belgesini bitirdi ve henüz yeni
+// bir işe başlamadı. Sıklığın üst sınırı kodda değil, ortak 60 sn kuralında ve
+// AdMob panelindeki geçiş birimi sıklık sınırında - yeni sürüm gerekmeden
+// ayarlanabilir. Önceki değer 3'tü; üç PDF'den ikisi hiç gelir üretmiyordu.
+const READER_EXITS_PER_INTERSTITIAL = 1;
 const READER_EXIT_COUNT_KEY = '@pdf-reader/ads/reader-exit-count-v1';
 
 export function markInterstitialPending() {
@@ -586,9 +584,20 @@ export async function maybeShowToolInterstitial() {
     const prepared = preparedInterstitial;
     preparedInterstitial = null;
 
-    const result = prepared
-      ? await presentPreparedAd(prepared.ad, adsMayBeShownNow)
-      : await presentFullScreenAd('interstitial', INTERSTITIAL_LOAD_TIMEOUT_MS, adsMayBeShownNow);
+    // Yalnızca ÖNCEDEN YÜKLENMİŞ reklam gösterilir. Hazır değilse bu fırsat
+    // atlanır ve bir sonraki için yükleme başlatılır.
+    //
+    // Önceki davranış reklamı o an istemek ve dokuz saniyeye kadar beklemekti.
+    // Kullanıcı o sürede başka bir PDF açmış ya da bir araç başlatmış olabiliyor
+    // ve reklam onun işinin üstüne geç açılıyordu - hem yavaş hissettiriyor hem
+    // de kazara tıklamaya açık. Reklam okuyucu açılırken önden yüklendiği için
+    // çıkış anında normalde hazır.
+    if (!prepared) {
+      primeInterstitial();
+      return false;
+    }
+
+    const result = await presentPreparedAd(prepared.ad, adsMayBeShownNow);
     if (result === 'unavailable') return false;
 
     sessionInterstitials += 1;

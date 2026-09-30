@@ -9,6 +9,7 @@ import { AppIcon } from '@/components/AppIcon';
 import { AdBanner } from '@/components/AdBanner';
 import { useTranslation } from '@/hooks/useTranslation';
 import { palette } from '@/constants/theme';
+import { markInterstitialPending, prepareToolAd } from '@/lib/adGate';
 
 const LOAD_TIMEOUT_MS=20_000;
 // BUG-14: accept the localized digit sets the number pad can produce so a
@@ -37,6 +38,10 @@ export default function ReaderScreen(){
  const flushProgress=useCallback(()=>{if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=null;const pending=pendingProgress.current;pendingProgress.current=null;if(id&&pending)updateProgress(id,pending.page,pending.pageCount)},[id,updateProgress]);
  const queueProgress=useCallback((nextPage:number,nextPageCount?:number)=>{pendingProgress.current={page:nextPage,pageCount:nextPageCount};if(progressTimer.current)clearTimeout(progressTimer.current);progressTimer.current=setTimeout(flushProgress,750)},[flushProgress]);
  useEffect(()=>{if(id)touchDocument(id)},[id,touchDocument]);
+ // Hangi yoldan açılırsa açılsın (ana sayfa, kütüphane, favoriler, araç sonucu,
+ // WhatsApp) okuyucudan çıkış bir doğal aradır. Reklam okuma sürerken önden
+ // yüklenir; okuyucunun kendisinde hiçbir zaman gösterilmez.
+ useEffect(()=>{markInterstitialPending();void prepareToolAd()},[]);
  useEffect(()=>{const subscription=AppState.addEventListener('change',(state)=>{if(state==='inactive'||state==='background')flushProgress()});return()=>subscription.remove()},[flushProgress]);
  useEffect(()=>()=>flushProgress(),[flushProgress]);
  // BUG-01: an externally opened document can be the only entry on the stack, so
