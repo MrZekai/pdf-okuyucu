@@ -361,7 +361,7 @@ if (settingsSource.includes('languageLabels') || settingsSource.includes("t('set
 if (!settingsSource.includes('await refreshAds()') || !adsBootstrapSource.includes('startInFlight')) fail('UMP sonrası reklam başlatma yenilemesi veya yarış koruması eksik.');
 if (appOpenSource.includes('requestNonPersonalizedAdsOnly')) fail('App-open reklamı UMP kararını geçersiz kılabilecek kişiselleştirme bayrağı içeriyor.');
 if (appOpenSource.includes("AppState.addEventListener('change'") || appOpenSource.includes('MIN_BACKGROUND_MS') || appOpenSource.includes("'warm'")) fail('App-open reklamı banner bulunan warm-resume içeriği üzerine çıkabilecek yol içeriyor.');
-if (!appOpenSource.includes('FIRST_AD_LAUNCH = 2') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk kullanım/creative tazelik/tek launch sayımı koruması eksik.');
+if (!appOpenSource.includes('FIRST_AD_LAUNCH = 1') || !appOpenSource.includes('AD_VALIDITY_MS = 4 * 60 * 60 * 1000') || !appOpenSource.includes('launchInitializedRef')) fail('Cold app-open ilk açılış kuralı (FIRST_AD_LAUNCH = 1, bilinçli karar)/creative tazelik/tek launch sayımı koruması eksik.');
 // v58 reklam modeli: tempo AdMob panelinde, kodda tek kural var.
 if (!appOpenSource.includes('Date.now() - lastShownAt >= MIN_FULL_SCREEN_GAP_MS')) fail('App-open paylaşılan tam ekran aralığı kuralını kullanmıyor.');
 if (!appOpenSource.includes('openedWithDocument')) fail('PDF niyetiyle açılışta app-open reklamını bastırma koruması eksik.');

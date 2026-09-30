@@ -13,10 +13,18 @@ import { palette } from '@/constants/theme';
 const LAUNCH_COUNT_KEY = '@pdf-reader/app-open-launch-count-v1';
 const FIRST_SEEN_KEY = '@pdf-reader/app-open-first-seen-v1';
 const LAST_APP_OPEN_KEY = '@pdf-reader/app-open-last-shown-v1';
-/** The very first launch of a new install stays clean. */
-const FIRST_AD_LAUNCH = 2;
 /**
- * Kurulumdan sonra ek bekleme yok: ilk açılış zaten temiz (FIRST_AD_LAUNCH).
+ * Kurulumdan sonraki ilk açılış dahil her soğuk açılış reklama uygundur.
+ *
+ * Önceki değer 2'ydi (ilk açılış reklamsız). Uygulama sahibinin kararıyla
+ * rakiplerdeki gibi ilk açılışta da açılış ekranı + app-open gösteriliyor.
+ * AB'deki kullanıcıda önce onay formu çıkar; onay gelmeden reklam istenmez
+ * (adsReady), yani bu değer onay akışını atlamaz. Eski davranışa dönmek için
+ * 2 yap ve scripts/validate-release.mjs içindeki beklenen değeri güncelle.
+ */
+const FIRST_AD_LAUNCH = 1;
+/**
+ * Kurulumdan sonra ek bekleme yok (FIRST_AD_LAUNCH ile birlikte okuyun).
  *
  * Önceki değer 48 saatti. Uygulamayı iki gün içinde bırakan bir kullanıcı - küçük
  * bir uygulamada kullanıcıların çoğu - bu yüzden HİÇ app-open reklamı görmüyordu.
